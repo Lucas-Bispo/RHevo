@@ -1,0 +1,27 @@
+# Arquivos compilados do Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ambiente virtual
+venv/
+env/
+.venv/
+
+# Arquivos de log
+*.log
+
+# Arquivos sensíveis
+.env
+*.env
+
+# Dados do Docker
+postgres_data/
+docker-compose.override.yml
+
+# Arquivos de IDE
+.vscode/
+.idea/
+
+# Arquivos temporários do sistema
+.DS_Store
