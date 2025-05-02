@@ -1,0 +1,76 @@
+version: '3.9'
+
+# Servi o do backend (API)
+services:
+  backend:
+    # Cria uma imagem do backend com o c digo-fonte em ./backend
+    build: ./backend
+    # D  um nome para o container
+    container_name: pref-rh-backend
+    # Executa o comando para subir a API com o Uvicorn
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    # Vincula o volume do c digo-fonte com o container
+    volumes:
+      - ./backend:/app
+    # Abre a porta 8000 do container para o host
+    ports:
+      - "8000:8000"
+    # Faz o container depender do container do banco de dados
+    depends_on:
+      - db
+    # Define as vari veis de ambiente para o container
+    environment:
+      - DATABASE_URL=postgresql://rhuser:rhpass@db:5432/rhdb
+
+# Servi o do frontend (web)
+  frontend:
+    # Usa a imagem do PHP 8.2 com Apache
+    image: php:8.2-apache
+    # D  um nome para o container
+    container_name: pref-rh-frontend
+    # Vincula o volume do c digo-fonte do frontend com o container
+    volumes:
+      - ./frontend:/var/www/html
+    # Abre a porta 8080 do container para o host
+    ports:
+      - "8080:80"
+    # Faz o container depender do container do backend
+    depends_on:
+      - backend
+
+# Servi o do banco de dados (PostgreSQL)
+  db:
+    # Usa a imagem do PostgreSQL 15
+    image: postgres:15
+    # D  um nome para o container
+    container_name: pref-rh-db
+    # Faz o container reiniciar sempre que ele falhar
+    restart: always
+    # Define as vari veis de ambiente para o container
+    environment:
+      POSTGRES_DB: rhdb
+      POSTGRES_USER: rhuser
+      POSTGRES_PASSWORD: rhpass
+    # Abre a porta 5432 do container para o host
+    ports:
+      - "5432:5432"
+    # Vincula o volume do banco de dados com o container
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+# Servi o do Adminer (ferramenta para gerenciar o banco de dados)
+  adminer:
+    # Usa a imagem do Adminer
+    image: adminer
+    # D  um nome para o container
+    container_name: pref-rh-adminer
+    # Faz o container reiniciar sempre que ele falhar
+    restart: always
+    # Abre a porta 8081 do container para o host
+    ports:
+      - "8081:8080"
+
+# Define o volume para o banco de dados
+volumes:
+  dbdata:
+
