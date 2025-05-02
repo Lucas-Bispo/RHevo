@@ -1,8 +1,16 @@
 from fastapi import FastAPI
-from app.db.database import get_db
+from app.db.database import SessionLocal
 
-app = FastAPI(title="Sistema de RH para Prefeituras")
+app = FastAPI()
 
 @app.get("/")
-def root():
-    return {"message": "Sistema de RH iniciado com sucesso!"}
+def read_root():
+    # Testa conexão abrindo e fechando a sessão
+    db = SessionLocal()
+    try:
+        db.execute("SELECT 1")
+        return {"message": "Conexão com banco de dados OK"}
+    except Exception as e:
+        return {"error": str(e)}
+    finally:
+        db.close()
