@@ -1,7 +1,8 @@
 from fastapi import FastAPI
+from app.db.database import get_db
 
-app = FastAPI()
+app = FastAPI(title="Sistema de RH para Prefeituras")
 
 @app.get("/")
-async def root():
-     return {"message": "Prefeitura RH Backend - FastAPI ativo!"}
+def root():
+    return {"message": "Sistema de RH iniciado com sucesso!"}
