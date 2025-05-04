@@ -20,4 +20,4 @@ class LotacaoRead(LotacaoBase):
     id: int
 
     class Config:
-        orm_mode = True  # permite conversão automática do modelo SQLAlchemy
+        from_attributes = True  # permite conversão automática do modelo SQLAlchemy

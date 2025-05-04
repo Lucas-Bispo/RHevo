@@ -1,4 +1,5 @@
-from pydantic import BaseSettings  # Importa a classe BaseSettings da biblioteca Pydantic para facilitar a configuração baseada em variáveis de ambiente.
+from pydantic_settings import BaseSettings
+  # Importa a classe BaseSettings da biblioteca Pydantic para facilitar a configuração baseada em variáveis de ambiente.
 
 class Settings(BaseSettings):  # Define uma classe Settings que herda de BaseSettings.
     DB_HOST: str = "db"  # Define o nome do host do banco de dados com valor padrão "db".

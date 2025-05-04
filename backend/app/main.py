@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.api.v1 import servidor  # importa o roteador
+from app.api.v1 import servidor, lotacao  # importa o roteador
 
 app = FastAPI(
     title="RHEVO - Sistema de RH para Prefeituras",
@@ -13,3 +13,4 @@ def read_root():
 
 # ✅ Importa as rotas do módulo Servidor (S-2200)
 app.include_router(servidor.router)
+app.include_router(lotacao.router)
