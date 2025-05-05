@@ -2,7 +2,7 @@ services:
   backend:
     build: ./backend
     container_name: pref-rh-backend
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    entrypoint: ["/app/entrypoint.sh"]  # Atualizado para o caminho correto dentro do container
     volumes:
       - ./backend:/app
     ports:
@@ -10,8 +10,8 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://rhuser:rhpass@db:5432/rhdb
-
+      DATABASE_URL: postgresql://rhuser:rhpass@db:5432/rhdb
+  
   frontend:
     image: php:8.2-apache
     container_name: pref-rh-frontend
@@ -22,7 +22,7 @@ services:
       - "8080:80"
     depends_on:
       - db
-    command: bash -c "a2enconf custom && apache2-foreground"
+    command: bash -c "a2enconf custom && service apache2 reload && apache2-foreground"
 
   db:
     image: postgres:15
