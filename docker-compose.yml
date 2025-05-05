@@ -22,7 +22,7 @@ services:
       - "8080:80"
     depends_on:
       - db
-    command: bash -c "a2enconf custom && service apache2 reload && apache2-foreground"
+    command: bash -c "a2enconf custom && apache2-foreground"
 
   db:
     image: postgres:15
