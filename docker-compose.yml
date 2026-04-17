@@ -1,17 +1,4 @@
 services:
-  backend:
-    build: ./backend
-    container_name: pref-rh-backend
-    entrypoint: ["/app/entrypoint.sh"]  # Atualizado para o caminho correto dentro do container
-    volumes:
-      - ./backend:/app
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    environment:
-      DATABASE_URL: postgresql://rhuser:rhpass@db:5432/rhdb
-  
   frontend:
     image: php:8.2-apache
     container_name: pref-rh-frontend

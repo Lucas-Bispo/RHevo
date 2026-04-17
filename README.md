@@ -91,7 +91,7 @@ Desenvolver um sistema robusto e modular que atenda às necessidades do setor de
 
 ## 🛠️ Tecnologias sugeridas
 > (Personalizar conforme stack escolhida)
-- Backend: Python (Django ou FastAPI)
+- Backend: PHP (Laravel)
 - Frontend: PHP (Laravel Blade, Symfony Twig ou puro com HTML/CSS)
 - Banco de dados: PostgreSQL / MySQL
 - Autenticação: JWT + RBAC
