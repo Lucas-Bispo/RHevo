@@ -122,6 +122,11 @@ Desenvolver um sistema robusto e modular que atenda às necessidades do setor de
 
 ---
 
+
+## 🗂️ Contexto Estratégico (Obsidian)
+- Hub de contexto em `docs/obsidian/00-Index.md`
+- Conteúdo interligado por wikilinks (`[[...]]`) para uso em vault Obsidian
+
 ## 🤝 Licença
 Este projeto é confidencial, de uso exclusivo para prefeituras e órgãos públicos. Direitos reservados à administração responsável pelo desenvolvimento.
 
