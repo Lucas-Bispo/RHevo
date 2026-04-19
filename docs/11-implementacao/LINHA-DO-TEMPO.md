@@ -2,6 +2,25 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 17:19 - Atualização do README Principal
+
+**Ação realizada:**  
+- Atualizado o `README.md` principal da raiz do projeto para alinhar a documentação do ambiente com o cenário real de desenvolvimento e execução.
+- Removido o conteúdo antigo que ainda descrevia um contexto genérico de `PrefRH` e consolidada uma versão coerente com o FolhaNova.
+- Deixado explícito que o Windows 11 é o sistema host, o VS Code é o editor e o ambiente válido de execução local e futura produção é o Ubuntu 24.04.
+
+**Arquivos criados / alterados:**  
+- `README.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisões técnicas:**  
+- O README da raiz passou a ser a referência principal para onboarding rápido do projeto.
+- A documentação foi escrita priorizando Linux como ambiente operacional, sem assumir execução nativa no Windows.
+- O README técnico do backend em `backend/FolhaNova/README.md` foi preservado como complemento mais específico da aplicação.
+
+**Status:** Concluído ✅
+
 ### 19/04/2026 - 17:15 - Diagnóstico de Performance da Tela de Login
 
 **Ação realizada:**  

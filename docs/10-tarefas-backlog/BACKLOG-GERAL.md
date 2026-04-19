@@ -5,6 +5,18 @@
 ## Objetivo
 Consolidar as tarefas macro do projeto em uma visão única de backlog priorizado, alinhada ao estado real da aplicação e à documentação estratégica já produzida.
 
+### README-AMBIENTE-PRINCIPAL - 19/04/2026
+
+**Descrição:**  
+Atualizar o `README.md` principal do projeto para explicar com clareza o ambiente de desenvolvimento em Windows 11 com VS Code e o ambiente real de execução local e futura produção em Linux Ubuntu 24.04.
+
+**Status:** Concluído  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `README.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
 ### DIAGNOSTICO-PERFORMANCE-LOGIN - 19/04/2026
 
 **Descrição:**  

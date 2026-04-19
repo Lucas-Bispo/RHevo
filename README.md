@@ -1,133 +1,90 @@
-# 📘 Sistema de RH para Prefeitura - `PrefRH` (nome sugestivo)
+# FolhaNova
 
-Sistema completo de gestão de Recursos Humanos voltado para a administração pública municipal. Focado em eficiência, conformidade legal e usabilidade para servidores e gestores.
+Sistema web em desenvolvimento para folha de pagamento e gestao de servidores de prefeituras brasileiras, com foco em operacao moderna, rastreabilidade, seguranca e compatibilidade progressiva com o eSocial.
 
----
+## Visao geral
 
-## 📌 Objetivo
+O FolhaNova esta sendo construido para substituir fluxos legados de RH e folha por uma base mais organizada, auditavel e preparada para evolucao modular. O projeto combina:
 
-Desenvolver um sistema robusto e modular que atenda às necessidades do setor de Recursos Humanos da prefeitura, garantindo a automatização de processos, transparência e controle da gestão de pessoal.
+- operacao aderente ao contexto de prefeituras brasileiras;
+- arquitetura web moderna com Laravel e Livewire;
+- documentacao tecnica centralizada em `docs/`;
+- prioridade para compatibilidade com ambiente Linux Ubuntu 24.04.
 
----
+## Ambiente de desenvolvimento
 
-## 🧩 Módulos Funcionais
+O desenvolvimento acontece em uma maquina com:
 
-### 1. 📇 Cadastro de Servidores
-- Dados pessoais e funcionais
-- Histórico de cargos e movimentações
-- Armazenamento de documentos digitalizados
-- Vinculação com secretarias, setores e chefias
+- Windows 11 como sistema operacional host;
+- Visual Studio Code como editor principal;
+- repositorio acessado localmente pelo desenvolvedor no Windows.
 
-### 2. 🧾 Gestão de Cargos e Lotação
-- Tabela de cargos e vencimentos
-- Planos de carreira
-- Lotação atual e movimentações internas
-- Organograma funcional
+O papel do Windows neste projeto e hospedar o workspace e a ferramenta de edicao. O Windows **nao** deve ser tratado como ambiente principal de execucao da aplicacao.
 
-### 3. 💸 Folha de Pagamento
-- Cálculo de vencimentos, descontos e adicionais
-- Férias, 13º, rescisões, horas extras
-- Geração de holerites e informes de rendimento
-- Integração com sistema financeiro municipal
+## Ambiente de execucao local
 
-### 4. ⏱️ Controle de Frequência/Ponto
-- Marcação de ponto (manual ou eletrônico)
-- Controle de banco de horas, faltas e atrasos
-- Solicitações e aprovações de abonos
+O ambiente valido para rodar a aplicacao localmente e:
 
-### 5. 🌴 Férias e Licenças
-- Programação e controle de férias
-- Tipos de licença (médica, prêmio, maternidade etc.)
-- Alertas de vencimento e relatório de saldo
+- WSL;
+- Linux Ubuntu 24.04;
+- terminal Linux para comandos, scripts e validacoes do projeto.
 
-### 6. 📊 Avaliação de Desempenho
-- Avaliações periódicas por setor e servidor
-- Relatórios com indicadores de desempenho
-- Impacto em progressões e bonificações
+Em outras palavras:
 
-### 7. 👵 Gestão Previdenciária
-- Controle de aposentadorias e pensões
-- Integração com RPPS ou INSS
-- Cálculo de tempo de contribuição
+- o codigo pode ser editado no VS Code;
+- a aplicacao deve ser executada, testada e validada no Ubuntu 24.04 via WSL;
+- exemplos de comandos do projeto devem priorizar sempre o shell Linux.
 
-### 8. 🧪 Gestão de Concursos Públicos
-- Cadastro e acompanhamento de concursos
-- Histórico de candidatos e nomeações
+Esse ambiente local em Linux e a referencia principal para comportamento da aplicacao durante o desenvolvimento.
 
-### 9. 📈 Relatórios e BI
-- Relatórios gerenciais e operacionais
-- Dashboards e gráficos interativos
-- Exportação em PDF, Excel, CSV
+## Ambiente de producao previsto
 
-### 10. 🌐 Portal do Servidor
-- Consulta de dados cadastrais
-- Visualização de holerite, férias e histórico
-- Solicitação de abonos e licenças
+O ambiente futuro de producao sera em nuvem, tambem baseado em:
 
-### 11. 🎓 Treinamentos e Capacitações
-- Registro de cursos e capacitações
-- Controle de carga horária e certificados
+- Linux Ubuntu 24.04;
+- servidor Linux como ambiente oficial de execucao;
+- stack alinhada ao comportamento validado no WSL.
 
----
+Isso significa que o WSL Ubuntu 24.04 nao e apenas uma conveniencia local: ele existe para aproximar o desenvolvimento do ambiente real onde a aplicacao sera publicada.
 
-## 🔐 Funcionalidades Transversais
-- Perfis de acesso (servidor, RH, gestor, admin)
-- Logs e trilhas de auditoria
-- Backup automático e criptografia
-- Conformidade com a LGPD
-- Suporte multiusuário e multidepartamental
+## Por que essa padronizacao existe
 
----
+Padronizar a execucao em Ubuntu 24.04, mesmo com desenvolvimento em Windows 11, ajuda a:
 
-## 🚀 Funcionalidades Futuras / Diferenciais
-- App mobile para marcação de ponto e consulta
-- Integração com eSocial
-- Assinatura digital de documentos
-- Canal interno de atendimento (chat)
-- Ouvidoria interna e notificações via e-mail
-- Integração com sistemas Gov.br
+- reduzir diferencas entre desenvolvimento e producao;
+- evitar erros causados por comportamento diferente entre Windows e Linux;
+- melhorar a consistencia de scripts, comandos e dependencias;
+- facilitar troubleshooting, automacao e deploy;
+- criar uma base mais confiavel para testes tecnicos e validacoes de performance.
 
----
+## Instrucoes gerais
 
-## 🛠️ Tecnologias sugeridas
-> (Personalizar conforme stack escolhida)
-- Backend: PHP (Laravel)
-- Frontend: PHP (Laravel Blade, Symfony Twig ou puro com HTML/CSS)
-- Banco de dados: PostgreSQL / MySQL
-- Autenticação: JWT + RBAC
-- Infraestrutura: Docker, NGINX, CI/CD, AWS
+Ao trabalhar neste projeto:
 
+- prefira sempre executar comandos no Ubuntu 24.04 via WSL;
+- trate o Linux como ambiente local oficial da aplicacao;
+- documente exemplos e procedimentos pensando primeiro no terminal Linux;
+- evite assumir execucao nativa no Windows para rotinas da aplicacao;
+- valide mudancas importantes no ambiente WSL antes de considerar a tarefa concluida.
 
----
+## Organizacao do projeto
 
-## 📅 Planejamento de Entregas (Fases)
+As principais referencias documentais ficam em `docs/`:
 
-### MVP (Versão 1)
-- Cadastro de servidores
-- Gestão de cargos/lotações
-- Frequência/ponto
-- Férias/licenças
-- Folha de pagamento básica
+- `docs/README.md` para o indice geral;
+- `docs/01-visao-projeto/` para visao do produto;
+- `docs/05-performance/` para diagnosticos e metas de performance;
+- `docs/10-tarefas-backlog/` para backlog;
+- `docs/11-implementacao/` para linha do tempo e progresso.
 
-### Versão 2
-- Portal do servidor
-- Relatórios gerenciais
-- Avaliação de desempenho
-- Segurança e auditoria
+O backend principal da aplicacao esta em:
 
-### Versão 3
-- Treinamentos, concursos e previdência
-- Integração com eSocial
-- Assinatura digital e app mobile
+- `backend/FolhaNova`
 
----
+## Observacoes importantes
 
-
-## 🗂️ Contexto Estratégico (Obsidian)
-- Hub de contexto em `docs/obsidian/00-Index.md`
-- Conteúdo interligado por wikilinks (`[[...]]`) para uso em vault Obsidian
-
-## 🤝 Licença
-Este projeto é confidencial, de uso exclusivo para prefeituras e órgãos públicos. Direitos reservados à administração responsável pelo desenvolvimento.
-
----
+- Windows 11 atua como sistema hospedeiro do desenvolvedor.
+- Visual Studio Code atua como editor de codigo.
+- Ubuntu 24.04 no WSL e o ambiente principal para executar a aplicacao localmente.
+- O ambiente final previsto para producao tambem sera Linux Ubuntu 24.04 em nuvem.
+- Sempre que houver duvida sobre qual ambiente considerar como referencia, use o Ubuntu 24.04.
