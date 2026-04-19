@@ -8,10 +8,23 @@ Esta pasta concentra os direcionadores de performance, escalabilidade e observab
 ## Conteúdo Atual
 - Bíblia principal de performance.
 - Diagnóstico inicial e trilha contínua de performance da página de login.
+- Diagnóstico consolidado da lentidão da aplicação com foco no bootstrap da rota `/login`.
+- Backlog priorizado de performance com validações sugeridas.
+- Plano incremental para correções futuras sem perder rastreabilidade.
 - Metas de latência e throughput.
 - Regras de banco, cache, filas e Livewire.
+
+## Índice da Trilha
+- `PERFORMANCE-BIBLE.md`
+- `PERFORMANCE-LOGIN.md`
+- `DIAGNOSTICO-INICIAL.md`
+- `ANALISE-TELA-LOGIN.md`
+- `TAREFAS-PERFORMANCE.md`
+- `PLANO-DE-ACAO.md`
+- `METRICAS-E-VALIDACOES.md`
 
 ## Uso Esperado
 - Consultar antes de implementar listagens, cálculos ou integrações pesadas.
 - Aplicar como checklist em revisões técnicas.
 - Registrar otimizações específicas por módulo, como em `PERFORMANCE-LOGIN.md`.
+- Consolidar aqui as evidências antes de qualquer rodada de otimização mais invasiva.

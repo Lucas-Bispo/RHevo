@@ -5,6 +5,25 @@
 ## Objetivo
 Consolidar as tarefas macro do projeto em uma visão única de backlog priorizado, alinhada ao estado real da aplicação e à documentação estratégica já produzida.
 
+### DIAGNOSTICO-PERFORMANCE-LOGIN - 19/04/2026
+
+**Descrição:**  
+Investigar e documentar a lentidão de carregamento da aplicação com foco inicial na tela de login, separando evidências, hipóteses, prioridades e plano de ação antes de qualquer nova correção no código.
+
+**Status:** Concluído  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `docs/05-performance/README.md`
+- `docs/05-performance/PERFORMANCE-LOGIN.md`
+- `docs/05-performance/DIAGNOSTICO-INICIAL.md`
+- `docs/05-performance/ANALISE-TELA-LOGIN.md`
+- `docs/05-performance/TAREFAS-PERFORMANCE.md`
+- `docs/05-performance/PLANO-DE-ACAO.md`
+- `docs/05-performance/METRICAS-E-VALIDACOES.md`
+- `docs/README.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
 ### COMMIT-PENDENCIAS-DOCUMENTAIS - 19/04/2026
 
 **Descrição:**  

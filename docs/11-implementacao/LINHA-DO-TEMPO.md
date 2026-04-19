@@ -2,6 +2,32 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 17:15 - Diagnóstico de Performance da Tela de Login
+
+**Ação realizada:**  
+- Executado um diagnóstico documental e técnico da lentidão da aplicação com foco na rota `/login`, sem aplicar novas correções no código.
+- Cruzadas evidências do ambiente WSL, do build frontend, do HTML renderizado, da configuração Laravel e dos arquivos da tela de login.
+- Criada uma trilha estruturada de documentos em `docs/05-performance` com diagnóstico inicial, análise da tela, backlog priorizado, plano de ação e critérios de validação.
+
+**Arquivos criados / alterados:**  
+- `docs/05-performance/README.md`
+- `docs/05-performance/PERFORMANCE-LOGIN.md`
+- `docs/05-performance/DIAGNOSTICO-INICIAL.md`
+- `docs/05-performance/ANALISE-TELA-LOGIN.md`
+- `docs/05-performance/TAREFAS-PERFORMANCE.md`
+- `docs/05-performance/PLANO-DE-ACAO.md`
+- `docs/05-performance/METRICAS-E-VALIDACOES.md`
+- `docs/README.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisões técnicas:**  
+- A etapa foi mantida estritamente diagnóstica para respeitar o fluxo definido no projeto.
+- A hipótese principal registrada é de gargalo estrutural no ambiente local, reforçada pelo uso de WSL sobre `/mnt/c/.../OneDrive`, build lento e TTFB muito acima da meta.
+- O custo visual do login foi documentado como fator secundário relevante, mas não como causa única da lentidão observada.
+
+**Status:** Concluído ✅
+
 ### 19/04/2026 - 16:55 - Saneamento de Commits Pendentes
 
 **Ação realizada:**  
