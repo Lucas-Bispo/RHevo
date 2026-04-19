@@ -5,6 +5,49 @@
 ## Objetivo
 Consolidar as tarefas macro do projeto em uma visão única de backlog priorizado, alinhada ao estado real da aplicação e à documentação estratégica já produzida.
 
+### COMMIT-PENDENCIAS-DOCUMENTAIS - 19/04/2026
+
+**Descrição:**  
+Realizar os commits pendentes dos arquivos de documentação e prompts já criados, agrupando-os por assunto e preservando fora do commit os itens não relacionados.
+
+**Status:** Concluído  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `FOLHANOVA-WORKFLOW.md`
+- `FOLHANOVA-LOGIN-BOTAO-FIX.md`
+- `docs/01-visao-projeto/README.md`
+- `docs/02-requisitos/README.md`
+- `docs/02-requisitos/REQUISITOS-FUNCIONAIS.md`
+- `docs/03-arquitetura/README.md`
+- `docs/04-ciberseguranca/README.md`
+- `docs/04-ciberseguranca/CYBERSECURITY-BIBLE.md`
+- `docs/05-performance/PERFORMANCE-BIBLE.md`
+- `docs/06-engenharia-software/README.md`
+- `docs/06-engenharia-software/ENGENHARIA-BIBLE.md`
+- `docs/07-bug-prevention/README.md`
+- `docs/07-bug-prevention/BUG-PREVENTION-BIBLE.md`
+- `docs/08-esocial/README.md`
+- `docs/08-esocial/ESOCIAL-DOCUMENTACAO-OFICIAL.md`
+- `docs/09-project-organization/README.md`
+- `docs/09-project-organization/PROJECT-ORGANIZER.md`
+- `docs/09-project-organization/FOLHANOVA-DOCUMENTATION-STRUCTURE.md`
+- `docs/10-tarefas-backlog/README.md`
+- `docs/11-implementacao/README.md`
+- `docs/11-implementacao/ROADMAP-FASES.md`
+- `docs/obsidian/00-Index.md`
+- `docs/obsidian/07-Ambiente-WSL-Ubuntu.md`
+- `docs/obsidian/08-Linha-do-Tempo-Projeto.md`
+- `docs/obsidian/09-Tasks-Login-Local.md`
+- `docs/obsidian/10-Tasks-Macro-Projeto.md`
+- `docs/obsidian/BUG-TRACKING.md`
+- `docs/obsidian/FOLHANOVA-CYBERSECURITY.md`
+- `docs/obsidian/FOLHANOVA-ENGENHARIA.md`
+- `docs/obsidian/FOLHANOVA-PERFORMANCE.md`
+- `docs/obsidian/FOLHANOVA-PROJECT-ORGANIZER.md`
+- `docs/obsidian/projeto.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
 ### BUILD-WSL-VALIDACAO-LOGIN - 19/04/2026
 
 **Descrição:**  
