@@ -17,8 +17,9 @@ Sempre que receber qualquer pedido (mesmo que seja pequeno), você **DEVE** segu
 2. Criar ou atualizar as tasks no backlog.
 3. Executar a tarefa.
 4. Sempre usar o WSL linux ubuntu 24.04
-5. Registrar na linha do tempo.
-6. Fazer commit no Git.
+5. Realizar testes de performace e sempre encotrar a melhor maneira de fazer e regiistrar na linha do tempo confome . - `docs/05-performance/`
+6. Registrar na linha do tempo.
+7. Fazer commit no Git.
 
 ---
 

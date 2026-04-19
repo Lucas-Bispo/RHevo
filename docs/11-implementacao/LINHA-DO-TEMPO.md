@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 17:35 - Consolidação do Backend na Main
+
+**Ação realizada:**  
+- Identificada a causa de a pasta `backend` não aparecer corretamente na `main`: o diretório `backend/FolhaNova` estava como repositório Git separado do repositório raiz.
+- Definida a estratégia de consolidação apenas do backend Laravel atual, sem incorporar o backend antigo em Python vindo de `origin/develop`.
+- Preparada a integração do backend atual ao repositório principal, com preservação segura do `.git` interno em backup local antes da incorporação na `main`.
+
+**Arquivos criados / alterados:**  
+- `.gitignore`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+- repositório raiz `RHevo`
+- `backend/FolhaNova`
+
+**Decisões técnicas:**  
+- O backend antigo de `origin/develop` foi explicitamente descartado desta consolidação para evitar regressão arquitetural e mistura de stacks.
+- A integração será feita diretamente no repositório raiz, pois esse é o único caminho para fazer o backend atual existir de fato na `main` de `Lucas-Bispo/RHevo`.
+- O `.git` interno do backend não será apagado cegamente: ele será removido da árvore ativa após backup local ignorado.
+
+**Status:** Em andamento
+
 ### 19/04/2026 - 17:19 - Atualização do README Principal
 
 **Ação realizada:**  

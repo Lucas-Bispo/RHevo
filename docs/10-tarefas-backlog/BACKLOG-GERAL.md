@@ -5,6 +5,32 @@
 ## Objetivo
 Consolidar as tarefas macro do projeto em uma visão única de backlog priorizado, alinhada ao estado real da aplicação e à documentação estratégica já produzida.
 
+### CONSOLIDAR-BACKEND-NA-MAIN - 19/04/2026
+
+**Descrição:**  
+Integrar o conteúdo do repositório interno `backend/FolhaNova` na `main` do repositório raiz, preservando o histórico útil e fazendo a pasta backend passar a existir de fato no branch principal.
+
+**Status:** Em andamento  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+- `backend/FolhaNova`
+- repositório raiz `RHevo`
+
+### INTEGRAR-BRANCHES-NA-MAIN - 19/04/2026
+
+**Descrição:**  
+Investigar todas as branches relacionadas ao projeto e integrar na `main` as alterações necessárias para que o conteúdo do backend também passe a aparecer corretamente no branch principal.
+
+**Status:** Em andamento  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+- repositório raiz `RHevo`
+- repositório interno `backend/FolhaNova`
+
 ### README-AMBIENTE-PRINCIPAL - 19/04/2026
 
 **Descrição:**  
