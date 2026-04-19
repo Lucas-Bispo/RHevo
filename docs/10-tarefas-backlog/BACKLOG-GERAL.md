@@ -5,6 +5,23 @@
 ## Objetivo
 Consolidar as tarefas macro do projeto em uma visão única de backlog priorizado, alinhada ao estado real da aplicação e à documentação estratégica já produzida.
 
+### LOGIN-BOTAO-PERFORMANCE-FIX - 19/04/2026
+
+**Descrição:**  
+Corrigir o estado inicial do botão "Entrar" na página de login, garantir loading apenas após clique real e aplicar otimizações iniciais de performance no módulo de autenticação.
+
+**Status:** Concluído  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `backend/FolhaNova/app/Livewire/Auth/Login.php`
+- `backend/FolhaNova/resources/views/livewire/auth/login.blade.php`
+- `backend/FolhaNova/resources/css/app.css`
+- `docs/05-performance/PERFORMANCE-LOGIN.md`
+- `docs/05-performance/README.md`
+- `docs/README.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
 ### LOGIN-V2-ORGANIZADO - 19/04/2026
 
 **Descrição:**  
