@@ -2,6 +2,23 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 16:43 - Validação de Build no WSL
+
+**Ação realizada:**  
+- Executada novamente a compilação frontend da aplicação no WSL Ubuntu 24.04 com `npm run build` dentro de `backend/FolhaNova`.
+- Confirmado que o build de produção conclui com sucesso após os ajustes recentes da página de login.
+- Registrado o tempo observado de compilação para acompanhamento de performance do ambiente local.
+
+**Arquivos criados / alterados:**  
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisões técnicas:**  
+- Mantido o fluxo oficial de validação no WSL Ubuntu 24.04, conforme padrão operacional definido no projeto.
+- O resultado funcional do build foi aceito, mas o tempo total de `5m 37s` indica que ainda vale uma investigação específica de performance do pipeline local.
+
+**Status:** Concluído ✅
+
 ### 19/04/2026 - 16:26 - Correção do Botão Entrar e Performance do Login
 
 **Ação realizada:**  
