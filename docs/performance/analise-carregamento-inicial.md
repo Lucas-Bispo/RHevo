@@ -13,6 +13,7 @@
 - A abertura da aplicação para usuário não autenticado não vai direto para `/login`.
 - Há pelo menos dois redirecionamentos antes da primeira tela útil.
 - Cada hop adicional paga novamente custo de bootstrap, middleware, sessão e resposta HTTP.
+- Log do navegador: `GET /` levou `~6.45s`, com `wait ~6.14s`.
 
 ## Gargalos prováveis
 - Redirecionamento em cascata `/` -> `/dashboard` -> `/login`
@@ -26,6 +27,7 @@
 
 ## Melhor hipótese atual
 - O carregamento inicial sofre mais com hops extras e custo estrutural de ambiente do que com lógica de aplicação.
+- O `wait` alto em `/` reforça que o tempo está sendo consumido antes do navegador começar a baixar a resposta útil.
 
 ## Medições necessárias
 - tempo total de `GET /`

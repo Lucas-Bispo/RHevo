@@ -27,6 +27,14 @@ Investigar a performance fim a fim dos fluxos de carregamento inicial, login, au
 - `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
 - `docs/11-implementacao/LINHA-DO-TEMPO.md`
 
+**Evidência adicional consolidada:**  
+- `GET /`: ~6,45s com wait dominante
+- `GET /dashboard`: ~7,02s com wait dominante
+- `GET /login`: ~3,29s com wait dominante
+- `POST /livewire/update` no login: ~3,42s com wait dominante
+- `POST /livewire/update` no logout: ~2,58s com wait dominante
+- CSS, favicon e fonte rápidos em comparação, reduzindo a suspeita sobre assets como causa principal
+
 ### CONSOLIDAR-BACKEND-NA-MAIN - 19/04/2026
 
 **Descrição:**  

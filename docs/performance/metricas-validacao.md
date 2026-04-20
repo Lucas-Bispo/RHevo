@@ -30,6 +30,12 @@
 ## Medições já conhecidas
 - `GET /login` em documentação anterior: `~8.1s`
 - `npm run build` em documentação anterior: `5m 37s`
+- `GET /`: `~6.45s`, `wait ~6.14s`
+- `GET /dashboard` autenticado: `~7.02s`, `wait ~6.60s`
+- `GET /login`: `~3.29s`, `wait ~2.82s`
+- `POST /livewire/update` no login: `~3.42s`, `wait ~3.35s`
+- `POST /livewire/update` no logout: `~2.58s`, `wait ~2.50s`
+- CSS, favicon e fonte com tempos baixos em comparação aos requests principais
 
 ## Tabela de registro recomendada
 | Fluxo | Tempo total | TTFB | Redirects | Queries | SQL total | Observações |
@@ -39,6 +45,11 @@
 | `login submit` | a medir | a medir | a medir | a medir | a medir | credenciais válidas |
 | `/dashboard` | a medir | a medir | a medir | a medir | a medir | autenticado |
 | `logout` | a medir | a medir | a medir | a medir | a medir | autenticado |
+
+## Leitura atual das medições
+- O padrão mais forte desta rodada é `wait` muito alto em todos os fluxos críticos.
+- Isso sugere gargalo dominante no backend, no ambiente ou no encadeamento dos requests.
+- Os assets estáticos não aparecem como suspeitos principais nesta etapa.
 
 ## Regras de validação
 - medir antes e depois de cada mudança relevante

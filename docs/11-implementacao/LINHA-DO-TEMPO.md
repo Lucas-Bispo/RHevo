@@ -2,6 +2,30 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 23:14 - Consolidação dos Logs dos Fluxos Críticos
+
+**Ação realizada:**  
+- Incorporadas ao diagnóstico de performance as novas medições de navegador para `/`, `/login`, login via Livewire, `/dashboard` após autenticação e logout via Livewire.
+- Confirmado que o padrão dominante dos fluxos críticos é tempo alto de `wait`, muito acima do tempo gasto com CSS, favicon e fonte.
+- Reforçada a leitura de que o gargalo principal atual está no backend, no ambiente local e no desenho do fluxo HTTP, não no download dos assets estáticos.
+
+**Arquivos criados / alterados:**  
+- `docs/performance/diagnostico-inicial.md`
+- `docs/performance/analise-carregamento-inicial.md`
+- `docs/performance/analise-login.md`
+- `docs/performance/analise-dashboard.md`
+- `docs/performance/analise-logout.md`
+- `docs/performance/metricas-validacao.md`
+- `docs/performance/tarefas-performance.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisões técnicas:**  
+- O foco da próxima etapa deve ser decompor o tempo de espera do backend antes de seguir com ajustes cosméticos ou micro-otimizações de asset.
+- A prioridade subiu para instrumentação do backend e remoção de redirecionamentos em cascata.
+
+**Status:** Concluído ✅
+
 ### 19/04/2026 - 23:04 - Diagnóstico Expandido de Performance dos Fluxos Críticos
 
 **Ação realizada:**  

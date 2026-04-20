@@ -19,6 +19,7 @@
 - bootstrap do Livewire para a sidebar
 - fonte externa novamente presente
 - custo estrutural do ambiente local
+- tempo de processamento do request autenticado no backend
 
 ## O que merece atenção futura
 - quando o dashboard passar a carregar métricas reais, widgets e permissões, o risco de N+1 e excesso de consultas crescerá
@@ -37,3 +38,7 @@
 - query count real do dashboard
 - tempo total SQL
 - waterfall do primeiro carregamento autenticado
+
+## Evidência adicional dos logs
+- `GET /dashboard` após login levou `~7.02s`, com `wait ~6.60s`
+- Isso reforça que o pós-login está sofrendo principalmente no servidor antes da resposta começar a trafegar.

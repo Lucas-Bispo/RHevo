@@ -16,7 +16,7 @@ Sem baseline, o time pode corrigir o ponto errado.
 **Prioridade:** Alta
 
 **Evidência:**  
-Os diagnósticos existentes se concentram em `/login` e no build, mas ainda não cobrem todo o fluxo ponta a ponta.
+Agora já há uma rodada inicial com logs de navegador mostrando `wait` dominante em `/`, `/login`, `/dashboard`, login e logout, mas ainda faltam query count, SQL total e comparação controlada por ambiente.
 
 **Ação sugerida:**  
 Capturar TTFB, tempo total, query count, tempo SQL, redirects e waterfall dos fluxos principais.
@@ -107,6 +107,27 @@ Executar rodada de benchmark com ambiente controlado e comparar.
 
 **Forma de validação:**  
 Comparativo objetivo de tempo por rota e tempo SQL.
+
+### PERF-10 - Instrumentar o backend para decompor o tempo de espera
+**Descrição:**  
+Separar quanto do `wait` vem de bootstrap, middleware, sessão, autenticação, Livewire e SQL.
+
+**Causa provável:**  
+Os logs mostram que a maior parte da latência está antes da transferência da resposta, mas ainda não está decomposta.
+
+**Impacto:**  
+Sem essa decomposição, há risco de otimizar a camada errada.
+
+**Prioridade:** Alta
+
+**Evidência:**  
+`GET /` `~6.45s`, `/dashboard` `~7.02s`, `/login` `~3.29s`, login Livewire `~3.42s` e logout Livewire `~2.58s`, todos com `wait` dominante.
+
+**Ação sugerida:**  
+Adicionar medição controlada por request no backend ou usar profiling operacional do Laravel para capturar tempo total, SQL e etapas-chave.
+
+**Forma de validação:**  
+Relatório por fluxo com decomposição de tempo e principal suspeito confirmado.
 
 ## Prioridade Média
 ### PERF-06 - Reduzir payload inicial da tela de login

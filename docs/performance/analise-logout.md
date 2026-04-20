@@ -20,6 +20,10 @@
 - Redirecionamentos em cascata após logout:
 - `/` -> `/dashboard` -> `/login`
 
+## Evidência adicional dos logs
+- `POST /livewire/update` no logout levou `~2.58s`, com `wait ~2.50s`
+- O padrão repete a mesma assinatura dos demais fluxos: a lentidão dominante está no processamento do request e não nos assets subsequentes.
+
 ## Impacto
 - Mais latência percebida
 - Mais bootstrap do framework
@@ -29,6 +33,7 @@
 ## Melhor hipótese atual
 - O logout não é lento por regras de negócio.
 - O logout parece lento porque o fluxo de navegação final está desenhado com hops desnecessários.
+- O `wait` alto também sugere custo estrutural do backend no request Livewire de saída.
 
 ## Medições necessárias
 - tempo total do clique de logout até a tela de login estar utilizável

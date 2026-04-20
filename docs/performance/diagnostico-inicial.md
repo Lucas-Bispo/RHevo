@@ -12,6 +12,12 @@
 ## O que está comprovadamente lento
 - A documentação existente em `docs/05-performance` já registra `GET /login` em aproximadamente `8.1s` no ambiente local.
 - O build `npm run build` já foi observado em `5m 37s`, incompatível com o tamanho final dos assets.
+- Uma nova rodada de logs do navegador confirmou lentidão concentrada no tempo de espera do backend:
+  - `GET /`: `~6.45s`, com `wait ~6.14s`
+  - `GET /dashboard` após login: `~7.02s`, com `wait ~6.60s`
+  - `GET /login`: `~3.29s`, com `wait ~2.82s`
+  - `POST /livewire/update` no login: `~3.42s`, com `wait ~3.35s`
+  - `POST /livewire/update` no logout: `~2.58s`, com `wait ~2.50s`
 
 ## O que foi confirmado nesta rodada
 ### 1. Ambiente local desfavorável para benchmark
@@ -44,6 +50,11 @@
 - hero com múltiplos ícones decorativos, gradientes, blur e animação contínua
 - `backdrop-filter` pesado no card principal
 
+### 5.1. Os assets não aparecem como causa principal nesta rodada
+- CSS, favicon e fonte ficaram rápidos em comparação com os requests principais.
+- Isso reduz a probabilidade de o gargalo dominante estar no download de assets estáticos.
+- O foco passa a ser tempo de espera do backend, bootstrap da aplicação e encadeamento de requests.
+
 ### 6. O backend de autenticação está relativamente simples
 - O `login()` customizado valida, chama `Auth::attempt`, regenera sessão e redireciona.
 - Não há evidência de consultas de domínio complexas no login.
@@ -60,6 +71,9 @@
 
 ### Hipótese forte
 - O tempo percebido é agravado por bootstrap de desenvolvimento: debug ativo, Telescope ativo, drivers `file` e servidor embutido.
+
+### Hipótese forte
+- O padrão de `wait` alto em `GET /`, `/dashboard`, `/login` e nos `POST /livewire/update` indica gargalo predominante no processamento do request no servidor, não no carregamento dos assets.
 
 ### Hipótese média
 - O carregamento inicial do login é piorado por fonte externa, CSS global e custo de composição visual.
@@ -80,5 +94,5 @@ Atacar primeiro:
 
 1. medição comparativa do ambiente e do fluxo HTTP real;
 2. eliminação de redirecionamentos desnecessários em `/` e logout;
-3. redução do peso do login e do bundle inicial;
-4. validação de queries e hidratação só depois de medir os pontos acima.
+3. instrumentação do backend para separar bootstrap, sessão, auth, Livewire e SQL;
+4. redução do peso do login e do bundle inicial só depois de confirmar os ganhos do backend e da navegação.

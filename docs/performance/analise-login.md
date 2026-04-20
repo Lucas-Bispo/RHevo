@@ -30,6 +30,7 @@
 - carga de CSS global para uma tela que usa subconjunto do sistema
 - bootstrap do Livewire
 - I/O local do ambiente
+- processamento backend do request antes da resposta começar a sair
 
 ## Quantas queries o login parece fazer
 ### Confirmado
@@ -44,6 +45,11 @@
 - query count real no `POST`/request Livewire de autenticação
 - tempo SQL total do login
 - waterfall de fontes, CSS, JS e Livewire
+
+## Evidência adicional dos logs
+- `GET /login` levou `~3.29s`, com `wait ~2.82s`
+- `POST /livewire/update` do login levou `~3.42s`, com `wait ~3.35s`
+- Como CSS, favicon e fonte ficaram rápidos perto disso, o principal gargalo do fluxo de login nesta rodada parece estar no backend e não no download dos assets.
 
 ## Observação importante de qualidade
 - Os testes `AuthenticationTest` ainda validam o componente Volt `pages.auth.login`, enquanto a rota real de login usa `App\Livewire\Auth\Login`.
