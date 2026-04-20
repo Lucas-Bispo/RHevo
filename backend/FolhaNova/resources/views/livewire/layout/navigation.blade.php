@@ -29,19 +29,25 @@ new class extends Component
             <a href="{{ route('dashboard') }}" wire:navigate class="sidebar-link {{ request()->routeIs('dashboard') ? 'sidebar-link-active' : '' }}">
                 <span>Dashboard</span>
             </a>
-            <a href="javascript:void(0)" class="sidebar-link">
+            <a href="{{ route('orgao-publico.show') }}" wire:navigate class="sidebar-link {{ request()->routeIs('orgao-publico.*') ? 'sidebar-link-active' : '' }}">
+                <span>Orgao Publico</span>
+            </a>
+            <a href="{{ route('servidores.index') }}" wire:navigate class="sidebar-link {{ request()->routeIs('servidores.*') ? 'sidebar-link-active' : '' }}">
                 <span>Servidores</span>
             </a>
-            <a href="javascript:void(0)" class="sidebar-link">
+            <a href="{{ route('lotacoes.index') }}" wire:navigate class="sidebar-link {{ request()->routeIs('lotacoes.*') ? 'sidebar-link-active' : '' }}">
                 <span>Lotações</span>
             </a>
-            <a href="javascript:void(0)" class="sidebar-link">
+            <a href="{{ route('cargos.index') }}" wire:navigate class="sidebar-link {{ request()->routeIs('cargos.*') ? 'sidebar-link-active' : '' }}">
                 <span>Cargos</span>
             </a>
-            <a href="javascript:void(0)" class="sidebar-link">
+            <a href="{{ route('funcoes.index') }}" wire:navigate class="sidebar-link {{ request()->routeIs('funcoes.*') ? 'sidebar-link-active' : '' }}">
+                <span>Funcoes</span>
+            </a>
+            <a href="{{ route('rubricas.index') }}" wire:navigate class="sidebar-link {{ request()->routeIs('rubricas.*') ? 'sidebar-link-active' : '' }}">
                 <span>Rubricas</span>
             </a>
-            <a href="javascript:void(0)" class="sidebar-link">
+            <a href="{{ route('eventos-esocial.index') }}" wire:navigate class="sidebar-link {{ request()->routeIs('eventos-esocial.*') ? 'sidebar-link-active' : '' }}">
                 <span>Eventos eSocial</span>
             </a>
             <a href="{{ route('profile') }}" wire:navigate class="sidebar-link {{ request()->routeIs('profile') ? 'sidebar-link-active' : '' }}">

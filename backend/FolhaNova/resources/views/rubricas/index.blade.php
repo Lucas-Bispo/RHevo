@@ -1,0 +1,146 @@
+<x-app-layout>
+    <x-slot name="header">
+        Rubricas
+    </x-slot>
+
+    <section class="space-y-6">
+        @if (session('status'))
+            <div class="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div class="stat-card">
+                <p class="text-sm text-slate-400">Total de rubricas</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['total'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-cyan-300">Base remuneratoria do orgao</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-sm text-slate-400">Ativas</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['ativas'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Disponiveis para parametrizacao</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-sm text-slate-400">Inativas</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['inativas'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-amber-300">Preservando historico de calculo</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-sm text-slate-400">Com codigo eSocial</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['com_codigo_esocial'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-cyan-300">Base para S-1010</p>
+            </div>
+        </div>
+
+        <div class="grid gap-6 xl:grid-cols-[1.8fr_1fr]">
+            <div class="panel-surface rounded-3xl p-6">
+                <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                    <div>
+                        <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Estrutura remuneratoria</p>
+                        <h2 class="mt-2 text-2xl font-semibold text-white">Rubricas organizadas para folha e eSocial</h2>
+                        <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-300">
+                            Este modulo consolida proventos, descontos e verbas informativas com foco em incidencia,
+                            governanca operacional e preparo gradual do <strong>S-1010</strong>.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-3 lg:items-end">
+                        <a href="{{ route('rubricas.create') }}" class="btn btn-info">Nova rubrica</a>
+                        <form method="GET" action="{{ route('rubricas.index') }}" class="grid gap-3 sm:grid-cols-[minmax(0,1fr)_180px_auto]">
+                            <label class="form-control">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Busca</span>
+                                <input
+                                    type="search"
+                                    name="q"
+                                    value="{{ $filtros['q'] }}"
+                                    placeholder="Codigo, nome, natureza ou eSocial"
+                                    class="input input-bordered border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500"
+                                >
+                            </label>
+
+                            <label class="form-control">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Status</span>
+                                <select name="status" class="select select-bordered border-white/10 bg-slate-950/50 text-sm text-white">
+                                    <option value="">Todos</option>
+                                    <option value="ativos" @selected($filtros['status'] === 'ativos')>Ativas</option>
+                                    <option value="inativos" @selected($filtros['status'] === 'inativos')>Inativas</option>
+                                </select>
+                            </label>
+
+                            <div class="flex gap-3">
+                                <button type="submit" class="btn btn-info">Filtrar</button>
+                                <a href="{{ route('rubricas.index') }}" class="btn btn-ghost">Limpar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="mt-6 overflow-x-auto">
+                    <table class="table">
+                        <thead>
+                            <tr class="text-slate-400">
+                                <th>Codigo</th>
+                                <th>Nome</th>
+                                <th>Tipo</th>
+                                <th>Incidencias</th>
+                                <th>Status</th>
+                                <th class="text-right">Acoes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($rubricas as $rubrica)
+                                <tr>
+                                    <td class="font-medium text-white">{{ $rubrica->codigo }}</td>
+                                    <td>
+                                        <p class="text-white">{{ $rubrica->nome }}</p>
+                                        <p class="text-xs text-slate-500">{{ $rubrica->codigo_esocial ?? 'Sem codigo eSocial' }}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{ ucfirst($rubrica->tipo) }}</p>
+                                        <p class="text-xs text-slate-500">{{ $rubrica->natureza }}</p>
+                                    </td>
+                                    <td class="text-sm text-slate-300">
+                                        IRRF {{ $rubrica->incide_irrf ? 'sim' : 'nao' }} /
+                                        INSS {{ $rubrica->incide_inss ? 'sim' : 'nao' }} /
+                                        FGTS {{ $rubrica->incide_fgts ? 'sim' : 'nao' }}
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-outline {{ $rubrica->ativo ? 'badge-success' : 'badge-warning' }}">
+                                            {{ $rubrica->ativo ? 'Ativa' : 'Inativa' }}
+                                        </span>
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="{{ route('rubricas.edit', $rubrica) }}" class="btn btn-ghost btn-sm">Editar</a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="py-10 text-center text-sm text-slate-400">
+                                        Nenhuma rubrica encontrada com os filtros atuais.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-6">
+                    {{ $rubricas->links() }}
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="panel-surface rounded-3xl p-6">
+                    <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Leitura eSocial</p>
+                    <h3 class="mt-3 text-xl font-semibold text-white">Base para S-1010</h3>
+                    <ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">
+                        <li>A rubrica organiza a base de verbas da folha antes da integracao governamental.</li>
+                        <li>As incidencias ajudam a reduzir inconsistencias futuras em calculo e envio.</li>
+                        <li>O codigo interno atende a operacao; o codigo eSocial prepara o espelhamento oficial.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</x-app-layout>

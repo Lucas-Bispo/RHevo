@@ -35,7 +35,7 @@
                         <h2 class="mt-2 text-2xl font-semibold text-white">Centro de controle de RH e Folha</h2>
                     </div>
 
-                    <button class="btn btn-info btn-sm">Nova rotina</button>
+                    <a href="{{ route('servidores.index') }}" class="btn btn-info btn-sm">Abrir modulo</a>
                 </div>
 
                 <div class="mt-6 overflow-x-auto">
@@ -97,10 +97,13 @@
 
                 <div class="panel-surface rounded-3xl p-6">
                     <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Próximo módulo</p>
-                    <h3 class="mt-3 text-xl font-semibold text-white">Cadastro de Servidor com S-2200</h3>
+                    <h3 class="mt-3 text-xl font-semibold text-white">Painel de Eventos eSocial</h3>
                     <p class="mt-3 text-sm leading-6 text-slate-300">
                         A fundação do projeto já suporta a próxima etapa: cadastro de pessoa, vínculo funcional, lotação, cargo, função e rastreabilidade de eventos do eSocial.
                     </p>
+                    <div class="mt-4">
+                        <a href="{{ route('eventos-esocial.index') }}" class="btn btn-outline btn-info btn-sm">Abrir painel</a>
+                    </div>
                 </div>
             </div>
         </div>
