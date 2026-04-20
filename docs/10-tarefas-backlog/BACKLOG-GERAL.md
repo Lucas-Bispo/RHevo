@@ -20,6 +20,7 @@ Refazer o build da aplicação no WSL Ubuntu 24.04, recolocar backend e frontend
 - build frontend refeito com sucesso no WSL
 - backend e Vite recolocados no ar em `127.0.0.1`
 - `/login` validado com `200 OK`
+- HTML final da tela de login apontando para `/build/assets`, sem dependência de `public/hot`
 
 ## Objetivo
 Consolidar as tarefas macro do projeto em uma visão única de backlog priorizado, alinhada ao estado real da aplicação e à documentação estratégica já produzida.

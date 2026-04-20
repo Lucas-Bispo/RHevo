@@ -8,6 +8,7 @@
 - Refeito o ciclo de build da aplicação no WSL Ubuntu 24.04 com novo `php artisan optimize:clear`, `php artisan optimize` e `npm run build`.
 - Reiniciado o backend local em `0.0.0.0:8000` e reiniciado o Vite dev server após remover o processo antigo que ainda ocupava a porta `5173`.
 - Validada a retomada do ambiente local com `GET /login` respondendo `200 OK` e `GET /@vite/client` servindo o payload esperado.
+- Confirmado no HTML final de `/login` que a aplicação está consumindo `/build/assets`, sem depender de `public/hot` para esta rodada de testes.
 
 **Arquivos criados / alterados:**  
 - `docs/performance/metricas-validacao.md`

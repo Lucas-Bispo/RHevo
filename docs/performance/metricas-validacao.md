@@ -15,6 +15,7 @@
 | `GET /login` | `200 OK` | aplicação respondendo novamente em `http://127.0.0.1:8000/login` |
 | `GET /@vite/client` | `200` com payload JS | cliente do Vite servindo normalmente em `http://127.0.0.1:5173/@vite/client` |
 | build frontend | `CSS 97.37 kB`, `JS 37.98 kB` | tamanhos antes do gzip reportados pelo Vite |
+| HTML final de `/login` | referências para `/build/assets` | `public/hot` ausente, permitindo teste local apenas com o backend e os assets compilados |
 
 ## Fluxos a medir
 - `GET /`
