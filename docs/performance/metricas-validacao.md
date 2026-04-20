@@ -82,6 +82,25 @@
 - O dashboard autenticado permanece como o request mais caro da rodada reproduzida.
 - O login via Livewire também apresenta variação relevante entre execuções, reforçando a suspeita de gargalo estrutural no backend/ambiente.
 
+## Ajuste de navegação aplicado - 19/04/2026
+### Mudanças realizadas
+- `/` deixou de redirecionar sempre para `/dashboard`
+- guest em `/` agora vai direto para `/login`
+- usuário autenticado em `/` continua indo para `/dashboard`
+- o logout deixou de redirecionar para `/` e agora aponta direto para `/login`
+
+### Evidência após ajuste
+| Fluxo | Resultado |
+| --- | --- |
+| `GET /` bruto | `302` direto para `/login` |
+| Redirects no request bruto de `/` | `0` seguidos pelo cliente, com `redirect_url` já apontando para `/login` |
+| Testes de rota/autenticação | `7` testes passando |
+
+### Leitura técnica
+- Esta etapa reduz hops desnecessários no fluxo HTTP.
+- O gargalo estrutural do backend continua existindo, mas agora a navegação está menos inflada artificialmente.
+- A próxima medição comparativa fica mais limpa porque não carrega a cascata antiga de `/` e logout.
+
 ## Regras de validação
 - medir antes e depois de cada mudança relevante
 - separar claramente gargalo de ambiente, backend, frontend e navegação

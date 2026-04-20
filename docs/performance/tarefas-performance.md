@@ -45,6 +45,9 @@ Avaliar envio direto de guest para `/login` e de usuário autenticado para `/das
 **Forma de validação:**  
 Menor quantidade de redirects e queda no tempo total de abertura inicial.
 
+**Status atual:**  
+Concluído na etapa de navegação inicial. Agora `/` envia guest direto para `/login`.
+
 ### PERF-03 - Eliminar redirects desnecessários no logout
 **Descrição:**  
 Revisar o destino do logout para evitar cascata até `/login`.
@@ -65,6 +68,9 @@ Redirecionar o logout diretamente para `/login`.
 
 **Forma de validação:**  
 Redução do número de hops e melhora do tempo de saída até tela utilizável.
+
+**Status atual:**  
+Concluído na etapa de navegação inicial. O componente de navegação agora redireciona o logout diretamente para `/login`.
 
 ### PERF-04 - Validar impacto do ambiente WSL em `/mnt/c/.../OneDrive`
 **Descrição:**  

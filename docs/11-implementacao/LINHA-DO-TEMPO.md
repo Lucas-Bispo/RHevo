@@ -2,6 +2,31 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 23:32 - Ajuste Inicial de Navegação para Performance
+
+**Ação realizada:**  
+- Alterado o comportamento da rota `/` para enviar guest diretamente a `/login` e manter usuários autenticados indo para `/dashboard`.
+- Alterado o logout da navegação para redirecionar diretamente a `/login`, removendo a cascata via `/`.
+- Atualizados os testes automatizados para refletir o fluxo real e corrigida a asserção da tela de login para o componente Livewire atualmente usado.
+
+**Arquivos criados / alterados:**  
+- `backend/FolhaNova/routes/web.php`
+- `backend/FolhaNova/resources/views/livewire/layout/navigation.blade.php`
+- `backend/FolhaNova/tests/Feature/ExampleTest.php`
+- `backend/FolhaNova/tests/Feature/Auth/AuthenticationTest.php`
+- `docs/performance/diagnostico-inicial.md`
+- `docs/performance/metricas-validacao.md`
+- `docs/performance/tarefas-performance.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisões técnicas:**  
+- Esta etapa atacou apenas o desenho de navegação HTTP, sem tratar ainda o gargalo estrutural do backend.
+- A mudança reduz hops artificiais e melhora a qualidade das próximas medições comparativas.
+- A suíte direcionada de autenticação e navegação passou com `7` testes verdes após o ajuste.
+
+**Status:** Concluído ✅
+
 ### 19/04/2026 - 23:24 - Teste Controlado de Performance dos Fluxos HTTP
 
 **Ação realizada:**  

@@ -105,3 +105,9 @@ Atacar primeiro:
 2. eliminação de redirecionamentos desnecessários em `/` e logout;
 3. instrumentação do backend para separar bootstrap, sessão, auth, Livewire e SQL;
 4. redução do peso do login e do bundle inicial só depois de confirmar os ganhos do backend e da navegação.
+
+## Status das ações iniciais
+- Remoção da cascata de `/`: aplicada
+- Redirecionamento direto do logout para `/login`: aplicado
+- Alinhamento dos testes com o fluxo atual: aplicado
+- Instrumentação fina do backend: pendente

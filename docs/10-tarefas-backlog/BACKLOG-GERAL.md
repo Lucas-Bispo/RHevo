@@ -36,6 +36,26 @@ Investigar a performance fim a fim dos fluxos de carregamento inicial, login, au
 - CSS, favicon e fonte rápidos em comparação, reduzindo a suspeita sobre assets como causa principal
 - rodada controlada por HTTP confirmou alta variância entre requests frios e aquecidos
 - `GET /dashboard` autenticado permaneceu caro mesmo após o login reproduzido via sessão HTTP
+- cascata de `/` removida para guest
+- logout alinhado para redirecionar direto a `/login`
+
+### AJUSTE-NAVEGACAO-PERFORMANCE-INICIAL - 19/04/2026
+
+**Descrição:**  
+Reduzir hops desnecessários no fluxo HTTP inicial, fazendo guest em `/` ir direto para `/login` e fazendo logout redirecionar diretamente para `/login`, além de alinhar os testes automatizados ao comportamento atual.
+
+**Status:** Concluído  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `backend/FolhaNova/routes/web.php`
+- `backend/FolhaNova/resources/views/livewire/layout/navigation.blade.php`
+- `backend/FolhaNova/tests/Feature/ExampleTest.php`
+- `backend/FolhaNova/tests/Feature/Auth/AuthenticationTest.php`
+- `docs/performance/diagnostico-inicial.md`
+- `docs/performance/metricas-validacao.md`
+- `docs/performance/tarefas-performance.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
 
 ### CONSOLIDAR-BACKEND-NA-MAIN - 19/04/2026
 
