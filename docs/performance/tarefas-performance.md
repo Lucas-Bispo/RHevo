@@ -114,6 +114,9 @@ Executar rodada de benchmark com ambiente controlado e comparar.
 **Forma de validação:**  
 Comparativo objetivo de tempo por rota e tempo SQL.
 
+**Status atual:**  
+Parcialmente concluído. Runtime local já foi validado com `Debug Mode OFF`, caches gerados e cache/sessão em `database`.
+
 ### PERF-10 - Instrumentar o backend para decompor o tempo de espera
 **Descrição:**  
 Separar quanto do `wait` vem de bootstrap, middleware, sessão, autenticação, Livewire e SQL.
@@ -155,6 +158,9 @@ Executar baterias controladas com servidor recém-subido e depois com ambiente a
 
 **Forma de validação:**  
 Tabela comparando tempos frios e aquecidos por fluxo.
+
+**Status atual:**  
+Em andamento. A variância continua evidente mesmo após a otimização local.
 
 ## Prioridade Média
 ### PERF-06 - Reduzir payload inicial da tela de login

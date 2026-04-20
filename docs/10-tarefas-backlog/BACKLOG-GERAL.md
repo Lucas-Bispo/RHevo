@@ -57,6 +57,32 @@ Reduzir hops desnecessários no fluxo HTTP inicial, fazendo guest em `/` ir dire
 - `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
 - `docs/11-implementacao/LINHA-DO-TEMPO.md`
 
+### OTIMIZACAO-BACKEND-LOCAL-PERFORMANCE - 19/04/2026
+
+**Descrição:**  
+Preparar a aplicação para operar melhor em modo otimizado local, removendo entraves evitáveis ao cache do Laravel, desabilitando Telescope por padrão e validando ganho de performance no login e no pós-login.
+
+**Status:** Em andamento  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `backend/FolhaNova/app/Http/Controllers/RootRedirectController.php`
+- `backend/FolhaNova/routes/web.php`
+- `backend/FolhaNova/bootstrap/providers.php`
+- `backend/FolhaNova/config/telescope.php`
+- `backend/FolhaNova/tests/Feature/ExampleTest.php`
+- `backend/FolhaNova/tests/Feature/Auth/AuthenticationTest.php`
+- `docs/performance/diagnostico-inicial.md`
+- `docs/performance/metricas-validacao.md`
+- `docs/performance/tarefas-performance.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Resultado parcial:**  
+- runtime local otimizado com `APP_DEBUG=false`
+- Telescope desabilitado por padrão
+- cache e sessão validados em `database`
+- dashboard com melhora relevante no pós-login
+
 ### CONSOLIDAR-BACKEND-NA-MAIN - 19/04/2026
 
 **Descrição:**  

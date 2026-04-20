@@ -110,4 +110,10 @@ Atacar primeiro:
 - Remoção da cascata de `/`: aplicada
 - Redirecionamento direto do logout para `/login`: aplicado
 - Alinhamento dos testes com o fluxo atual: aplicado
+- Runtime local otimizado com caches e sem debug: aplicado
 - Instrumentação fina do backend: pendente
+
+## Melhoras já confirmadas
+- O dashboard autenticado apresentou a primeira melhora estrutural relevante desta investigação.
+- Após colocar o runtime local em modo otimizado, o dashboard caiu de uma faixa anterior acima de `6s` para medições em torno de `2.3s` e até `0.4s` em execução aquecida.
+- O login via Livewire também melhorou de forma moderada, embora ainda mantenha variância alta em request frio.

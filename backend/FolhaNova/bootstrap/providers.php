@@ -2,6 +2,6 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    App\Providers\TelescopeServiceProvider::class,
+    env('TELESCOPE_ENABLED', false) ? App\Providers\TelescopeServiceProvider::class : null,
     App\Providers\VoltServiceProvider::class,
 ];

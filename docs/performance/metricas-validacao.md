@@ -101,6 +101,37 @@
 - O gargalo estrutural do backend continua existindo, mas agora a navegação está menos inflada artificialmente.
 - A próxima medição comparativa fica mais limpa porque não carrega a cascata antiga de `/` e logout.
 
+## Rodada otimizada de backend local - 19/04/2026 para 20/04/2026
+### Estado de runtime confirmado
+- `Debug Mode`: `OFF`
+- `Config`: `CACHED`
+- `Events`: `CACHED`
+- `Routes`: `CACHED`
+- `Cache`: `database`
+- `Session`: `database`
+
+### Medições brutas de `/` e `/login`
+| Fluxo | Execuções | Resultado |
+| --- | --- | --- |
+| `GET /` bruto | 3 | `4.34s`, `2.69s`, `0.19s` |
+| `GET /login` bruto | 3 | `4.45s`, `0.37s`, `0.29s` |
+
+### Fluxo autenticado reproduzido
+| Execução | `GET /login` | `POST login /livewire/update` | `GET /dashboard` |
+| --- | --- | --- | --- |
+| 1 | `6833.60ms` | `2892.02ms` | `2343.91ms` |
+| 2 | `260.05ms` | `2269.59ms` | `423.82ms` |
+
+## Melhoras observadas nesta etapa
+- O dashboard autenticado caiu de uma faixa anterior de `~6351ms` a `~6924ms` para `~2344ms` e `~424ms`.
+- O `POST /livewire/update` do login caiu da faixa anterior de `~3206ms` para `~2269ms` na execução aquecida.
+- O runtime agora está em modo mais próximo de benchmark local real, sem debug e com caches ativos.
+
+## Leitura técnica da melhoria
+- Houve melhora real e perceptível principalmente no pós-login.
+- O dashboard foi o maior beneficiado pela combinação de caches de bootstrap, Telescope fora do caminho e uso de `database` para cache/sessão.
+- O login ainda apresenta variância alta no request frio, o que reforça que o ambiente local continua impactando bastante o primeiro acesso.
+
 ## Regras de validação
 - medir antes e depois de cada mudança relevante
 - separar claramente gargalo de ambiente, backend, frontend e navegação

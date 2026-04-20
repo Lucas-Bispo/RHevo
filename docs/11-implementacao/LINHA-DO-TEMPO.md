@@ -2,6 +2,34 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 23:32 - Otimização do Runtime Local para Performance
+
+**Ação realizada:**  
+- Preparado o runtime local para operar em modo mais performático, com `APP_DEBUG=false`, Telescope desabilitado por padrão, rota raiz compatível com cache e uso de `database` para cache e sessão.
+- Criada migration idempotente para a tabela `sessions` e executado novo ciclo de `optimize:clear` e `optimize` no WSL.
+- Refeitas as medições de `/`, `/login`, login via Livewire e `/dashboard`, confirmando melhora concreta no pós-login.
+
+**Arquivos criados / alterados:**  
+- `backend/FolhaNova/app/Http/Controllers/RootRedirectController.php`
+- `backend/FolhaNova/bootstrap/providers.php`
+- `backend/FolhaNova/config/telescope.php`
+- `backend/FolhaNova/.env`
+- `backend/FolhaNova/.env.example`
+- `backend/FolhaNova/database/migrations/2026_04_19_233500_create_sessions_table.php`
+- `backend/FolhaNova/tests/Feature/Auth/AuthenticationTest.php`
+- `docs/performance/diagnostico-inicial.md`
+- `docs/performance/metricas-validacao.md`
+- `docs/performance/tarefas-performance.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisões técnicas:**  
+- A raiz foi mantida em controller para preservar compatibilidade com `route:cache`.
+- O ganho principal desta etapa veio da redução de overhead do runtime local e não de mudanças na UI.
+- O ambiente local continua exibindo variância alta entre request frio e aquecido, o que mantém o filesystem montado do Windows como suspeito forte.
+
+**Status:** Concluído ✅
+
 ### 19/04/2026 - 23:32 - Ajuste Inicial de Navegação para Performance
 
 **Ação realizada:**  
