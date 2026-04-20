@@ -2,6 +2,35 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 23:04 - Diagnóstico Expandido de Performance dos Fluxos Críticos
+
+**Ação realizada:**  
+- Realizada uma leitura técnica consolidada do projeto com foco em bootstrap, carregamento inicial, login, autenticação, dashboard e logout.
+- Criada uma nova trilha documental em `docs/performance` para registrar stack atual, hipóteses, evidências, tarefas priorizadas, plano de ação e métricas de validação.
+- Identificados como gargalos mais fortes nesta rodada o ambiente WSL sobre `/mnt/c/.../OneDrive`, o modo de desenvolvimento pleno, os redirecionamentos em cascata de `/` e do logout, e o payload inicial acima do necessário na tela de login.
+
+**Arquivos criados / alterados:**  
+- `docs/performance/README.md`
+- `docs/performance/tecnologias-atuais.md`
+- `docs/performance/diagnostico-inicial.md`
+- `docs/performance/analise-carregamento-inicial.md`
+- `docs/performance/analise-login.md`
+- `docs/performance/analise-dashboard.md`
+- `docs/performance/analise-logout.md`
+- `docs/performance/tarefas-performance.md`
+- `docs/performance/plano-de-acao.md`
+- `docs/performance/metricas-validacao.md`
+- `docs/README.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisões técnicas:**  
+- Esta etapa foi mantida diagnóstica, sem correções estruturais no código de aplicação.
+- A trilha nova não substitui `docs/05-performance`; ela expande o diagnóstico para fluxos além do login e consolida um plano de medição ponta a ponta.
+- As próximas correções devem ser guiadas por benchmark comparativo e priorizar primeiro ambiente e navegação, antes de micro-otimizações.
+
+**Status:** Concluído ✅
+
 ### 19/04/2026 - 17:35 - Consolidação do Backend na Main
 
 **Ação realizada:**  

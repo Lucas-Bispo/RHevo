@@ -5,6 +5,28 @@
 ## Objetivo
 Consolidar as tarefas macro do projeto em uma visão única de backlog priorizado, alinhada ao estado real da aplicação e à documentação estratégica já produzida.
 
+### DIAGNOSTICO-PERFORMANCE-FLUXOS-CRITICOS - 19/04/2026
+
+**Descrição:**  
+Investigar a performance fim a fim dos fluxos de carregamento inicial, login, autenticação, dashboard e logout, consolidando diagnóstico técnico, stack atual, evidências, métricas e prioridades em uma nova trilha documental dedicada.
+
+**Status:** Em andamento  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `docs/performance/README.md`
+- `docs/performance/tecnologias-atuais.md`
+- `docs/performance/diagnostico-inicial.md`
+- `docs/performance/analise-carregamento-inicial.md`
+- `docs/performance/analise-login.md`
+- `docs/performance/analise-dashboard.md`
+- `docs/performance/analise-logout.md`
+- `docs/performance/tarefas-performance.md`
+- `docs/performance/plano-de-acao.md`
+- `docs/performance/metricas-validacao.md`
+- `docs/README.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
 ### CONSOLIDAR-BACKEND-NA-MAIN - 19/04/2026
 
 **Descrição:**  

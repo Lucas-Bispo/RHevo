@@ -17,6 +17,7 @@ Este índice organiza a documentação do projeto FolhaNova em trilhas temática
 - [09-project-organization](./09-project-organization/README.md)
 - [10-tarefas-backlog](./10-tarefas-backlog/README.md)
 - [11-implementacao](./11-implementacao/README.md)
+- [performance](./performance/README.md)
 
 ## Arquivos-Chave
 - [Visão do projeto](./01-visao-projeto/README.md)
@@ -30,6 +31,9 @@ Este índice organiza a documentação do projeto FolhaNova em trilhas temática
 - [Tarefas de performance](./05-performance/TAREFAS-PERFORMANCE.md)
 - [Plano de ação de performance](./05-performance/PLANO-DE-ACAO.md)
 - [Métricas e validações de performance](./05-performance/METRICAS-E-VALIDACOES.md)
+- [Trilha expandida de performance](./performance/README.md)
+- [Stack atual para análise de performance](./performance/tecnologias-atuais.md)
+- [Diagnóstico inicial expandido](./performance/diagnostico-inicial.md)
 - [Engenharia Bible](./06-engenharia-software/ENGENHARIA-BIBLE.md)
 - [Bug Prevention Bible](./07-bug-prevention/BUG-PREVENTION-BIBLE.md)
 - [Documentação eSocial](./08-esocial/ESOCIAL-DOCUMENTACAO-OFICIAL.md)
