@@ -2,6 +2,20 @@
 **Documento gerado em:** 19 de abril de 2026  
 **Versão:** 1.0
 
+## Rebuild e retomada local - 19/04/2026 para 20/04/2026
+### Resultado operacional
+- `php artisan optimize:clear && php artisan optimize` executado com sucesso no WSL
+- `npm run build` concluído em `~1m09s`
+- backend local recolocado no ar com `php artisan serve --host=0.0.0.0 --port=8000`
+- Vite dev server reiniciado no WSL após limpeza do processo antigo
+
+### Evidências de disponibilidade
+| Verificação | Resultado | Observações |
+| --- | --- | --- |
+| `GET /login` | `200 OK` | aplicação respondendo novamente em `http://127.0.0.1:8000/login` |
+| `GET /@vite/client` | `200` com payload JS | cliente do Vite servindo normalmente em `http://127.0.0.1:5173/@vite/client` |
+| build frontend | `CSS 97.37 kB`, `JS 37.98 kB` | tamanhos antes do gzip reportados pelo Vite |
+
 ## Fluxos a medir
 - `GET /`
 - `GET /login`

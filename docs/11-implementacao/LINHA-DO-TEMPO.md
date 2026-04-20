@@ -2,6 +2,25 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 23:54 - Rebuild e Restart Local para Testes
+
+**Ação realizada:**  
+- Refeito o ciclo de build da aplicação no WSL Ubuntu 24.04 com novo `php artisan optimize:clear`, `php artisan optimize` e `npm run build`.
+- Reiniciado o backend local em `0.0.0.0:8000` e reiniciado o Vite dev server após remover o processo antigo que ainda ocupava a porta `5173`.
+- Validada a retomada do ambiente local com `GET /login` respondendo `200 OK` e `GET /@vite/client` servindo o payload esperado.
+
+**Arquivos criados / alterados:**  
+- `docs/performance/metricas-validacao.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisões técnicas:**  
+- O rebuild foi executado integralmente no WSL para manter coerência com o ambiente padrão do projeto.
+- A validação final priorizou disponibilidade operacional antes de uma nova rodada de testes de performance.
+- O Vite foi reiniciado separadamente porque um processo antigo permaneceu ativo mesmo após a primeira limpeza.
+
+**Status:** Concluído ✅
+
 ### 19/04/2026 - 23:32 - Otimização do Runtime Local para Performance
 
 **Ação realizada:**  

@@ -2,6 +2,25 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### REBUILD-RESTART-LOCAL-PARA-TESTES - 19/04/2026
+
+**Descrição:**  
+Refazer o build da aplicação no WSL Ubuntu 24.04, recolocar backend e frontend no ar em `localhost` e validar a disponibilidade local para uma nova rodada de testes de performance.
+
+**Status:** Concluído  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+- `docs/performance/metricas-validacao.md`
+- `backend/FolhaNova/scripts/run_backend_detached.sh`
+- `backend/FolhaNova/scripts/run_vite_detached.sh`
+
+**Resultado:**  
+- build frontend refeito com sucesso no WSL
+- backend e Vite recolocados no ar em `127.0.0.1`
+- `/login` validado com `200 OK`
+
 ## Objetivo
 Consolidar as tarefas macro do projeto em uma visão única de backlog priorizado, alinhada ao estado real da aplicação e à documentação estratégica já produzida.
 
