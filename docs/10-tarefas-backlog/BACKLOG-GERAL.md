@@ -34,6 +34,8 @@ Investigar a performance fim a fim dos fluxos de carregamento inicial, login, au
 - `POST /livewire/update` no login: ~3,42s com wait dominante
 - `POST /livewire/update` no logout: ~2,58s com wait dominante
 - CSS, favicon e fonte rápidos em comparação, reduzindo a suspeita sobre assets como causa principal
+- rodada controlada por HTTP confirmou alta variância entre requests frios e aquecidos
+- `GET /dashboard` autenticado permaneceu caro mesmo após o login reproduzido via sessão HTTP
 
 ### CONSOLIDAR-BACKEND-NA-MAIN - 19/04/2026
 

@@ -51,6 +51,37 @@
 - Isso sugere gargalo dominante no backend, no ambiente ou no encadeamento dos requests.
 - Os assets estáticos não aparecem como suspeitos principais nesta etapa.
 
+## Rodada controlada de teste HTTP - 19/04/2026 para 20/04/2026
+### Medições isoladas
+| Fluxo | Tempo total | TTFB | Observações |
+| --- | --- | --- | --- |
+| `GET /` | `~5.65s` | `~5.50s` | request isolado por `curl` |
+| `GET /login` | `~3.03s` | `~2.99s` | request isolado por `curl` |
+| `GET /login` + `POST /livewire/update` + `GET /dashboard` | `2811.81ms`, `3295.03ms`, `6620.25ms` | n/a | fluxo autenticado reproduzido via sessão HTTP real |
+
+### Amostragem curta aquecida
+| Fluxo | Execuções | Resultado |
+| --- | --- | --- |
+| `GET /` | 3 | `2.54s`, `2.49s`, `2.30s` |
+| `GET /login` | 3 | `0.41s`, `0.37s`, `0.40s` |
+
+### Fluxo autenticado reproduzido
+| Execução | `GET /login` | `POST login /livewire/update` | `GET /dashboard` |
+| --- | --- | --- | --- |
+| 1 | `2681.26ms` | `856.73ms` | `6351.05ms` |
+| 2 | `2710.22ms` | `3205.80ms` | `6924.04ms` |
+
+### Logout reproduzido
+| Fluxo | Tempo | Observações |
+| --- | --- | --- |
+| `POST logout /livewire/update` | `2334.86ms` | sessão invalidada durante o fluxo; a automação HTTP recebeu `419`, mas o servidor registrou o request na faixa esperada de `~2s` |
+
+## Conclusões da rodada controlada
+- Há alta variância entre request frio e request aquecido.
+- `GET /login` melhora drasticamente após aquecimento, mas `/dashboard` continua muito caro.
+- O dashboard autenticado permanece como o request mais caro da rodada reproduzida.
+- O login via Livewire também apresenta variação relevante entre execuções, reforçando a suspeita de gargalo estrutural no backend/ambiente.
+
 ## Regras de validação
 - medir antes e depois de cada mudança relevante
 - separar claramente gargalo de ambiente, backend, frontend e navegação

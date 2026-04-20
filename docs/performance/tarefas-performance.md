@@ -129,6 +129,27 @@ Adicionar medição controlada por request no backend ou usar profiling operacio
 **Forma de validação:**  
 Relatório por fluxo com decomposição de tempo e principal suspeito confirmado.
 
+### PERF-11 - Medir cold start versus warm run no ambiente local
+**Descrição:**  
+Separar explicitamente a diferença entre primeira carga e cargas subsequentes.
+
+**Causa provável:**  
+Os testes controlados mostraram queda forte de `/` e `/login` após aquecimento, sugerindo custo alto de bootstrap, leitura de arquivos e caches transitórios.
+
+**Impacto:**  
+Sem separar cold/warm, o time pode superestimar ou subestimar o ganho real de uma correção.
+
+**Prioridade:** Alta
+
+**Evidência:**  
+`GET /` caiu de uma medição isolada em `~5.65s` para a faixa de `~2.30s` a `~2.54s`; `GET /login` caiu de `~3.03s` para `~0.36s` a `~0.41s`.
+
+**Ação sugerida:**  
+Executar baterias controladas com servidor recém-subido e depois com ambiente aquecido.
+
+**Forma de validação:**  
+Tabela comparando tempos frios e aquecidos por fluxo.
+
 ## Prioridade Média
 ### PERF-06 - Reduzir payload inicial da tela de login
 **Descrição:**  

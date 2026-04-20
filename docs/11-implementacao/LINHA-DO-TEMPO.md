@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 19/04/2026 - 23:24 - Teste Controlado de Performance dos Fluxos HTTP
+
+**Ação realizada:**  
+- Executada uma rodada controlada de testes de performance por HTTP para `/`, `/login`, login via `POST /livewire/update`, `/dashboard` autenticado e logout via `POST /livewire/update`.
+- Reproduzido o login real com a conta local `test@example.com` usando o snapshot real do componente Livewire da tela de login.
+- Confirmada uma alta variância entre requests frios e requests aquecidos, com melhora forte em `/login` após aquecimento, mas manutenção de alto custo em `/dashboard`.
+
+**Arquivos criados / alterados:**  
+- `docs/performance/diagnostico-inicial.md`
+- `docs/performance/metricas-validacao.md`
+- `docs/performance/tarefas-performance.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisões técnicas:**  
+- O fluxo de login autenticado foi validado via HTTP sem depender apenas de medições visuais do navegador.
+- O logout automatizado por sessão HTTP retornou `419` no cliente de teste após invalidação de sessão, mas o tempo do `POST /livewire/update` ainda foi útil para a análise de latência.
+- A próxima etapa deve priorizar instrumentação do backend e comparação entre cold start e warm run.
+
+**Status:** Concluído ✅
+
 ### 19/04/2026 - 23:14 - Consolidação dos Logs dos Fluxos Críticos
 
 **Ação realizada:**  

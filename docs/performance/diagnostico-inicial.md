@@ -32,6 +32,12 @@
 - `QUEUE_CONNECTION=sync`
 - Telescope habilitado por padrão em `local`
 
+### 2.1. Os testes controlados confirmam alta variância entre requests
+- Rodada controlada por HTTP em `2026-04-19/20` mostrou diferença grande entre requests "frios" e requests já aquecidos.
+- `GET /` foi medido em `~5.65s` numa medição isolada, mas caiu para uma faixa de `~2.30s` a `~2.54s` em três execuções consecutivas.
+- `GET /login` foi medido em `~3.03s` numa medição isolada, mas caiu para `~0.36s` a `~0.41s` em três execuções consecutivas.
+- Esse padrão sugere impacto relevante de bootstrap, leitura de arquivos, caches transitórios e aquecimento do ambiente.
+
 ### 3. O fluxo inicial da aplicação já nasce com redirecionamentos extras
 - `GET /` redireciona para `/dashboard`
 - usuário não autenticado em `/dashboard` é redirecionado pelo middleware `auth` para `/login`
@@ -74,6 +80,9 @@
 
 ### Hipótese forte
 - O padrão de `wait` alto em `GET /`, `/dashboard`, `/login` e nos `POST /livewire/update` indica gargalo predominante no processamento do request no servidor, não no carregamento dos assets.
+
+### Hipótese forte
+- A variância entre primeira carga e carga aquecida sugere gargalo ligado a I/O, bootstrap e aquecimento de estado local mais do que a payload estática fixa.
 
 ### Hipótese média
 - O carregamento inicial do login é piorado por fonte externa, CSS global e custo de composição visual.
