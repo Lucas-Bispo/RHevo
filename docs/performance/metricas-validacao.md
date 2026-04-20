@@ -151,3 +151,10 @@
 - medir antes e depois de cada mudança relevante
 - separar claramente gargalo de ambiente, backend, frontend e navegação
 - sempre anotar data, contexto e configuração do teste
+
+## Nova evidencia operacional - 20/04/2026
+| Verificacao | Resultado | Leitura |
+| --- | --- | --- |
+| `php artisan about --only=environment,drivers` | `~35.8s` | bootstrap CLI continua caro demais para um comando simples |
+| `php artisan route:list --path=login` | `~37.0s` | reforca suspeita de ambiente/filesystem como gargalo principal |
+| Runtime ativo | `debug=false`, `cache=database`, `session=database`, `sqlite` | confirma que a lentidao restante nao depende mais das configuracoes antigas em `file` |

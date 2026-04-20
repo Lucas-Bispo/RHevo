@@ -68,16 +68,17 @@ Listar a stack real identificada no código e separar o que está confirmado do 
 - Windows 11 como host
 - WSL Ubuntu 24.04 como ambiente oficial de execução
 - Projeto localizado em caminho montado do Windows com OneDrive: `C:\Users\lukao\OneDrive\Documents\RHevo\backend\FolhaNova`
+- Diagnostico operacional em 20/04/2026 confirmou `Laravel 11.51.0` e `PHP 8.3.6` no WSL
 
 ### Ambiente futuro de produção
 - Ubuntu 24.04, conforme documentação do projeto
 
 ### Dependências que impactam performance
-- Telescope ativo em ambiente local por padrão
 - Bunny Fonts carregadas externamente nos layouts `auth-login` e `app`
 - Livewire Scripts carregados na tela de login
 - CSS global único para login e área autenticada
-- `axios` carregado globalmente mesmo sem uso evidente na tela inicial
+- `axios` permanece no bundle autenticado via `resources/js/app.js`
+- A tela de login foi separada para `resources/js/auth-login.js`, deixando de puxar `axios` no primeiro acesso
 - `spatie/laravel-permission` no modelo `User`
 - `spatie/laravel-multitenancy` instalado, ainda sem finder ativo
 

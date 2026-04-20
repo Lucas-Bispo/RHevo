@@ -184,6 +184,9 @@ Medir e reduzir dependências não críticas da primeira tela.
 **Forma de validação:**  
 Menor LCP/FCP e menor waterfall inicial.
 
+**Status atual:**  
+Parcialmente concluido. O login agora usa `resources/js/auth-login.js` sem `axios`, mas ainda falta medir o ganho real no navegador.
+
 ### PERF-07 - Confirmar query count real de login e dashboard
 **Descrição:**  
 Instrumentar e medir queries por request nos fluxos autenticados e não autenticados.
@@ -247,3 +250,6 @@ Medir e, se fizer sentido, adiar ou segmentar esse JS.
 
 **Forma de validação:**  
 Redução marginal no JS inicial.
+
+**Status atual:**  
+Concluido para a tela de login via split de bundle. Ainda vale decidir se a mesma estrategia sera aplicada a outras telas publicas.

@@ -20,10 +20,24 @@
   - `POST /livewire/update` no logout: `~2.58s`, com `wait ~2.50s`
 
 ## O que foi confirmado nesta rodada
+### 0. O runtime atual esta diferente do primeiro diagnostico
+- Em 20/04/2026, `php artisan about --only=environment,drivers` confirmou:
+  - `Debug Mode OFF`
+  - `Cache database`
+  - `Session database`
+  - `Database sqlite`
+  - `Queue sync`
+- Isso invalida parte da leitura antiga baseada em `SESSION_DRIVER=file` e `CACHE_STORE=file`.
+
 ### 1. Ambiente local desfavorável para benchmark
 - O repositório está em caminho sincronizado por OneDrive.
 - O backend roda no WSL a partir de filesystem montado do Windows.
 - Sessão, cache, logs, views compiladas e demais arquivos transitórios ficam sujeitos a I/O mais lento.
+
+### 1.1. O bootstrap CLI do Laravel continua anormalmente caro
+- `php artisan about --only=environment,drivers` levou aproximadamente `35.8s`.
+- `php artisan route:list --path=login` levou aproximadamente `37.0s`.
+- Como ambos sao comandos simples e sem carga de negocio relevante, isso reforca a suspeita de gargalo ambiental e de filesystem.
 
 ### 2. Laravel está em modo de desenvolvimento pleno
 - `APP_DEBUG=true`
@@ -111,6 +125,8 @@ Atacar primeiro:
 - Redirecionamento direto do logout para `/login`: aplicado
 - Alinhamento dos testes com o fluxo atual: aplicado
 - Runtime local otimizado com caches e sem debug: aplicado
+- Split do JS da tela de login: aplicado
+- Primeiro modulo operacional de servidores com eager loading: aplicado
 - Instrumentação fina do backend: pendente
 
 ## Melhoras já confirmadas
