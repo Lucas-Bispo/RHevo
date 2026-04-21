@@ -8,6 +8,14 @@
         $naturezaJuridicaLabel = $tipoInscricao === '2'
             ? 'Nao se aplica para inscricao por CPF'
             : ($parametros['natureza_juridica'] ?? 'Nao informada');
+        $classificacoesTributarias = [
+            '21' => '21 - Pessoa fisica equiparada / contexto por CPF',
+            '85' => '85 - Administracao publica direta, autarquias e fundacoes',
+        ];
+        $classificacaoTributaria = $parametros['classificacao_tributaria'] ?? null;
+        $classificacaoTributariaLabel = $classificacaoTributaria
+            ? ($classificacoesTributarias[$classificacaoTributaria] ?? $classificacaoTributaria)
+            : 'Nao informada';
         $vigenciaLabel = isset($parametros['inicio_validade'])
             ? (($parametros['inicio_validade'] ?? 'Nao definido').' ate '.($parametros['fim_validade'] ?? 'Em aberto'))
             : 'Nao definida';
@@ -106,7 +114,7 @@
                             <dl class="mt-4 space-y-3 text-sm text-slate-300">
                                 <div class="flex items-start justify-between gap-4">
                                     <dt>Classificacao tributaria</dt>
-                                    <dd class="text-right text-white">{{ $parametros['classificacao_tributaria'] ?? 'Nao informada' }}</dd>
+                                    <dd class="text-right text-white">{{ $classificacaoTributariaLabel }}</dd>
                                 </div>
                                 <div class="flex items-start justify-between gap-4">
                                     <dt>Ambiente</dt>

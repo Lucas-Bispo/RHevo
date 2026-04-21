@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 21/04/2026 - 21:05 - Leitura da Classificacao Tributaria no S-1000
+
+**Acao realizada:**
+- Melhorada a tela de orgao publico para exibir a classificacao tributaria com codigo e descricao.
+- Mantido fallback para classificacao ainda nao mapeada, preservando a leitura do codigo existente.
+- Criado teste focado para garantir que o codigo `85` aparece com descricao operacional.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/OrgaoPublicoTest.php`: `8` testes verdes e `40` assercoes.
+- `tests/Feature/Auth/AuthenticationTest.php`: `5` testes verdes e `15` assercoes.
+- `GET /login`: `200 OK`.
+- Vite serviu `resources/js/app.js`.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 20:55 - Classificacao Tributaria Controlada no S-1000
 
 **Acao realizada:**

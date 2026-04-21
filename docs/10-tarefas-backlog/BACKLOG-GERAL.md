@@ -26,6 +26,31 @@ Evoluir o modulo de parametros do orgao publico para deixar `classTrib` menos li
 - codigo nao mapeado deixa de gerar evento `S-1000` pendente;
 - validacao focada de `OrgaoPublicoTest` passou com `7` testes e `38` assercoes.
 
+### PRODUTO-S1000-LEITURA-CLASSIFICACAO-TRIBUTARIA - 21/04/2026
+
+**Descricao:**
+Melhorar a leitura operacional da tela de orgao publico exibindo a descricao da classificacao tributaria junto ao codigo do `S-1000`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- mapear os codigos atualmente suportados para labels legiveis;
+- manter fallback para codigo nao mapeado;
+- cobrir a exibicao por teste de feature;
+- validar login, frontend e suite focada antes de concluir.
+
+**Resultado:**
+- tela de orgao publico passou a exibir codigo e descricao da classificacao tributaria;
+- fallback para codigo nao mapeado foi preservado;
+- validacao focada de `OrgaoPublicoTest` passou com `8` testes e `40` assercoes;
+- autenticacao permaneceu validada com `5` testes e `15` assercoes.
+
 # FolhaNova - Backlog Geral
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
