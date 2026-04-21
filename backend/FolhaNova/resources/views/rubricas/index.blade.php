@@ -45,32 +45,32 @@
                         </p>
                     </div>
 
-                    <div class="flex flex-col gap-3 lg:items-end">
+                    <div class="flex w-full max-w-3xl flex-col gap-3 lg:items-end">
                         <a href="{{ route('rubricas.create') }}" class="btn btn-info">Nova rubrica</a>
-                        <form method="GET" action="{{ route('rubricas.index') }}" class="grid gap-3 sm:grid-cols-[minmax(0,1fr)_180px_auto]">
-                            <label class="form-control">
+                        <form method="GET" action="{{ route('rubricas.index') }}" class="flex w-full flex-col gap-3 xl:flex-row xl:flex-wrap xl:items-end">
+                            <label class="form-control w-full min-w-0 flex-1">
                                 <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Busca</span>
                                 <input
                                     type="search"
                                     name="q"
                                     value="{{ $filtros['q'] }}"
                                     placeholder="Codigo, nome, natureza ou eSocial"
-                                    class="input input-bordered border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500"
+                                    class="input input-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500"
                                 >
                             </label>
 
-                            <label class="form-control">
+                            <label class="form-control w-full xl:w-48">
                                 <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Status</span>
-                                <select name="status" class="select select-bordered border-white/10 bg-slate-950/50 text-sm text-white">
+                                <select name="status" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
                                     <option value="">Todos</option>
                                     <option value="ativos" @selected($filtros['status'] === 'ativos')>Ativas</option>
                                     <option value="inativos" @selected($filtros['status'] === 'inativos')>Inativas</option>
                                 </select>
                             </label>
 
-                            <div class="flex gap-3">
-                                <button type="submit" class="btn btn-info">Filtrar</button>
-                                <a href="{{ route('rubricas.index') }}" class="btn btn-ghost">Limpar</a>
+                            <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-auto xl:flex-none">
+                                <button type="submit" class="btn btn-info w-full sm:w-auto">Filtrar</button>
+                                <a href="{{ route('rubricas.index') }}" class="btn btn-ghost w-full sm:w-auto">Limpar</a>
                             </div>
                         </form>
                     </div>

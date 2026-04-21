@@ -44,34 +44,34 @@
                         </p>
                     </div>
 
-                    <div class="flex flex-col gap-3 lg:items-end">
+                    <div class="flex w-full max-w-3xl flex-col gap-3 lg:items-end">
                         <a href="{{ route('servidores.create') }}" class="btn btn-info">Nova admissao</a>
-                        <form method="GET" action="{{ route('servidores.index') }}" class="grid gap-3 sm:grid-cols-[minmax(0,1fr)_180px_auto]">
-                        <label class="form-control">
-                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Busca</span>
-                            <input
-                                type="search"
-                                name="q"
-                                value="{{ $filtros['q'] }}"
-                                placeholder="Nome, CPF, matricula ou categoria"
-                                class="input input-bordered border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500"
-                            >
-                        </label>
+                        <form method="GET" action="{{ route('servidores.index') }}" class="flex w-full flex-col gap-3 xl:flex-row xl:flex-wrap xl:items-end">
+                            <label class="form-control w-full min-w-0 flex-1">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Busca</span>
+                                <input
+                                    type="search"
+                                    name="q"
+                                    value="{{ $filtros['q'] }}"
+                                    placeholder="Nome, CPF, matricula ou categoria"
+                                    class="input input-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500"
+                                >
+                            </label>
 
-                        <label class="form-control">
-                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Situacao</span>
-                            <select name="situacao" class="select select-bordered border-white/10 bg-slate-950/50 text-sm text-white">
-                                <option value="">Todas</option>
-                                <option value="ativo" @selected($filtros['situacao'] === 'ativo')>Ativo</option>
-                                <option value="afastado" @selected($filtros['situacao'] === 'afastado')>Afastado</option>
-                                <option value="desligado" @selected($filtros['situacao'] === 'desligado')>Desligado</option>
-                            </select>
-                        </label>
+                            <label class="form-control w-full xl:w-48">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Situacao</span>
+                                <select name="situacao" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                    <option value="">Todas</option>
+                                    <option value="ativo" @selected($filtros['situacao'] === 'ativo')>Ativo</option>
+                                    <option value="afastado" @selected($filtros['situacao'] === 'afastado')>Afastado</option>
+                                    <option value="desligado" @selected($filtros['situacao'] === 'desligado')>Desligado</option>
+                                </select>
+                            </label>
 
-                        <div class="flex gap-3">
-                            <button type="submit" class="btn btn-info">Filtrar</button>
-                            <a href="{{ route('servidores.index') }}" class="btn btn-ghost">Limpar</a>
-                        </div>
+                            <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-auto xl:flex-none">
+                                <button type="submit" class="btn btn-info w-full sm:w-auto">Filtrar</button>
+                                <a href="{{ route('servidores.index') }}" class="btn btn-ghost w-full sm:w-auto">Limpar</a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -114,7 +114,11 @@
                                         </span>
                                     </td>
                                     <td class="text-right">
-                                        <a href="{{ route('servidores.show', $servidor) }}" class="btn btn-ghost btn-sm">Abrir</a>
+                                        <div class="flex flex-wrap justify-end gap-2">
+                                            <a href="{{ route('servidores.edit-cadastral', $servidor) }}" class="btn btn-outline btn-info btn-sm">S-2205</a>
+                                            <a href="{{ route('servidores.edit', $servidor) }}" class="btn btn-outline btn-warning btn-sm">S-2206</a>
+                                            <a href="{{ route('servidores.show', $servidor) }}" class="btn btn-ghost btn-sm">Abrir</a>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

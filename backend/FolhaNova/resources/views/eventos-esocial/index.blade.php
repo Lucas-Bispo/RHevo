@@ -39,21 +39,21 @@
                         </p>
                     </div>
 
-                    <form method="GET" action="{{ route('eventos-esocial.index') }}" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_140px_140px_140px_auto]">
-                        <label class="form-control">
+                    <form method="GET" action="{{ route('eventos-esocial.index') }}" class="flex w-full flex-col gap-3 xl:flex-row xl:flex-wrap xl:items-end">
+                        <label class="form-control w-full min-w-0 xl:min-w-[18rem] xl:flex-1">
                             <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Busca</span>
                             <input
                                 type="search"
                                 name="q"
                                 value="{{ $filtros['q'] }}"
                                 placeholder="Evento, matricula, nome, recibo"
-                                class="input input-bordered border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500"
+                                class="input input-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500"
                             >
                         </label>
 
-                        <label class="form-control">
+                        <label class="form-control w-full xl:w-36">
                             <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Evento</span>
-                            <select name="evento" class="select select-bordered border-white/10 bg-slate-950/50 text-sm text-white">
+                            <select name="evento" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
                                 <option value="">Todos</option>
                                 @foreach ($eventosDisponiveis as $eventoDisponivel)
                                     <option value="{{ $eventoDisponivel }}" @selected($filtros['evento'] === $eventoDisponivel)>{{ $eventoDisponivel }}</option>
@@ -61,9 +61,9 @@
                             </select>
                         </label>
 
-                        <label class="form-control">
+                        <label class="form-control w-full xl:w-36">
                             <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Status</span>
-                            <select name="status" class="select select-bordered border-white/10 bg-slate-950/50 text-sm text-white">
+                            <select name="status" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
                                 <option value="">Todos</option>
                                 <option value="pendente" @selected($filtros['status'] === 'pendente')>Pendente</option>
                                 <option value="processado" @selected($filtros['status'] === 'processado')>Processado</option>
@@ -71,18 +71,18 @@
                             </select>
                         </label>
 
-                        <label class="form-control">
+                        <label class="form-control w-full xl:w-36">
                             <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Ambiente</span>
-                            <select name="ambiente" class="select select-bordered border-white/10 bg-slate-950/50 text-sm text-white">
+                            <select name="ambiente" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
                                 <option value="">Todos</option>
                                 <option value="homologacao" @selected($filtros['ambiente'] === 'homologacao')>Homologacao</option>
                                 <option value="producao" @selected($filtros['ambiente'] === 'producao')>Producao</option>
                             </select>
                         </label>
 
-                        <div class="flex gap-3">
-                            <button type="submit" class="btn btn-info">Filtrar</button>
-                            <a href="{{ route('eventos-esocial.index') }}" class="btn btn-ghost">Limpar</a>
+                        <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-auto xl:flex-none">
+                            <button type="submit" class="btn btn-info w-full sm:w-auto">Filtrar</button>
+                            <a href="{{ route('eventos-esocial.index') }}" class="btn btn-ghost w-full sm:w-auto">Limpar</a>
                         </div>
                     </form>
                 </div>

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        Editar servidor
+        Alteracao contratual S-2206
     </x-slot>
 
     <section class="space-y-6">
@@ -8,14 +8,17 @@
             <div class="panel-surface rounded-3xl p-6">
                 <div class="flex flex-col gap-3 border-b border-white/10 pb-5 md:flex-row md:items-start md:justify-between">
                     <div>
-                        <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Modulo RH</p>
-                        <h2 class="text-2xl font-semibold text-white">Atualizacao cadastral do servidor</h2>
+                        <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Modulo RH + eSocial</p>
+                        <h2 class="text-2xl font-semibold text-white">Alteracao contratual do trabalhador</h2>
                         <p class="max-w-3xl text-sm leading-6 text-slate-300">
-                            Esta tela preserva o vinculo funcional e sincroniza o payload do evento inicial pendente quando houver necessidade de correcao cadastral.
+                            Esta operacao e dedicada ao evento `S-2206` e concentra mudancas de vinculo, lotacao, cargo, funcao, remuneracao e demais dados contratuais. Para dados pessoais e endereco, utilize a trilha `S-2205`.
                         </p>
                     </div>
 
-                    <a href="{{ route('servidores.show', $servidor) }}" class="btn btn-ghost">Voltar ao detalhe</a>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="{{ route('servidores.edit-cadastral', $servidor) }}" class="btn btn-outline btn-info">Ir para S-2205</a>
+                        <a href="{{ route('servidores.show', $servidor) }}" class="btn btn-ghost">Voltar ao detalhe</a>
+                    </div>
                 </div>
 
                 @if ($errors->any())
@@ -27,11 +30,10 @@
                 <form method="POST" action="{{ route('servidores.update', $servidor) }}" class="mt-6 space-y-8">
                     @csrf
                     @method('PUT')
-                    @php($mode = 'edit')
-                    @include('servidores.partials.form-fields')
+                    @include('servidores.partials.contract-form-fields')
 
                     <div class="flex flex-wrap items-center gap-3 border-t border-white/10 pt-6">
-                        <button type="submit" class="btn btn-info">Salvar alteracoes</button>
+                        <button type="submit" class="btn btn-info">Gerar alteracao contratual</button>
                         <a href="{{ route('servidores.show', $servidor) }}" class="btn btn-ghost">Cancelar</a>
                     </div>
                 </form>
@@ -44,7 +46,7 @@
                         <li>Matricula: {{ $servidor->matricula }}</li>
                         <li>Situacao: {{ ucfirst($servidor->situacao) }}</li>
                         <li>Admissao: {{ optional($servidor->data_admissao)->format('d/m/Y') ?? 'Nao informada' }}</li>
-                        <li>Ultimo evento: {{ $servidor->eventosEsocial->sortByDesc('id')->first()?->evento ?? 'Sem evento' }}</li>
+                        <li>Ultimo evento contratual: {{ $servidor->eventosEsocial->where('evento', 'S-2206')->sortByDesc('id')->first()?->status ? ucfirst($servidor->eventosEsocial->where('evento', 'S-2206')->sortByDesc('id')->first()->status) : 'Nao gerado' }}</li>
                     </ul>
                 </div>
             </div>
