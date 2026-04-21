@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 20/04/2026 - 22:10 - Saneamento do Payload Institucional do S-1000
+
+**Acao realizada:**  
+- Ajustado o builder do evento `S-1000` para evitar serializacao de blocos vazios no `infoCadastro`.
+- O bloco `contato` deixou de ser enviado quando nenhum dado operacional foi informado.
+- `natJurid` passou a ser omitido no payload quando a inscricao institucional e por `CPF`.
+- Criado teste de feature cobrindo o fluxo por `CPF` e validando a estrutura final do payload.
+
+**Arquivos criados / alterados:**  
+- `backend/FolhaNova/app/Services/OrgaoPublico/AtualizarParametrosOrgaoService.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisoes tecnicas:**  
+- A rodada permaneceu restrita ao saneamento estrutural do payload, sem ampliar a superficie de validacoes oficiais ainda nao sustentadas por parser local dos PDFs.
+- A prioridade foi reduzir risco de integracao futura sem alterar rotas, banco ou layout.
+
+**Status:** Concluido
+
 ### 20/04/2026 - 21:45 - Reforco das Validacoes Institucionais do S-1000
 
 **Acao realizada:**  

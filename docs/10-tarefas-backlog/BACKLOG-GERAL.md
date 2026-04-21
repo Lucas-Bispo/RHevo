@@ -2,6 +2,25 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### PRODUTO-S1000-PAYLOAD-CONSISTENTE - 20/04/2026
+
+**Descricao:**  
+Sanear o payload institucional do `S-1000` para evitar serializacao de blocos vazios e remover `natJurid` quando a inscricao institucional for por `CPF`.
+
+**Status:** Concluido  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `backend/FolhaNova/app/Services/OrgaoPublico/AtualizarParametrosOrgaoService.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Resultado:**  
+- payload do `S-1000` ficou mais consistente para a futura camada de integracao
+- bloco `contato` deixou de ser enviado quando vazio
+- `natJurid` deixou de ser serializado em inscricoes institucionais por `CPF`
+
 ### PRODUTO-S1000-VALIDACOES-INSTITUCIONAIS - 20/04/2026
 
 **Descricao:**  

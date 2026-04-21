@@ -165,6 +165,45 @@ class OrgaoPublicoTest extends TestCase
         ]);
     }
 
+    public function test_updating_orgao_publico_omits_empty_contact_block_and_natureza_juridica_for_cpf(): void
+    {
+        $tenant = $this->createTenant();
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Fundo Municipal de Apoio',
+                'tipo_inscricao' => '2',
+                'numero_inscricao' => '12345678901',
+                'classificacao_tributaria' => '21',
+                'natureza_juridica' => '',
+                'inicio_validade' => '2026-04',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'homologacao',
+                'contato_nome' => '',
+                'contato_cpf' => '',
+                'contato_email' => '',
+                'telefone' => '',
+                'observacoes' => '',
+            ])
+            ->assertRedirect(route('orgao-publico.show'));
+
+        $evento = EventoEsocial::query()
+            ->where('tenant_id', $tenant->id)
+            ->where('evento', 'S-1000')
+            ->latest('id')
+            ->firstOrFail();
+
+        $this->assertSame('2', data_get($evento->payload, 'ideEmpregador.tpInsc'));
+        $this->assertSame('12345678901', data_get($evento->payload, 'ideEmpregador.nrInsc'));
+        $this->assertSame('21', data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.classTrib'));
+        $this->assertNull(data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.natJurid'));
+        $this->assertNull(data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.contato'));
+    }
+
     private function createTenant(array $overrides = []): Tenant
     {
         $this->ensureTenantsTableExists();

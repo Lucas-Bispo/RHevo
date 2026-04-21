@@ -57,3 +57,5 @@
 - Tratar vigencia explicitamente em eventos de tabela.
 - Criar camada de validacao de negocio antes da geracao do payload.
 - Diferenciar erro de preenchimento local, erro de regra e erro de integracao.
+- Nao serializar blocos vazios no payload dos eventos de tabela.
+- No `S-1000`, `natJurid` nao deve ser enviado quando a inscricao institucional for por `CPF`.

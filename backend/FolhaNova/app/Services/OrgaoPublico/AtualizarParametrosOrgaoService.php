@@ -78,6 +78,20 @@ class AtualizarParametrosOrgaoService
     private function buildEventoPayload(Tenant $tenant): array
     {
         $parametros = $tenant->metadata['orgao_publico'] ?? [];
+        $contato = Arr::whereNotNull([
+            'nmCtt' => $parametros['contato_nome'] ?? null,
+            'cpfCtt' => $this->onlyDigits($parametros['contato_cpf'] ?? null),
+            'email' => $parametros['contato_email'] ?? null,
+            'foneFixo' => $this->onlyDigits($parametros['telefone'] ?? null),
+        ]);
+        $infoCadastro = Arr::whereNotNull([
+            'nmRazao' => $tenant->name,
+            'classTrib' => $parametros['classificacao_tributaria'] ?? null,
+            'natJurid' => ($parametros['tipo_inscricao'] ?? null) === '1'
+                ? ($parametros['natureza_juridica'] ?? null)
+                : null,
+            'contato' => $contato === [] ? null : $contato,
+        ]);
 
         return [
             'evento' => 'S-1000',
@@ -92,17 +106,7 @@ class AtualizarParametrosOrgaoService
                         'iniValid' => $parametros['inicio_validade'] ?? null,
                         'fimValid' => $parametros['fim_validade'] ?? null,
                     ]),
-                    'infoCadastro' => Arr::whereNotNull([
-                        'nmRazao' => $tenant->name,
-                        'classTrib' => $parametros['classificacao_tributaria'] ?? null,
-                        'natJurid' => $parametros['natureza_juridica'] ?? null,
-                        'contato' => Arr::whereNotNull([
-                            'nmCtt' => $parametros['contato_nome'] ?? null,
-                            'cpfCtt' => $this->onlyDigits($parametros['contato_cpf'] ?? null),
-                            'email' => $parametros['contato_email'] ?? null,
-                            'foneFixo' => $this->onlyDigits($parametros['telefone'] ?? null),
-                        ]),
-                    ]),
+                    'infoCadastro' => $infoCadastro,
                 ],
             ],
             'controle_interno' => [
