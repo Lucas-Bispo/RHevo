@@ -4,6 +4,13 @@
 
 Este projeto deve ser desenvolvido e operado localmente via `WSL Ubuntu 24.04`, mesmo quando os arquivos estiverem armazenados em caminho compartilhado do Windows.
 
+## Regra obrigatoria
+
+- nao usar `XAMPP`;
+- nao orientar comandos com Apache/PHP/MySQL do Windows;
+- nao assumir runtime local fora do `WSL Ubuntu 24.04`;
+- sempre priorizar execucao, paths e validacoes dentro do ambiente Linux.
+
 ## Motivos da decisão
 
 - maior compatibilidade com o ambiente Linux de produção;
