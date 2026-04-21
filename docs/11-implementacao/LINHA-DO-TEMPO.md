@@ -30,6 +30,32 @@
 
 **Status:** Concluido
 
+### 21/04/2026 - 11:30 - Subida Estavel do Projeto no WSL
+
+**Acao realizada:**  
+- Revalidada a orientacao documental antes da operacao local.
+- Confirmado que `public/hot` esta ausente, evitando que o Laravel use o Vite dev server durante a homologacao local.
+- Confirmado que o backend Laravel esta ouvindo em `0.0.0.0:8000`.
+- Confirmado que `public/build/manifest.json` existe e que `/login` referencia os assets compilados.
+- Garantida a conta local `test@example.com` pelo script `scripts/ensure_local_login.php`.
+
+**Arquivos criados / alterados:**  
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+- `docs/performance/metricas-validacao.md`
+
+**Decisoes tecnicas:**  
+- A subida foi mantida em modo estavel: backend Laravel ativo e Vite desligado.
+- Nenhum codigo de aplicacao foi alterado.
+- A validacao priorizou login, assets compilados e previsibilidade visual.
+
+**Validacao:**  
+- `GET /login`: `200`.
+- CSS compilado: `200`, `110503` bytes.
+- JS compilado: `200`, `37977` bytes.
+- HTML final de `/login` apontando para `/build/assets`.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 10:25 - Recuperacao do Frontend por Assets Compilados
 
 **Acao realizada:**  

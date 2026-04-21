@@ -37,6 +37,28 @@
 - Na retomada de `21/04/2026`, `php artisan about --only=environment,drivers` reportou `cache=file` e `session=file`.
 - Antes de qualquer nova otimizacao, a proxima rodada deve decidir se o ambiente deve voltar para `database` ou se a documentacao deve ser realinhada ao estado atual.
 
+## Subida estavel no WSL - 21/04/2026 11:30
+### Contexto
+- objetivo: manter o projeto no ar para continuidade segura;
+- modo escolhido: backend Laravel + assets compilados;
+- Vite dev server: desligado para evitar recriacao de `public/hot`.
+
+### Validacoes
+| Verificacao | Resultado | Observacoes |
+| --- | --- | --- |
+| `public/hot` | ausente | Laravel usa `public/build` |
+| porta `8000` | ativa | `php artisan serve` ouvindo em `0.0.0.0:8000` |
+| porta `5173` | inativa | Vite fora do fluxo de homologacao local |
+| `GET /login` | `200` | tela de login acessivel |
+| CSS compilado | `200`, `110503` bytes | asset servido por `/build/assets` |
+| JS compilado | `200`, `37977` bytes | asset servido por `/build/assets` |
+| usuario local | `test@example.com` | garantido por `scripts/ensure_local_login.php` |
+
+### Leitura operacional
+- o projeto esta no ar em `http://127.0.0.1:8000/login`;
+- para preservar o frontend, nao iniciar o Vite dev server nesta fase;
+- se for necessario desenvolvimento ativo de UI, diagnosticar primeiro o comportamento de `public/hot`.
+
 ## Rebuild e retomada local - 19/04/2026 para 20/04/2026
 ### Resultado operacional
 - `php artisan optimize:clear && php artisan optimize` executado com sucesso no WSL
