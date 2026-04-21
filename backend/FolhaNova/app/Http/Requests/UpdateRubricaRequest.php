@@ -32,7 +32,7 @@ class UpdateRubricaRequest extends FormRequest
                     ->where(fn ($query) => $query->where('tenant_id', $tenantId)),
             ],
             'nome' => ['required', 'string', 'max:255'],
-            'natureza' => ['required', 'string', 'max:30'],
+            'natureza' => ['required', 'string', 'regex:/^\d{4}$/'],
             'tipo' => ['required', Rule::in(['provento', 'desconto', 'informativa'])],
             'incide_irrf' => ['required', 'boolean'],
             'incide_inss' => ['required', 'boolean'],

@@ -30,6 +30,40 @@
 
 **Status:** Concluido
 
+### 21/04/2026 - 11:55 - Validacao Inicial da Natureza de Rubrica S-1010
+
+**Acao realizada:**  
+- Evoluido o modulo de rubricas com uma validacao incremental para o `S-1010`.
+- O campo `natureza` passou a representar explicitamente o codigo `natRubr`, com 4 digitos numericos.
+- Atualizada a leitura da tela para exibir `Natureza eSocial`.
+- Adicionado teste cobrindo rejeicao de natureza textual, evitando regressao para preenchimento livre.
+
+**Arquivos criados / alterados:**  
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/app/Services/Rubricas/RegistrarRubricaService.php`
+- `backend/FolhaNova/app/Services/Rubricas/AtualizarRubricaService.php`
+- `backend/FolhaNova/resources/views/rubricas/partials/form-fields.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisoes tecnicas:**  
+- A rodada ficou restrita a validacao local e leitura operacional, sem migration.
+- A lista fechada de naturezas oficiais nao foi implementada porque os PDFs locais nao puderam ser extraidos de forma confiavel nesta sessao.
+- A mudanca prepara uma futura tabela/enum oficial de naturezas sem bloquear o CRUD atual alem do formato numerico minimo.
+
+**Validacao:**  
+- `php artisan test tests/Feature/RubricaCrudTest.php tests/Feature/RubricasIndexTest.php`: `5` testes verdes e `17` assercoes.
+- `GET /login`: `200`.
+- `GET /rubricas` como guest: `302` para `/login`.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 11:30 - Subida Estavel do Projeto no WSL
 
 **Acao realizada:**  

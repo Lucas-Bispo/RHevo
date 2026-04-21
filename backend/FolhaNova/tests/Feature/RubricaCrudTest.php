@@ -37,7 +37,7 @@ class RubricaCrudTest extends TestCase
             ->post(route('rubricas.store'), [
                 'codigo' => 'RUB-001',
                 'nome' => 'Gratificacao de funcao',
-                'natureza' => 'Vencimento',
+                'natureza' => '1000',
                 'tipo' => 'provento',
                 'incide_irrf' => '1',
                 'incide_inss' => '1',
@@ -55,6 +55,7 @@ class RubricaCrudTest extends TestCase
             'codigo' => 'RUB-001',
             'nome' => 'Gratificacao de funcao',
             'tipo' => 'provento',
+            'natureza' => '1000',
             'incide_irrf' => true,
             'incide_inss' => true,
             'incide_fgts' => false,
@@ -72,7 +73,7 @@ class RubricaCrudTest extends TestCase
             'tenant_id' => 62,
             'codigo' => 'DESC-01',
             'nome' => 'Desconto assistencial',
-            'natureza' => 'Desconto',
+            'natureza' => '9201',
             'tipo' => 'desconto',
             'incide_irrf' => false,
             'incide_inss' => false,
@@ -85,7 +86,7 @@ class RubricaCrudTest extends TestCase
             ->put(route('rubricas.update', $rubrica), [
                 'codigo' => 'DESC-01',
                 'nome' => 'Desconto sindical',
-                'natureza' => 'Desconto legal',
+                'natureza' => '9219',
                 'tipo' => 'desconto',
                 'incide_irrf' => '0',
                 'incide_inss' => '0',
@@ -101,9 +102,32 @@ class RubricaCrudTest extends TestCase
         $this->assertDatabaseHas('rubricas', [
             'id' => $rubrica->id,
             'nome' => 'Desconto sindical',
-            'natureza' => 'Desconto legal',
+            'natureza' => '9219',
             'codigo_esocial' => 'S1010-DESC',
             'ativo' => false,
         ]);
+    }
+
+    public function test_user_can_not_create_rubrica_with_textual_natureza(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 64,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->post(route('rubricas.store'), [
+                'codigo' => 'RUB-TXT',
+                'nome' => 'Rubrica invalida',
+                'natureza' => 'Vencimento',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-TXT',
+                'ativo' => '1',
+            ]);
+
+        $response->assertSessionHasErrors('natureza');
     }
 }

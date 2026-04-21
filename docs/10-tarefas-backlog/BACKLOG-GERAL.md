@@ -58,6 +58,34 @@ Corrigir quebra visual do frontend causada pela presenca de `public/hot`, que fa
 - JS compilado respondeu `200` com `37977` bytes;
 - suite focada de autenticacao e navegacao passou com `7` testes e `19` assercoes.
 
+### PRODUTO-S1010-NATUREZA-RUBRICA - 21/04/2026
+
+**Descricao:**  
+Aproximar o cadastro de rubricas do `S-1010`, tratando a natureza da rubrica como codigo oficial `natRubr` de 4 digitos, sem abrir mudanca estrutural de banco nesta rodada.
+
+**Status:** Concluido  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/app/Services/Rubricas/RegistrarRubricaService.php`
+- `backend/FolhaNova/app/Services/Rubricas/AtualizarRubricaService.php`
+- `backend/FolhaNova/resources/views/rubricas/partials/form-fields.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Resultado:**  
+- `natureza` passou a aceitar apenas codigo numerico de 4 digitos;
+- tela passou a rotular o campo como `Natureza eSocial (natRubr)`;
+- listagem passou a explicitar a leitura operacional da natureza eSocial;
+- teste focado cobre rejeicao de natureza textual;
+- validacao focada de rubricas passou com `5` testes e `17` assercoes.
+
 ### PRODUTO-FLUXO-SEGURANCA-OPERACIONAL - 20/04/2026
 
 **Descricao:**  

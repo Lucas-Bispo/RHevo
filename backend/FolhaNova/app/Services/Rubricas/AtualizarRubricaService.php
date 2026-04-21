@@ -14,7 +14,7 @@ class AtualizarRubricaService
         $rubrica->update([
             'codigo' => trim((string) $payload['codigo']),
             'nome' => trim((string) $payload['nome']),
-            'natureza' => trim((string) $payload['natureza']),
+            'natureza' => $this->numericCode($payload['natureza']),
             'tipo' => $payload['tipo'],
             'incide_irrf' => (bool) $payload['incide_irrf'],
             'incide_inss' => (bool) $payload['incide_inss'],
@@ -31,5 +31,10 @@ class AtualizarRubricaService
         $value = trim((string) $value);
 
         return $value === '' ? null : $value;
+    }
+
+    private function numericCode(mixed $value): string
+    {
+        return preg_replace('/\D+/', '', (string) $value) ?? '';
     }
 }

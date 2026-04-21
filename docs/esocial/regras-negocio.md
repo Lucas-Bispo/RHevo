@@ -34,6 +34,7 @@
 
 ### Rubricas
 - Rubrica precisa ter natureza, tipo e incidencia consistentes.
+- A natureza da rubrica deve ser tratada como codigo `natRubr` numerico de 4 digitos no cadastro local.
 - Compatibilidade entre rubrica e categoria do trabalhador deve ser verificada.
 - Codigos de incidencia e rubricas especificas de grupos nao podem ser usados em categorias incompativeis.
 

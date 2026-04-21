@@ -21,7 +21,7 @@ class RubricasIndexTest extends TestCase
             'tenant_id' => 63,
             'codigo' => 'RUB-101',
             'nome' => 'Adicional noturno',
-            'natureza' => 'Adicional',
+            'natureza' => '1002',
             'tipo' => 'provento',
             'incide_irrf' => true,
             'incide_inss' => true,
@@ -38,6 +38,7 @@ class RubricasIndexTest extends TestCase
             ->assertOk()
             ->assertSee('Rubricas')
             ->assertSee('Adicional noturno')
+            ->assertSee('Natureza eSocial 1002')
             ->assertSee('S1010-NOT');
     }
 }

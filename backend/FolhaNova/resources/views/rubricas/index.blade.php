@@ -98,7 +98,7 @@
                                     </td>
                                     <td>
                                         <p>{{ ucfirst($rubrica->tipo) }}</p>
-                                        <p class="text-xs text-slate-500">{{ $rubrica->natureza }}</p>
+                                        <p class="text-xs text-slate-500">Natureza eSocial {{ $rubrica->natureza }}</p>
                                     </td>
                                     <td class="text-sm text-slate-300">
                                         IRRF {{ $rubrica->incide_irrf ? 'sim' : 'nao' }} /
@@ -137,6 +137,7 @@
                     <ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">
                         <li>A rubrica organiza a base de verbas da folha antes da integracao governamental.</li>
                         <li>As incidencias ajudam a reduzir inconsistencias futuras em calculo e envio.</li>
+                        <li>A natureza deve ser informada como codigo numerico de 4 digitos para aproximar o cadastro do `natRubr`.</li>
                         <li>O codigo interno atende a operacao; o codigo eSocial prepara o espelhamento oficial.</li>
                     </ul>
                 </div>

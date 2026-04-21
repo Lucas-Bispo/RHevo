@@ -19,6 +19,7 @@
 - Modulo inicial de cargos com listagem, cadastro e edicao.
 - Modulo inicial de funcoes com listagem, cadastro e edicao.
 - Modulo inicial de rubricas com listagem, cadastro e edicao.
+- Validacao inicial de rubricas para `S-1010`, exigindo natureza eSocial (`natRubr`) numerica de 4 digitos.
 
 ## RH operacional
 - Listagem de servidores com filtros por busca e situacao.
