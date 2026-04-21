@@ -2,6 +2,41 @@
 **Documento gerado em:** 19 de abril de 2026  
 **Versão:** 1.0
 
+## Retomada operacional - 21/04/2026
+### Contexto
+- ambiente oficial usado: `WSL Ubuntu 24.04`
+- backend iniciado por `scripts/run_backend_detached.sh`
+- Vite iniciado por `scripts/run_vite_detached.sh`
+- usuario local garantido por `scripts/ensure_local_login.php`
+
+### Estado confirmado
+| Verificacao | Resultado | Observacoes |
+| --- | --- | --- |
+| PHP | `8.3.6` | runtime WSL validado |
+| Laravel | `11.51.0` | via `php artisan about` |
+| Debug | `OFF` | ambiente local em modo sem debug |
+| Database | `sqlite` | estado atual do ambiente local |
+| Cache | `file` | divergente de registros anteriores com `database` |
+| Session | `file` | divergente de registros anteriores com `database` |
+| `/login` | `200 OK` | backend respondendo em `http://127.0.0.1:8000/login` |
+| Vite | `200 OK` em `GET /@vite/client` | dev server ativo em `http://127.0.0.1:5173` |
+
+### Processos ativos
+| Servico | Porta | Resultado |
+| --- | --- | --- |
+| Laravel `php artisan serve` | `8000` | ouvindo em `0.0.0.0:8000` |
+| Vite | `5173` | ouvindo em `0.0.0.0:5173` |
+
+### Observacoes de performance
+- a retomada confirmou novamente alta variancia e TTFB elevado nos requests principais;
+- amostras concorrentes por `curl` chegaram a tempos altos, por isso nao devem ser tratadas como benchmark isolado confiavel;
+- a leitura permanece alinhada ao diagnostico anterior: o gargalo dominante parece estar no ambiente/bootstrap local, nao apenas em assets estaticos.
+
+### Divergencia registrada
+- Documentos anteriores registravam runtime otimizado com `cache=database` e `session=database`.
+- Na retomada de `21/04/2026`, `php artisan about --only=environment,drivers` reportou `cache=file` e `session=file`.
+- Antes de qualquer nova otimizacao, a proxima rodada deve decidir se o ambiente deve voltar para `database` ou se a documentacao deve ser realinhada ao estado atual.
+
 ## Rebuild e retomada local - 19/04/2026 para 20/04/2026
 ### Resultado operacional
 - `php artisan optimize:clear && php artisan optimize` executado com sucesso no WSL

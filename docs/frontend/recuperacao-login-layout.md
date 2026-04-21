@@ -52,3 +52,29 @@ Mas o build estavel disponivel no projeto so gerava assets para `resources/js/ap
 
 - ambiente oficial local: `WSL Ubuntu 24.04`
 - nao usar `XAMPP`
+
+## Retomada de 21/04/2026
+
+### Novo sintoma operacional
+
+- apos iniciar o Vite dev server, o arquivo `public/hot` ficou presente;
+- com `public/hot`, o Laravel passou a renderizar o login usando `http://127.0.0.1:5173`;
+- a validacao estavel precisava voltar a usar os assets compilados em `public/build`.
+
+### Correcao aplicada
+
+- executado `npm run build` no `WSL Ubuntu 24.04`;
+- encerrado o Vite dev server;
+- removido `backend/FolhaNova/public/hot`;
+- confirmado que `/login` voltou a apontar para `/build/assets`.
+
+### Regra operacional atual
+
+Para validar estabilidade visual e funcional do frontend local, usar:
+
+1. `npm run build`;
+2. backend Laravel em `http://127.0.0.1:8000`;
+3. ausencia de `public/hot`;
+4. HTML final de `/login` apontando para `/build/assets`.
+
+O Vite dev server deve ficar reservado para desenvolvimento ativo de frontend e nao deve ser usado como criterio de homologacao local enquanto a inconsistencia atual nao for investigada em rodada propria.

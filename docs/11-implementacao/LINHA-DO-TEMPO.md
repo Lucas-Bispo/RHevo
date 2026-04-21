@@ -2,6 +2,62 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 21/04/2026 - 10:05 - Retomada Operacional do Ambiente Local
+
+**Acao realizada:**  
+- Reconsultada a documentacao de workflow, recuperacao, performance, backlog, linha do tempo e ambiente WSL antes de qualquer nova evolucao.
+- Validado o runtime oficial no `WSL Ubuntu 24.04`, com `PHP 8.3.6`, `Laravel 11.51.0`, `APP_DEBUG=false`, locale `pt_BR` e timezone `America/Sao_Paulo`.
+- Garantida a conta local `test@example.com` pelo script `scripts/ensure_local_login.php`.
+- Iniciado o backend Laravel pelo script `scripts/run_backend_detached.sh`.
+- Iniciado o Vite pelo script `scripts/run_vite_detached.sh`.
+- Validado `GET /login` com `200 OK` e confirmado no snapshot Livewire que `isLoading=false` no estado inicial do botao de login.
+
+**Arquivos criados / alterados:**  
+- `docs/performance/metricas-validacao.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisoes tecnicas:**  
+- A rodada foi tratada como retomada operacional, sem alteracao de codigo.
+- Foi preservado o fluxo oficial em WSL e evitada abertura de feature com o ambiente ainda nao validado.
+- Foi registrada divergencia entre documentacao anterior e ambiente atual: `cache` e `session` aparecem como `file`, embora registros anteriores apontassem `database`.
+
+**Validacao:**  
+- `GET /login`: `200 OK`
+- Vite ativo em `0.0.0.0:5173`
+- Backend ativo em `0.0.0.0:8000`
+- `GET /@vite/client`: `200 OK`
+
+**Status:** Concluido
+
+### 21/04/2026 - 10:25 - Recuperacao do Frontend por Assets Compilados
+
+**Acao realizada:**  
+- Investigada a quebra visual do frontend apos a retomada do ambiente local.
+- Confirmado que o build de producao do Vite conclui com sucesso no `WSL Ubuntu 24.04`.
+- Identificado que a presenca de `public/hot` fazia o Laravel priorizar o Vite dev server na tela de login.
+- Removido `public/hot` e encerrado o Vite dev server para restaurar o uso dos assets compilados em `public/build`.
+- Validado no HTML de `/login` que a tela voltou a referenciar `/build/assets/app-BKPuZS5v.css` e `/build/assets/app-BBasPo4V.js`.
+
+**Arquivos criados / alterados:**  
+- `docs/frontend/recuperacao-login-layout.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisoes tecnicas:**  
+- A correcao foi mantida operacional e documental, sem alterar codigo de layout, rota ou autenticacao.
+- Para validacao estavel local, o projeto deve usar `npm run build` e backend Laravel sem `public/hot`.
+- O Vite dev server deve ser usado com cautela ate uma rodada especifica diagnosticar sua lentidao/inconsistencia no ambiente atual.
+
+**Validacao:**  
+- `npm run build`: sucesso, CSS `110.50 kB` e JS `37.98 kB`.
+- `GET /login`: `200`.
+- CSS compilado: `200`, `110503` bytes.
+- JS compilado: `200`, `37977` bytes.
+- `php artisan test tests/Feature/Auth/AuthenticationTest.php tests/Feature/ExampleTest.php`: `7` testes verdes e `19` assercoes.
+
+**Status:** Concluido
+
 ### 20/04/2026 - 22:55 - Formalizacao do Fluxo de Producao e Seguranca
 
 **Acao realizada:**  

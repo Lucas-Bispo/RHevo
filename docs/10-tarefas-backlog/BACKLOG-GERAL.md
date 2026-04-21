@@ -2,6 +2,62 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### RETOMADA-OPERACIONAL-AMBIENTE-LOCAL - 21/04/2026
+
+**Descricao:**  
+Retomar o contexto do projeto pela documentacao vigente, colocar backend e Vite no ar no `WSL Ubuntu 24.04` e validar a disponibilidade basica da tela de login.
+
+**Status:** Concluido  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `FOLHANOVA-WORKFLOW.md`
+- `docs/workflow/recuperacao-e-padroes-de-ambiente.md`
+- `docs/workflow/fluxo-de-producao-e-seguranca.md`
+- `docs/performance/metricas-validacao.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+- `backend/FolhaNova/scripts/run_backend_detached.sh`
+- `backend/FolhaNova/scripts/run_vite_detached.sh`
+- `backend/FolhaNova/scripts/ensure_local_login.php`
+
+**Resultado:**  
+- backend Laravel iniciado em `http://127.0.0.1:8000`
+- Vite iniciado em `http://127.0.0.1:5173`
+- `/login` respondeu `200 OK`
+- conta local `test@example.com` garantida para validacao manual
+- registrada divergencia operacional: ambiente atual reportou `cache=file` e `session=file`, enquanto registros anteriores citavam `database`
+
+### INCIDENTE-FRONTEND-HOT-VITE - 21/04/2026
+
+**Descricao:**  
+Corrigir quebra visual do frontend causada pela presenca de `public/hot`, que fazia o Laravel priorizar o Vite dev server em vez dos assets compilados estaveis em `public/build`.
+
+**Status:** Concluido  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `backend/FolhaNova/public/hot`
+- `backend/FolhaNova/public/build/manifest.json`
+- `backend/FolhaNova/resources/views/components/layouts/auth-login.blade.php`
+- `backend/FolhaNova/vite.config.js`
+- `docs/frontend/recuperacao-login-layout.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**  
+- manter build de producao como fonte estavel para validacao local;
+- parar o Vite dev server nesta rodada;
+- remover `public/hot`;
+- validar que `/login` referencia `/build/assets`;
+- registrar a decisao operacional antes de retomar novas features.
+
+**Resultado:**  
+- `npm run build` executado com sucesso no WSL Ubuntu 24.04;
+- `public/hot` removido para impedir que o Laravel priorize o Vite dev server;
+- `/login` voltou a referenciar `public/build/assets`;
+- CSS compilado respondeu `200` com `110503` bytes;
+- JS compilado respondeu `200` com `37977` bytes;
+- suite focada de autenticacao e navegacao passou com `7` testes e `19` assercoes.
+
 ### PRODUTO-FLUXO-SEGURANCA-OPERACIONAL - 20/04/2026
 
 **Descricao:**  
