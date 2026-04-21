@@ -63,4 +63,98 @@ class EventoEsocialShowTest extends TestCase
             ->assertSee('Evento recebido com sucesso.')
             ->assertSee('Lucas Ribeiro');
     }
+
+    public function test_user_can_requeue_failed_event_for_local_reprocessing(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 74,
+        ]);
+
+        $evento = EventoEsocial::create([
+            'tenant_id' => 74,
+            'evento' => 'S-1000',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'protocolo' => 'PROTO-ERRO',
+            'recibo' => 'REC-ERRO',
+            'mensagem_retorno' => 'Rubrica rejeitada pela validacao local.',
+            'enviado_em' => now()->subMinutes(15),
+            'processado_em' => now()->subMinutes(10),
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->post(route('eventos-esocial.reprocessar', $evento));
+
+        $response
+            ->assertRedirect(route('eventos-esocial.show', $evento))
+            ->assertSessionHas('status', 'Evento reenfileirado como pendente para reprocessamento local.');
+
+        $this->assertDatabaseHas('eventos_esocial', [
+            'id' => $evento->id,
+            'tenant_id' => 74,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'protocolo' => null,
+            'recibo' => null,
+            'mensagem_retorno' => null,
+            'enviado_em' => null,
+            'processado_em' => null,
+        ]);
+    }
+
+    public function test_user_cannot_requeue_processed_event(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 75,
+        ]);
+
+        $evento = EventoEsocial::create([
+            'tenant_id' => 75,
+            'evento' => 'S-2200',
+            'status' => 'processado',
+            'ambiente' => 'producao',
+            'protocolo' => 'PROTO-OK',
+            'recibo' => 'REC-OK',
+            'mensagem_retorno' => 'Evento recebido.',
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->post(route('eventos-esocial.reprocessar', $evento));
+
+        $response
+            ->assertRedirect(route('eventos-esocial.show', $evento))
+            ->assertSessionHas('warning', 'Apenas eventos com erro podem ser reenfileirados nesta etapa.');
+
+        $this->assertDatabaseHas('eventos_esocial', [
+            'id' => $evento->id,
+            'status' => 'processado',
+            'protocolo' => 'PROTO-OK',
+            'recibo' => 'REC-OK',
+            'mensagem_retorno' => 'Evento recebido.',
+        ]);
+    }
+
+    public function test_user_cannot_requeue_event_from_another_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 76,
+        ]);
+
+        $evento = EventoEsocial::create([
+            'tenant_id' => 77,
+            'evento' => 'S-1010',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->post(route('eventos-esocial.reprocessar', $evento))
+            ->assertNotFound();
+    }
 }

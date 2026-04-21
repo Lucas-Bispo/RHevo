@@ -4,7 +4,7 @@
 
 ### 21/04/2026 - 10:05 - Retomada Operacional do Ambiente Local
 
-**Acao realizada:**  
+**Acao realizada:**
 - Reconsultada a documentacao de workflow, recuperacao, performance, backlog, linha do tempo e ambiente WSL antes de qualquer nova evolucao.
 - Validado o runtime oficial no `WSL Ubuntu 24.04`, com `PHP 8.3.6`, `Laravel 11.51.0`, `APP_DEBUG=false`, locale `pt_BR` e timezone `America/Sao_Paulo`.
 - Garantida a conta local `test@example.com` pelo script `scripts/ensure_local_login.php`.
@@ -12,21 +12,54 @@
 - Iniciado o Vite pelo script `scripts/run_vite_detached.sh`.
 - Validado `GET /login` com `200 OK` e confirmado no snapshot Livewire que `isLoading=false` no estado inicial do botao de login.
 
-**Arquivos criados / alterados:**  
+**Arquivos criados / alterados:**
 - `docs/performance/metricas-validacao.md`
 - `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
 - `docs/11-implementacao/LINHA-DO-TEMPO.md`
 
-**Decisoes tecnicas:**  
+**Decisoes tecnicas:**
 - A rodada foi tratada como retomada operacional, sem alteracao de codigo.
 - Foi preservado o fluxo oficial em WSL e evitada abertura de feature com o ambiente ainda nao validado.
 - Foi registrada divergencia entre documentacao anterior e ambiente atual: `cache` e `session` aparecem como `file`, embora registros anteriores apontassem `database`.
 
-**Validacao:**  
+**Validacao:**
 - `GET /login`: `200 OK`
 - Vite ativo em `0.0.0.0:5173`
 - Backend ativo em `0.0.0.0:8000`
 - `GET /@vite/client`: `200 OK`
+
+**Status:** Concluido
+
+### 21/04/2026 - 12:20 - Reprocessamento Local de Eventos eSocial com Erro
+
+**Acao realizada:**
+- Evoluido o painel de eventos eSocial com uma acao de reprocessamento local.
+- A acao foi limitada a eventos com `status = erro`.
+- O registro volta para `pendente`, preservando o payload e limpando protocolo, recibo, mensagem de retorno e timestamps de envio/processamento.
+- Eventos processados permanecem protegidos contra reenfileiramento nesta etapa.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/routes/web.php`
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/app/Services/EventosEsocial/ReprocessarEventoEsocialService.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/fluxos-do-usuario.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/esocial/mapeamento-esocial.md`
+- `docs/esocial/regras-negocio.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisoes tecnicas:**
+- A rodada ficou restrita a operacao local do painel, sem fila real, assinatura, transmissao ou consulta de retorno.
+- Foi criada uma service dedicada para manter a regra de reprocessamento fora da view e concentrada fora do controller.
+- A limpeza de recibo/protocolo foi bloqueada para eventos processados, evitando perda operacional indevida.
+
+**Validacao:**
+- `php artisan test tests/Feature/EventoEsocialShowTest.php tests/Feature/EventosEsocialIndexTest.php`
+- `GET /login`: deve permanecer `200 OK` com assets compilados.
 
 **Status:** Concluido
 

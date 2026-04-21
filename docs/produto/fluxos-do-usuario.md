@@ -43,3 +43,4 @@
 2. Filtra por evento, status, ambiente ou busca textual.
 3. Consulta quais eventos estao pendentes, processados ou com mensagem de retorno.
 4. Abre o detalhe para visualizar payload, protocolo, recibo e relacionamento com servidor quando existir.
+5. Quando um evento esta com `status = erro`, usuario pode reenfileirar o registro para reprocessamento local, preservando o payload e limpando metadados de retorno anteriores.

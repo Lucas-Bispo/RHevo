@@ -32,6 +32,7 @@
 - Dependencia `nfephp-org/sped-esocial` instalada.
 - Modelo `EventoEsocial` para recibo, protocolo, retorno e payload.
 - Registro inicial de evento `S-1000` pendente no fluxo de configuracao do orgao publico.
+- Reprocessamento local de evento eSocial com erro, retornando o registro para `pendente` sem alterar o payload.
 - Registro inicial de evento `S-2200` pendente no fluxo de admissao.
 - Painel para leitura de eventos institucionais e eventos vinculados a servidores.
 

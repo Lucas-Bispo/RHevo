@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventoEsocial;
+use App\Services\EventosEsocial\ReprocessarEventoEsocialService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class EventoEsocialController extends Controller
@@ -74,6 +76,26 @@ class EventoEsocialController extends Controller
             'eventoEsocial' => $eventoEsocial,
             'payloadFormatado' => json_encode($eventoEsocial->payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
         ]);
+    }
+
+    public function reprocessar(
+        Request $request,
+        EventoEsocial $eventoEsocial,
+        ReprocessarEventoEsocialService $service
+    ): RedirectResponse {
+        $eventoEsocial = $this->resolveEvento($request, $eventoEsocial);
+
+        if ($eventoEsocial->status !== 'erro') {
+            return redirect()
+                ->route('eventos-esocial.show', $eventoEsocial)
+                ->with('warning', 'Apenas eventos com erro podem ser reenfileirados nesta etapa.');
+        }
+
+        $service->execute($eventoEsocial);
+
+        return redirect()
+            ->route('eventos-esocial.show', $eventoEsocial)
+            ->with('status', 'Evento reenfileirado como pendente para reprocessamento local.');
     }
 
     private function resolveEvento(Request $request, EventoEsocial $eventoEsocial): EventoEsocial

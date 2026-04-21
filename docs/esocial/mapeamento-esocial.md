@@ -21,5 +21,5 @@
 - `Lotacao`, `Cargo`, `Funcao` e `Rubrica` ainda precisam evoluir de cadastro estrutural para tabela governada por regra.
 - `Rubrica` agora possui modulo inicial com incidencias e codigo eSocial, mas ainda sem geracao formal do `S-1010`.
 - `Tenant` agora possui modulo inicial de parametros institucionais e payload pendente de `S-1000`.
-- `EventoEsocial` agora possui painel operacional, mas ainda sem fila real, assinatura ou transmissao.
+- `EventoEsocial` agora possui painel operacional e reprocessamento local de eventos com erro, mas ainda sem fila real, assinatura ou transmissao.
 - A cobertura do `S-1000` ainda e parcial e precisa evoluir para regras mais completas de validacao.

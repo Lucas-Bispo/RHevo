@@ -4,6 +4,18 @@
     </x-slot>
 
     <section class="space-y-6">
+        @if (session('status'))
+            <div class="alert alert-success border-emerald-400/30 bg-emerald-500/10 text-emerald-100">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        @if (session('warning'))
+            <div class="alert alert-warning border-amber-400/30 bg-amber-500/10 text-amber-100">
+                {{ session('warning') }}
+            </div>
+        @endif
+
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <div class="stat-card">
                 <p class="text-sm text-slate-400">Total de eventos</p>

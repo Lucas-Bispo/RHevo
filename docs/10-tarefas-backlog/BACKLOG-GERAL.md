@@ -4,12 +4,12 @@
 
 ### RETOMADA-OPERACIONAL-AMBIENTE-LOCAL - 21/04/2026
 
-**Descricao:**  
+**Descricao:**
 Retomar o contexto do projeto pela documentacao vigente, colocar backend e Vite no ar no `WSL Ubuntu 24.04` e validar a disponibilidade basica da tela de login.
 
-**Status:** Concluido  
-**Prioridade:** Alta  
-**Arquivos envolvidos:**  
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
 - `FOLHANOVA-WORKFLOW.md`
 - `docs/workflow/recuperacao-e-padroes-de-ambiente.md`
 - `docs/workflow/fluxo-de-producao-e-seguranca.md`
@@ -20,7 +20,7 @@ Retomar o contexto do projeto pela documentacao vigente, colocar backend e Vite 
 - `backend/FolhaNova/scripts/run_vite_detached.sh`
 - `backend/FolhaNova/scripts/ensure_local_login.php`
 
-**Resultado:**  
+**Resultado:**
 - backend Laravel iniciado em `http://127.0.0.1:8000`
 - Vite iniciado em `http://127.0.0.1:5173`
 - `/login` respondeu `200 OK`
@@ -29,12 +29,12 @@ Retomar o contexto do projeto pela documentacao vigente, colocar backend e Vite 
 
 ### INCIDENTE-FRONTEND-HOT-VITE - 21/04/2026
 
-**Descricao:**  
+**Descricao:**
 Corrigir quebra visual do frontend causada pela presenca de `public/hot`, que fazia o Laravel priorizar o Vite dev server em vez dos assets compilados estaveis em `public/build`.
 
-**Status:** Concluido  
-**Prioridade:** Alta  
-**Arquivos envolvidos:**  
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
 - `backend/FolhaNova/public/hot`
 - `backend/FolhaNova/public/build/manifest.json`
 - `backend/FolhaNova/resources/views/components/layouts/auth-login.blade.php`
@@ -50,7 +50,7 @@ Corrigir quebra visual do frontend causada pela presenca de `public/hot`, que fa
 - validar que `/login` referencia `/build/assets`;
 - registrar a decisao operacional antes de retomar novas features.
 
-**Resultado:**  
+**Resultado:**
 - `npm run build` executado com sucesso no WSL Ubuntu 24.04;
 - `public/hot` removido para impedir que o Laravel priorize o Vite dev server;
 - `/login` voltou a referenciar `public/build/assets`;
@@ -85,6 +85,33 @@ Aproximar o cadastro de rubricas do `S-1010`, tratando a natureza da rubrica com
 - listagem passou a explicitar a leitura operacional da natureza eSocial;
 - teste focado cobre rejeicao de natureza textual;
 - validacao focada de rubricas passou com `5` testes e `17` assercoes.
+
+### PRODUTO-PAINEL-ESOCIAL-REPROCESSAMENTO-LOCAL - 21/04/2026
+
+**Descricao:**
+Evoluir o painel operacional de eventos eSocial com uma primeira acao segura de reprocessamento local para eventos com erro, sem implementar transmissao governamental nesta rodada.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/routes/web.php`
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/app/Services/EventosEsocial/ReprocessarEventoEsocialService.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/fluxos-do-usuario.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/esocial/mapeamento-esocial.md`
+- `docs/esocial/regras-negocio.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Resultado:**
+- eventos com `status = erro` podem voltar para `pendente` pela tela de detalhe;
+- payload original e vinculos operacionais sao preservados;
+- protocolo, recibo, mensagem de retorno e timestamps de envio/processamento sao limpos;
+- eventos processados nao sao reenfileirados nesta etapa para evitar perda indevida de recibo.
 
 ### PRODUTO-FLUXO-SEGURANCA-OPERACIONAL - 20/04/2026
 

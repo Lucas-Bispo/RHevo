@@ -40,6 +40,10 @@ Route::get('eventos-esocial/{eventoEsocial}', [EventoEsocialController::class, '
     ->middleware(['auth'])
     ->name('eventos-esocial.show');
 
+Route::post('eventos-esocial/{eventoEsocial}/reprocessar', [EventoEsocialController::class, 'reprocessar'])
+    ->middleware(['auth'])
+    ->name('eventos-esocial.reprocessar');
+
 Route::get('rubricas', [RubricaController::class, 'index'])
     ->middleware(['auth'])
     ->name('rubricas.index');

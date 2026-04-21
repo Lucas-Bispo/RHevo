@@ -52,6 +52,7 @@
   - recibo;
   - mensagem de retorno;
   - timestamps de envio e processamento.
+- Reprocessamento local nesta etapa deve ser permitido apenas para eventos com `status = erro`, preservando o payload e limpando protocolo, recibo, mensagem de retorno e timestamps antes de retornar para `pendente`.
 
 ## Regras tecnicas para o sistema
 - Separar `Pessoa` de `Servidor` e de `Contrato`.
