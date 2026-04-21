@@ -165,6 +165,107 @@ Ao final da entrega:
 
 ---
 
+## 5.1 Regra de seguranca operacional
+
+Nenhuma rodada de desenvolvimento deve ser considerada pronta se qualquer uma destas condicoes estiver aberta:
+
+- login quebrado;
+- build frontend quebrado;
+- backend nao sobe no `WSL Ubuntu 24.04`;
+- rota principal critica sem resposta;
+- teste focado do modulo afetado falhando;
+- incidente de ambiente sem registro.
+
+Se uma dessas condicoes ocorrer:
+
+- parar a evolucao funcional;
+- registrar o incidente;
+- restaurar previsibilidade do ambiente;
+- validar novamente;
+- so depois retomar a proxima microetapa.
+
+---
+
+## 5.2 Fluxo oficial para evoluir sem quebrar
+
+Toda evolucao deve seguir o modelo `dividir para conquistar`.
+
+### Tamanho maximo recomendado de uma rodada
+
+- 1 tema funcional por vez;
+- 1 microetapa por vez;
+- poucos arquivos por rodada;
+- 1 pacote coerente de teste;
+- 1 commit por escopo.
+
+### Exemplo de ordem segura
+
+1. diagnostico
+2. alteracao pequena
+3. teste focado
+4. validacao manual minima
+5. documentacao
+6. commit
+7. proxima microetapa
+
+### O que nao fazer
+
+- misturar login, layout, backend, banco e nova feature na mesma rodada;
+- alterar fluxo funcional sem rebuild e sem teste;
+- seguir implementando com incidente aberto;
+- usar ambiente paralelo fora do `WSL Ubuntu 24.04`;
+- depender de estado manual nao documentado.
+
+---
+
+## 5.3 Gates obrigatorios antes de liberar uma rodada
+
+Antes de considerar qualquer rodada segura para continuidade, validar no minimo:
+
+### Gate 1 - Ambiente
+
+- backend sobe no `WSL Ubuntu 24.04`;
+- build frontend conclui com sucesso;
+- assets finais sao servidos por `public/build` quando a rodada depender de build compilado.
+
+### Gate 2 - Login e acesso
+
+- `/login` responde `200`;
+- usuario local de teste existe;
+- autenticacao volta a funcionar;
+- primeira tela autenticada abre sem regressao critica.
+
+### Gate 3 - Modulo afetado
+
+- rota principal do modulo abre;
+- fluxo principal do modulo funciona;
+- nao ha quebra visual relevante na tela alterada.
+
+### Gate 4 - Testes
+
+- teste focado do modulo afetado passa;
+- se a rodada tocar autenticacao, navegacao ou eventos eSocial, executar tambem a suite adjacente mais sensata.
+
+### Gate 5 - Registro
+
+- backlog atualizado;
+- linha do tempo atualizada;
+- incidente ou decisao relevante documentados.
+
+---
+
+## 5.4 Ambientes de trabalho
+
+Para evitar confusao entre desenvolvimento e operacao:
+
+- `desenvolvimento`: microetapas pequenas com validacao focada;
+- `homologacao local`: aplicacao reconstruida no `WSL Ubuntu 24.04`, com login funcional, build valido e dados minimos para teste manual;
+- `producao futura`: ambiente Linux Ubuntu 24.04 em nuvem, com o mesmo fluxo de gates e validacoes adaptado ao deploy.
+
+Nenhuma mudanca deve ser promovida de `desenvolvimento` para `homologacao local` sem passar pelos gates desta documentacao.
+
+---
+
 ## 6. Formato de resposta esperado antes de implementar
 
 Antes de qualquer mudanca, responder com:

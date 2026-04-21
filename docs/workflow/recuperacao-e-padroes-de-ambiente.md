@@ -72,3 +72,10 @@ Escopo principal da reversao aplicada:
 - nao continuar desenvolvimento de novas trilhas enquanto o ambiente nao estiver estavel;
 - seguir o protocolo formal definido em `FOLHANOVA-WORKFLOW.md`;
 - alinhar `docs/produto/` e `docs/esocial/` antes de iniciar qualquer nova frente quando houver divergencia de prioridade.
+
+## Regra adicional de seguranca
+
+- toda rodada deve passar por rebuild, validacao de login e teste focado antes de ser considerada estavel;
+- se o login, o build ou a subida do backend falharem, a rodada entra automaticamente em estado de incidente;
+- com incidente aberto, nao avancar para nova feature;
+- a retomada so ocorre depois de restaurar ambiente, validar rotas criticas e registrar a correcao.

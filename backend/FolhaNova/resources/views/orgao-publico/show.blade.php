@@ -3,6 +3,16 @@
         Orgao Publico
     </x-slot>
 
+    @php
+        $tipoInscricao = $parametros['tipo_inscricao'] ?? null;
+        $naturezaJuridicaLabel = $tipoInscricao === '2'
+            ? 'Nao se aplica para inscricao por CPF'
+            : ($parametros['natureza_juridica'] ?? 'Nao informada');
+        $vigenciaLabel = isset($parametros['inicio_validade'])
+            ? (($parametros['inicio_validade'] ?? 'Nao definido').' ate '.($parametros['fim_validade'] ?? 'Em aberto'))
+            : 'Nao definida';
+    @endphp
+
     <section class="space-y-6">
         @if (session('status'))
             <div class="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
@@ -35,7 +45,7 @@
                 <div class="stat-card">
                     <p class="text-sm text-slate-400">Inicio de validade</p>
                     <p class="mt-3 text-2xl font-semibold text-white">{{ $parametros['inicio_validade'] ?? 'Nao definido' }}</p>
-                    <p class="mt-2 text-sm text-amber-300">Periodo-base do cadastro</p>
+                    <p class="mt-2 text-sm text-amber-300">{{ $parametros['fim_validade'] ?? null ? 'Cadastro com janela delimitada' : 'Cadastro com vigencia em aberto' }}</p>
                 </div>
                 <div class="stat-card">
                     <p class="text-sm text-slate-400">Evento S-1000</p>
@@ -86,7 +96,7 @@
                                 </div>
                                 <div class="flex items-start justify-between gap-4">
                                     <dt>Natureza juridica</dt>
-                                    <dd class="text-right text-white">{{ $parametros['natureza_juridica'] ?? 'Nao informada' }}</dd>
+                                    <dd class="text-right text-white">{{ $naturezaJuridicaLabel }}</dd>
                                 </div>
                             </dl>
                         </div>
@@ -109,6 +119,10 @@
                                 <div class="flex items-start justify-between gap-4">
                                     <dt>Fim de validade</dt>
                                     <dd class="text-right text-white">{{ $parametros['fim_validade'] ?? 'Em aberto' }}</dd>
+                                </div>
+                                <div class="flex items-start justify-between gap-4">
+                                    <dt>Janela de vigencia</dt>
+                                    <dd class="text-right text-white">{{ $vigenciaLabel }}</dd>
                                 </div>
                                 <div class="flex items-start justify-between gap-4">
                                     <dt>Contato</dt>

@@ -32,6 +32,34 @@ class OrgaoPublicoTest extends TestCase
             ->assertSee($tenant->name);
     }
 
+    public function test_orgao_publico_screen_explains_cpf_context_and_open_validity_window(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '2',
+                    'numero_inscricao' => '123.456.789-01',
+                    'classificacao_tributaria' => '21',
+                    'inicio_validade' => '2026-04',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.show'))
+            ->assertOk()
+            ->assertSee('Nao se aplica para inscricao por CPF')
+            ->assertSee('Cadastro com vigencia em aberto')
+            ->assertSee('2026-04 ate Em aberto');
+    }
+
     public function test_user_can_update_orgao_publico_and_generate_pending_s1000(): void
     {
         $tenant = $this->createTenant();

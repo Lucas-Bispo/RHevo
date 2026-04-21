@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 20/04/2026 - 22:55 - Formalizacao do Fluxo de Producao e Seguranca
+
+**Acao realizada:**  
+- Consolidado um fluxo mais seguro para evolucao do projeto, com gates obrigatorios antes de considerar qualquer rodada estavel.
+- O workflow principal passou a exigir validacao minima de ambiente, login, build, modulo alterado, testes e registro.
+- Foi criado um documento proprio para separar desenvolvimento, homologacao local e producao futura.
+- Ficou formalizada a politica de incidente: sem login, build, backend ou teste focado funcionando, nao se abre nova feature.
+
+**Arquivos criados / alterados:**  
+- `FOLHANOVA-WORKFLOW.md`
+- `docs/workflow/recuperacao-e-padroes-de-ambiente.md`
+- `docs/workflow/fluxo-de-producao-e-seguranca.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisoes tecnicas:**  
+- O projeto passa a operar explicitamente em microetapas, com validacao e commit por escopo.
+- A homologacao local no `WSL Ubuntu 24.04` vira gate obrigatorio antes de considerar qualquer rodada pronta.
+- Incidente aberto bloqueia continuidade funcional ate a restauracao da previsibilidade do ambiente.
+
+**Status:** Concluido
+
 ### 20/04/2026 - 22:10 - Saneamento do Payload Institucional do S-1000
 
 **Acao realizada:**  
@@ -20,6 +42,25 @@
 **Decisoes tecnicas:**  
 - A rodada permaneceu restrita ao saneamento estrutural do payload, sem ampliar a superficie de validacoes oficiais ainda nao sustentadas por parser local dos PDFs.
 - A prioridade foi reduzir risco de integracao futura sem alterar rotas, banco ou layout.
+
+**Status:** Concluido
+
+### 20/04/2026 - 22:35 - Leitura Operacional da Tela do Orgao Publico
+
+**Acao realizada:**  
+- Ajustada a tela de `OrgaoPublico` para explicitar que `natureza juridica` nao se aplica quando a inscricao institucional e por `CPF`.
+- Melhorada a leitura da vigencia para diferenciar cadastro em aberto de janela delimitada.
+- Criado teste de feature cobrindo a exibicao do contexto por `CPF` e a leitura da vigencia em aberto.
+
+**Arquivos criados / alterados:**  
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisoes tecnicas:**  
+- A rodada ficou restrita a leitura operacional da tela, sem mexer no service, no request ou no payload do evento.
+- A prioridade foi reduzir ambiguidade visual e funcional para o usuario sem abrir uma frente nova de implementacao.
 
 **Status:** Concluido
 

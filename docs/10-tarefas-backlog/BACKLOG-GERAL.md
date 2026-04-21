@@ -2,6 +2,25 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### PRODUTO-FLUXO-SEGURANCA-OPERACIONAL - 20/04/2026
+
+**Descricao:**  
+Formalizar um fluxo seguro de evolucao e liberacao local para evitar regressao recorrente de login, ambiente, build e modulo quebrado durante o desenvolvimento.
+
+**Status:** Concluido  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `FOLHANOVA-WORKFLOW.md`
+- `docs/workflow/recuperacao-e-padroes-de-ambiente.md`
+- `docs/workflow/fluxo-de-producao-e-seguranca.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Resultado:**  
+- fluxo oficial passou a exigir gates minimos de ambiente, login, build e testes
+- ficou explicita a politica de incidente
+- o projeto passou a diferenciar desenvolvimento, homologacao local e producao futura
+
 ### PRODUTO-S1000-PAYLOAD-CONSISTENTE - 20/04/2026
 
 **Descricao:**  
@@ -20,6 +39,24 @@ Sanear o payload institucional do `S-1000` para evitar serializacao de blocos va
 - payload do `S-1000` ficou mais consistente para a futura camada de integracao
 - bloco `contato` deixou de ser enviado quando vazio
 - `natJurid` deixou de ser serializado em inscricoes institucionais por `CPF`
+
+### PRODUTO-S1000-LEITURA-OPERACIONAL - 20/04/2026
+
+**Descricao:**  
+Ajustar a leitura operacional da tela de `OrgaoPublico` para refletir corretamente cenarios por `CPF` e deixar a vigencia institucional mais clara para o usuario.
+
+**Status:** Concluido  
+**Prioridade:** Media  
+**Arquivos envolvidos:**  
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Resultado:**  
+- a tela passou a informar quando `natureza juridica` nao se aplica ao contexto por `CPF`
+- a vigencia passou a ficar mais legivel para leitura operacional
+- o comportamento ficou coberto por teste de feature
 
 ### PRODUTO-S1000-VALIDACOES-INSTITUCIONAIS - 20/04/2026
 
