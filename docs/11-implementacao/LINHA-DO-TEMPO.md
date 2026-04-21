@@ -790,3 +790,27 @@
 - A continuidade do projeto fica protegida sem apagar a importancia da trilha `S-2205`.
 
 **Status:** Concluido ✅
+
+### 21/04/2026 - 20:40 - Subida Controlada do Ambiente Local
+
+**Acao realizada:**  
+- Consultado o workflow oficial e a documentacao de ambiente antes de iniciar a operacao.
+- Verificadas dependencias no `WSL Ubuntu 24.04`: `PHP 8.3.6`, `Composer 2.7.1`, `Node 20.20.2`, `npm 10.8.2`, `vendor` e `node_modules`.
+- Identificado que `php artisan serve` nao abriu porta neste ambiente durante os testes controlados.
+- Subido o backend de forma operacional com `php -S 0.0.0.0:8000 -t public public/index.php`.
+- Subido o frontend com `npm run dev -- --host 0.0.0.0 --port 5173`.
+- Garantido o usuario local de teste com `scripts/ensure_local_login.php`.
+
+**Validacoes realizadas:**  
+- `GET /login` respondeu `200 OK`.
+- `GET /` redirecionou para `/login`.
+- `GET /dashboard` sem sessao redirecionou corretamente para `/login`.
+- Vite serviu `@vite/client` e `resources/js/app.js`.
+- Rotas focadas `login` e `dashboard` confirmadas via `php artisan route:list --path=...`.
+- Teste focado `tests/Feature/Auth/AuthenticationTest.php` passou com `5` testes e `15` assercoes.
+
+**Observacoes:**  
+- O ambiente continua lento por estar em WSL sobre caminho `/mnt/c/.../OneDrive`; comandos Artisan focados ficaram na faixa de dezenas de segundos.
+- O unico erro novo registrado no log durante a rodada foi a tentativa invalida de usar `php artisan route:list --compact`, opcao inexistente nesta versao, sem impacto funcional.
+
+**Status:** Ambiente local no ar.
