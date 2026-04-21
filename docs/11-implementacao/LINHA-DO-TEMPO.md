@@ -532,3 +532,26 @@
 - A evolucao funcional seguiu em paralelo com o primeiro modulo operacional orientado a `S-2200`.
 
 **Status:** Concluido ✅
+### 20/04/2026 - 21:20 - Alinhamento do Workflow e dos Planos de Continuidade
+
+**Acao realizada:**  
+- Atualizado o `FOLHANOVA-WORKFLOW.md` para refletir um fluxo de desenvolvimento mais cuidadoso, com leitura previa, diagnostico, plano antes da mudanca, validacao, documentacao e commit com escopo coerente.
+- Reforcadas as regras oficiais de ambiente com `WSL Ubuntu 24.04` e proibicao explicita de `XAMPP`.
+- Registrada a regra de precedencia entre workflow, planos de produto e plano eSocial para evitar novas divergencias na escolha da proxima frente.
+- Alinhada a documentacao para deixar claro que a prioridade macro atual permanece estrutural (`S-1000`, `S-1010` e painel de eventos), enquanto `S-2205` segue como proxima etapa natural dentro da trilha eSocial do trabalhador quando essa frente for retomada.
+
+**Arquivos criados / alterados:**  
+- `FOLHANOVA-WORKFLOW.md`
+- `docs/workflow/recuperacao-e-padroes-de-ambiente.md`
+- `docs/produto/plano-de-implementacao.md`
+- `docs/produto/priorizacao.md`
+- `docs/esocial/plano-implementacao.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisoes tecnicas:**  
+- O workflow passou a explicitar o formato de resposta antes e depois de cada implementacao para reduzir mudancas cegas.
+- A divergencia entre `produto` e `esocial` nao foi mascarada; ela foi resolvida com uma regra clara de precedencia documental.
+- A continuidade do projeto fica protegida sem apagar a importancia da trilha `S-2205`.
+
+**Status:** Concluido ✅

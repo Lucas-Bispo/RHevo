@@ -469,3 +469,23 @@ Revalidar a stack e o estado real de performance no runtime atual, consolidar a 
 - login passou a usar bundle JS dedicado, sem `axios` no primeiro acesso
 - modulo inicial de `Servidores` entregue com filtros, resumo operacional e eager loading
 - nova suite `ServidoresIndexTest` aprovada em WSL
+### DOCS-ALINHAMENTO-WORKFLOW-E-PLANOS - 20/04/2026
+
+**Descricao:**  
+Consolidar o fluxo oficial de desenvolvimento do projeto, incorporando regras mais fortes de leitura previa, diagnostico, plano antes da alteracao, validacao e documentacao, alem de alinhar a precedencia entre `docs/produto/` e `docs/esocial/`.
+
+**Status:** Concluido  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `FOLHANOVA-WORKFLOW.md`
+- `docs/workflow/recuperacao-e-padroes-de-ambiente.md`
+- `docs/produto/plano-de-implementacao.md`
+- `docs/produto/priorizacao.md`
+- `docs/esocial/plano-implementacao.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Resultado:**  
+- workflow do projeto reforcado com protocolo explicito antes e depois de cada implementacao
+- regra de precedencia entre planos documentada
+- proxima frente do produto alinhada com a trilha estrutural antes do retorno ao historico funcional

@@ -53,7 +53,12 @@
    - consulta de retorno.
 
 ## Proxima implementacao sugerida
-- `S-2205 - Alteracao cadastral do trabalhador`
+- `S-2205 - Alteracao cadastral do trabalhador`, quando a frente ativa do produto retornar ao historico funcional
+
+## Observacao de precedencia
+- este documento detalha a sequencia tecnica da trilha eSocial;
+- a ordem macro de execucao do projeto continua sendo definida por `docs/produto/plano-de-implementacao.md` e `docs/produto/priorizacao.md`;
+- portanto, `S-2205` permanece como proxima implementacao natural dentro da trilha do trabalhador, mas nao substitui automaticamente a frente estrutural atualmente priorizada no produto.
 
 ## Justificativa
 - aproveita o modulo de `Servidor` ja existente;

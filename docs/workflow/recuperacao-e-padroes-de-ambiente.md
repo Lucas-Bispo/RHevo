@@ -69,4 +69,6 @@ Escopo principal da reversao aplicada:
 - subir backend e frontend a partir do `WSL Ubuntu 24.04`;
 - validar `/login` e rotas principais no ambiente Linux local;
 - registrar incidentes e reversoes antes de retomar qualquer feature;
-- nao continuar desenvolvimento de novas trilhas enquanto o ambiente nao estiver estavel.
+- nao continuar desenvolvimento de novas trilhas enquanto o ambiente nao estiver estavel;
+- seguir o protocolo formal definido em `FOLHANOVA-WORKFLOW.md`;
+- alinhar `docs/produto/` e `docs/esocial/` antes de iniciar qualquer nova frente quando houver divergencia de prioridade.

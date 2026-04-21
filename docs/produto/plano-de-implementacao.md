@@ -27,6 +27,11 @@
 - Evoluir o painel de eventos com acoes de processamento e reprocessamento.
 - Depois voltar ao historico funcional com a base estrutural mais completa.
 
+## Regra de continuidade
+- a ordem macro de evolucao do produto deve partir deste documento;
+- quando `docs/esocial/plano-implementacao.md` sugerir um proximo evento diferente, isso deve ser tratado como detalhamento tecnico da trilha eSocial, nao como mudanca automatica da prioridade global do produto;
+- qualquer troca de frente deve ser refletida antes em `docs/produto/priorizacao.md`, no backlog e na linha do tempo.
+
 ## Dependencias posteriores
 - CRUD de lotacoes, cargos e funcoes.
 - Parametros do orgao publico.

@@ -24,4 +24,9 @@
 - `5. Parametros do orgao publico`: implementacao inicial concluida.
 - `6. Rubricas`: implementacao inicial concluida.
 - `7. Painel operacional de eventos eSocial`: implementacao inicial concluida.
-- Proxima frente recomendada: `8. Atualizacao cadastral e contratual do servidor`.
+- Proxima frente recomendada: `8. aprofundar S-1000, S-1010 e a operacao do painel de eventos`.
+
+## Regra de alinhamento com eSocial
+- `docs/esocial/plano-implementacao.md` continua sendo a referencia tecnica para a ordem dos eventos;
+- a frente ativa do projeto, porem, deve respeitar esta priorizacao de produto;
+- o retorno para `S-2205`, `S-2206`, `S-2230` e `S-2299` deve ocorrer somente depois da consolidacao estrutural prevista em `docs/produto/plano-de-implementacao.md`, salvo replanejamento explicito documentado.
