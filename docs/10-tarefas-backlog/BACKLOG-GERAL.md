@@ -1,3 +1,31 @@
+### PRODUTO-S1000-CLASSIFICACAO-TRIBUTARIA-CONTROLADA - 21/04/2026
+
+**Descricao:**
+Evoluir o modulo de parametros do orgao publico para deixar `classTrib` menos livre, usando uma lista inicial controlada de classificacoes tributarias suportadas nesta etapa do `S-1000`.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Requests/UpdateOrgaoPublicoRequest.php`
+- `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- restringir `classificacao_tributaria` aos codigos atualmente suportados pelo produto;
+- trocar o campo livre da tela por select;
+- cobrir rejeicao de codigo nao mapeado por teste;
+- validar login, frontend e suite focada antes de concluir.
+
+**Resultado:**
+- `classificacao_tributaria` passou a aceitar apenas a lista inicial controlada pelo produto;
+- a tela de parametros do orgao publico passou a usar select para `classTrib`;
+- codigo nao mapeado deixa de gerar evento `S-1000` pendente;
+- validacao focada de `OrgaoPublicoTest` passou com `7` testes e `38` assercoes.
+
 # FolhaNova - Backlog Geral
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0

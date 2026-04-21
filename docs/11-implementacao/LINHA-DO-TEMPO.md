@@ -2,6 +2,32 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 21/04/2026 - 20:55 - Classificacao Tributaria Controlada no S-1000
+
+**Acao realizada:**
+- Evoluido o modulo de parametros do orgao publico para deixar `classTrib` menos livre na edicao do `S-1000`.
+- Restringida `classificacao_tributaria` a uma lista inicial controlada de codigos suportados nesta etapa do produto.
+- Substituido o campo livre da tela por um select com os codigos atualmente tratados pelo sistema.
+- Criado teste focado garantindo que codigo nao mapeado e rejeitado sem gerar evento `S-1000` pendente.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Requests/UpdateOrgaoPublicoRequest.php`
+- `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/OrgaoPublicoTest.php`: `7` testes verdes e `38` assercoes.
+- `tests/Feature/Auth/AuthenticationTest.php`: `5` testes verdes e `15` assercoes.
+- `GET /login`: `200 OK`.
+- Vite serviu `resources/js/app.js`.
+- `GET /orgao-publico` sem sessao redirecionou corretamente para `/login`.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 10:05 - Retomada Operacional do Ambiente Local
 
 **Acao realizada:**

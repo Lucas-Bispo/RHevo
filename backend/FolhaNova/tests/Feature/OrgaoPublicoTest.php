@@ -193,6 +193,42 @@ class OrgaoPublicoTest extends TestCase
         ]);
     }
 
+    public function test_updating_orgao_publico_rejects_unmapped_classificacao_tributaria(): void
+    {
+        $tenant = $this->createTenant();
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('orgao-publico.edit'))
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Prefeitura Municipal do Sol',
+                'tipo_inscricao' => '1',
+                'numero_inscricao' => '12345678000199',
+                'classificacao_tributaria' => '999',
+                'natureza_juridica' => '1244',
+                'inicio_validade' => '2026-04',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'homologacao',
+                'contato_nome' => 'Marina Souza',
+                'contato_cpf' => '12345678901',
+                'contato_email' => 'rh@sol.gov.br',
+                'telefone' => '1133334444',
+                'observacoes' => 'Cadastro inicial do orgao para trilha eSocial.',
+            ]);
+
+        $response
+            ->assertRedirect(route('orgao-publico.edit'))
+            ->assertSessionHasErrors(['classificacao_tributaria']);
+
+        $this->assertDatabaseMissing('eventos_esocial', [
+            'tenant_id' => $tenant->id,
+            'evento' => 'S-1000',
+        ]);
+    }
+
     public function test_updating_orgao_publico_omits_empty_contact_block_and_natureza_juridica_for_cpf(): void
     {
         $tenant = $this->createTenant();
