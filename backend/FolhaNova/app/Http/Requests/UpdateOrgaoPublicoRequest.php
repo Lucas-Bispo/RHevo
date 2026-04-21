@@ -13,8 +13,8 @@ class UpdateOrgaoPublicoRequest extends FormRequest
             'name' => trim((string) $this->input('name')),
             'tipo_inscricao' => $this->input('tipo_inscricao') ? (string) $this->input('tipo_inscricao') : null,
             'numero_inscricao' => $this->formatDocumento($this->input('tipo_inscricao'), $this->input('numero_inscricao')),
-            'classificacao_tributaria' => $this->nullableTrimmed('classificacao_tributaria'),
-            'natureza_juridica' => $this->nullableTrimmed('natureza_juridica'),
+            'classificacao_tributaria' => $this->onlyDigitsOrNull('classificacao_tributaria'),
+            'natureza_juridica' => $this->onlyDigitsOrNull('natureza_juridica'),
             'inicio_validade' => $this->nullableTrimmed('inicio_validade'),
             'fim_validade' => $this->nullableTrimmed('fim_validade'),
             'ambiente_esocial' => $this->nullableTrimmed('ambiente_esocial'),
@@ -40,8 +40,8 @@ class UpdateOrgaoPublicoRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'tipo_inscricao' => ['required', 'in:1,2'],
             'numero_inscricao' => ['required', 'string', 'max:18'],
-            'classificacao_tributaria' => ['nullable', 'string', 'max:4'],
-            'natureza_juridica' => ['nullable', 'string', 'max:4'],
+            'classificacao_tributaria' => ['required', 'digits_between:1,4'],
+            'natureza_juridica' => ['nullable', 'digits:4'],
             'inicio_validade' => ['required', 'regex:/^\d{4}-(0[1-9]|1[0-2])$/'],
             'fim_validade' => ['nullable', 'regex:/^\d{4}-(0[1-9]|1[0-2])$/'],
             'ambiente_esocial' => ['required', 'in:homologacao,producao'],
@@ -66,6 +66,10 @@ class UpdateOrgaoPublicoRequest extends FormRequest
 
             if ($tipoInscricao === '2' && strlen($numeroInscricao) !== 11) {
                 $validator->errors()->add('numero_inscricao', 'Informe um CPF valido para o orgao publico.');
+            }
+
+            if ($tipoInscricao === '1' && ! $this->filled('natureza_juridica')) {
+                $validator->errors()->add('natureza_juridica', 'Informe a natureza juridica para inscricoes por CNPJ.');
             }
 
             if ($contatoCpf !== '' && strlen($contatoCpf) !== 11) {
@@ -103,6 +107,13 @@ class UpdateOrgaoPublicoRequest extends FormRequest
         $value = trim((string) $this->input($key));
 
         return $value === '' ? null : $value;
+    }
+
+    private function onlyDigitsOrNull(string $key): ?string
+    {
+        $digits = preg_replace('/\D+/', '', (string) $this->input($key)) ?? '';
+
+        return $digits === '' ? null : $digits;
     }
 
     private function formatDocumento(mixed $tipoInscricao, mixed $numeroInscricao): ?string

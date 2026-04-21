@@ -6,6 +6,8 @@
 ### Identificacao do empregador
 - Validar `CPF/CNPJ` conforme `tpInsc`.
 - `nrInsc` deve ser compativel com `tpInsc`.
+- `classTrib` deve ser obrigatorio no cadastro institucional.
+- `natJurid` deve ser obrigatoria para inscricoes por `CNPJ`.
 - `iniValid` e `fimValid` devem respeitar vigencia logica.
 - Eventos de tabela nao devem nascer com vigencia futura incoerente.
 

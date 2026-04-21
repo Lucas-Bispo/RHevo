@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### PRODUTO-S1000-VALIDACOES-INSTITUCIONAIS - 20/04/2026
+
+**Descricao:**  
+Reforcar o modulo de parametros do orgao publico com validacoes mais consistentes para a trilha `S-1000`, exigindo `classificacao tributaria` e `natureza juridica` quando a inscricao institucional for por `CNPJ`.
+
+**Status:** Concluido  
+**Prioridade:** Alta  
+**Arquivos envolvidos:**  
+- `backend/FolhaNova/app/Http/Requests/UpdateOrgaoPublicoRequest.php`
+- `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Resultado:**  
+- validacao institucional do `S-1000` ficou mais aderente a base documental do projeto
+- atualizacao invalida deixou de gerar evento pendente inconsistente
+- tela passou a sinalizar melhor os campos estruturais essenciais
+
 ### PRODUTO-MODULO-CARGOS-E-FUNCOES-INICIAL - 20/04/2026
 
 **Descricao:**  

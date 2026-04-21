@@ -2,6 +2,30 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 20/04/2026 - 21:45 - Reforco das Validacoes Institucionais do S-1000
+
+**Acao realizada:**  
+- Reforcada a validacao do modulo `OrgaoPublico` para exigir `classificacao tributaria` no cadastro institucional.
+- Passou a ser obrigatoria a `natureza juridica` quando a inscricao do ente for por `CNPJ`.
+- Normalizados os campos numericos de `classificacao tributaria` e `natureza juridica` antes da persistencia.
+- Ajustada a tela de edicao para sinalizar melhor os campos obrigatorios do bloco institucional.
+- Criado teste de feature cobrindo a rejeicao da atualizacao invalida sem gerar evento `S-1000` inconsistente.
+
+**Arquivos criados / alterados:**  
+- `backend/FolhaNova/app/Http/Requests/UpdateOrgaoPublicoRequest.php`
+- `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Decisoes tecnicas:**  
+- A rodada ficou restrita a validacoes bem sustentadas pela documentacao ja consolidada no projeto, sem abrir uma ampliacao grande do payload do `S-1000`.
+- A exigencia de `natureza juridica` foi aplicada apenas para inscricoes por `CNPJ`, evitando endurecer indevidamente cenarios por `CPF`.
+- O teste foi incluido para impedir regressao silenciosa na geracao do evento institucional pendente.
+
+**Status:** Concluido ✅
+
 ### 20/04/2026 - 13:40 - Modulos Iniciais de Cargos e Funcoes
 
 **Acao realizada:**  

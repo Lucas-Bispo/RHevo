@@ -129,6 +129,42 @@ class OrgaoPublicoTest extends TestCase
         $this->assertSame('98765432000110', data_get($evento->payload, 'ideEmpregador.nrInsc'));
     }
 
+    public function test_updating_orgao_publico_requires_classificacao_tributaria_and_natureza_juridica_for_cnpj(): void
+    {
+        $tenant = $this->createTenant();
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('orgao-publico.edit'))
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Prefeitura Municipal do Sol',
+                'tipo_inscricao' => '1',
+                'numero_inscricao' => '12345678000199',
+                'classificacao_tributaria' => '',
+                'natureza_juridica' => '',
+                'inicio_validade' => '2026-04',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'homologacao',
+                'contato_nome' => 'Marina Souza',
+                'contato_cpf' => '12345678901',
+                'contato_email' => 'rh@sol.gov.br',
+                'telefone' => '1133334444',
+                'observacoes' => 'Cadastro inicial do orgao para trilha eSocial.',
+            ]);
+
+        $response
+            ->assertRedirect(route('orgao-publico.edit'))
+            ->assertSessionHasErrors(['classificacao_tributaria', 'natureza_juridica']);
+
+        $this->assertDatabaseMissing('eventos_esocial', [
+            'tenant_id' => $tenant->id,
+            'evento' => 'S-1000',
+        ]);
+    }
+
     private function createTenant(array $overrides = []): Tenant
     {
         $this->ensureTenantsTableExists();
