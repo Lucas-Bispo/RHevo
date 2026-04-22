@@ -27,11 +27,11 @@
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['pendentes'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-amber-300">Fila aguardando processamento</p>
             </a>
-            <div class="stat-card">
+            <a href="{{ route('eventos-esocial.index', ['status' => 'processado']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
                 <p class="text-sm text-slate-400">Processados</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['processados'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-emerald-300">Com trilha de retorno</p>
-            </div>
+            </a>
             <a href="{{ route('eventos-esocial.index', ['status' => 'erro']) }}" class="stat-card block transition hover:border-rose-400/40 hover:bg-rose-500/5 focus:outline-none focus:ring-2 focus:ring-rose-400/50">
                 <p class="text-sm text-slate-400">Com erro</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['erros'], 0, ',', '.') }}</p>

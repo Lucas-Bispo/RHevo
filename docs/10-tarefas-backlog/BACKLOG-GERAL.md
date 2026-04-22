@@ -1,3 +1,28 @@
+### PRODUTO-PAINEL-ESOCIAL-ATALHO-PROCESSADOS - 21/04/2026
+
+**Descricao:**
+Transformar o indicador `Processados` do painel eSocial em atalho operacional para a listagem filtrada por eventos processados.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- preservar a leitura visual do card `Processados`;
+- adicionar link para `eventos-esocial.index?status=processado`;
+- cobrir o atalho com teste de feature;
+- validar painel, login e frontend antes de concluir.
+
+**Resultado:**
+- card `Processados` passou a funcionar como atalho para a listagem filtrada por `status=processado`;
+- leitura visual do resumo foi preservada;
+- teste focado confirma o link operacional para eventos processados;
+- validacao focada do painel passou com `10` testes e `37` assercoes.
+
 ### PRODUTO-PAINEL-ESOCIAL-ATALHO-PENDENTES - 21/04/2026
 
 **Descricao:**

@@ -146,4 +146,31 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('Fila aguardando processamento')
             ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'pendente']).'"', false);
     }
+
+    public function test_eventos_index_links_processed_summary_to_processed_filter(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 81,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 81,
+            'evento' => 'S-1000',
+            'status' => 'processado',
+            'ambiente' => 'homologacao',
+            'protocolo' => 'PROTO-81',
+            'recibo' => 'REC-81',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'));
+
+        $response
+            ->assertOk()
+            ->assertSee('Processados')
+            ->assertSee('Com trilha de retorno')
+            ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'processado']).'"', false);
+    }
 }
