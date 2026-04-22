@@ -65,7 +65,9 @@ class EventoEsocialShowTest extends TestCase
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-2200']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'processado']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['ambiente' => 'producao']).'"', false)
-            ->assertSee('Mesmo ambiente');
+            ->assertSee('Mesmo ambiente')
+            ->assertSee('Abrir servidor')
+            ->assertSee('href="'.route('servidores.show', $servidor).'"', false);
     }
 
     public function test_user_can_requeue_failed_event_for_local_reprocessing(): void

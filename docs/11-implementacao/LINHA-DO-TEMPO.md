@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Atalho de Servidor no Detalhe eSocial
+
+**Acao realizada:**
+- Adicionado botao `Abrir servidor` no detalhe do evento eSocial quando ha servidor vinculado.
+- Eventos institucionais seguem sem link inaplicavel para servidor.
+- Fechada a navegacao de ida e volta entre detalhe do servidor e detalhe do evento eSocial.
+- Teste de detalhe eSocial passou a validar o link para o servidor.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventoEsocialShowTest.php` e `tests/Feature/ServidorDetailTest.php`: `7` testes verdes e `37` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Atalho de Evento no Detalhe do Servidor
 
 **Acao realizada:**

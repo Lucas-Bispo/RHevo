@@ -1,3 +1,29 @@
+### PRODUTO-DETALHE-ESOCIAL-ATALHO-SERVIDOR - 22/04/2026
+
+**Descricao:**
+Adicionar no detalhe do evento eSocial um atalho para abrir o detalhe do servidor vinculado quando o evento estiver relacionado a um vinculo funcional.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- exibir acao `Abrir servidor` apenas quando o evento possuir servidor vinculado;
+- apontar para `servidores.show`;
+- preservar eventos institucionais sem botao inaplicavel;
+- cobrir o atalho com teste de feature.
+
+**Resultado:**
+- detalhe eSocial passou a exibir `Abrir servidor` quando o evento tem vinculo funcional;
+- eventos institucionais continuam sem acao de servidor;
+- navegacao eSocial -> RH ficou direta para validacao manual;
+- testes focados confirmaram o link e o detalhe do servidor.
+
 ### PRODUTO-SERVIDOR-ATALHO-DETALHE-EVENTO - 22/04/2026
 
 **Descricao:**

@@ -41,6 +41,9 @@
                         <a href="{{ route('eventos-esocial.index', ['evento' => $eventoEsocial->evento]) }}" class="btn btn-ghost">Mesmo evento</a>
                         <a href="{{ route('eventos-esocial.index', ['status' => $eventoEsocial->status]) }}" class="btn btn-ghost">Mesmo status</a>
                         <a href="{{ route('eventos-esocial.index', ['ambiente' => $eventoEsocial->ambiente]) }}" class="btn btn-ghost">Mesmo ambiente</a>
+                        @if ($eventoEsocial->servidor)
+                            <a href="{{ route('servidores.show', $eventoEsocial->servidor) }}" class="btn btn-info">Abrir servidor</a>
+                        @endif
                     </div>
                 </div>
 
