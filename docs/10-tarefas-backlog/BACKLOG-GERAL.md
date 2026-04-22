@@ -1,3 +1,31 @@
+### PRODUTO-S1000-STATUS-VIGENCIA-INSTITUCIONAL - 22/04/2026
+
+**Descricao:**
+Melhorar o controle operacional da vigencia do `S-1000` exibindo status claro da janela institucional no modulo de orgao publico.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/OrgaoPublicoController.php`
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- calcular status da vigencia a partir de `inicio_validade` e `fim_validade`;
+- exibir o status no resumo e na configuracao eSocial do orgao publico;
+- cobrir vigencia futura e encerrada com teste de feature;
+- registrar a funcionalidade na documentacao.
+
+**Resultado:**
+- tela de orgao publico passou a exibir status de vigencia do `S-1000`;
+- status diferencia vigencia ativa, futura, encerrada e nao definida;
+- resumo e bloco de configuracao eSocial foram alinhados para a leitura operacional;
+- teste focado confirmou vigencia ativa, futura e encerrada.
+
 ### PRODUTO-S1000-VALIDACAO-DOCUMENTO-EMPREGADOR - 22/04/2026
 
 **Descricao:**

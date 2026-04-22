@@ -17,6 +17,7 @@
 - Edicao operacional do tenant atual com dados institucionais e parametros iniciais do `S-1000`.
 - Classificacao tributaria do `S-1000` controlada por lista inicial de codigos suportados pelo produto.
 - Validacao de CPF/CNPJ institucional por digito verificador no fluxo do `S-1000`.
+- Leitura operacional do status de vigencia institucional do `S-1000`.
 - Modulo inicial de lotacoes com listagem, cadastro e edicao.
 - Modulo inicial de cargos com listagem, cadastro e edicao.
 - Modulo inicial de funcoes com listagem, cadastro e edicao.

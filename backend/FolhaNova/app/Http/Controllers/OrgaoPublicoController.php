@@ -21,6 +21,7 @@ class OrgaoPublicoController extends Controller
             'tenant' => $tenant,
             'parametros' => $parametros,
             'eventoS1000' => $this->resolveEventoS1000($tenant),
+            'vigenciaStatus' => $this->resolveVigenciaStatus($parametros),
         ]);
     }
 
@@ -73,5 +74,47 @@ class OrgaoPublicoController extends Controller
             ->where('evento', 'S-1000')
             ->latest('id')
             ->first();
+    }
+
+    /**
+     * @param  array<string, mixed>  $parametros
+     * @return array{label: string, detail: string, tone: string}
+     */
+    private function resolveVigenciaStatus(array $parametros): array
+    {
+        $inicio = trim((string) ($parametros['inicio_validade'] ?? ''));
+        $fim = trim((string) ($parametros['fim_validade'] ?? ''));
+
+        if ($inicio === '') {
+            return [
+                'label' => 'Vigencia nao definida',
+                'detail' => 'Informe o inicio de validade do S-1000',
+                'tone' => 'text-slate-300',
+            ];
+        }
+
+        $competenciaAtual = now()->format('Y-m');
+
+        if ($inicio > $competenciaAtual) {
+            return [
+                'label' => 'Vigencia futura',
+                'detail' => "Inicio previsto para {$inicio}",
+                'tone' => 'text-amber-300',
+            ];
+        }
+
+        if ($fim !== '' && $fim < $competenciaAtual) {
+            return [
+                'label' => 'Vigencia encerrada',
+                'detail' => "Encerrada em {$fim}",
+                'tone' => 'text-rose-300',
+            ];
+        }
+
+        return [
+            'label' => 'Vigencia ativa',
+            'detail' => $fim !== '' ? "Ativa ate {$fim}" : 'Ativa sem fim informado',
+            'tone' => 'text-emerald-300',
+        ];
     }
 }

@@ -53,7 +53,7 @@
                 <div class="stat-card">
                     <p class="text-sm text-slate-400">Inicio de validade</p>
                     <p class="mt-3 text-2xl font-semibold text-white">{{ $parametros['inicio_validade'] ?? 'Nao definido' }}</p>
-                    <p class="mt-2 text-sm text-amber-300">{{ $parametros['fim_validade'] ?? null ? 'Cadastro com janela delimitada' : 'Cadastro com vigencia em aberto' }}</p>
+                    <p class="mt-2 text-sm {{ $vigenciaStatus['tone'] }}">{{ $vigenciaStatus['label'] }}</p>
                 </div>
                 <div class="stat-card">
                     <p class="text-sm text-slate-400">Evento S-1000</p>
@@ -131,6 +131,13 @@
                                 <div class="flex items-start justify-between gap-4">
                                     <dt>Janela de vigencia</dt>
                                     <dd class="text-right text-white">{{ $vigenciaLabel }}</dd>
+                                </div>
+                                <div class="flex items-start justify-between gap-4">
+                                    <dt>Status de vigencia</dt>
+                                    <dd class="text-right">
+                                        <span class="{{ $vigenciaStatus['tone'] }}">{{ $vigenciaStatus['label'] }}</span>
+                                        <span class="block text-xs text-slate-500">{{ $vigenciaStatus['detail'] }}</span>
+                                    </dd>
                                 </div>
                                 <div class="flex items-start justify-between gap-4">
                                     <dt>Contato</dt>

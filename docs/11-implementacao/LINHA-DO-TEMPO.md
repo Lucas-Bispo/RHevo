@@ -2,6 +2,29 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Status de Vigencia Institucional no S-1000
+
+**Acao realizada:**
+- Adicionado calculo de status de vigencia institucional para o modulo de orgao publico.
+- A tela passa a diferenciar vigencia ativa, futura, encerrada e nao definida.
+- O status foi exibido no resumo superior e no bloco de configuracao eSocial.
+- Criados testes para preservar a leitura operacional das janelas ativa, futura e encerrada.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/OrgaoPublicoController.php`
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/OrgaoPublicoTest.php`: `12` testes verdes e `66` assercoes.
+- Validacao manual em `localhost` deixada para a rodada do usuario, conforme orientacao.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Validacao de Documento Institucional no S-1000
 
 **Acao realizada:**

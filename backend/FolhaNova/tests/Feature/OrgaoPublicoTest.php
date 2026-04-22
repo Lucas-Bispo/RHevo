@@ -56,7 +56,7 @@ class OrgaoPublicoTest extends TestCase
             ->get(route('orgao-publico.show'))
             ->assertOk()
             ->assertSee('Nao se aplica para inscricao por CPF')
-            ->assertSee('Cadastro com vigencia em aberto')
+            ->assertSee('Vigencia ativa')
             ->assertSee('2026-04 ate Em aberto');
     }
 
@@ -85,6 +85,84 @@ class OrgaoPublicoTest extends TestCase
             ->get(route('orgao-publico.show'))
             ->assertOk()
             ->assertSee('85 - Administracao publica direta, autarquias e fundacoes');
+    }
+
+    public function test_orgao_publico_screen_shows_validity_status(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2020-01',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.show'))
+            ->assertOk()
+            ->assertSee('Status de vigencia')
+            ->assertSee('Vigencia ativa')
+            ->assertSee('Ativa sem fim informado');
+    }
+
+    public function test_orgao_publico_screen_shows_future_and_closed_validity_statuses(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2099-01',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.show'))
+            ->assertOk()
+            ->assertSee('Vigencia futura')
+            ->assertSee('Inicio previsto para 2099-01');
+
+        $tenant->update([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2020-01',
+                    'fim_validade' => '2020-12',
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.show'))
+            ->assertOk()
+            ->assertSee('Vigencia encerrada')
+            ->assertSee('Encerrada em 2020-12');
     }
 
     public function test_orgao_publico_screen_links_to_s1000_event_detail(): void
