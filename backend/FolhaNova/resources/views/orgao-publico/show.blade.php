@@ -153,6 +153,7 @@
                                 </div>
                                 <p class="mt-2 text-sm text-slate-300">Ambiente: {{ ucfirst($eventoS1000->ambiente) }}</p>
                                 <p class="mt-1 text-xs text-slate-500">Atualizado em {{ optional($eventoS1000->updated_at)->format('d/m/Y H:i') }}</p>
+                                <a href="{{ route('eventos-esocial.show', $eventoS1000) }}" class="btn btn-ghost btn-sm mt-4">Detalhar evento</a>
                             </div>
                         @else
                             <p class="mt-4 text-sm text-slate-400">Nenhum evento S-1000 foi preparado ainda.</p>

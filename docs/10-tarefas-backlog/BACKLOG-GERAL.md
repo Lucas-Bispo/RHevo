@@ -1,3 +1,28 @@
+### PRODUTO-S1000-ATALHO-DETALHE-EVENTO - 21/04/2026
+
+**Descricao:**
+Adicionar atalho da tela de parametros do orgao publico para o detalhe do evento `S-1000` no painel eSocial.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- exibir o atalho apenas quando existir evento `S-1000`;
+- preservar o card atual da trilha do S-1000;
+- cobrir o link com teste de feature;
+- validar orgao publico, login e frontend antes de concluir.
+
+**Resultado:**
+- tela de parametros do orgao publico passou a exibir atalho para detalhar o evento `S-1000`;
+- o link aparece apenas quando existe evento preparado;
+- card da trilha do S-1000 foi preservado;
+- validacao focada de `OrgaoPublicoTest` passou com `9` testes e `43` assercoes.
+
 ### PRODUTO-PAINEL-ESOCIAL-ATALHO-ERROS - 21/04/2026
 
 **Descricao:**

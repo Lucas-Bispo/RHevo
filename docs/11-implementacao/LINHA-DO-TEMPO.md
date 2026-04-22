@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 21/04/2026 - 22:20 - Atalho do S-1000 para Detalhe do Evento
+
+**Acao realizada:**
+- Adicionado atalho na tela de parametros do orgao publico para o detalhe do evento `S-1000`.
+- O botao aparece somente quando ha evento preparado para o tenant atual.
+- Criado teste cobrindo o link para o detalhe do evento eSocial.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/OrgaoPublicoTest.php`: `9` testes verdes e `43` assercoes.
+- `tests/Feature/Auth/AuthenticationTest.php`: `5` testes verdes e `15` assercoes.
+- `GET /login`: `200 OK`.
+- CSS e JS compilados em `/build/assets`: `200 OK`.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 22:10 - Atalho para Eventos com Erro no Painel eSocial
 
 **Acao realizada:**

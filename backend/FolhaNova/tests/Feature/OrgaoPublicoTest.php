@@ -87,6 +87,42 @@ class OrgaoPublicoTest extends TestCase
             ->assertSee('85 - Administracao publica direta, autarquias e fundacoes');
     }
 
+    public function test_orgao_publico_screen_links_to_s1000_event_detail(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '12.345.678/0001-99',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2026-04',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $evento = EventoEsocial::query()->create([
+            'tenant_id' => $tenant->id,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.show'))
+            ->assertOk()
+            ->assertSee('Detalhar evento')
+            ->assertSee('href="'.route('eventos-esocial.show', $evento).'"', false);
+    }
+
     public function test_user_can_update_orgao_publico_and_generate_pending_s1000(): void
     {
         $tenant = $this->createTenant();
