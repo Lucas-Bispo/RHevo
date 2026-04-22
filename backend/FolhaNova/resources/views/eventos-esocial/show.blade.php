@@ -29,10 +29,13 @@
 
                     <div class="flex flex-wrap gap-3">
                         @if ($eventoEsocial->status === 'erro')
-                            <form method="POST" action="{{ route('eventos-esocial.reprocessar', $eventoEsocial) }}">
-                                @csrf
-                                <button type="submit" class="btn btn-warning">Reprocessar</button>
-                            </form>
+                            <div class="flex max-w-md flex-col gap-2 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-100">
+                                <p>Evento com erro pode ser reenfileirado para reprocessamento local.</p>
+                                <form method="POST" action="{{ route('eventos-esocial.reprocessar', $eventoEsocial) }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning">Reprocessar</button>
+                                </form>
+                            </div>
                         @endif
                         <a href="{{ route('eventos-esocial.index') }}" class="btn btn-ghost">Voltar para painel</a>
                     </div>

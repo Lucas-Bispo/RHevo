@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 21/04/2026 - 21:45 - Orientacao de Reprocessamento no Detalhe eSocial
+
+**Acao realizada:**
+- Adicionada orientacao visual no detalhe de eventos com `status = erro`.
+- A tela passa a explicar que o evento pode ser reenfileirado para reprocessamento local.
+- Criado teste focado para preservar a leitura operacional da acao.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `8` testes verdes e `28` assercoes.
+- `tests/Feature/Auth/AuthenticationTest.php`: `5` testes verdes e `15` assercoes.
+- `GET /login`: `200 OK`.
+- CSS e JS compilados em `/build/assets`: `200 OK`.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 21:35 - Resumo de Eventos com Erro no Painel eSocial
 
 **Acao realizada:**

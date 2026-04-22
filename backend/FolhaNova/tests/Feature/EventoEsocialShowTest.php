@@ -104,6 +104,29 @@ class EventoEsocialShowTest extends TestCase
         ]);
     }
 
+    public function test_failed_event_detail_explains_local_reprocessing_action(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 80,
+        ]);
+
+        $evento = EventoEsocial::create([
+            'tenant_id' => 80,
+            'evento' => 'S-1010',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Falha de validacao local.',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.show', $evento))
+            ->assertOk()
+            ->assertSee('Evento com erro pode ser reenfileirado para reprocessamento local.')
+            ->assertSee('Reprocessar');
+    }
+
     public function test_user_cannot_requeue_processed_event(): void
     {
         $user = User::factory()->create([

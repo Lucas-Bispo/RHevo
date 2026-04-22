@@ -107,6 +107,31 @@ Evoluir o painel operacional de eventos eSocial com um indicador de eventos com 
 - teste focado confirmou o resumo de erros;
 - validação do painel passou com `7` testes e `25` assercoes.
 
+### PRODUTO-PAINEL-ESOCIAL-ORIENTACAO-REPROCESSAMENTO - 21/04/2026
+
+**Descricao:**
+Melhorar a tela de detalhe de eventos eSocial com uma orientacao direta para eventos com erro que podem ser reenfileirados para reprocessamento local.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- exibir orientacao apenas quando `status = erro`;
+- manter a acao de reprocessamento existente;
+- cobrir a leitura operacional com teste de feature;
+- validar painel, login e frontend antes de concluir.
+
+**Resultado:**
+- detalhe do evento com erro passou a explicar o reprocessamento local;
+- acao de reprocessamento existente foi preservada sem mudanca de regra;
+- validacao focada do painel passou com `8` testes e `28` assercoes;
+- login e assets compilados permaneceram operacionais.
+
 ### PRODUTO-S1000-LEITURA-CLASSIFICACAO-TRIBUTARIA - 21/04/2026
 
 **Descricao:**
