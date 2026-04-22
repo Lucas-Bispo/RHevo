@@ -155,7 +155,15 @@
                                     </td>
                                     <td>{{ optional($evento->updated_at)->format('d/m/Y H:i') }}</td>
                                     <td class="text-right">
-                                        <a href="{{ route('eventos-esocial.show', $evento) }}" class="btn btn-ghost btn-sm">Detalhar</a>
+                                        <div class="flex flex-wrap justify-end gap-2">
+                                            @if ($evento->status === 'erro')
+                                                <form method="POST" action="{{ route('eventos-esocial.reprocessar', $evento) }}">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-warning btn-sm">Reprocessar</button>
+                                                </form>
+                                            @endif
+                                            <a href="{{ route('eventos-esocial.show', $evento) }}" class="btn btn-ghost btn-sm">Detalhar</a>
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

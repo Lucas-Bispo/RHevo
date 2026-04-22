@@ -1,3 +1,30 @@
+### PRODUTO-PAINEL-ESOCIAL-REPROCESSAR-NA-LISTA - 22/04/2026
+
+**Descricao:**
+Adicionar acao de reprocessamento local diretamente na listagem do painel eSocial para eventos com erro, mantendo o detalhe como tela de auditoria completa.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- exibir botao `Reprocessar` apenas em eventos com status `erro`;
+- reutilizar a rota e o service de reprocessamento existentes;
+- cobrir a acao visivel na listagem com teste de feature;
+- validar a suite adjacente de detalhe e reprocessamento.
+
+**Resultado:**
+- painel eSocial passou a exibir `Reprocessar` diretamente na listagem para eventos com erro;
+- eventos pendentes ou processados continuam sem acao de reprocessamento na lista;
+- rota e service existentes foram reaproveitados sem alterar contrato de backend;
+- testes focados confirmaram a visibilidade da acao e o fluxo de reprocessamento local.
+
 ### PRODUTO-S1010-ATALHO-PAINEL-EVENTOS - 22/04/2026
 
 **Descricao:**

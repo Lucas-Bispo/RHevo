@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Reprocessamento no Painel eSocial
+
+**Acao realizada:**
+- Adicionada acao `Reprocessar` diretamente na listagem do painel eSocial para eventos com status `erro`.
+- A acao reutiliza a rota existente de reprocessamento local e mantem a tela de detalhe como auditoria completa.
+- Eventos pendentes e processados nao exibem a acao na listagem.
+- Teste de painel passou a validar que somente eventos com erro recebem o formulario de reprocessamento.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `13` testes verdes e `58` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Atalho S-1010 no Painel eSocial
 
 **Acao realizada:**

@@ -258,4 +258,38 @@ class EventosEsocialIndexTest extends TestCase
             ->assertDontSee('cadastro_inicial_servidor')
             ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false);
     }
+
+    public function test_eventos_index_shows_reprocess_action_only_for_failed_events(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 84,
+        ]);
+
+        $eventoComErro = EventoEsocial::create([
+            'tenant_id' => 84,
+            'evento' => 'S-1010',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Falha de validacao local.',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        $eventoProcessado = EventoEsocial::create([
+            'tenant_id' => 84,
+            'evento' => 'S-1000',
+            'status' => 'processado',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'));
+
+        $response
+            ->assertOk()
+            ->assertSee('Reprocessar')
+            ->assertSee('action="'.route('eventos-esocial.reprocessar', $eventoComErro).'"', false)
+            ->assertDontSee('action="'.route('eventos-esocial.reprocessar', $eventoProcessado).'"', false);
+    }
 }

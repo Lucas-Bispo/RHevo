@@ -42,6 +42,7 @@
 - Reprocessamento local de evento eSocial com erro, retornando o registro para `pendente` sem alterar o payload.
 - Registro inicial de evento `S-2200` pendente no fluxo de admissao.
 - Painel para leitura de eventos institucionais e eventos vinculados a servidores.
+- Acao de reprocessamento local direto na listagem do painel para eventos com erro.
 - Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010` e `S-2200`.
 - Filtro do painel eSocial para eventos com mensagem de retorno registrada.
 - Tela de detalhe do evento eSocial com atalhos para retornar ao painel filtrado por evento ou status.
