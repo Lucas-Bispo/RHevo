@@ -54,6 +54,33 @@ Normalizar entradas do cadastro de rubricas antes da validacao para evitar dupli
 - validacao focada de rubricas passou com `6` testes e `22` assercoes;
 - login e assets compilados permaneceram operacionais.
 
+### PRODUTO-S1010-FILTRO-TIPO-RUBRICA - 21/04/2026
+
+**Descricao:**
+Adicionar filtro por tipo na listagem de rubricas para facilitar a operacao de proventos, descontos e verbas informativas na preparacao do `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- aceitar filtro `tipo` somente para valores conhecidos;
+- aplicar filtro na query de listagem;
+- adicionar select visual na tela;
+- cobrir comportamento com teste de feature;
+- validar rubricas, login e frontend antes de concluir.
+
+**Resultado:**
+- listagem de rubricas passou a filtrar por `provento`, `desconto` e `informativa`;
+- tela ganhou select dedicado para tipo de rubrica;
+- teste focado confirmou que `tipo=desconto` oculta rubricas de provento;
+- validação de rubricas passou com `7` testes e `26` assercoes.
+
 ### PRODUTO-S1000-LEITURA-CLASSIFICACAO-TRIBUTARIA - 21/04/2026
 
 **Descricao:**

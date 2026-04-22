@@ -18,6 +18,8 @@ class RubricaController extends Controller
         $tenantId = $request->user()?->tenant_id;
         $search = trim((string) $request->string('q'));
         $status = trim((string) $request->string('status'));
+        $tipo = trim((string) $request->string('tipo'));
+        $tipo = in_array($tipo, ['provento', 'desconto', 'informativa'], true) ? $tipo : '';
 
         $baseQuery = Rubrica::query()
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
@@ -34,6 +36,7 @@ class RubricaController extends Controller
                 });
             })
             ->when($status !== '', fn ($query) => $query->where('ativo', $status === 'ativos'))
+            ->when($tipo !== '', fn ($query) => $query->where('tipo', $tipo))
             ->orderBy('nome')
             ->paginate(12)
             ->withQueryString();
@@ -49,6 +52,7 @@ class RubricaController extends Controller
             'filtros' => [
                 'q' => $search,
                 'status' => $status,
+                'tipo' => $tipo,
             ],
         ]);
     }

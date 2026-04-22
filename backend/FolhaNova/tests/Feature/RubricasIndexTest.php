@@ -41,4 +41,45 @@ class RubricasIndexTest extends TestCase
             ->assertSee('Natureza eSocial 1002')
             ->assertSee('S1010-NOT');
     }
+
+    public function test_authenticated_user_can_filter_rubricas_by_tipo(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 64,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 64,
+            'codigo' => 'PROV-001',
+            'nome' => 'Adicional noturno',
+            'natureza' => '1002',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => true,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 64,
+            'codigo' => 'DESC-001',
+            'nome' => 'Desconto sindical',
+            'natureza' => '9219',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['tipo' => 'desconto']));
+
+        $response
+            ->assertOk()
+            ->assertSee('Desconto sindical')
+            ->assertDontSee('Adicional noturno')
+            ->assertSee('value="desconto" selected', false);
+    }
 }
