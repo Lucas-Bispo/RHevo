@@ -1,3 +1,29 @@
+### PRODUTO-SERVIDOR-ATALHO-DETALHE-EVENTO - 22/04/2026
+
+**Descricao:**
+Adicionar no detalhe do servidor um atalho para abrir o detalhe de cada evento eSocial vinculado, melhorando a rastreabilidade entre RH e painel eSocial.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/servidores/show.blade.php`
+- `backend/FolhaNova/tests/Feature/ServidorDetailTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- incluir link `Detalhar evento` em cada evento vinculado ao servidor;
+- apontar para `eventos-esocial.show`;
+- preservar a leitura atual de status, ambiente e data;
+- cobrir o link com teste de feature.
+
+**Resultado:**
+- detalhe do servidor passou a abrir diretamente o detalhe de eventos eSocial vinculados;
+- leitura de status, ambiente e data dos eventos foi preservada;
+- rastreabilidade RH -> eSocial ficou mais direta para validacao manual;
+- testes focados confirmaram o link e a tela de detalhe eSocial.
+
 ### PRODUTO-DETALHE-ESOCIAL-ATALHO-AMBIENTE - 22/04/2026
 
 **Descricao:**

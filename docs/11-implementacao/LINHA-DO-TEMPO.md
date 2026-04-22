@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Atalho de Evento no Detalhe do Servidor
+
+**Acao realizada:**
+- Adicionado link `Detalhar evento` em cada evento eSocial listado no detalhe do servidor.
+- O link leva diretamente para a tela de detalhe do evento eSocial.
+- Preservada a leitura atual de status, ambiente e data no card do evento.
+- Teste do detalhe do servidor passou a validar a navegacao para o evento vinculado.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/servidores/show.blade.php`
+- `backend/FolhaNova/tests/Feature/ServidorDetailTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/ServidorDetailTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `7` testes verdes e `35` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Atalho de Ambiente no Detalhe eSocial
 
 **Acao realizada:**

@@ -115,6 +115,7 @@
                                 </div>
                                 <p class="mt-2 text-sm text-slate-300">Ambiente: {{ ucfirst($evento->ambiente) }}</p>
                                 <p class="mt-1 text-xs text-slate-500">Atualizado em {{ optional($evento->updated_at)->format('d/m/Y H:i') }}</p>
+                                <a href="{{ route('eventos-esocial.show', $evento) }}" class="btn btn-ghost btn-sm mt-4">Detalhar evento</a>
                             </div>
                         @empty
                             <p class="text-sm text-slate-400">Nenhum evento vinculado a este servidor.</p>

@@ -34,6 +34,7 @@
 - Resumo operacional de base ativa, pendencias de `S-2200` e vinculos sem lotacao.
 - Cadastro inicial de admissao com criacao de pessoa, vinculo funcional e evento eSocial pendente.
 - Tela de detalhe do servidor com leitura consolidada do cadastro e dos eventos vinculados.
+- Atalho do detalhe do servidor para abrir o detalhe de cada evento eSocial vinculado.
 - Edicao do cadastro do servidor com sincronizacao do payload do `S-2200` pendente.
 
 ## eSocial

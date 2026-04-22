@@ -35,7 +35,7 @@ class ServidorDetailTest extends TestCase
             'data_admissao' => '2026-03-10',
         ]);
 
-        EventoEsocial::create([
+        $evento = EventoEsocial::create([
             'tenant_id' => 12,
             'servidor_id' => $servidor->id,
             'evento' => 'S-2200',
@@ -51,7 +51,9 @@ class ServidorDetailTest extends TestCase
             ->assertOk()
             ->assertSee('Helena Martins')
             ->assertSee('HE-001')
-            ->assertSee('S-2200');
+            ->assertSee('S-2200')
+            ->assertSee('Detalhar evento')
+            ->assertSee('href="'.route('eventos-esocial.show', $evento).'"', false);
     }
 
     public function test_user_can_update_servidor_and_pending_event_payload(): void
