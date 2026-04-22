@@ -1,3 +1,28 @@
+### PRODUTO-PAINEL-ESOCIAL-ATALHO-PENDENTES - 21/04/2026
+
+**Descricao:**
+Transformar o indicador `Pendentes` do painel eSocial em atalho operacional para a listagem filtrada por eventos pendentes.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- preservar a leitura visual do card `Pendentes`;
+- adicionar link para `eventos-esocial.index?status=pendente`;
+- cobrir o atalho com teste de feature;
+- validar painel, login e frontend antes de concluir.
+
+**Resultado:**
+- card `Pendentes` passou a funcionar como atalho para a listagem filtrada por `status=pendente`;
+- leitura visual do resumo foi preservada;
+- teste focado confirma o link operacional para eventos pendentes;
+- validacao focada do painel passou com `9` testes e `33` assercoes.
+
 ### PRODUTO-S1010-FILTRO-CODIGO-ESOCIAL - 21/04/2026
 
 **Descricao:**

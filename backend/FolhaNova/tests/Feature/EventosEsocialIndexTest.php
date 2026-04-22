@@ -121,4 +121,29 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'erro']).'"', false)
             ->assertSee('>1<', false);
     }
+
+    public function test_eventos_index_links_pending_summary_to_pending_filter(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 80,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 80,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'));
+
+        $response
+            ->assertOk()
+            ->assertSee('Pendentes')
+            ->assertSee('Fila aguardando processamento')
+            ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'pendente']).'"', false);
+    }
 }

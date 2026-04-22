@@ -22,11 +22,11 @@
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['total'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-cyan-300">Rastreabilidade operacional</p>
             </div>
-            <div class="stat-card">
+            <a href="{{ route('eventos-esocial.index', ['status' => 'pendente']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
                 <p class="text-sm text-slate-400">Pendentes</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['pendentes'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-amber-300">Fila aguardando processamento</p>
-            </div>
+            </a>
             <div class="stat-card">
                 <p class="text-sm text-slate-400">Processados</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['processados'], 0, ',', '.') }}</p>
