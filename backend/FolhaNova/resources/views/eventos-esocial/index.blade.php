@@ -3,6 +3,16 @@
         Eventos eSocial
     </x-slot>
 
+    @php
+        $filtrosAtivos = collect([
+            'Busca' => $filtros['q'],
+            'Evento' => $filtros['evento'],
+            'Status' => $filtros['status'] !== '' ? ucfirst($filtros['status']) : '',
+            'Ambiente' => $filtros['ambiente'] !== '' ? ucfirst($filtros['ambiente']) : '',
+            'Retorno' => $filtros['retorno'] === 'com_mensagem' ? 'Com mensagem' : '',
+        ])->filter();
+    @endphp
+
     <section class="space-y-6">
         @if (session('status'))
             <div class="alert alert-success border-emerald-400/30 bg-emerald-500/10 text-emerald-100">
@@ -121,6 +131,20 @@
                         </div>
                     </form>
                 </div>
+
+                @if ($filtrosAtivos->isNotEmpty())
+                    <div class="mt-6 flex flex-col gap-3 rounded-2xl border border-cyan-400/20 bg-cyan-500/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.25em] text-cyan-200">Filtros ativos</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                @foreach ($filtrosAtivos as $rotulo => $valor)
+                                    <span class="badge badge-outline badge-info">{{ $rotulo }}: {{ $valor }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                        <a href="{{ route('eventos-esocial.index') }}" class="btn btn-ghost btn-sm">Limpar filtros</a>
+                    </div>
+                @endif
 
                 <div class="mt-6 overflow-x-auto">
                     <table class="table">

@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Filtros Ativos no Painel eSocial
+
+**Acao realizada:**
+- Adicionado resumo `Filtros ativos` no painel eSocial.
+- Busca, evento, status, ambiente e retorno passam a ser exibidos como badges quando preenchidos.
+- Incluido atalho `Limpar filtros` para retornar a listagem completa.
+- Teste de painel passou a cobrir filtros combinados e o link de limpeza.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `15` testes verdes e `70` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Retorno Resumido no Painel eSocial
 
 **Acao realizada:**

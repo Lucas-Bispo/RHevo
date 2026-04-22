@@ -1,3 +1,29 @@
+### PRODUTO-PAINEL-ESOCIAL-FILTROS-ATIVOS - 22/04/2026
+
+**Descricao:**
+Exibir resumo dos filtros ativos no painel eSocial para facilitar validacao manual e evitar confusao ao navegar por atalhos de status, evento, ambiente ou retorno.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- montar resumo visual dos filtros ativos na view;
+- incluir busca, evento, status, ambiente e retorno quando preenchidos;
+- manter o link `Limpar` apontando para a listagem sem query string;
+- cobrir o comportamento com teste de feature.
+
+**Resultado:**
+- painel eSocial passou a exibir bloco `Filtros ativos` quando ha filtros aplicados;
+- busca, evento, status, ambiente e retorno aparecem como badges operacionais;
+- bloco inclui acao `Limpar filtros` para voltar a listagem completa;
+- teste focado confirmou filtros combinados e link de limpeza.
+
 ### PRODUTO-PAINEL-ESOCIAL-RETORNO-NA-LISTA - 22/04/2026
 
 **Descricao:**

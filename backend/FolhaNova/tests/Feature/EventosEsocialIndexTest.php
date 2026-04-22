@@ -259,6 +259,40 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false);
     }
 
+    public function test_eventos_index_shows_active_filters_summary(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 86,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 86,
+            'evento' => 'S-1000',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Retorno institucional.',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', [
+                'q' => 'S-1000',
+                'evento' => 'S-1000',
+                'status' => 'erro',
+                'ambiente' => 'homologacao',
+                'retorno' => 'com_mensagem',
+            ]))
+            ->assertOk()
+            ->assertSee('Filtros ativos')
+            ->assertSee('Busca: S-1000')
+            ->assertSee('Evento: S-1000')
+            ->assertSee('Status: Erro')
+            ->assertSee('Ambiente: Homologacao')
+            ->assertSee('Retorno: Com mensagem')
+            ->assertSee('href="'.route('eventos-esocial.index').'"', false);
+    }
+
     public function test_eventos_index_shows_return_summary_in_listing(): void
     {
         $user = User::factory()->create([
