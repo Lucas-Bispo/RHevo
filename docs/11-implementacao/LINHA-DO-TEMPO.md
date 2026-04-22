@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Atalhos Contextuais no Detalhe eSocial
+
+**Acao realizada:**
+- Adicionados atalhos `Mesmo evento` e `Mesmo status` na tela de detalhe de eventos eSocial.
+- Os links retornam ao painel operacional ja filtrado pelo evento ou status atual.
+- Mantido o botao geral `Voltar para painel` e preservada a acao de reprocessamento local.
+- Teste focado passou a cobrir os links contextuais.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventoEsocialShowTest.php` e `tests/Feature/EventosEsocialIndexTest.php`: `11` testes verdes e `48` assercoes.
+- Validacao manual em `localhost` deixada para a rodada do usuario, conforme orientacao.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Atalhos de Eventos Prioritarios no Painel eSocial
 
 **Acao realizada:**

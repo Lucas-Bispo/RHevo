@@ -1,3 +1,29 @@
+### PRODUTO-DETALHE-ESOCIAL-ATALHOS-CONTEXTO - 22/04/2026
+
+**Descricao:**
+Adicionar atalhos contextuais na tela de detalhe do evento eSocial para retornar ao painel filtrado pelo mesmo evento ou pelo mesmo status.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- preservar o botao geral de retorno ao painel;
+- adicionar atalhos para `evento` e `status` atuais;
+- cobrir os links com teste de feature;
+- registrar a funcionalidade na documentacao.
+
+**Resultado:**
+- detalhe do evento passou a oferecer atalhos `Mesmo evento` e `Mesmo status`;
+- links retornam ao painel com filtros preservados por query string;
+- fluxo de reprocessamento local foi preservado;
+- teste focado confirmou os links contextuais no detalhe.
+
 ### PRODUTO-PAINEL-ESOCIAL-ATALHOS-EVENTOS-PRIORITARIOS - 22/04/2026
 
 **Descricao:**
