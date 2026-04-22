@@ -198,7 +198,10 @@ class OrgaoPublicoTest extends TestCase
             ->get(route('orgao-publico.show'))
             ->assertOk()
             ->assertSee('Detalhar evento')
-            ->assertSee('href="'.route('eventos-esocial.show', $evento).'"', false);
+            ->assertSee('Ver S-1000 no painel')
+            ->assertSee('Abrir S-1000 no painel')
+            ->assertSee('href="'.route('eventos-esocial.show', $evento).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1000']).'"', false);
     }
 
     public function test_user_can_update_orgao_publico_and_generate_pending_s1000(): void

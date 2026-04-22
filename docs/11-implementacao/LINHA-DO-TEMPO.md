@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Atalho S-1000 no Painel eSocial
+
+**Acao realizada:**
+- Adicionado atalho na tela de orgao publico para abrir o painel eSocial filtrado por `S-1000`.
+- Card do evento institucional atual passou a oferecer acao para detalhar o evento ou abrir a lista filtrada.
+- Mantida a leitura existente de vigencia, classificacao tributaria e status do evento.
+- Teste de orgao publico passou a validar o link para o painel filtrado.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/OrgaoPublicoTest.php` e `tests/Feature/EventosEsocialIndexTest.php`: `19` testes verdes e `104` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Correcao da Tela Contratual de Servidores
 
 **Acao realizada:**

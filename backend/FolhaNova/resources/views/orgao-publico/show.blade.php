@@ -76,6 +76,7 @@
 
                         <div class="flex flex-wrap gap-3">
                             <a href="{{ route('orgao-publico.edit') }}" class="btn btn-info">Editar parametros</a>
+                            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000']) }}" class="btn btn-ghost">Ver S-1000 no painel</a>
                             <a href="{{ route('dashboard') }}" class="btn btn-ghost">Voltar ao dashboard</a>
                         </div>
                     </div>
@@ -160,10 +161,14 @@
                                 </div>
                                 <p class="mt-2 text-sm text-slate-300">Ambiente: {{ ucfirst($eventoS1000->ambiente) }}</p>
                                 <p class="mt-1 text-xs text-slate-500">Atualizado em {{ optional($eventoS1000->updated_at)->format('d/m/Y H:i') }}</p>
-                                <a href="{{ route('eventos-esocial.show', $eventoS1000) }}" class="btn btn-ghost btn-sm mt-4">Detalhar evento</a>
+                                <div class="mt-4 flex flex-wrap gap-3">
+                                    <a href="{{ route('eventos-esocial.show', $eventoS1000) }}" class="btn btn-ghost btn-sm">Detalhar evento</a>
+                                    <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000']) }}" class="btn btn-ghost btn-sm">Abrir S-1000 no painel</a>
+                                </div>
                             </div>
                         @else
                             <p class="mt-4 text-sm text-slate-400">Nenhum evento S-1000 foi preparado ainda.</p>
+                            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000']) }}" class="btn btn-ghost btn-sm mt-4">Abrir S-1000 no painel</a>
                         @endif
                     </div>
 
