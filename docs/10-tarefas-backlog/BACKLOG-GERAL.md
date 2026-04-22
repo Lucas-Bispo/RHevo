@@ -1,3 +1,28 @@
+### PRODUTO-PAINEL-ESOCIAL-ATALHO-ERROS - 21/04/2026
+
+**Descricao:**
+Transformar o indicador `Com erro` do painel eSocial em atalho operacional para a listagem filtrada por eventos com erro.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- preservar a leitura visual do card `Com erro`;
+- adicionar link para `eventos-esocial.index?status=erro`;
+- cobrir o atalho com teste de feature;
+- validar painel, login e frontend antes de concluir.
+
+**Resultado:**
+- card `Com erro` passou a funcionar como atalho para a listagem filtrada por `status=erro`;
+- leitura visual do resumo foi preservada;
+- teste focado confirma o link operacional para eventos com erro;
+- validacao focada do painel passou com `8` testes e `29` assercoes.
+
 ### PRODUTO-S1010-FILTRO-INCIDENCIA-RUBRICA - 21/04/2026
 
 **Descricao:**

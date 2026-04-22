@@ -118,6 +118,7 @@ class EventosEsocialIndexTest extends TestCase
             ->assertOk()
             ->assertSee('Com erro')
             ->assertSee('Prioridade para reprocessamento')
+            ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'erro']).'"', false)
             ->assertSee('>1<', false);
     }
 }

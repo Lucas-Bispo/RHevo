@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 21/04/2026 - 22:10 - Atalho para Eventos com Erro no Painel eSocial
+
+**Acao realizada:**
+- Transformado o card `Com erro` em atalho para a listagem filtrada por eventos com erro.
+- Preservada a leitura visual do resumo operacional.
+- Criado teste cobrindo o link para `status=erro`.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `8` testes verdes e `29` assercoes.
+- `tests/Feature/Auth/AuthenticationTest.php`: `5` testes verdes e `15` assercoes.
+- `GET /login`: `200 OK`.
+- CSS e JS compilados em `/build/assets`: `200 OK`.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 22:00 - Filtro por Incidencia na Listagem de Rubricas S-1010
 
 **Acao realizada:**
