@@ -81,6 +81,32 @@ Adicionar filtro por tipo na listagem de rubricas para facilitar a operacao de p
 - teste focado confirmou que `tipo=desconto` oculta rubricas de provento;
 - validação de rubricas passou com `7` testes e `26` assercoes.
 
+### PRODUTO-PAINEL-ESOCIAL-RESUMO-ERROS - 21/04/2026
+
+**Descricao:**
+Evoluir o painel operacional de eventos eSocial com um indicador de eventos com erro para orientar o reprocessamento local.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar contagem de eventos com `status = erro` ao resumo;
+- exibir card dedicado no painel;
+- validar isolamento por tenant;
+- rodar testes focados do painel, login e assets compilados.
+
+**Resultado:**
+- painel eSocial passou a exibir card `Com erro`;
+- contagem considera apenas eventos do tenant atual;
+- teste focado confirmou o resumo de erros;
+- validação do painel passou com `7` testes e `25` assercoes.
+
 ### PRODUTO-S1000-LEITURA-CLASSIFICACAO-TRIBUTARIA - 21/04/2026
 
 **Descricao:**

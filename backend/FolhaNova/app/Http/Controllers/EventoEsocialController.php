@@ -51,6 +51,7 @@ class EventoEsocialController extends Controller
                 'total' => (clone $baseQuery)->count(),
                 'pendentes' => (clone $baseQuery)->where('status', 'pendente')->count(),
                 'processados' => (clone $baseQuery)->where('status', 'processado')->count(),
+                'erros' => (clone $baseQuery)->where('status', 'erro')->count(),
                 'com_retorno' => (clone $baseQuery)->whereNotNull('mensagem_retorno')->count(),
             ],
             'filtros' => [

@@ -33,9 +33,9 @@
                 <p class="mt-2 text-sm text-emerald-300">Com trilha de retorno</p>
             </div>
             <div class="stat-card">
-                <p class="text-sm text-slate-400">Com mensagem</p>
-                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['com_retorno'], 0, ',', '.') }}</p>
-                <p class="mt-2 text-sm text-cyan-300">Apoio a analise operacional</p>
+                <p class="text-sm text-slate-400">Com erro</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['erros'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-rose-300">Prioridade para reprocessamento</p>
             </div>
         </div>
 
