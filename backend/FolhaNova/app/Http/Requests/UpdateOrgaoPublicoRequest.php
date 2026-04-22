@@ -62,11 +62,11 @@ class UpdateOrgaoPublicoRequest extends FormRequest
             $numeroInscricao = preg_replace('/\D+/', '', (string) $this->input('numero_inscricao')) ?? '';
             $contatoCpf = preg_replace('/\D+/', '', (string) $this->input('contato_cpf')) ?? '';
 
-            if ($tipoInscricao === '1' && ! in_array(strlen($numeroInscricao), [8, 14], true)) {
+            if ($tipoInscricao === '1' && ! $this->isValidCnpjOrRoot($numeroInscricao)) {
                 $validator->errors()->add('numero_inscricao', 'Informe um CNPJ valido para o orgao publico.');
             }
 
-            if ($tipoInscricao === '2' && strlen($numeroInscricao) !== 11) {
+            if ($tipoInscricao === '2' && ! $this->isValidCpf($numeroInscricao)) {
                 $validator->errors()->add('numero_inscricao', 'Informe um CPF valido para o orgao publico.');
             }
 
@@ -74,7 +74,7 @@ class UpdateOrgaoPublicoRequest extends FormRequest
                 $validator->errors()->add('natureza_juridica', 'Informe a natureza juridica para inscricoes por CNPJ.');
             }
 
-            if ($contatoCpf !== '' && strlen($contatoCpf) !== 11) {
+            if ($contatoCpf !== '' && ! $this->isValidCpf($contatoCpf)) {
                 $validator->errors()->add('contato_cpf', 'Informe um CPF valido para o contato responsavel.');
             }
 
@@ -160,5 +160,62 @@ class UpdateOrgaoPublicoRequest extends FormRequest
         }
 
         return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $digits) ?: (string) $cpf;
+    }
+
+    private function isValidCpf(string $digits): bool
+    {
+        if (strlen($digits) !== 11 || preg_match('/^(\d)\1{10}$/', $digits)) {
+            return false;
+        }
+
+        for ($position = 9; $position <= 10; $position++) {
+            $sum = 0;
+
+            for ($index = 0; $index < $position; $index++) {
+                $sum += (int) $digits[$index] * (($position + 1) - $index);
+            }
+
+            $checkDigit = ($sum * 10) % 11;
+            $checkDigit = $checkDigit === 10 ? 0 : $checkDigit;
+
+            if ($checkDigit !== (int) $digits[$position]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private function isValidCnpjOrRoot(string $digits): bool
+    {
+        if (strlen($digits) === 8) {
+            return ! (bool) preg_match('/^(\d)\1{7}$/', $digits);
+        }
+
+        if (strlen($digits) !== 14 || preg_match('/^(\d)\1{13}$/', $digits)) {
+            return false;
+        }
+
+        $weights = [
+            [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2],
+            [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2],
+        ];
+
+        foreach ($weights as $position => $weightSet) {
+            $sum = 0;
+
+            foreach ($weightSet as $index => $weight) {
+                $sum += (int) $digits[$index] * $weight;
+            }
+
+            $remainder = $sum % 11;
+            $checkDigit = $remainder < 2 ? 0 : 11 - $remainder;
+
+            if ($checkDigit !== (int) $digits[12 + $position]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

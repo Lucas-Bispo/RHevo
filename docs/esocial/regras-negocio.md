@@ -6,6 +6,7 @@
 ### Identificacao do empregador
 - Validar `CPF/CNPJ` conforme `tpInsc`.
 - `nrInsc` deve ser compativel com `tpInsc`.
+- `nrInsc` com CPF ou CNPJ completo deve ser rejeitado quando o digito verificador for invalido.
 - `classTrib` deve ser obrigatorio no cadastro institucional.
 - `classTrib` deve ser selecionado a partir da lista inicial controlada pelo sistema para evitar payload institucional com codigo ainda nao mapeado.
 - `natJurid` deve ser obrigatoria para inscricoes por `CNPJ`.

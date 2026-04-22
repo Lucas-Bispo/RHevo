@@ -2,6 +2,30 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Validacao de Documento Institucional no S-1000
+
+**Acao realizada:**
+- Aprofundada a validacao do cadastro de orgao publico para rejeitar CPF/CNPJ completos com digito verificador invalido.
+- Mantida a normalizacao e formatacao existentes para `numero_inscricao` e `contato_cpf`.
+- Preservado o suporte a CNPJ raiz de 8 digitos no contexto ja aceito pelo fluxo institucional.
+- Criado teste cobrindo rejeicao de CNPJ invalido, CPF institucional invalido e CPF de contato invalido.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Requests/UpdateOrgaoPublicoRequest.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/OrgaoPublicoTest.php`: `10` testes verdes e `56` assercoes.
+- `tests/Feature/Auth/AuthenticationTest.php`: `5` testes verdes e `15` assercoes.
+- `npm run build` no WSL atualizou `public/build/manifest.json` e assets em `public/build/assets`, mas o comando nao retornou saida antes do timeout operacional.
+- `GET /login` por `curl` nao foi validado porque o servidor local nao permaneceu ativo em `127.0.0.1:8000` nesta rodada.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 22:50 - Atalho para Eventos Processados no Painel eSocial
 
 **Acao realizada:**

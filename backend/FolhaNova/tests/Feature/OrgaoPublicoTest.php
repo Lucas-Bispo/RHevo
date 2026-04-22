@@ -38,7 +38,7 @@ class OrgaoPublicoTest extends TestCase
             'metadata' => [
                 'orgao_publico' => [
                     'tipo_inscricao' => '2',
-                    'numero_inscricao' => '123.456.789-01',
+                    'numero_inscricao' => '529.982.247-25',
                     'classificacao_tributaria' => '21',
                     'inicio_validade' => '2026-04',
                     'fim_validade' => null,
@@ -66,7 +66,7 @@ class OrgaoPublicoTest extends TestCase
             'metadata' => [
                 'orgao_publico' => [
                     'tipo_inscricao' => '1',
-                    'numero_inscricao' => '12.345.678/0001-99',
+                    'numero_inscricao' => '11.222.333/0001-81',
                     'classificacao_tributaria' => '85',
                     'natureza_juridica' => '1244',
                     'inicio_validade' => '2026-04',
@@ -93,7 +93,7 @@ class OrgaoPublicoTest extends TestCase
             'metadata' => [
                 'orgao_publico' => [
                     'tipo_inscricao' => '1',
-                    'numero_inscricao' => '12.345.678/0001-99',
+                    'numero_inscricao' => '11.222.333/0001-81',
                     'classificacao_tributaria' => '85',
                     'natureza_juridica' => '1244',
                     'inicio_validade' => '2026-04',
@@ -135,14 +135,14 @@ class OrgaoPublicoTest extends TestCase
             ->put(route('orgao-publico.update'), [
                 'name' => 'Prefeitura Municipal do Sol',
                 'tipo_inscricao' => '1',
-                'numero_inscricao' => '12345678000199',
+                'numero_inscricao' => '11222333000181',
                 'classificacao_tributaria' => '85',
                 'natureza_juridica' => '1244',
                 'inicio_validade' => '2026-04',
                 'fim_validade' => '',
                 'ambiente_esocial' => 'homologacao',
                 'contato_nome' => 'Marina Souza',
-                'contato_cpf' => '12345678901',
+                'contato_cpf' => '52998224725',
                 'contato_email' => 'rh@sol.gov.br',
                 'telefone' => '1133334444',
                 'observacoes' => 'Cadastro inicial do orgao para trilha eSocial.',
@@ -155,7 +155,7 @@ class OrgaoPublicoTest extends TestCase
         $tenant->refresh();
 
         $this->assertSame('Prefeitura Municipal do Sol', $tenant->name);
-        $this->assertSame('12.345.678/0001-99', $tenant->metadata['orgao_publico']['numero_inscricao']);
+        $this->assertSame('11.222.333/0001-81', $tenant->metadata['orgao_publico']['numero_inscricao']);
         $this->assertSame('Marina Souza', $tenant->metadata['orgao_publico']['contato_nome']);
 
         $this->assertDatabaseHas('eventos_esocial', [
@@ -172,7 +172,7 @@ class OrgaoPublicoTest extends TestCase
             'metadata' => [
                 'orgao_publico' => [
                     'tipo_inscricao' => '1',
-                    'numero_inscricao' => '98.765.432/0001-10',
+                    'numero_inscricao' => '11.222.333/0001-81',
                     'inicio_validade' => '2026-01',
                     'ambiente_esocial' => 'homologacao',
                 ],
@@ -197,14 +197,14 @@ class OrgaoPublicoTest extends TestCase
             ->put(route('orgao-publico.update'), [
                 'name' => 'Prefeitura Municipal das Flores',
                 'tipo_inscricao' => '1',
-                'numero_inscricao' => '98765432000110',
+                'numero_inscricao' => '11222333000181',
                 'classificacao_tributaria' => '85',
                 'natureza_juridica' => '1244',
                 'inicio_validade' => '2026-05',
                 'fim_validade' => '',
                 'ambiente_esocial' => 'producao',
                 'contato_nome' => 'Joao Lima',
-                'contato_cpf' => '98765432100',
+                'contato_cpf' => '52998224725',
                 'contato_email' => 'folha@flores.gov.br',
                 'telefone' => '1130304040',
                 'observacoes' => '',
@@ -217,7 +217,7 @@ class OrgaoPublicoTest extends TestCase
 
         $this->assertSame('producao', $evento->ambiente);
         $this->assertSame('Prefeitura Municipal das Flores', data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.nmRazao'));
-        $this->assertSame('98765432000110', data_get($evento->payload, 'ideEmpregador.nrInsc'));
+        $this->assertSame('11222333000181', data_get($evento->payload, 'ideEmpregador.nrInsc'));
     }
 
     public function test_updating_orgao_publico_requires_classificacao_tributaria_and_natureza_juridica_for_cnpj(): void
@@ -233,14 +233,14 @@ class OrgaoPublicoTest extends TestCase
             ->put(route('orgao-publico.update'), [
                 'name' => 'Prefeitura Municipal do Sol',
                 'tipo_inscricao' => '1',
-                'numero_inscricao' => '12345678000199',
+                'numero_inscricao' => '11222333000181',
                 'classificacao_tributaria' => '',
                 'natureza_juridica' => '',
                 'inicio_validade' => '2026-04',
                 'fim_validade' => '',
                 'ambiente_esocial' => 'homologacao',
                 'contato_nome' => 'Marina Souza',
-                'contato_cpf' => '12345678901',
+                'contato_cpf' => '52998224725',
                 'contato_email' => 'rh@sol.gov.br',
                 'telefone' => '1133334444',
                 'observacoes' => 'Cadastro inicial do orgao para trilha eSocial.',
@@ -269,14 +269,14 @@ class OrgaoPublicoTest extends TestCase
             ->put(route('orgao-publico.update'), [
                 'name' => 'Prefeitura Municipal do Sol',
                 'tipo_inscricao' => '1',
-                'numero_inscricao' => '12345678000199',
+                'numero_inscricao' => '11222333000181',
                 'classificacao_tributaria' => '999',
                 'natureza_juridica' => '1244',
                 'inicio_validade' => '2026-04',
                 'fim_validade' => '',
                 'ambiente_esocial' => 'homologacao',
                 'contato_nome' => 'Marina Souza',
-                'contato_cpf' => '12345678901',
+                'contato_cpf' => '52998224725',
                 'contato_email' => 'rh@sol.gov.br',
                 'telefone' => '1133334444',
                 'observacoes' => 'Cadastro inicial do orgao para trilha eSocial.',
@@ -285,6 +285,82 @@ class OrgaoPublicoTest extends TestCase
         $response
             ->assertRedirect(route('orgao-publico.edit'))
             ->assertSessionHasErrors(['classificacao_tributaria']);
+
+        $this->assertDatabaseMissing('eventos_esocial', [
+            'tenant_id' => $tenant->id,
+            'evento' => 'S-1000',
+        ]);
+    }
+
+    public function test_updating_orgao_publico_rejects_invalid_document_check_digits(): void
+    {
+        $tenant = $this->createTenant();
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->from(route('orgao-publico.edit'))
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Prefeitura Municipal do Sol',
+                'tipo_inscricao' => '1',
+                'numero_inscricao' => '11222333000182',
+                'classificacao_tributaria' => '85',
+                'natureza_juridica' => '1244',
+                'inicio_validade' => '2026-04',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'homologacao',
+                'contato_nome' => 'Marina Souza',
+                'contato_cpf' => '52998224725',
+                'contato_email' => 'rh@sol.gov.br',
+                'telefone' => '1133334444',
+                'observacoes' => 'Cadastro inicial do orgao para trilha eSocial.',
+            ])
+            ->assertRedirect(route('orgao-publico.edit'))
+            ->assertSessionHasErrors(['numero_inscricao']);
+
+        $this
+            ->actingAs($user)
+            ->from(route('orgao-publico.edit'))
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Fundo Municipal de Apoio',
+                'tipo_inscricao' => '2',
+                'numero_inscricao' => '52998224726',
+                'classificacao_tributaria' => '21',
+                'natureza_juridica' => '',
+                'inicio_validade' => '2026-04',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'homologacao',
+                'contato_nome' => '',
+                'contato_cpf' => '',
+                'contato_email' => '',
+                'telefone' => '',
+                'observacoes' => '',
+            ])
+            ->assertRedirect(route('orgao-publico.edit'))
+            ->assertSessionHasErrors(['numero_inscricao']);
+
+        $this
+            ->actingAs($user)
+            ->from(route('orgao-publico.edit'))
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Prefeitura Municipal do Sol',
+                'tipo_inscricao' => '1',
+                'numero_inscricao' => '11222333000181',
+                'classificacao_tributaria' => '85',
+                'natureza_juridica' => '1244',
+                'inicio_validade' => '2026-04',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'homologacao',
+                'contato_nome' => 'Marina Souza',
+                'contato_cpf' => '52998224726',
+                'contato_email' => 'rh@sol.gov.br',
+                'telefone' => '1133334444',
+                'observacoes' => 'Cadastro inicial do orgao para trilha eSocial.',
+            ])
+            ->assertRedirect(route('orgao-publico.edit'))
+            ->assertSessionHasErrors(['contato_cpf']);
 
         $this->assertDatabaseMissing('eventos_esocial', [
             'tenant_id' => $tenant->id,
@@ -304,7 +380,7 @@ class OrgaoPublicoTest extends TestCase
             ->put(route('orgao-publico.update'), [
                 'name' => 'Fundo Municipal de Apoio',
                 'tipo_inscricao' => '2',
-                'numero_inscricao' => '12345678901',
+                'numero_inscricao' => '52998224725',
                 'classificacao_tributaria' => '21',
                 'natureza_juridica' => '',
                 'inicio_validade' => '2026-04',
@@ -325,7 +401,7 @@ class OrgaoPublicoTest extends TestCase
             ->firstOrFail();
 
         $this->assertSame('2', data_get($evento->payload, 'ideEmpregador.tpInsc'));
-        $this->assertSame('12345678901', data_get($evento->payload, 'ideEmpregador.nrInsc'));
+        $this->assertSame('52998224725', data_get($evento->payload, 'ideEmpregador.nrInsc'));
         $this->assertSame('21', data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.classTrib'));
         $this->assertNull(data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.natJurid'));
         $this->assertNull(data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.contato'));

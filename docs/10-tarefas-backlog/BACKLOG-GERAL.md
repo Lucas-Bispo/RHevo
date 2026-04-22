@@ -1,3 +1,31 @@
+### PRODUTO-S1000-VALIDACAO-DOCUMENTO-EMPREGADOR - 22/04/2026
+
+**Descricao:**
+Aprofundar a validacao institucional do `S-1000`, rejeitando CPF/CNPJ invalidos por digito verificador no cadastro do orgao publico antes da geracao de evento pendente.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Requests/UpdateOrgaoPublicoRequest.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- manter a normalizacao e formatacao atuais de inscricao institucional;
+- validar CPF/CNPJ por digito verificador conforme `tipo_inscricao`;
+- validar CPF do contato quando informado;
+- cobrir rejeicoes com teste de feature;
+- validar orgao publico, login e frontend antes de concluir.
+
+**Resultado:**
+- CPF e CNPJ completos informados no cadastro do orgao publico passaram a ser validados por digito verificador;
+- CPF do contato responsavel tambem passou a ser rejeitado quando invalido;
+- CNPJ raiz de 8 digitos continua aceito para o contexto ja suportado pelo fluxo do `S-1000`;
+- teste focado confirmou rejeicao de documento institucional e CPF de contato invalidos.
+
 ### PRODUTO-PAINEL-ESOCIAL-ATALHO-PROCESSADOS - 21/04/2026
 
 **Descricao:**
