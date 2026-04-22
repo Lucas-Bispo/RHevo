@@ -91,7 +91,7 @@ class ServidorController extends Controller
         $servidor = $this->resolveServidor($request, $servidor);
 
         return view('servidores.edit', [
-            'servidor' => $servidor->load(['pessoa', 'lotacao', 'cargo', 'funcao']),
+            'servidor' => $servidor->load(['pessoa', 'lotacao', 'cargo', 'funcao', 'eventosEsocial']),
             'lotacoes' => $this->lookupOptions(Lotacao::class, $tenantId),
             'cargos' => $this->lookupOptions(Cargo::class, $tenantId),
             'funcoes' => $this->lookupOptions(Funcao::class, $tenantId),

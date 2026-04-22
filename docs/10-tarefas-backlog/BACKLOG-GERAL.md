@@ -1,3 +1,32 @@
+### PRODUTO-SERVIDORES-REMOVE-ATALHO-S2205-QUEBRADO - 22/04/2026
+
+**Descricao:**
+Corrigir links quebrados para a rota futura de `S-2205` nas telas de servidores, preservando a indicacao operacional sem gerar erro em runtime.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/ServidorController.php`
+- `backend/FolhaNova/resources/views/servidores/index.blade.php`
+- `backend/FolhaNova/resources/views/servidores/edit.blade.php`
+- `backend/FolhaNova/resources/views/servidores/partials/contract-form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/ServidoresIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- remover chamadas a rota inexistente `servidores.edit-cadastral`;
+- exibir `S-2205` como trilha planejada, sem link acionavel;
+- validar a listagem de servidores e tela de edicao contratual;
+- registrar a correcao na documentacao.
+
+**Resultado:**
+- listagem de servidores deixou de renderizar link para rota futura inexistente;
+- tela S-2206 passou a exibir `S-2205` como trilha planejada;
+- criado partial contratual para a tela de alteracao, preservando dados civis atuais sem exibi-los no fluxo S-2206;
+- controller passou a carregar historico eSocial na edicao contratual;
+- testes focados de servidores ficaram verdes.
+
 ### PRODUTO-DASHBOARD-DEMO-ATALHOS-REAIS - 22/04/2026
 
 **Descricao:**

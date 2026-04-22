@@ -2,6 +2,29 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Correcao da Tela Contratual de Servidores
+
+**Acao realizada:**
+- Removidos atalhos quebrados para a rota futura `servidores.edit-cadastral`.
+- Listagem e edicao contratual passaram a indicar `S-2205` como trilha planejada, sem link acionavel.
+- Criado partial `contract-form-fields` para reabrir a tela `S-2206`.
+- O formulario contratual preserva os dados civis atuais em campos ocultos e exibe apenas campos de vinculo.
+- Controller de servidores passou a carregar o historico eSocial na tela de edicao.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/ServidorController.php`
+- `backend/FolhaNova/resources/views/servidores/index.blade.php`
+- `backend/FolhaNova/resources/views/servidores/edit.blade.php`
+- `backend/FolhaNova/resources/views/servidores/partials/contract-form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/ServidoresIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/ServidoresIndexTest.php` e `tests/Feature/ServidorDetailTest.php`: `5` testes verdes e `27` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Dashboard com Dados Reais e Atalhos Demo
 
 **Acao realizada:**

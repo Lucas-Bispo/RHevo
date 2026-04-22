@@ -16,7 +16,7 @@
                     </div>
 
                     <div class="flex flex-wrap gap-3">
-                        <a href="{{ route('servidores.edit-cadastral', $servidor) }}" class="btn btn-outline btn-info">Ir para S-2205</a>
+                        <span class="badge badge-outline badge-info px-4 py-3">S-2205 em planejamento</span>
                         <a href="{{ route('servidores.show', $servidor) }}" class="btn btn-ghost">Voltar ao detalhe</a>
                     </div>
                 </div>

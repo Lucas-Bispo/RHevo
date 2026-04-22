@@ -115,7 +115,7 @@
                                     </td>
                                     <td class="text-right">
                                         <div class="flex flex-wrap justify-end gap-2">
-                                            <a href="{{ route('servidores.edit-cadastral', $servidor) }}" class="btn btn-outline btn-info btn-sm">S-2205</a>
+                                            <span class="badge badge-outline badge-info">S-2205 planejado</span>
                                             <a href="{{ route('servidores.edit', $servidor) }}" class="btn btn-outline btn-warning btn-sm">S-2206</a>
                                             <a href="{{ route('servidores.show', $servidor) }}" class="btn btn-ghost btn-sm">Abrir</a>
                                         </div>

@@ -68,7 +68,9 @@ class ServidoresIndexTest extends TestCase
             ->assertSee('Servidores')
             ->assertSee('Maria das Dores')
             ->assertSee('2026-0001')
-            ->assertSee('Pendentes de S-2200');
+            ->assertSee('Pendentes de S-2200')
+            ->assertSee('S-2205 planejado')
+            ->assertDontSee('servidores.edit-cadastral');
     }
 
     public function test_index_filters_results_by_search_and_tenant_scope(): void
@@ -116,5 +118,35 @@ class ServidoresIndexTest extends TestCase
             ->assertSee('Carlos Alberto')
             ->assertDontSee('Ana Beatriz')
             ->assertDontSee('MAT-88');
+    }
+
+    public function test_contract_edit_screen_marks_s2205_as_planned_without_broken_route(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 78,
+        ]);
+
+        $pessoa = Pessoa::create([
+            'tenant_id' => 78,
+            'nome_completo' => 'Helena Costa',
+            'cpf' => '529.982.247-25',
+        ]);
+
+        $servidor = Servidor::create([
+            'tenant_id' => 78,
+            'pessoa_id' => $pessoa->id,
+            'matricula' => 'MAT-7801',
+            'tipo_vinculo' => 'estatutario',
+            'situacao' => 'ativo',
+            'salario_base' => 4500,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('servidores.edit', $servidor))
+            ->assertOk()
+            ->assertSee('Alteracao contratual do trabalhador')
+            ->assertSee('S-2205 em planejamento')
+            ->assertDontSee('servidores.edit-cadastral');
     }
 }
