@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Retorno Resumido no Painel eSocial
+
+**Acao realizada:**
+- Adicionada coluna `Retorno` na listagem do painel eSocial.
+- Mensagens de retorno passaram a aparecer de forma resumida para triagem operacional.
+- Eventos sem mensagem exibem `Sem retorno registrado`.
+- A tela de detalhe continua sendo a referencia para retorno completo, payload e auditoria.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `14` testes verdes e `62` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Reprocessamento no Painel eSocial
 
 **Acao realizada:**

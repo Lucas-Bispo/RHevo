@@ -259,6 +259,39 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false);
     }
 
+    public function test_eventos_index_shows_return_summary_in_listing(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 85,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 85,
+            'evento' => 'S-1010',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Rubrica sem natureza eSocial compativel com a parametrizacao atual.',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 85,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => null,
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('Retorno')
+            ->assertSee('Rubrica sem natureza eSocial compativel')
+            ->assertSee('Sem retorno registrado');
+    }
+
     public function test_eventos_index_shows_reprocess_action_only_for_failed_events(): void
     {
         $user = User::factory()->create([

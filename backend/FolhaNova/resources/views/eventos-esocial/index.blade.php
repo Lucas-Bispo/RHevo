@@ -130,6 +130,7 @@
                                 <th>Origem</th>
                                 <th>Ambiente</th>
                                 <th>Status</th>
+                                <th>Retorno</th>
                                 <th>Atualizado</th>
                                 <th class="text-right">Acoes</th>
                             </tr>
@@ -153,6 +154,11 @@
                                             {{ ucfirst($evento->status) }}
                                         </span>
                                     </td>
+                                    <td class="max-w-xs">
+                                        <p class="text-sm text-slate-300">
+                                            {{ $evento->mensagem_retorno ? \Illuminate\Support\Str::limit($evento->mensagem_retorno, 90) : 'Sem retorno registrado' }}
+                                        </p>
+                                    </td>
                                     <td>{{ optional($evento->updated_at)->format('d/m/Y H:i') }}</td>
                                     <td class="text-right">
                                         <div class="flex flex-wrap justify-end gap-2">
@@ -168,7 +174,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="py-10 text-center text-sm text-slate-400">
+                                    <td colspan="7" class="py-10 text-center text-sm text-slate-400">
                                         Nenhum evento encontrado com os filtros atuais.
                                     </td>
                                 </tr>

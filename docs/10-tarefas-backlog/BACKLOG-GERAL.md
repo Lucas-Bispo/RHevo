@@ -1,3 +1,29 @@
+### PRODUTO-PAINEL-ESOCIAL-RETORNO-NA-LISTA - 22/04/2026
+
+**Descricao:**
+Exibir resumo da mensagem de retorno diretamente na listagem do painel eSocial para acelerar a triagem de eventos com erro ou retorno registrado.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar coluna/resumo de retorno na tabela do painel;
+- truncar mensagens longas para manter a leitura da listagem;
+- manter o detalhe como local do retorno completo;
+- cobrir a exibicao com teste de feature.
+
+**Resultado:**
+- painel eSocial passou a exibir uma coluna `Retorno` na listagem;
+- eventos com mensagem mostram resumo truncado para triagem rapida;
+- eventos sem retorno exibem `Sem retorno registrado`;
+- detalhe do evento permanece como local para auditoria completa do retorno e payload.
+
 ### PRODUTO-PAINEL-ESOCIAL-REPROCESSAR-NA-LISTA - 22/04/2026
 
 **Descricao:**
