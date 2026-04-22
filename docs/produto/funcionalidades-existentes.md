@@ -40,6 +40,7 @@
 - Reprocessamento local de evento eSocial com erro, retornando o registro para `pendente` sem alterar o payload.
 - Registro inicial de evento `S-2200` pendente no fluxo de admissao.
 - Painel para leitura de eventos institucionais e eventos vinculados a servidores.
+- Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010` e `S-2200`.
 
 ## O que ainda nao existe em operacao real
 - Atualizacoes cadastrais, afastamentos e desligamentos.

@@ -74,7 +74,7 @@ class EventosEsocialIndexTest extends TestCase
             'evento' => 'S-1010',
             'status' => 'erro',
             'ambiente' => 'producao',
-            'payload' => ['origem' => 'rubricas'],
+            'payload' => ['origem' => 'tenant_72_payload_marker'],
         ]);
 
         $response = $this
@@ -84,7 +84,7 @@ class EventosEsocialIndexTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('S-1000')
-            ->assertDontSee('S-1010');
+            ->assertDontSee('tenant_72_payload_marker');
     }
 
     public function test_eventos_index_shows_error_summary_for_current_tenant(): void
@@ -172,5 +172,53 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('Processados')
             ->assertSee('Com trilha de retorno')
             ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'processado']).'"', false);
+    }
+
+    public function test_eventos_index_links_priority_event_summaries_to_event_filters(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 82,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 82,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 82,
+            'evento' => 'S-1010',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 82,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1000']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-2200']).'"', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['evento' => 'S-1010']))
+            ->assertOk()
+            ->assertSee('S-1010')
+            ->assertDontSee('parametros_orgao_publico')
+            ->assertDontSee('cadastro_inicial_servidor')
+            ->assertSee('value="S-1010" selected', false);
     }
 }

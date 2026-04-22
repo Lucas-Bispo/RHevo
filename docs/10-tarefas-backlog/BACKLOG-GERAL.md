@@ -1,3 +1,31 @@
+### PRODUTO-PAINEL-ESOCIAL-ATALHOS-EVENTOS-PRIORITARIOS - 22/04/2026
+
+**Descricao:**
+Adicionar atalhos operacionais por tipo de evento prioritario no painel eSocial, facilitando a leitura de `S-1000`, `S-1010` e `S-2200`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- calcular contagem dos eventos prioritarios no resumo do painel;
+- exibir atalhos para `S-1000`, `S-1010` e `S-2200`;
+- apontar cada atalho para a listagem filtrada por `evento`;
+- cobrir o comportamento com teste de feature;
+- registrar a funcionalidade na documentacao.
+
+**Resultado:**
+- painel eSocial passou a exibir atalhos por evento prioritario;
+- cards de `S-1000`, `S-1010` e `S-2200` apontam para a listagem filtrada;
+- contagens respeitam o tenant atual;
+- teste focado confirmou links e filtragem por `evento`.
+
 ### PRODUTO-S1010-FILTRO-SEM-CODIGO-ESOCIAL - 22/04/2026
 
 **Descricao:**

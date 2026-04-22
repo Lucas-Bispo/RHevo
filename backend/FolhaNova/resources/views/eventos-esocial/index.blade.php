@@ -39,6 +39,24 @@
             </a>
         </div>
 
+        <div class="grid gap-4 md:grid-cols-3">
+            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
+                <p class="text-sm text-slate-400">S-1000</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1000'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-cyan-300">Base institucional</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1010']) }}" class="stat-card block transition hover:border-sky-400/40 hover:bg-sky-500/5 focus:outline-none focus:ring-2 focus:ring-sky-400/50">
+                <p class="text-sm text-slate-400">S-1010</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1010'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-sky-300">Rubricas</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-2200']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">S-2200</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s2200'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Admissao inicial</p>
+            </a>
+        </div>
+
         <div class="grid gap-6 xl:grid-cols-[1.85fr_1fr]">
             <div class="panel-surface rounded-3xl p-6">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">

@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Atalhos de Eventos Prioritarios no Painel eSocial
+
+**Acao realizada:**
+- Adicionadas contagens dedicadas para `S-1000`, `S-1010` e `S-2200` no resumo do painel eSocial.
+- Criados cards operacionais para abrir a listagem filtrada por tipo de evento.
+- Mantidos os filtros existentes por busca, status, ambiente e evento.
+- Criado teste cobrindo links e filtragem por `evento`.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `11` testes verdes e `46` assercoes.
+- Validacao manual em `localhost` deixada para a rodada do usuario, conforme orientacao.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Filtro de Rubricas sem Codigo eSocial
 
 **Acao realizada:**

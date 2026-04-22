@@ -53,6 +53,9 @@ class EventoEsocialController extends Controller
                 'processados' => (clone $baseQuery)->where('status', 'processado')->count(),
                 'erros' => (clone $baseQuery)->where('status', 'erro')->count(),
                 'com_retorno' => (clone $baseQuery)->whereNotNull('mensagem_retorno')->count(),
+                's1000' => (clone $baseQuery)->where('evento', 'S-1000')->count(),
+                's1010' => (clone $baseQuery)->where('evento', 'S-1010')->count(),
+                's2200' => (clone $baseQuery)->where('evento', 'S-2200')->count(),
             ],
             'filtros' => [
                 'q' => $search,
