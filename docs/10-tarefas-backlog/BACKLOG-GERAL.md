@@ -1,3 +1,30 @@
+### PRODUTO-DADOS-DEMO-VALIDACAO-MANUAL - 22/04/2026
+
+**Descricao:**
+Criar massa de dados demo para validacao manual local dos fluxos de login, cadastros de RH, rubricas e painel eSocial.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/database/seeders/DatabaseSeeder.php`
+- `backend/FolhaNova/database/seeders/DemoDataSeeder.php`
+- `backend/FolhaNova/tests/Feature/DemoDataSeederTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- criar seeder demo idempotente;
+- vincular `test@example.com` a um tenant demo;
+- popular orgao publico, lotacoes, cargos, funcoes, servidores, rubricas e eventos eSocial;
+- cobrir o seeder com teste automatizado;
+- executar `php artisan db:seed` no banco local para teste manual.
+
+**Resultado:**
+- criado tenant `Prefeitura Demonstracao`;
+- login demo `test@example.com` preservado com senha `password`;
+- criados dados para servidores, rubricas e eventos `S-1000`, `S-1010` e `S-2200`;
+- `php artisan db:seed` executado com sucesso no banco local.
+
 ### PRODUTO-PAINEL-ESOCIAL-FILTRO-COM-RETORNO - 22/04/2026
 
 **Descricao:**

@@ -2,6 +2,34 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Massa Demo para Validacao Manual Local
+
+**Acao realizada:**
+- Criado `DemoDataSeeder` idempotente para popular o sistema com dados navegaveis.
+- `DatabaseSeeder` passou a chamar a massa demo por padrao.
+- Login `test@example.com` foi vinculado ao tenant `Prefeitura Demonstracao` com senha `password`.
+- Populados orgao publico, lotacoes, cargos, funcoes, servidores, rubricas e eventos eSocial.
+- Executado `php artisan db:seed` no banco local para disponibilizar os dados ao teste manual.
+
+**Dados principais criados:**
+- `3` servidores demo.
+- `5` rubricas, incluindo rubricas com e sem codigo eSocial.
+- `4` eventos eSocial com `S-1000`, `S-1010` e `S-2200`, incluindo pendente, processado e erro com retorno.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/database/seeders/DatabaseSeeder.php`
+- `backend/FolhaNova/database/seeders/DemoDataSeeder.php`
+- `backend/FolhaNova/tests/Feature/DemoDataSeederTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/DemoDataSeederTest.php`: `1` teste verde e `8` assercoes.
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/RubricasIndexTest.php`: `12` testes verdes e `59` assercoes.
+- `php artisan db:seed`: executado com sucesso no ambiente local WSL.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Filtro de Eventos com Retorno no Painel eSocial
 
 **Acao realizada:**
