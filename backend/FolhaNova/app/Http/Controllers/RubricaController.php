@@ -22,6 +22,8 @@ class RubricaController extends Controller
         $tipo = in_array($tipo, ['provento', 'desconto', 'informativa'], true) ? $tipo : '';
         $incidencia = trim((string) $request->string('incidencia'));
         $incidencia = in_array($incidencia, ['irrf', 'inss', 'fgts'], true) ? $incidencia : '';
+        $esocial = trim((string) $request->string('esocial'));
+        $esocial = $esocial === 'com_codigo' ? $esocial : '';
 
         $baseQuery = Rubrica::query()
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
@@ -40,6 +42,7 @@ class RubricaController extends Controller
             ->when($status !== '', fn ($query) => $query->where('ativo', $status === 'ativos'))
             ->when($tipo !== '', fn ($query) => $query->where('tipo', $tipo))
             ->when($incidencia !== '', fn ($query) => $query->where("incide_{$incidencia}", true))
+            ->when($esocial === 'com_codigo', fn ($query) => $query->whereNotNull('codigo_esocial'))
             ->orderBy('nome')
             ->paginate(12)
             ->withQueryString();
@@ -57,6 +60,7 @@ class RubricaController extends Controller
                 'status' => $status,
                 'tipo' => $tipo,
                 'incidencia' => $incidencia,
+                'esocial' => $esocial,
             ],
         ]);
     }

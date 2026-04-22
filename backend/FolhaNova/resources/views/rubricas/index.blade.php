@@ -26,11 +26,11 @@
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['inativas'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-amber-300">Preservando historico de calculo</p>
             </div>
-            <div class="stat-card">
+            <a href="{{ route('rubricas.index', ['esocial' => 'com_codigo']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
                 <p class="text-sm text-slate-400">Com codigo eSocial</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['com_codigo_esocial'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-cyan-300">Base para S-1010</p>
-            </div>
+            </a>
         </div>
 
         <div class="grid gap-6 xl:grid-cols-[1.8fr_1fr]">
@@ -85,6 +85,14 @@
                                     <option value="irrf" @selected($filtros['incidencia'] === 'irrf')>IRRF</option>
                                     <option value="inss" @selected($filtros['incidencia'] === 'inss')>INSS</option>
                                     <option value="fgts" @selected($filtros['incidencia'] === 'fgts')>FGTS</option>
+                                </select>
+                            </label>
+
+                            <label class="form-control w-full xl:w-48">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">eSocial</span>
+                                <select name="esocial" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                    <option value="">Todas</option>
+                                    <option value="com_codigo" @selected($filtros['esocial'] === 'com_codigo')>Com codigo</option>
                                 </select>
                             </label>
 
