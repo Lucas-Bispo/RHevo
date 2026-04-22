@@ -1,3 +1,31 @@
+### PRODUTO-DASHBOARD-DEMO-ATALHOS-REAIS - 22/04/2026
+
+**Descricao:**
+Conectar o dashboard operacional aos dados reais do tenant e exibir atalhos para validacao manual da massa demo.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/DashboardController.php`
+- `backend/FolhaNova/routes/web.php`
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- substituir dashboard estatico por controller com resumo por tenant;
+- exibir contagens reais de servidores, eventos e rubricas;
+- adicionar atalhos para orgao publico, rubricas e eventos eSocial;
+- cobrir dashboard com teste de feature;
+- registrar a entrega na documentacao.
+
+**Resultado:**
+- dashboard passou a usar contagens reais do tenant autenticado;
+- cards principais apontam para filtros operacionais;
+- tela ganhou atalhos para validar orgao publico, rubricas e painel eSocial;
+- teste focado confirmou a leitura e os links do dashboard.
+
 ### PRODUTO-DADOS-DEMO-VALIDACAO-MANUAL - 22/04/2026
 
 **Descricao:**

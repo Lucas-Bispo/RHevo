@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventoEsocialController;
 use App\Http\Controllers\FuncaoController;
 use App\Http\Controllers\LotacaoController;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', RootRedirectController::class);
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', DashboardController::class)
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 

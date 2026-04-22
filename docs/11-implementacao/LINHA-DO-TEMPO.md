@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Dashboard com Dados Reais e Atalhos Demo
+
+**Acao realizada:**
+- Criado `DashboardController` para calcular indicadores reais por tenant.
+- Rota `/dashboard` passou a usar controller em vez de view estatica.
+- Dashboard passou a exibir contagens reais de servidores, eventos e rubricas.
+- Adicionados atalhos para validar orgao publico, rubricas e painel eSocial com a massa demo.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/DashboardController.php`
+- `backend/FolhaNova/routes/web.php`
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/DashboardTest.php`, `tests/Feature/Auth/AuthenticationTest.php` e `tests/Feature/ExampleTest.php`: `8` testes verdes e `27` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Massa Demo para Validacao Manual Local
 
 **Acao realizada:**

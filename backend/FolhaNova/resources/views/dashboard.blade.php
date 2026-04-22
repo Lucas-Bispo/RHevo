@@ -7,65 +7,73 @@
         <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <div class="stat-card">
                 <p class="text-sm text-slate-400">Servidores ativos</p>
-                <p class="mt-3 text-3xl font-semibold text-white">1.248</p>
-                <p class="mt-2 text-sm text-emerald-300">+18 este mês</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['servidores_ativos'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Base operacional do tenant</p>
             </div>
-            <div class="stat-card">
+
+            <a href="{{ route('eventos-esocial.index', ['status' => 'pendente']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
                 <p class="text-sm text-slate-400">Eventos pendentes</p>
-                <p class="mt-3 text-3xl font-semibold text-white">37</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['eventos_pendentes'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-amber-300">Acompanhar fila do eSocial</p>
-            </div>
-            <div class="stat-card">
+            </a>
+
+            <a href="{{ route('rubricas.index', ['status' => 'ativos']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
                 <p class="text-sm text-slate-400">Rubricas ativas</p>
-                <p class="mt-3 text-3xl font-semibold text-white">214</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['rubricas_ativas'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-cyan-300">Base preparada para S-1010</p>
-            </div>
-            <div class="stat-card">
-                <p class="text-sm text-slate-400">Saúde operacional</p>
-                <p class="mt-3 text-3xl font-semibold text-white">98,4%</p>
-                <p class="mt-2 text-sm text-emerald-300">Observabilidade ativa</p>
-            </div>
+            </a>
+
+            <a href="{{ route('eventos-esocial.index', ['status' => 'erro']) }}" class="stat-card block transition hover:border-rose-400/40 hover:bg-rose-500/5 focus:outline-none focus:ring-2 focus:ring-rose-400/50">
+                <p class="text-sm text-slate-400">Eventos com erro</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['eventos_com_erro'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-rose-300">Prioridade de revisao</p>
+            </a>
         </div>
 
         <div class="grid gap-6 xl:grid-cols-[1.7fr_1fr]">
             <div class="panel-surface rounded-3xl p-6">
-                <div class="flex items-center justify-between">
+                <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                     <div>
-                        <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Operação diária</p>
-                        <h2 class="mt-2 text-2xl font-semibold text-white">Centro de controle de RH e Folha</h2>
+                        <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Validacao manual</p>
+                        <h2 class="mt-2 text-2xl font-semibold text-white">Atalhos para testar a massa demo</h2>
+                        <p class="mt-3 max-w-3xl text-sm leading-6 text-slate-300">
+                            Use estes caminhos para conferir rapidamente os fluxos entregues no localhost com dados reais do tenant demo.
+                        </p>
                     </div>
 
-                    <a href="{{ route('servidores.index') }}" class="btn btn-info btn-sm">Abrir modulo</a>
+                    <a href="{{ route('servidores.index') }}" class="btn btn-info btn-sm">Abrir servidores</a>
                 </div>
 
                 <div class="mt-6 overflow-x-auto">
                     <table class="table">
                         <thead>
                             <tr class="text-slate-400">
-                                <th>Rotina</th>
-                                <th>Status</th>
-                                <th>Prazo</th>
-                                <th>Responsável</th>
+                                <th>Fluxo</th>
+                                <th>O que validar</th>
+                                <th class="text-right">Atalho</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Fechamento da folha mensal</td>
-                                <td><span class="badge badge-warning badge-outline">Em validação</span></td>
-                                <td>Hoje, 18:00</td>
-                                <td>Equipe RH</td>
+                                <td>Orgao publico</td>
+                                <td>Status de vigencia, dados institucionais e evento S-1000.</td>
+                                <td class="text-right">
+                                    <a href="{{ route('orgao-publico.show') }}" class="btn btn-ghost btn-sm">Abrir</a>
+                                </td>
                             </tr>
                             <tr>
-                                <td>Envio S-2200 admissões</td>
-                                <td><span class="badge badge-info badge-outline">Aguardando fila</span></td>
-                                <td>Amanhã, 09:00</td>
-                                <td>eSocial</td>
+                                <td>Rubricas</td>
+                                <td>Filtros com codigo, sem codigo, tipo e incidencia.</td>
+                                <td class="text-right">
+                                    <a href="{{ route('rubricas.index', ['esocial' => 'sem_codigo']) }}" class="btn btn-ghost btn-sm">Abrir pendencias</a>
+                                </td>
                             </tr>
                             <tr>
-                                <td>Conferência de rubricas</td>
-                                <td><span class="badge badge-success badge-outline">Concluído</span></td>
-                                <td>Concluído</td>
-                                <td>Folha</td>
+                                <td>Eventos eSocial</td>
+                                <td>Cards por status, evento prioritario, retorno e detalhe.</td>
+                                <td class="text-right">
+                                    <a href="{{ route('eventos-esocial.index') }}" class="btn btn-ghost btn-sm">Abrir painel</a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -74,35 +82,35 @@
 
             <div class="space-y-6">
                 <div class="panel-surface rounded-3xl p-6">
-                    <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Checklist técnico</p>
+                    <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Leitura demo</p>
                     <ul class="mt-4 space-y-3 text-sm text-slate-200">
                         <li class="flex items-center justify-between">
-                            <span>Laravel 11</span>
+                            <span>Rubricas sem codigo</span>
+                            <span class="badge badge-warning badge-outline">{{ number_format($resumo['rubricas_sem_codigo'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span>Eventos com retorno</span>
+                            <span class="badge badge-info badge-outline">{{ number_format($resumo['eventos_com_retorno'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span>Login demo</span>
                             <span class="badge badge-success badge-outline">OK</span>
                         </li>
                         <li class="flex items-center justify-between">
-                            <span>Livewire 3</span>
-                            <span class="badge badge-success badge-outline">OK</span>
-                        </li>
-                        <li class="flex items-center justify-between">
-                            <span>Telescope</span>
-                            <span class="badge badge-success badge-outline">OK</span>
-                        </li>
-                        <li class="flex items-center justify-between">
-                            <span>Multi-tenant</span>
-                            <span class="badge badge-info badge-outline">Base pronta</span>
+                            <span>Tenant demo</span>
+                            <span class="badge badge-info badge-outline">Ativo</span>
                         </li>
                     </ul>
                 </div>
 
                 <div class="panel-surface rounded-3xl p-6">
-                    <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Próximo módulo</p>
-                    <h3 class="mt-3 text-xl font-semibold text-white">Painel de Eventos eSocial</h3>
+                    <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Painel eSocial</p>
+                    <h3 class="mt-3 text-xl font-semibold text-white">Eventos com retorno</h3>
                     <p class="mt-3 text-sm leading-6 text-slate-300">
-                        A fundação do projeto já suporta a próxima etapa: cadastro de pessoa, vínculo funcional, lotação, cargo, função e rastreabilidade de eventos do eSocial.
+                        Confira eventos que ja possuem mensagem de retorno registrada e depois navegue para o detalhe.
                     </p>
                     <div class="mt-4">
-                        <a href="{{ route('eventos-esocial.index') }}" class="btn btn-outline btn-info btn-sm">Abrir painel</a>
+                        <a href="{{ route('eventos-esocial.index', ['retorno' => 'com_mensagem']) }}" class="btn btn-outline btn-info btn-sm">Abrir retornos</a>
                     </div>
                 </div>
             </div>
