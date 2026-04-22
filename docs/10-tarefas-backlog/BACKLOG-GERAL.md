@@ -1,3 +1,30 @@
+### PRODUTO-PAINEL-ESOCIAL-ATALHOS-AMBIENTE - 22/04/2026
+
+**Descricao:**
+Adicionar atalhos e contagens por ambiente no painel eSocial para separar rapidamente eventos de `homologacao` e `producao`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- calcular contagens por ambiente no resumo do painel;
+- exibir cards para `Homologacao` e `Producao`;
+- apontar os cards para o filtro `ambiente`;
+- cobrir os links e a filtragem com teste de feature.
+
+**Resultado:**
+- painel eSocial passou a exibir cards para ambientes `Homologacao` e `Producao`;
+- cada card mostra a contagem do tenant atual e abre a listagem filtrada;
+- resumo de filtros ativos exibe o ambiente selecionado;
+- teste focado confirmou os links e a filtragem por ambiente.
+
 ### PRODUTO-DASHBOARD-TRIAGEM-ESOCIAL - 22/04/2026
 
 **Descricao:**

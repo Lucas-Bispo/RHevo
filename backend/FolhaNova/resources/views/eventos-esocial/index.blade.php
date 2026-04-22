@@ -72,6 +72,19 @@
             </a>
         </div>
 
+        <div class="grid gap-4 md:grid-cols-2">
+            <a href="{{ route('eventos-esocial.index', ['ambiente' => 'homologacao']) }}" class="stat-card block transition hover:border-indigo-400/40 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-400/50">
+                <p class="text-sm text-slate-400">Homologacao</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['homologacao'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-indigo-300">Eventos em ambiente de teste</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['ambiente' => 'producao']) }}" class="stat-card block transition hover:border-fuchsia-400/40 hover:bg-fuchsia-500/5 focus:outline-none focus:ring-2 focus:ring-fuchsia-400/50">
+                <p class="text-sm text-slate-400">Producao</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['producao'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-fuchsia-300">Eventos em ambiente definitivo</p>
+            </a>
+        </div>
+
         <div class="grid gap-6 xl:grid-cols-[1.85fr_1fr]">
             <div class="panel-surface rounded-3xl p-6">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">

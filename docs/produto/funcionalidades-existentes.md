@@ -46,6 +46,7 @@
 - Acao de reprocessamento local direto na listagem do painel para eventos com erro.
 - Resumo da mensagem de retorno exibido diretamente na listagem do painel eSocial.
 - Resumo visual de filtros ativos no painel eSocial com acao para limpar filtros.
+- Cards do painel eSocial para filtrar eventos por ambiente de homologacao ou producao.
 - Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010` e `S-2200`.
 - Filtro do painel eSocial para eventos com mensagem de retorno registrada.
 - Tela de detalhe do evento eSocial com atalhos para retornar ao painel filtrado por evento ou status.

@@ -222,6 +222,47 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('value="S-1010" selected', false);
     }
 
+    public function test_eventos_index_links_environment_summaries_to_environment_filters(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 87,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 87,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 87,
+            'evento' => 'S-1010',
+            'status' => 'processado',
+            'ambiente' => 'producao',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('Homologacao')
+            ->assertSee('Producao')
+            ->assertSee('href="'.route('eventos-esocial.index', ['ambiente' => 'homologacao']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['ambiente' => 'producao']).'"', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['ambiente' => 'producao']))
+            ->assertOk()
+            ->assertSee('rubricas')
+            ->assertDontSee('parametros_orgao_publico')
+            ->assertSee('value="producao" selected', false)
+            ->assertSee('Ambiente: Producao');
+    }
+
     public function test_eventos_index_can_filter_events_with_return_message(): void
     {
         $user = User::factory()->create([

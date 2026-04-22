@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Atalhos por Ambiente no Painel eSocial
+
+**Acao realizada:**
+- Adicionadas contagens de eventos por ambiente no controller do painel eSocial.
+- Criados cards `Homologacao` e `Producao` com links para o filtro `ambiente`.
+- O resumo de filtros ativos passa a evidenciar o ambiente selecionado quando usado.
+- Teste de painel cobre links e filtragem por ambiente.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `16` testes verdes e `80` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Triagem eSocial no Dashboard
 
 **Acao realizada:**
