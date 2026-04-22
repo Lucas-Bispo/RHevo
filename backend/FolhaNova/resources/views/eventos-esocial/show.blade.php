@@ -40,6 +40,7 @@
                         <a href="{{ route('eventos-esocial.index') }}" class="btn btn-ghost">Voltar para painel</a>
                         <a href="{{ route('eventos-esocial.index', ['evento' => $eventoEsocial->evento]) }}" class="btn btn-ghost">Mesmo evento</a>
                         <a href="{{ route('eventos-esocial.index', ['status' => $eventoEsocial->status]) }}" class="btn btn-ghost">Mesmo status</a>
+                        <a href="{{ route('eventos-esocial.index', ['ambiente' => $eventoEsocial->ambiente]) }}" class="btn btn-ghost">Mesmo ambiente</a>
                     </div>
                 </div>
 

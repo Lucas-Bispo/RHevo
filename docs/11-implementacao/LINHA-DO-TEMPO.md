@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Atalho de Ambiente no Detalhe eSocial
+
+**Acao realizada:**
+- Adicionado link `Mesmo ambiente` na tela de detalhe de evento eSocial.
+- O link retorna ao painel com filtro `ambiente` do evento atual.
+- Mantidos os atalhos `Mesmo evento` e `Mesmo status`.
+- Teste de detalhe passou a validar o novo link e a suite do painel confirmou a filtragem.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventoEsocialShowTest.php` e `tests/Feature/EventosEsocialIndexTest.php`: `16` testes verdes e `82` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Atalhos por Ambiente no Painel eSocial
 
 **Acao realizada:**

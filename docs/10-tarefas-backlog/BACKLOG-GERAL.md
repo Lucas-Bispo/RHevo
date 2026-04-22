@@ -1,3 +1,29 @@
+### PRODUTO-DETALHE-ESOCIAL-ATALHO-AMBIENTE - 22/04/2026
+
+**Descricao:**
+Adicionar atalho no detalhe de evento eSocial para retornar ao painel filtrado pelo mesmo ambiente do evento atual.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar link `Mesmo ambiente` no detalhe eSocial;
+- apontar para o painel com filtro `ambiente`;
+- preservar atalhos existentes de evento e status;
+- cobrir o link com teste de feature.
+
+**Resultado:**
+- detalhe do evento eSocial ganhou atalho `Mesmo ambiente`;
+- link retorna ao painel filtrado por `homologacao` ou `producao`;
+- atalhos existentes por evento e status foram preservados;
+- testes focados confirmaram a navegacao entre detalhe e painel.
+
 ### PRODUTO-PAINEL-ESOCIAL-ATALHOS-AMBIENTE - 22/04/2026
 
 **Descricao:**

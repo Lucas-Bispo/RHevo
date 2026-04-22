@@ -49,7 +49,7 @@
 - Cards do painel eSocial para filtrar eventos por ambiente de homologacao ou producao.
 - Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010` e `S-2200`.
 - Filtro do painel eSocial para eventos com mensagem de retorno registrada.
-- Tela de detalhe do evento eSocial com atalhos para retornar ao painel filtrado por evento ou status.
+- Tela de detalhe do evento eSocial com atalhos para retornar ao painel filtrado por evento, status ou ambiente.
 
 ## O que ainda nao existe em operacao real
 - Atualizacoes cadastrais, afastamentos e desligamentos.
