@@ -1,3 +1,32 @@
+### PRODUTO-S1010-FILTRO-SEM-CODIGO-ESOCIAL - 22/04/2026
+
+**Descricao:**
+Adicionar filtro operacional para listar rubricas sem codigo eSocial, evidenciando pendencias de parametrizacao para preparacao do `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- aceitar filtro `esocial=sem_codigo`;
+- listar apenas rubricas sem `codigo_esocial`;
+- adicionar leitura de pendencias no resumo e no select da tela;
+- cobrir comportamento com teste de feature;
+- registrar a funcionalidade na documentacao.
+
+**Resultado:**
+- listagem de rubricas passou a aceitar filtro `esocial=sem_codigo`;
+- tela ganhou card operacional de rubricas sem codigo eSocial;
+- select de eSocial passou a permitir alternar entre todas, com codigo e sem codigo;
+- teste focado confirmou que rubricas parametrizadas ficam fora da listagem de pendencias.
+
 ### PRODUTO-S1000-STATUS-VIGENCIA-INSTITUCIONAL - 22/04/2026
 
 **Descricao:**

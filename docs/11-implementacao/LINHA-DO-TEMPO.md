@@ -2,6 +2,29 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Filtro de Rubricas sem Codigo eSocial
+
+**Acao realizada:**
+- Adicionado filtro `esocial=sem_codigo` na listagem de rubricas.
+- Criado card operacional `Sem codigo eSocial` como atalho para pendencias de parametrizacao.
+- Select de eSocial passou a alternar entre todas, com codigo e sem codigo.
+- Criado teste cobrindo a listagem de rubricas pendentes de codigo eSocial.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricasIndexTest.php` e `tests/Feature/RubricaCrudTest.php`: `10` testes verdes e `41` assercoes.
+- Validacao manual em `localhost` deixada para a rodada do usuario, conforme orientacao.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Status de Vigencia Institucional no S-1000
 
 **Acao realizada:**

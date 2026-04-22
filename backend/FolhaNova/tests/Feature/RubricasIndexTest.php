@@ -167,4 +167,49 @@ class RubricasIndexTest extends TestCase
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'com_codigo']).'"', false)
             ->assertSee('value="com_codigo" selected', false);
     }
+
+    public function test_authenticated_user_can_filter_rubricas_without_codigo_esocial(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 67,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 67,
+            'codigo' => 'S1010-002',
+            'nome' => 'Vencimento base parametrizado',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => true,
+            'codigo_esocial' => 'S1010-VENC',
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 67,
+            'codigo' => 'SEM-COD-002',
+            'nome' => 'Rubrica pendente de parametrizacao',
+            'natureza' => '1002',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'codigo_esocial' => null,
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['esocial' => 'sem_codigo']));
+
+        $response
+            ->assertOk()
+            ->assertSee('Rubrica pendente de parametrizacao')
+            ->assertDontSee('Vencimento base parametrizado')
+            ->assertSee('Sem codigo eSocial')
+            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
+            ->assertSee('value="sem_codigo" selected', false);
+    }
 }

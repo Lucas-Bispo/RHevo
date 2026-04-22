@@ -10,7 +10,7 @@
             </div>
         @endif
 
-        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <div class="stat-card">
                 <p class="text-sm text-slate-400">Total de rubricas</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['total'], 0, ',', '.') }}</p>
@@ -30,6 +30,11 @@
                 <p class="text-sm text-slate-400">Com codigo eSocial</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['com_codigo_esocial'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-cyan-300">Base para S-1010</p>
+            </a>
+            <a href="{{ route('rubricas.index', ['esocial' => 'sem_codigo']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
+                <p class="text-sm text-slate-400">Sem codigo eSocial</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['sem_codigo_esocial'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-amber-300">Pendencias do S-1010</p>
             </a>
         </div>
 
@@ -93,6 +98,7 @@
                                 <select name="esocial" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
                                     <option value="">Todas</option>
                                     <option value="com_codigo" @selected($filtros['esocial'] === 'com_codigo')>Com codigo</option>
+                                    <option value="sem_codigo" @selected($filtros['esocial'] === 'sem_codigo')>Sem codigo</option>
                                 </select>
                             </label>
 

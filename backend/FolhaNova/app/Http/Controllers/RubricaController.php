@@ -23,7 +23,7 @@ class RubricaController extends Controller
         $incidencia = trim((string) $request->string('incidencia'));
         $incidencia = in_array($incidencia, ['irrf', 'inss', 'fgts'], true) ? $incidencia : '';
         $esocial = trim((string) $request->string('esocial'));
-        $esocial = $esocial === 'com_codigo' ? $esocial : '';
+        $esocial = in_array($esocial, ['com_codigo', 'sem_codigo'], true) ? $esocial : '';
 
         $baseQuery = Rubrica::query()
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
@@ -43,6 +43,7 @@ class RubricaController extends Controller
             ->when($tipo !== '', fn ($query) => $query->where('tipo', $tipo))
             ->when($incidencia !== '', fn ($query) => $query->where("incide_{$incidencia}", true))
             ->when($esocial === 'com_codigo', fn ($query) => $query->whereNotNull('codigo_esocial'))
+            ->when($esocial === 'sem_codigo', fn ($query) => $query->whereNull('codigo_esocial'))
             ->orderBy('nome')
             ->paginate(12)
             ->withQueryString();
@@ -54,6 +55,7 @@ class RubricaController extends Controller
                 'ativas' => (clone $baseQuery)->where('ativo', true)->count(),
                 'inativas' => (clone $baseQuery)->where('ativo', false)->count(),
                 'com_codigo_esocial' => (clone $baseQuery)->whereNotNull('codigo_esocial')->count(),
+                'sem_codigo_esocial' => (clone $baseQuery)->whereNull('codigo_esocial')->count(),
             ],
             'filtros' => [
                 'q' => $search,
