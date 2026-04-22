@@ -130,4 +130,44 @@ class RubricaCrudTest extends TestCase
 
         $response->assertSessionHasErrors('natureza');
     }
+
+    public function test_user_can_not_create_rubrica_with_duplicate_codigo_surrounded_by_spaces(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 65,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 65,
+            'codigo' => 'RUB-001',
+            'nome' => 'Gratificacao de funcao',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.create'))
+            ->post(route('rubricas.store'), [
+                'codigo' => ' RUB-001 ',
+                'nome' => 'Outra gratificacao',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => '',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.create'))
+            ->assertSessionHasErrors('codigo');
+
+        $this->assertSame(1, Rubrica::query()->where('tenant_id', 65)->where('codigo', 'RUB-001')->count());
+    }
 }

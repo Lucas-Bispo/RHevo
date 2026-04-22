@@ -7,6 +7,16 @@ use Illuminate\Validation\Rule;
 
 class StoreRubricaRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'codigo' => trim((string) $this->input('codigo')),
+            'nome' => trim((string) $this->input('nome')),
+            'natureza' => trim((string) $this->input('natureza')),
+            'codigo_esocial' => $this->nullableTrimmed('codigo_esocial'),
+        ]);
+    }
+
     public function authorize(): bool
     {
         return $this->user() !== null;
@@ -35,5 +45,12 @@ class StoreRubricaRequest extends FormRequest
             'codigo_esocial' => ['nullable', 'string', 'max:30'],
             'ativo' => ['required', 'boolean'],
         ];
+    }
+
+    private function nullableTrimmed(string $key): ?string
+    {
+        $value = trim((string) $this->input($key));
+
+        return $value === '' ? null : $value;
     }
 }

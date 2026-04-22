@@ -26,6 +26,34 @@ Evoluir o modulo de parametros do orgao publico para deixar `classTrib` menos li
 - codigo nao mapeado deixa de gerar evento `S-1000` pendente;
 - validacao focada de `OrgaoPublicoTest` passou com `7` testes e `38` assercoes.
 
+### PRODUTO-S1010-NORMALIZACAO-RUBRICAS - 21/04/2026
+
+**Descricao:**
+Normalizar entradas do cadastro de rubricas antes da validacao para evitar duplicidade mascarada por espacos e manter `natRubr` como codigo limpo no fluxo do `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- aplicar `trim` nos campos principais antes da validacao;
+- converter `codigo_esocial` vazio em `null`;
+- impedir que `codigo` com espacos burle a unicidade por tenant;
+- validar rubricas, login e frontend antes de concluir.
+
+**Resultado:**
+- requests de criacao e edicao de rubricas passaram a normalizar campos antes da validacao;
+- duplicidade de codigo por tenant com espacos ao redor passou a ser barrada pela validacao;
+- validacao focada de rubricas passou com `6` testes e `22` assercoes;
+- login e assets compilados permaneceram operacionais.
+
 ### PRODUTO-S1000-LEITURA-CLASSIFICACAO-TRIBUTARIA - 21/04/2026
 
 **Descricao:**

@@ -2,6 +2,31 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 21/04/2026 - 21:15 - Normalizacao de Entradas de Rubricas S-1010
+
+**Acao realizada:**
+- Adicionada normalizacao previa nos requests de criacao e edicao de rubricas.
+- Campos `codigo`, `nome` e `natureza` passam por `trim` antes da validacao.
+- `codigo_esocial` vazio passa a ser tratado como `null`.
+- Criado teste para impedir duplicidade de `codigo` mascarada por espacos no mesmo tenant.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php` e `tests/Feature/RubricasIndexTest.php`: `6` testes verdes e `22` assercoes.
+- `tests/Feature/Auth/AuthenticationTest.php`: `5` testes verdes e `15` assercoes.
+- `GET /login`: `200 OK`.
+- CSS e JS compilados em `/build/assets`: `200 OK`.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 21:05 - Leitura da Classificacao Tributaria no S-1000
 
 **Acao realizada:**
