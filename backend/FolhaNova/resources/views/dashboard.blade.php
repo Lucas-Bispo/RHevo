@@ -113,6 +113,25 @@
                         <a href="{{ route('eventos-esocial.index', ['retorno' => 'com_mensagem']) }}" class="btn btn-outline btn-info btn-sm">Abrir retornos</a>
                     </div>
                 </div>
+
+                <div class="panel-surface rounded-3xl p-6">
+                    <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Triagem eSocial</p>
+                    <h3 class="mt-3 text-xl font-semibold text-white">Fila operacional</h3>
+                    <div class="mt-4 space-y-3 text-sm text-slate-200">
+                        <a href="{{ route('eventos-esocial.index', ['status' => 'erro']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-rose-400/40 hover:bg-rose-500/5">
+                            <span>Eventos com erro</span>
+                            <span class="badge badge-error badge-outline">{{ number_format($resumo['eventos_com_erro'], 0, ',', '.') }}</span>
+                        </a>
+                        <a href="{{ route('eventos-esocial.index', ['status' => 'pendente']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-amber-400/40 hover:bg-amber-500/5">
+                            <span>Eventos pendentes</span>
+                            <span class="badge badge-warning badge-outline">{{ number_format($resumo['eventos_pendentes'], 0, ',', '.') }}</span>
+                        </a>
+                        <a href="{{ route('eventos-esocial.index', ['retorno' => 'com_mensagem']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-sky-400/40 hover:bg-sky-500/5">
+                            <span>Eventos com retorno</span>
+                            <span class="badge badge-info badge-outline">{{ number_format($resumo['eventos_com_retorno'], 0, ',', '.') }}</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

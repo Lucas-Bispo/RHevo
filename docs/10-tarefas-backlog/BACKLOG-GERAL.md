@@ -1,3 +1,29 @@
+### PRODUTO-DASHBOARD-TRIAGEM-ESOCIAL - 22/04/2026
+
+**Descricao:**
+Adicionar no dashboard um bloco de triagem eSocial com atalhos diretos para eventos com erro, pendentes e com retorno, aproveitando os filtros operacionais do painel.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- incluir bloco compacto de triagem eSocial no dashboard;
+- apontar atalhos para filtros `erro`, `pendente` e `retorno=com_mensagem`;
+- preservar os cards e atalhos existentes;
+- cobrir os links com teste de feature.
+
+**Resultado:**
+- dashboard ganhou bloco `Triagem eSocial` com leitura da fila operacional;
+- atalhos apontam para eventos com erro, pendentes e com retorno;
+- contagens existentes foram reaproveitadas sem alterar controller ou banco;
+- teste focado confirmou os links e a permanencia dos atalhos existentes.
+
 ### PRODUTO-PAINEL-ESOCIAL-FILTROS-ATIVOS - 22/04/2026
 
 **Descricao:**

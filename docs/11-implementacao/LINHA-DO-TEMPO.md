@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Triagem eSocial no Dashboard
+
+**Acao realizada:**
+- Adicionado bloco `Triagem eSocial` no dashboard operacional.
+- Incluidos atalhos para eventos com erro, pendentes e com retorno.
+- As contagens existentes do dashboard foram reaproveitadas sem mudar controller ou banco.
+- Teste do dashboard passou a validar os novos links para filtros do painel eSocial.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/DashboardTest.php` e `tests/Feature/EventosEsocialIndexTest.php`: `11` testes verdes e `63` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Filtros Ativos no Painel eSocial
 
 **Acao realizada:**

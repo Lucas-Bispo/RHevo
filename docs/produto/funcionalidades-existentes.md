@@ -5,6 +5,7 @@
 - Login customizado com Livewire.
 - Rotas de autenticacao auxiliares via Volt.
 - Dashboard inicial.
+- Triagem eSocial no dashboard com atalhos para eventos com erro, pendentes e com retorno.
 - Perfil do usuario autenticado.
 - Navegacao lateral para modulos principais.
 - Modulo de parametros do orgao publico para o tenant atual.

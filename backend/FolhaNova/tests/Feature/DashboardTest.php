@@ -70,7 +70,11 @@ class DashboardTest extends TestCase
             ->assertSee('Servidores ativos')
             ->assertSee('Eventos com erro')
             ->assertSee('Rubricas sem codigo')
+            ->assertSee('Triagem eSocial')
+            ->assertSee('Fila operacional')
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'erro']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'pendente']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false);
     }
 
