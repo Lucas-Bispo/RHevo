@@ -51,7 +51,10 @@
                     </div>
 
                     <div class="flex w-full max-w-3xl flex-col gap-3 lg:items-end">
-                        <a href="{{ route('rubricas.create') }}" class="btn btn-info">Nova rubrica</a>
+                        <div class="flex w-full flex-col gap-3 sm:flex-row lg:w-auto">
+                            <a href="{{ route('rubricas.create') }}" class="btn btn-info">Nova rubrica</a>
+                            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1010']) }}" class="btn btn-ghost">Ver S-1010 no painel</a>
+                        </div>
                         <form method="GET" action="{{ route('rubricas.index') }}" class="flex w-full flex-col gap-3 xl:flex-row xl:flex-wrap xl:items-end">
                             <label class="form-control w-full min-w-0 flex-1">
                                 <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Busca</span>

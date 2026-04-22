@@ -2,6 +2,25 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Atalho S-1010 no Painel eSocial
+
+**Acao realizada:**
+- Adicionado atalho na tela de rubricas para abrir o painel eSocial filtrado por `S-1010`.
+- Mantidos os filtros operacionais de rubricas por tipo, incidencia e codigo eSocial.
+- Teste de rubricas passou a validar o link de navegacao para a trilha `S-1010`.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricasIndexTest.php` e `tests/Feature/EventosEsocialIndexTest.php`: `12` testes verdes e `61` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Atalho S-1000 no Painel eSocial
 
 **Acao realizada:**

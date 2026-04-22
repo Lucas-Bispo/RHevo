@@ -26,6 +26,7 @@
 - Validacao inicial de rubricas para `S-1010`, exigindo natureza eSocial (`natRubr`) numerica de 4 digitos.
 - Normalizacao previa dos campos de rubrica para preservar unicidade por tenant mesmo com espacos no preenchimento.
 - Filtros de rubricas por tipo, incidencia e situacao de codigo eSocial, incluindo pendencias sem codigo.
+- Atalho de rubricas para abrir o painel eSocial filtrado pela trilha `S-1010`.
 
 ## RH operacional
 - Listagem de servidores com filtros por busca e situacao.

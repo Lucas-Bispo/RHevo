@@ -1,3 +1,29 @@
+### PRODUTO-S1010-ATALHO-PAINEL-EVENTOS - 22/04/2026
+
+**Descricao:**
+Adicionar atalho operacional da tela de rubricas para o painel eSocial filtrado por `S-1010`, facilitando a validacao manual da trilha de rubricas.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- incluir acao para abrir painel de eventos filtrado por `S-1010`;
+- manter os filtros existentes de rubricas por codigo eSocial;
+- cobrir o atalho com teste de feature;
+- registrar a entrega na documentacao.
+
+**Resultado:**
+- tela de rubricas passou a ter atalho direto para o painel eSocial filtrado por `S-1010`;
+- filtros existentes de rubricas foram preservados;
+- teste focado confirmou o link para a trilha de eventos de rubricas;
+- suite adjacente do painel eSocial seguiu verde.
+
 ### PRODUTO-S1000-ATALHO-PAINEL-EVENTOS - 22/04/2026
 
 **Descricao:**
