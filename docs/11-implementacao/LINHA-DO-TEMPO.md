@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Filtro de Eventos com Retorno no Painel eSocial
+
+**Acao realizada:**
+- Adicionado filtro `retorno=com_mensagem` no painel eSocial.
+- Exibido card operacional `Com retorno` com contagem de eventos que possuem mensagem de retorno.
+- A listagem filtrada passa a mostrar apenas eventos com `mensagem_retorno`.
+- Criado teste cobrindo o link e o filtro operacional.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `12` testes verdes e `54` assercoes.
+- Validacao manual em `localhost` deixada para a rodada do usuario, conforme orientacao.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Atalhos Contextuais no Detalhe eSocial
 
 **Acao realizada:**

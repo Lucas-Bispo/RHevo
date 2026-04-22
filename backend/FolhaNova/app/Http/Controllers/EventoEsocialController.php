@@ -17,6 +17,8 @@ class EventoEsocialController extends Controller
         $evento = trim((string) $request->string('evento'));
         $status = trim((string) $request->string('status'));
         $ambiente = trim((string) $request->string('ambiente'));
+        $retorno = trim((string) $request->string('retorno'));
+        $retorno = $retorno === 'com_mensagem' ? $retorno : '';
 
         $baseQuery = EventoEsocial::query()
             ->with(['servidor.pessoa'])
@@ -40,6 +42,7 @@ class EventoEsocialController extends Controller
             ->when($evento !== '', fn ($query) => $query->where('evento', $evento))
             ->when($status !== '', fn ($query) => $query->where('status', $status))
             ->when($ambiente !== '', fn ($query) => $query->where('ambiente', $ambiente))
+            ->when($retorno === 'com_mensagem', fn ($query) => $query->whereNotNull('mensagem_retorno'))
             ->latest('updated_at')
             ->latest('id')
             ->paginate(12)
@@ -62,6 +65,7 @@ class EventoEsocialController extends Controller
                 'evento' => $evento,
                 'status' => $status,
                 'ambiente' => $ambiente,
+                'retorno' => $retorno,
             ],
             'eventosDisponiveis' => (clone $baseQuery)
                 ->select('evento')

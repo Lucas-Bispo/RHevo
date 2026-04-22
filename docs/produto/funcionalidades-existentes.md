@@ -41,6 +41,7 @@
 - Registro inicial de evento `S-2200` pendente no fluxo de admissao.
 - Painel para leitura de eventos institucionais e eventos vinculados a servidores.
 - Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010` e `S-2200`.
+- Filtro do painel eSocial para eventos com mensagem de retorno registrada.
 - Tela de detalhe do evento eSocial com atalhos para retornar ao painel filtrado por evento ou status.
 
 ## O que ainda nao existe em operacao real

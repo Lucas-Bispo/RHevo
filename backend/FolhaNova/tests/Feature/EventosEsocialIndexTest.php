@@ -221,4 +221,41 @@ class EventosEsocialIndexTest extends TestCase
             ->assertDontSee('cadastro_inicial_servidor')
             ->assertSee('value="S-1010" selected', false);
     }
+
+    public function test_eventos_index_can_filter_events_with_return_message(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 83,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 83,
+            'evento' => 'S-1000',
+            'status' => 'processado',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Evento recebido com sucesso.',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 83,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => null,
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['retorno' => 'com_mensagem']));
+
+        $response
+            ->assertOk()
+            ->assertSee('Com retorno')
+            ->assertSee('Mensagens registradas')
+            ->assertSee('parametros_orgao_publico')
+            ->assertDontSee('cadastro_inicial_servidor')
+            ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false);
+    }
 }

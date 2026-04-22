@@ -1,3 +1,31 @@
+### PRODUTO-PAINEL-ESOCIAL-FILTRO-COM-RETORNO - 22/04/2026
+
+**Descricao:**
+Adicionar atalho e filtro operacional para eventos eSocial com mensagem de retorno registrada.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- aceitar filtro `retorno=com_mensagem`;
+- listar apenas eventos com `mensagem_retorno`;
+- exibir card operacional `Com retorno`;
+- cobrir comportamento com teste de feature;
+- registrar a funcionalidade na documentacao.
+
+**Resultado:**
+- painel eSocial passou a aceitar filtro `retorno=com_mensagem`;
+- card `Com retorno` exibe a contagem de eventos com mensagem registrada;
+- listagem filtrada oculta eventos sem `mensagem_retorno`;
+- teste focado confirmou o link e o filtro operacional.
+
 ### PRODUTO-DETALHE-ESOCIAL-ATALHOS-CONTEXTO - 22/04/2026
 
 **Descricao:**

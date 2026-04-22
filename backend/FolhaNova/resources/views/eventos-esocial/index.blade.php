@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <div class="stat-card">
                 <p class="text-sm text-slate-400">Total de eventos</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['total'], 0, ',', '.') }}</p>
@@ -36,6 +36,11 @@
                 <p class="text-sm text-slate-400">Com erro</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['erros'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-rose-300">Prioridade para reprocessamento</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['retorno' => 'com_mensagem']) }}" class="stat-card block transition hover:border-sky-400/40 hover:bg-sky-500/5 focus:outline-none focus:ring-2 focus:ring-sky-400/50">
+                <p class="text-sm text-slate-400">Com retorno</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['com_retorno'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-sky-300">Mensagens registradas</p>
             </a>
         </div>
 
