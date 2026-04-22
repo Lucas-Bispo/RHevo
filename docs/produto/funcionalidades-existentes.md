@@ -28,6 +28,7 @@
 - Normalizacao previa dos campos de rubrica para preservar unicidade por tenant mesmo com espacos no preenchimento.
 - Filtros de rubricas por tipo, incidencia e situacao de codigo eSocial, incluindo pendencias sem codigo.
 - Atalho de rubricas para abrir o painel eSocial filtrado pela trilha `S-1010`.
+- Atalhos de revisao S-1010 na edicao de rubrica para painel eSocial e pendencias sem codigo.
 
 ## RH operacional
 - Listagem de servidores com filtros por busca e situacao.

@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 22/04/2026 - Atalhos de Revisao S-1010 na Rubrica
+
+**Acao realizada:**
+- Adicionado bloco `Revisao S-1010` na tela de edicao de rubrica.
+- Incluido atalho para o painel eSocial filtrado por `S-1010`.
+- Incluido atalho para a listagem de rubricas sem codigo eSocial.
+- Teste de CRUD de rubricas passou a validar os links de revisao.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php`, `tests/Feature/RubricasIndexTest.php` e `tests/Feature/EventosEsocialIndexTest.php`: `22` testes verdes e `110` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Atalho de Servidor no Detalhe eSocial
 
 **Acao realizada:**

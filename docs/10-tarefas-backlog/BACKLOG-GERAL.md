@@ -1,3 +1,29 @@
+### PRODUTO-RUBRICAS-ATALHOS-REVISAO-S1010 - 22/04/2026
+
+**Descricao:**
+Adicionar atalhos de revisao S-1010 na tela de edicao de rubrica para retornar rapidamente ao painel eSocial filtrado e as pendencias de rubricas sem codigo.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar bloco de revisao S-1010 na edicao de rubrica;
+- incluir atalho para painel eSocial filtrado por `S-1010`;
+- incluir atalho para rubricas sem codigo eSocial;
+- cobrir os links com teste de feature.
+
+**Resultado:**
+- edicao de rubrica ganhou bloco `Revisao S-1010`;
+- tela passou a abrir o painel eSocial filtrado por `S-1010`;
+- tela tambem leva direto as pendencias de rubricas sem codigo eSocial;
+- testes focados de rubricas e painel eSocial ficaram verdes.
+
 ### PRODUTO-DETALHE-ESOCIAL-ATALHO-SERVIDOR - 22/04/2026
 
 **Descricao:**

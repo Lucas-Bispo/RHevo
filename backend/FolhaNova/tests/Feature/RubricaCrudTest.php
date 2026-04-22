@@ -108,6 +108,35 @@ class RubricaCrudTest extends TestCase
         ]);
     }
 
+    public function test_rubrica_edit_screen_shows_s1010_review_shortcuts(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 66,
+        ]);
+
+        $rubrica = Rubrica::create([
+            'tenant_id' => 66,
+            'codigo' => 'RUB-REV',
+            'nome' => 'Rubrica revisao',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.edit', $rubrica))
+            ->assertOk()
+            ->assertSee('Revisao S-1010')
+            ->assertSee('Ver S-1010 no painel')
+            ->assertSee('Ver pendencias sem codigo')
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false);
+    }
+
     public function test_user_can_not_create_rubrica_with_textual_natureza(): void
     {
         $user = User::factory()->create([
