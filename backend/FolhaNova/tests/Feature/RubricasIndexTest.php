@@ -82,4 +82,45 @@ class RubricasIndexTest extends TestCase
             ->assertDontSee('Adicional noturno')
             ->assertSee('value="desconto" selected', false);
     }
+
+    public function test_authenticated_user_can_filter_rubricas_by_incidencia(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 65,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 65,
+            'codigo' => 'IRRF-001',
+            'nome' => 'Gratificacao tributavel',
+            'natureza' => '1002',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 65,
+            'codigo' => 'SEM-IRRF',
+            'nome' => 'Ajuda indenizatoria',
+            'natureza' => '1409',
+            'tipo' => 'informativa',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['incidencia' => 'irrf']));
+
+        $response
+            ->assertOk()
+            ->assertSee('Gratificacao tributavel')
+            ->assertDontSee('Ajuda indenizatoria')
+            ->assertSee('value="irrf" selected', false);
+    }
 }

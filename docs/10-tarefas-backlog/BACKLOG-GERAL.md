@@ -1,3 +1,31 @@
+### PRODUTO-S1010-FILTRO-INCIDENCIA-RUBRICA - 21/04/2026
+
+**Descricao:**
+Adicionar filtro por incidencia na listagem de rubricas para facilitar a auditoria operacional de IRRF, INSS e FGTS na preparacao do `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- aceitar filtro `incidencia` somente para `irrf`, `inss` e `fgts`;
+- aplicar o filtro na listagem usando os campos booleanos existentes;
+- adicionar select visual no bloco de filtros;
+- cobrir comportamento com teste de feature;
+- validar rubricas, login e frontend antes de concluir.
+
+**Resultado:**
+- listagem de rubricas passou a filtrar por incidencias de IRRF, INSS e FGTS;
+- o filtro usa apenas os campos booleanos existentes, sem mudanca de banco;
+- tela ganhou select dedicado para incidencia;
+- teste focado confirmou que `incidencia=irrf` exibe somente rubricas com IRRF;
+- validacao focada de rubricas passou com `8` testes e `30` assercoes.
+
 ### PRODUTO-S1000-CLASSIFICACAO-TRIBUTARIA-CONTROLADA - 21/04/2026
 
 **Descricao:**

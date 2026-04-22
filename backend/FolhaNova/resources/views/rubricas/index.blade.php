@@ -78,6 +78,16 @@
                                 </select>
                             </label>
 
+                            <label class="form-control w-full xl:w-48">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Incidencia</span>
+                                <select name="incidencia" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                    <option value="">Todas</option>
+                                    <option value="irrf" @selected($filtros['incidencia'] === 'irrf')>IRRF</option>
+                                    <option value="inss" @selected($filtros['incidencia'] === 'inss')>INSS</option>
+                                    <option value="fgts" @selected($filtros['incidencia'] === 'fgts')>FGTS</option>
+                                </select>
+                            </label>
+
                             <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-auto xl:flex-none">
                                 <button type="submit" class="btn btn-info w-full sm:w-auto">Filtrar</button>
                                 <a href="{{ route('rubricas.index') }}" class="btn btn-ghost w-full sm:w-auto">Limpar</a>

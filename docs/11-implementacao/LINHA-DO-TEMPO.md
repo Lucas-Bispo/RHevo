@@ -2,6 +2,29 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 21/04/2026 - 22:00 - Filtro por Incidencia na Listagem de Rubricas S-1010
+
+**Acao realizada:**
+- Adicionado filtro de incidencia na listagem de rubricas.
+- O filtro aceita apenas `irrf`, `inss` e `fgts`.
+- A tela passou a exibir um select dedicado para auditoria das incidencias.
+- Criado teste cobrindo a filtragem por `incidencia=irrf`.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php` e `tests/Feature/RubricasIndexTest.php`: `8` testes verdes e `30` assercoes.
+- `tests/Feature/Auth/AuthenticationTest.php`: `5` testes verdes e `15` assercoes.
+- `GET /login`: `200 OK`.
+- CSS e JS compilados em `/build/assets`: `200 OK`.
+
+**Status:** Concluido
+
 ### 21/04/2026 - 21:45 - Orientacao de Reprocessamento no Detalhe eSocial
 
 **Acao realizada:**
