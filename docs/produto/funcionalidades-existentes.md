@@ -17,6 +17,7 @@
 - Estrutura de tenant landlord preparada, ainda sem finder operacional.
 - Edicao operacional do tenant atual com dados institucionais e parametros iniciais do `S-1000`.
 - Classificacao tributaria do `S-1000` controlada por lista inicial de codigos suportados pelo produto.
+- Compatibilidade inicial entre tipo de inscricao institucional e classificacao tributaria no `S-1000`.
 - Validacao de CPF/CNPJ institucional por digito verificador no fluxo do `S-1000`.
 - Leitura operacional do status de vigencia institucional do `S-1000`.
 - Atalho do orgao publico para abrir o painel eSocial filtrado pela trilha `S-1000`.

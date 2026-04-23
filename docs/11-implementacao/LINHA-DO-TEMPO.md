@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Compatibilidade de Classificacao no S-1000
+
+**Acao realizada:**
+- Adicionada validacao entre tipo de inscricao institucional e classificacao tributaria suportada no `S-1000`.
+- Inscricoes por CNPJ deixam de aceitar a classificacao `21`, reservada ao contexto por CPF nesta etapa.
+- Inscricoes por CPF deixam de aceitar a classificacao `85`, reservada ao contexto CNPJ de administracao publica nesta etapa.
+- Criado teste para impedir que combinacoes incompativeis gerem evento `S-1000` pendente.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Requests/UpdateOrgaoPublicoRequest.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/OrgaoPublicoTest.php`: `13` testes verdes e `78` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Vigencia Inicial das Rubricas S-1010
 
 **Acao realizada:**

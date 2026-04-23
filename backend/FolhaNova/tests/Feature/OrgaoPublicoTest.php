@@ -373,6 +373,61 @@ class OrgaoPublicoTest extends TestCase
         ]);
     }
 
+    public function test_updating_orgao_publico_rejects_incompatible_classificacao_tributaria_for_inscricao_type(): void
+    {
+        $tenant = $this->createTenant();
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->from(route('orgao-publico.edit'))
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Prefeitura Municipal do Sol',
+                'tipo_inscricao' => '1',
+                'numero_inscricao' => '11222333000181',
+                'classificacao_tributaria' => '21',
+                'natureza_juridica' => '1244',
+                'inicio_validade' => '2026-04',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'homologacao',
+                'contato_nome' => 'Marina Souza',
+                'contato_cpf' => '52998224725',
+                'contato_email' => 'rh@sol.gov.br',
+                'telefone' => '1133334444',
+                'observacoes' => '',
+            ])
+            ->assertRedirect(route('orgao-publico.edit'))
+            ->assertSessionHasErrors(['classificacao_tributaria']);
+
+        $this
+            ->actingAs($user)
+            ->from(route('orgao-publico.edit'))
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Fundo Municipal de Apoio',
+                'tipo_inscricao' => '2',
+                'numero_inscricao' => '52998224725',
+                'classificacao_tributaria' => '85',
+                'natureza_juridica' => '',
+                'inicio_validade' => '2026-04',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'homologacao',
+                'contato_nome' => '',
+                'contato_cpf' => '',
+                'contato_email' => '',
+                'telefone' => '',
+                'observacoes' => '',
+            ])
+            ->assertRedirect(route('orgao-publico.edit'))
+            ->assertSessionHasErrors(['classificacao_tributaria']);
+
+        $this->assertDatabaseMissing('eventos_esocial', [
+            'tenant_id' => $tenant->id,
+            'evento' => 'S-1000',
+        ]);
+    }
+
     public function test_updating_orgao_publico_rejects_invalid_document_check_digits(): void
     {
         $tenant = $this->createTenant();

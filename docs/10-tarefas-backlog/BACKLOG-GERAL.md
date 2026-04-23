@@ -1564,3 +1564,29 @@ Adicionar controle inicial de vigencia nas rubricas para preparar a evolucao do 
 - cadastro e edicao exigem inicio de validade e rejeitam fim anterior ao inicio;
 - listagem e edicao exibem a vigencia da rubrica;
 - testes focados de rubricas ficaram verdes.
+### PRODUTO-S1000-COMPATIBILIDADE-CLASSIFICACAO - 23/04/2026
+
+**Descricao:**
+Validar a compatibilidade entre tipo de inscricao institucional e classificacao tributaria suportada no recorte atual do `S-1000`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Requests/UpdateOrgaoPublicoRequest.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- rejeitar CPF com classificacao tributaria reservada ao contexto CNPJ suportado;
+- rejeitar CNPJ com classificacao tributaria reservada ao contexto CPF suportado;
+- preservar os fluxos validos ja cobertos;
+- registrar a regra na documentacao.
+
+**Resultado:**
+- `S-1000` passou a rejeitar CNPJ com `classificacao_tributaria = 21`;
+- `S-1000` passou a rejeitar CPF com `classificacao_tributaria = 85`;
+- atualizacoes invalidas continuam sem gerar evento pendente;
+- teste focado do modulo institucional ficou verde.

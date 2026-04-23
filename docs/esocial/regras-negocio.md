@@ -9,6 +9,7 @@
 - `nrInsc` com CPF ou CNPJ completo deve ser rejeitado quando o digito verificador for invalido.
 - `classTrib` deve ser obrigatorio no cadastro institucional.
 - `classTrib` deve ser selecionado a partir da lista inicial controlada pelo sistema para evitar payload institucional com codigo ainda nao mapeado.
+- No recorte atual do produto, `classTrib` deve ser compativel com o tipo de inscricao: `21` para inscricoes por CPF e `85` para inscricoes por CNPJ.
 - `natJurid` deve ser obrigatoria para inscricoes por `CNPJ`.
 - `iniValid` e `fimValid` devem respeitar vigencia logica.
 - A tela institucional deve indicar se a vigencia do `S-1000` esta ativa, futura, encerrada ou nao definida.

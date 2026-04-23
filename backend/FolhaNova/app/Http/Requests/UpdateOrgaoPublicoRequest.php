@@ -59,6 +59,7 @@ class UpdateOrgaoPublicoRequest extends FormRequest
     {
         $validator->after(function (Validator $validator): void {
             $tipoInscricao = (string) $this->input('tipo_inscricao');
+            $classificacaoTributaria = (string) $this->input('classificacao_tributaria');
             $numeroInscricao = preg_replace('/\D+/', '', (string) $this->input('numero_inscricao')) ?? '';
             $contatoCpf = preg_replace('/\D+/', '', (string) $this->input('contato_cpf')) ?? '';
 
@@ -72,6 +73,14 @@ class UpdateOrgaoPublicoRequest extends FormRequest
 
             if ($tipoInscricao === '1' && ! $this->filled('natureza_juridica')) {
                 $validator->errors()->add('natureza_juridica', 'Informe a natureza juridica para inscricoes por CNPJ.');
+            }
+
+            if ($tipoInscricao === '1' && $classificacaoTributaria === '21') {
+                $validator->errors()->add('classificacao_tributaria', 'Use a classificacao tributaria compativel com inscricao por CNPJ nesta etapa.');
+            }
+
+            if ($tipoInscricao === '2' && $classificacaoTributaria === '85') {
+                $validator->errors()->add('classificacao_tributaria', 'Use a classificacao tributaria compativel com inscricao por CPF nesta etapa.');
             }
 
             if ($contatoCpf !== '' && ! $this->isValidCpf($contatoCpf)) {
