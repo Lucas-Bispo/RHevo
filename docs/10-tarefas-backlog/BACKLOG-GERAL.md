@@ -1469,6 +1469,36 @@ Documento consolidado a partir de `docs/obsidian/10-Tasks-Macro-Projeto.md` e ma
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versao:** 1.0
 
+### PRODUTO-S1010-CODIGO-ESOCIAL-UNICO - 23/04/2026
+
+**Descricao:**
+Normalizar e validar a unicidade do codigo eSocial das rubricas no tenant para evitar parametrizacao duplicada na preparacao do `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/app/Services/Rubricas/RegistrarRubricaService.php`
+- `backend/FolhaNova/app/Services/Rubricas/AtualizarRubricaService.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- normalizar `codigo_esocial` para caixa alta quando informado;
+- rejeitar duplicidade de `codigo_esocial` dentro do mesmo tenant;
+- preservar `null` para rubricas ainda sem parametrizacao;
+- cobrir criacao duplicada com teste focado.
+
+**Resultado:**
+- `codigo_esocial` passou a ser normalizado em caixa alta na criacao e edicao de rubricas;
+- duplicidade de codigo eSocial no mesmo tenant passou a ser bloqueada;
+- rubricas sem codigo continuam permitidas como pendencia de parametrizacao;
+- teste focado cobre duplicidade com variacao de caixa e espacos.
+
 ### PRODUTO-S1000-NATUREZA-JURIDICA-CPF - 23/04/2026
 
 **Descricao:**

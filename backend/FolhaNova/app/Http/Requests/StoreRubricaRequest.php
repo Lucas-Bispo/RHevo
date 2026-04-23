@@ -13,7 +13,7 @@ class StoreRubricaRequest extends FormRequest
             'codigo' => trim((string) $this->input('codigo')),
             'nome' => trim((string) $this->input('nome')),
             'natureza' => trim((string) $this->input('natureza')),
-            'codigo_esocial' => $this->nullableTrimmed('codigo_esocial'),
+            'codigo_esocial' => $this->nullableUpperTrimmed('codigo_esocial'),
         ]);
     }
 
@@ -42,16 +42,21 @@ class StoreRubricaRequest extends FormRequest
             'incide_irrf' => ['required', 'boolean'],
             'incide_inss' => ['required', 'boolean'],
             'incide_fgts' => ['required', 'boolean'],
-            'codigo_esocial' => ['nullable', 'string', 'max:30'],
+            'codigo_esocial' => [
+                'nullable',
+                'string',
+                'max:30',
+                Rule::unique('rubricas', 'codigo_esocial')->where(fn ($query) => $query->where('tenant_id', $tenantId)),
+            ],
             'inicio_validade' => ['required', 'date'],
             'fim_validade' => ['nullable', 'date', 'after_or_equal:inicio_validade'],
             'ativo' => ['required', 'boolean'],
         ];
     }
 
-    private function nullableTrimmed(string $key): ?string
+    private function nullableUpperTrimmed(string $key): ?string
     {
-        $value = trim((string) $this->input($key));
+        $value = strtoupper(trim((string) $this->input($key)));
 
         return $value === '' ? null : $value;
     }

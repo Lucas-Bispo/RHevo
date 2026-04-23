@@ -237,4 +237,47 @@ class RubricaCrudTest extends TestCase
 
         $this->assertSame(1, Rubrica::query()->where('tenant_id', 65)->where('codigo', 'RUB-001')->count());
     }
+
+    public function test_user_can_not_create_rubrica_with_duplicate_codigo_esocial_in_same_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 68,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 68,
+            'codigo' => 'RUB-BASE',
+            'nome' => 'Vencimento base',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'codigo_esocial' => 'S1010-BASE',
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.create'))
+            ->post(route('rubricas.store'), [
+                'codigo' => 'RUB-BASE-2',
+                'nome' => 'Vencimento base duplicado',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => ' s1010-base ',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.create'))
+            ->assertSessionHasErrors('codigo_esocial');
+
+        $this->assertSame(1, Rubrica::query()->where('tenant_id', 68)->where('codigo_esocial', 'S1010-BASE')->count());
+    }
 }

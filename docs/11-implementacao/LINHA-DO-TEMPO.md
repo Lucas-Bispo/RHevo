@@ -2,6 +2,30 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Codigo eSocial Unico nas Rubricas S-1010
+
+**Acao realizada:**
+- Normalizado `codigo_esocial` de rubricas para caixa alta na criacao e edicao.
+- Adicionada validacao de unicidade de `codigo_esocial` por tenant quando informado.
+- Preservadas rubricas sem codigo eSocial como pendencias validas de parametrizacao.
+- Criado teste focado para bloquear duplicidade com variacao de caixa e espacos.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/app/Services/Rubricas/RegistrarRubricaService.php`
+- `backend/FolhaNova/app/Services/Rubricas/AtualizarRubricaService.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php` e `tests/Feature/RubricasIndexTest.php`: `13` testes verdes e `61` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Normalizacao de Natureza Juridica por CPF no S-1000
 
 **Acao realizada:**

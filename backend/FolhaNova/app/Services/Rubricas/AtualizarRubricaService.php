@@ -30,7 +30,7 @@ class AtualizarRubricaService
 
     private function nullableString(mixed $value): ?string
     {
-        $value = trim((string) $value);
+        $value = strtoupper(trim((string) $value));
 
         return $value === '' ? null : $value;
     }
