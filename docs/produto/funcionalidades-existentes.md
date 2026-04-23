@@ -58,7 +58,7 @@
 - Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010` e `S-2200`.
 - Card do painel eSocial para filtrar eventos sem mensagem de retorno registrada.
 - Filtro do painel eSocial para eventos com ou sem mensagem de retorno registrada, disponivel no card e no formulario principal.
-- Tela de detalhe do evento eSocial com atalhos para retornar ao painel filtrado por evento, status ou ambiente.
+- Tela de detalhe do evento eSocial com atalhos para retornar ao painel filtrado por evento, status, ambiente ou contexto de retorno.
 - Atalho do detalhe eSocial para abrir o servidor vinculado quando o evento possuir vinculo funcional.
 
 ## O que ainda nao existe em operacao real

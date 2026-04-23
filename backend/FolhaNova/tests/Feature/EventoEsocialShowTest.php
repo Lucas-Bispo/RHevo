@@ -65,6 +65,8 @@ class EventoEsocialShowTest extends TestCase
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-2200']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'processado']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['ambiente' => 'producao']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false)
+            ->assertSee('Com retorno')
             ->assertSee('Mesmo ambiente')
             ->assertSee('Abrir servidor')
             ->assertSee('href="'.route('servidores.show', $servidor).'"', false);
@@ -130,7 +132,32 @@ class EventoEsocialShowTest extends TestCase
             ->get(route('eventos-esocial.show', $evento))
             ->assertOk()
             ->assertSee('Evento com erro pode ser reenfileirado para reprocessamento local.')
+            ->assertSee('Com retorno')
+            ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false)
             ->assertSee('Reprocessar');
+    }
+
+    public function test_event_detail_links_without_return_when_message_is_missing(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 81,
+        ]);
+
+        $evento = EventoEsocial::create([
+            'tenant_id' => 81,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => null,
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.show', $evento))
+            ->assertOk()
+            ->assertSee('Sem retorno')
+            ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'sem_mensagem']).'"', false);
     }
 
     public function test_user_cannot_requeue_processed_event(): void

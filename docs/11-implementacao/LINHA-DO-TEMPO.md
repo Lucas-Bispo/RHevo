@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Atalho de Retorno no Detalhe do Evento eSocial
+
+**Acao realizada:**
+- Adicionado atalho contextual de retorno no detalhe do evento eSocial.
+- Eventos com mensagem registrada agora oferecem o link `Com retorno`.
+- Eventos sem mensagem registrada agora oferecem o link `Sem retorno`.
+- O atalho reaproveita os filtros `retorno=com_mensagem` e `retorno=sem_mensagem` ja existentes no painel.
+- Criado teste focado cobrindo os dois cenarios.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventoEsocialShowTest.php`: `6` testes verdes e `30` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Card de Eventos Sem Retorno no Painel eSocial
 
 **Acao realizada:**

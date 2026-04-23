@@ -1469,6 +1469,32 @@ Documento consolidado a partir de `docs/obsidian/10-Tasks-Macro-Projeto.md` e ma
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versao:** 1.0
 
+### PRODUTO-DETALHE-ESOCIAL-ATALHO-RETORNO - 23/04/2026
+
+**Descricao:**
+Adicionar no detalhe do evento eSocial um atalho para retornar ao painel filtrado por eventos com o mesmo contexto de retorno do registro atual.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar atalho contextual de retorno no detalhe;
+- apontar para `retorno=com_mensagem` ou `retorno=sem_mensagem`;
+- preservar os atalhos existentes por evento, status e ambiente;
+- cobrir o comportamento com teste focado.
+
+**Resultado:**
+- detalhe do evento eSocial passou a exibir atalho de retorno contextual;
+- eventos com mensagem usam `retorno=com_mensagem`;
+- eventos sem mensagem usam `retorno=sem_mensagem`;
+- teste focado cobre os dois cenarios.
+
 ### PRODUTO-PAINEL-ESOCIAL-ATALHO-SEM-RETORNO - 23/04/2026
 
 **Descricao:**
