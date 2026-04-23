@@ -125,6 +125,47 @@ class RubricaCrudTest extends TestCase
         ]);
     }
 
+    public function test_user_can_not_update_inactive_rubrica_without_end_of_validity(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 92,
+        ]);
+
+        $rubrica = Rubrica::create([
+            'tenant_id' => 92,
+            'codigo' => 'RUB-ATV',
+            'nome' => 'Rubrica ativa',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'inicio_validade' => '2026-01-01',
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.edit', $rubrica))
+            ->put(route('rubricas.update', $rubrica), [
+                'codigo' => 'RUB-ATV',
+                'nome' => 'Rubrica encerrada sem fim',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-ATV',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '',
+                'ativo' => '0',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.edit', $rubrica))
+            ->assertSessionHasErrors('fim_validade');
+    }
+
     public function test_user_can_not_create_rubrica_with_invalid_vigencia_range(): void
     {
         $user = User::factory()->create([
@@ -146,6 +187,34 @@ class RubricaCrudTest extends TestCase
                 'inicio_validade' => '2026-12-31',
                 'fim_validade' => '2026-01-01',
                 'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.create'))
+            ->assertSessionHasErrors('fim_validade');
+    }
+
+    public function test_user_can_not_create_inactive_rubrica_without_end_of_validity(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 91,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.create'))
+            ->post(route('rubricas.store'), [
+                'codigo' => 'RUB-INAT',
+                'nome' => 'Rubrica inativa sem fim',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-INAT',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '',
+                'ativo' => '0',
             ]);
 
         $response

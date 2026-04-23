@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Encerramento de Rubrica com Fim de Validade Obrigatorio
+
+**Acao realizada:**
+- Ajustada a validacao de rubricas para exigir `fim_validade` quando a rubrica for salva como inativa.
+- Preservada a regra existente que impede `fim_validade` anterior ao `inicio_validade`.
+- Criados testes focados para bloquear criacao e edicao de rubricas inativas sem data de encerramento.
+- Documentada a regra na trilha funcional e nas regras eSocial.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php`: `11` testes verdes e `68` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Filtro por Origem no Painel eSocial
 
 **Acao realizada:**

@@ -49,7 +49,12 @@ class StoreRubricaRequest extends FormRequest
                 Rule::unique('rubricas', 'codigo_esocial')->where(fn ($query) => $query->where('tenant_id', $tenantId)),
             ],
             'inicio_validade' => ['required', 'date'],
-            'fim_validade' => ['nullable', 'date', 'after_or_equal:inicio_validade'],
+            'fim_validade' => [
+                Rule::requiredIf(fn () => ! $this->boolean('ativo')),
+                'nullable',
+                'date',
+                'after_or_equal:inicio_validade',
+            ],
             'ativo' => ['required', 'boolean'],
         ];
     }

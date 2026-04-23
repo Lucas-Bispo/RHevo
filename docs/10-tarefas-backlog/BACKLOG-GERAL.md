@@ -1856,6 +1856,34 @@ Adicionar leitura e filtragem por `origem` no painel operacional de eventos eSoc
 - o detalhe do evento ganhou atalho para retornar ao painel pela mesma origem;
 - testes focados do painel e do detalhe ficaram verdes.
 
+### PRODUTO-S1010-ENCERRAMENTO-RUBRICA - 23/04/2026
+
+**Descricao:**
+Amarrar a inativacao de rubricas a um `fim_validade` obrigatorio para reforcar a coerencia de vigencia na trilha `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- exigir `fim_validade` quando a rubrica estiver sendo salva como inativa;
+- preservar a regra existente de fim maior ou igual ao inicio;
+- cobrir criacao e edicao com testes focados;
+- registrar a regra na documentacao funcional e eSocial.
+
+**Resultado:**
+- rubricas inativas passaram a exigir `fim_validade` na criacao e na edicao;
+- a trilha de encerramento ficou mais coerente com o uso de vigencia em eventos de tabela;
+- testes focados de CRUD validaram os cenarios de bloqueio;
+- documentacao do produto e das regras eSocial foi atualizada.
+
 ### PRODUTO-S1010-ATALHOS-CONTEXTUAIS-EDICAO - 23/04/2026
 
 **Descricao:**
