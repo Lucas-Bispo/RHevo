@@ -337,6 +337,30 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('value="sem_mensagem" selected', false);
     }
 
+    public function test_eventos_index_links_without_return_summary_to_filter(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 89,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 89,
+            'evento' => 'S-1010',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => null,
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('Sem retorno')
+            ->assertSee('Aguardando mensagem registrada')
+            ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'sem_mensagem']).'"', false);
+    }
+
     public function test_eventos_index_shows_active_filters_summary(): void
     {
         $user = User::factory()->create([

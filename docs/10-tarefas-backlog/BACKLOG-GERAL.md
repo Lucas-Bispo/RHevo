@@ -1469,6 +1469,33 @@ Documento consolidado a partir de `docs/obsidian/10-Tasks-Macro-Projeto.md` e ma
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versao:** 1.0
 
+### PRODUTO-PAINEL-ESOCIAL-ATALHO-SEM-RETORNO - 23/04/2026
+
+**Descricao:**
+Adicionar card operacional para eventos eSocial sem mensagem de retorno registrada, alinhando o resumo do painel ao novo filtro `retorno=sem_mensagem`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- calcular contagem de eventos sem retorno no resumo do painel;
+- exibir card `Sem retorno`;
+- apontar o card para `retorno=sem_mensagem`;
+- cobrir o atalho com teste focado.
+
+**Resultado:**
+- painel eSocial passou a exibir card `Sem retorno`;
+- card mostra a contagem de eventos sem mensagem registrada;
+- atalho aponta para `retorno=sem_mensagem`;
+- teste focado cobre o link operacional.
+
 ### PRODUTO-RUBRICAS-ATALHOS-STATUS - 23/04/2026
 
 **Descricao:**

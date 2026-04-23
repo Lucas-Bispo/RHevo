@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Card de Eventos Sem Retorno no Painel eSocial
+
+**Acao realizada:**
+- Adicionado card `Sem retorno` no resumo do painel eSocial.
+- O card mostra a contagem de eventos sem `mensagem_retorno`.
+- O atalho abre a listagem filtrada por `retorno=sem_mensagem`.
+- Criado teste focado para validar o link operacional.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php`: `13` testes verdes e `71` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Atalhos por Status na Listagem de Rubricas
 
 **Acao realizada:**
