@@ -52,6 +52,24 @@
             </a>
         </div>
 
+        <div class="grid gap-4 md:grid-cols-3">
+            <a href="{{ route('rubricas.index', ['tipo' => 'provento']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">Proventos</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['proventos'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Verbas de credito</p>
+            </a>
+            <a href="{{ route('rubricas.index', ['tipo' => 'desconto']) }}" class="stat-card block transition hover:border-rose-400/40 hover:bg-rose-500/5 focus:outline-none focus:ring-2 focus:ring-rose-400/50">
+                <p class="text-sm text-slate-400">Descontos</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['descontos'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-rose-300">Verbas redutoras</p>
+            </a>
+            <a href="{{ route('rubricas.index', ['tipo' => 'informativa']) }}" class="stat-card block transition hover:border-sky-400/40 hover:bg-sky-500/5 focus:outline-none focus:ring-2 focus:ring-sky-400/50">
+                <p class="text-sm text-slate-400">Informativas</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['informativas'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-sky-300">Base auxiliar do calculo</p>
+            </a>
+        </div>
+
         <div class="grid gap-6 xl:grid-cols-[1.8fr_1fr]">
             <div class="panel-surface rounded-3xl p-6">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">

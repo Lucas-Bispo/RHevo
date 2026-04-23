@@ -1469,6 +1469,33 @@ Documento consolidado a partir de `docs/obsidian/10-Tasks-Macro-Projeto.md` e ma
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versao:** 1.0
 
+### PRODUTO-RUBRICAS-ATALHOS-TIPO - 23/04/2026
+
+**Descricao:**
+Adicionar cards operacionais por tipo na listagem de rubricas para abrir rapidamente `provento`, `desconto` e `informativa`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- calcular contagem de rubricas por tipo no resumo;
+- exibir cards `Provento`, `Desconto` e `Informativa`;
+- apontar cada card para o filtro `tipo`;
+- cobrir o comportamento com teste focado.
+
+**Resultado:**
+- listagem de rubricas passou a exibir cards por tipo;
+- cards `Provento`, `Desconto` e `Informativa` abrem a listagem filtrada;
+- controller passou a calcular as contagens por tipo no resumo;
+- teste focado cobre os links e a filtragem por tipo.
+
 ### PRODUTO-DETALHE-ESOCIAL-ATALHO-RETORNO - 23/04/2026
 
 **Descricao:**

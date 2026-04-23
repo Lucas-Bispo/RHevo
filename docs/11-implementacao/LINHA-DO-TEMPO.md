@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Atalhos por Tipo na Listagem de Rubricas
+
+**Acao realizada:**
+- Adicionados cards por tipo na listagem de rubricas.
+- Os cards `Provento`, `Desconto` e `Informativa` agora funcionam como atalhos operacionais.
+- Controller passou a calcular as contagens por tipo no resumo da tela.
+- Criado teste focado cobrindo os links e a filtragem por tipo.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricasIndexTest.php`: `8` testes verdes e `53` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Atalho de Retorno no Detalhe do Evento eSocial
 
 **Acao realizada:**

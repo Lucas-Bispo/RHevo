@@ -136,6 +136,66 @@ class RubricasIndexTest extends TestCase
             ->assertSee('value="inativos" selected', false);
     }
 
+    public function test_rubricas_index_links_type_summaries_to_type_filters(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 70,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 70,
+            'codigo' => 'PROV-001',
+            'nome' => 'Vencimento base',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => true,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 70,
+            'codigo' => 'DESC-001',
+            'nome' => 'Desconto consignado',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 70,
+            'codigo' => 'INFO-001',
+            'nome' => 'Base informativa',
+            'natureza' => '1409',
+            'tipo' => 'informativa',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index'))
+            ->assertOk()
+            ->assertSee('href="'.route('rubricas.index', ['tipo' => 'provento']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['tipo' => 'desconto']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['tipo' => 'informativa']).'"', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['tipo' => 'informativa']))
+            ->assertOk()
+            ->assertSee('Base informativa')
+            ->assertDontSee('Vencimento base')
+            ->assertDontSee('Desconto consignado')
+            ->assertSee('value="informativa" selected', false);
+    }
+
     public function test_authenticated_user_can_filter_rubricas_by_incidencia(): void
     {
         $user = User::factory()->create([
