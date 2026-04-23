@@ -23,7 +23,16 @@ class RubricaCrudTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertSee('Cadastro de rubrica');
+            ->assertSee('Cadastro de rubrica')
+            ->assertSee('Apoio S-1010')
+            ->assertSee('Ver S-1010 no painel')
+            ->assertSee('Ver pendencias sem codigo')
+            ->assertSee('Ver rubricas com codigo')
+            ->assertSee('Ver rubricas ativas')
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'com_codigo']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['status' => 'ativos']).'"', false);
     }
 
     public function test_user_can_create_rubrica(): void

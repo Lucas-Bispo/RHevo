@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Atalhos de Apoio S-1010 na Criacao de Rubrica
+
+**Acao realizada:**
+- Adicionado bloco lateral `Apoio S-1010` na tela de criacao de rubrica.
+- Incluidos atalhos para o painel `S-1010`, pendencias sem codigo, rubricas com codigo e rubricas ativas.
+- Mantida a tela de cadastro enxuta, reaproveitando filtros e navegacoes ja existentes no produto.
+- Ajustado teste focado para validar os links operacionais da nova caixa.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/rubricas/create.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php`: `9` testes verdes e `60` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Atalhos Contextuais na Edicao de Rubrica
 
 **Acao realizada:**

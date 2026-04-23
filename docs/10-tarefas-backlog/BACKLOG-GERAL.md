@@ -1800,6 +1800,32 @@ Consolidar o fluxo oficial de desenvolvimento do projeto, incorporando regras ma
 - workflow do projeto reforcado com protocolo explicito antes e depois de cada implementacao
 - regra de precedencia entre planos documentada
 - proxima frente do produto alinhada com a trilha estrutural antes do retorno ao historico funcional
+### PRODUTO-S1010-ATALHOS-CRIACAO-RUBRICA - 23/04/2026
+
+**Descricao:**
+Adicionar uma caixa de apoio `S-1010` na tela de criacao de rubrica para encurtar a navegacao operacional durante a parametrizacao.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/rubricas/create.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- criar um bloco lateral de apoio ao `S-1010` na tela de cadastro;
+- reaproveitar filtros operacionais ja existentes da listagem e do painel;
+- manter a tela de criacao enxuta, sem competir com o formulario;
+- validar os links com teste focado de CRUD.
+
+**Resultado:**
+- a tela de criacao passou a exibir atalhos para painel `S-1010`, pendencias sem codigo, rubricas com codigo e rubricas ativas;
+- o cadastro ficou mais alinhado com a trilha operacional ja presente na listagem e na edicao;
+- a navegacao de ida e volta durante a parametrizacao ficou mais curta;
+- teste focado de CRUD de rubricas ficou verde.
+
 ### PRODUTO-S1010-ATALHOS-CONTEXTUAIS-EDICAO - 23/04/2026
 
 **Descricao:**
