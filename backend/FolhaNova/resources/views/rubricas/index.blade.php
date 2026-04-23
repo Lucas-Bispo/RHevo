@@ -30,16 +30,16 @@
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['total'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-cyan-300">Base remuneratoria do orgao</p>
             </div>
-            <div class="stat-card">
+            <a href="{{ route('rubricas.index', ['status' => 'ativos']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
                 <p class="text-sm text-slate-400">Ativas</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['ativas'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-emerald-300">Disponiveis para parametrizacao</p>
-            </div>
-            <div class="stat-card">
+            </a>
+            <a href="{{ route('rubricas.index', ['status' => 'inativos']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
                 <p class="text-sm text-slate-400">Inativas</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['inativas'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-amber-300">Preservando historico de calculo</p>
-            </div>
+            </a>
             <a href="{{ route('rubricas.index', ['esocial' => 'com_codigo']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
                 <p class="text-sm text-slate-400">Com codigo eSocial</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['com_codigo_esocial'], 0, ',', '.') }}</p>

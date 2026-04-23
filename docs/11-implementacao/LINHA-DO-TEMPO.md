@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Atalhos por Status na Listagem de Rubricas
+
+**Acao realizada:**
+- Transformados os cards `Ativas` e `Inativas` da listagem de rubricas em atalhos operacionais.
+- Os cards agora apontam para a mesma tela com filtro `status=ativos` ou `status=inativos`.
+- A leitura visual da tela foi preservada.
+- Criado teste focado cobrindo os links e a filtragem resultante.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricasIndexTest.php`: `7` testes verdes e `44` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Filtros Ativos na Listagem de Rubricas S-1010
 
 **Acao realizada:**

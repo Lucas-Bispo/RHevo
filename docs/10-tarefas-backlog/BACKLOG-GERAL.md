@@ -1469,6 +1469,32 @@ Documento consolidado a partir de `docs/obsidian/10-Tasks-Macro-Projeto.md` e ma
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versao:** 1.0
 
+### PRODUTO-RUBRICAS-ATALHOS-STATUS - 23/04/2026
+
+**Descricao:**
+Transformar os indicadores `Ativas` e `Inativas` da listagem de rubricas em atalhos operacionais para os filtros de status.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- transformar os cards `Ativas` e `Inativas` em links;
+- apontar para `status=ativos` e `status=inativos`;
+- preservar a leitura visual da tela;
+- cobrir os atalhos com teste focado.
+
+**Resultado:**
+- os cards `Ativas` e `Inativas` passaram a funcionar como atalhos;
+- os links apontam para `status=ativos` e `status=inativos`;
+- a leitura visual da listagem foi preservada;
+- teste focado cobre os links e a filtragem por status.
+
 ### PRODUTO-RUBRICAS-FILTROS-ATIVOS - 23/04/2026
 
 **Descricao:**

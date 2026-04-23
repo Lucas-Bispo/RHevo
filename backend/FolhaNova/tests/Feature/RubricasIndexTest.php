@@ -90,6 +90,52 @@ class RubricasIndexTest extends TestCase
             ->assertSee('value="desconto" selected', false);
     }
 
+    public function test_rubricas_index_links_status_summaries_to_status_filters(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 69,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 69,
+            'codigo' => 'ATIVA-001',
+            'nome' => 'Rubrica ativa',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 69,
+            'codigo' => 'INAT-001',
+            'nome' => 'Rubrica inativa',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => false,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index'))
+            ->assertOk()
+            ->assertSee('href="'.route('rubricas.index', ['status' => 'ativos']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['status' => 'inativos']).'"', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['status' => 'inativos']))
+            ->assertOk()
+            ->assertSee('Rubrica inativa')
+            ->assertDontSee('Rubrica ativa')
+            ->assertSee('value="inativos" selected', false);
+    }
+
     public function test_authenticated_user_can_filter_rubricas_by_incidencia(): void
     {
         $user = User::factory()->create([
