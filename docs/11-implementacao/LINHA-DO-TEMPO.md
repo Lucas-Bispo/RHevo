@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Filtro de Retorno no Formulario do Painel eSocial
+
+**Acao realizada:**
+- Adicionado select `Retorno` no formulario principal do painel eSocial.
+- Reaproveitado o filtro existente `retorno=com_mensagem`.
+- Preservados o card `Com retorno` e o resumo visual de filtros ativos.
+- Ajustado teste focado para confirmar a opcao selecionada no formulario.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php`: `11` testes verdes e `62` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Codigo eSocial Unico nas Rubricas S-1010
 
 **Acao realizada:**

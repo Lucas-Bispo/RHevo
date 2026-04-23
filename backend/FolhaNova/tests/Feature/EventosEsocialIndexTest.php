@@ -297,7 +297,8 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('Mensagens registradas')
             ->assertSee('parametros_orgao_publico')
             ->assertDontSee('cadastro_inicial_servidor')
-            ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false);
+            ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false)
+            ->assertSee('value="com_mensagem" selected', false);
     }
 
     public function test_eventos_index_shows_active_filters_summary(): void

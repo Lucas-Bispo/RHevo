@@ -1469,6 +1469,32 @@ Documento consolidado a partir de `docs/obsidian/10-Tasks-Macro-Projeto.md` e ma
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versao:** 1.0
 
+### PRODUTO-PAINEL-ESOCIAL-FILTRO-RETORNO-FORMULARIO - 23/04/2026
+
+**Descricao:**
+Adicionar o filtro de retorno diretamente no formulario do painel eSocial para permitir selecionar eventos com mensagem sem depender apenas do card de atalho.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- incluir select `Retorno` no formulario de filtros do painel;
+- reaproveitar o parametro existente `retorno=com_mensagem`;
+- preservar o resumo de filtros ativos ja implementado;
+- cobrir a opcao selecionada com teste focado.
+
+**Resultado:**
+- formulario do painel eSocial passou a exibir filtro `Retorno`;
+- opcao `Com mensagem` reaproveita `retorno=com_mensagem`;
+- resumo de filtros ativos continua exibindo `Retorno: Com mensagem`;
+- teste focado passou a confirmar a opcao selecionada.
+
 ### PRODUTO-S1010-CODIGO-ESOCIAL-UNICO - 23/04/2026
 
 **Descricao:**
