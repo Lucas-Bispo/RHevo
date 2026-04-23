@@ -1469,6 +1469,35 @@ Documento consolidado a partir de `docs/obsidian/10-Tasks-Macro-Projeto.md` e ma
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versao:** 1.0
 
+### PRODUTO-PAINEL-ESOCIAL-FILTRO-SEM-RETORNO - 23/04/2026
+
+**Descricao:**
+Adicionar filtro operacional para eventos eSocial sem mensagem de retorno registrada, complementando o filtro existente de eventos com retorno.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- aceitar `retorno=sem_mensagem` no controller;
+- listar apenas eventos sem `mensagem_retorno`;
+- exibir opcao `Sem mensagem` no formulario;
+- mostrar resumo de filtro ativo;
+- cobrir o comportamento com teste focado.
+
+**Resultado:**
+- painel eSocial passou a aceitar `retorno=sem_mensagem`;
+- listagem filtra eventos sem mensagem de retorno registrada;
+- formulario exibe as opcoes `Com mensagem` e `Sem mensagem`;
+- resumo de filtros ativos mostra `Retorno: Sem mensagem`;
+- teste focado cobre a nova filtragem.
+
 ### PRODUTO-PAINEL-ESOCIAL-FILTRO-RETORNO-FORMULARIO - 23/04/2026
 
 **Descricao:**

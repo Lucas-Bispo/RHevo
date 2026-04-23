@@ -9,7 +9,9 @@
             'Evento' => $filtros['evento'],
             'Status' => $filtros['status'] !== '' ? ucfirst($filtros['status']) : '',
             'Ambiente' => $filtros['ambiente'] !== '' ? ucfirst($filtros['ambiente']) : '',
-            'Retorno' => $filtros['retorno'] === 'com_mensagem' ? 'Com mensagem' : '',
+            'Retorno' => $filtros['retorno'] === 'com_mensagem'
+                ? 'Com mensagem'
+                : ($filtros['retorno'] === 'sem_mensagem' ? 'Sem mensagem' : ''),
         ])->filter();
     @endphp
 
@@ -143,6 +145,7 @@
                             <select name="retorno" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
                                 <option value="">Todos</option>
                                 <option value="com_mensagem" @selected($filtros['retorno'] === 'com_mensagem')>Com mensagem</option>
+                                <option value="sem_mensagem" @selected($filtros['retorno'] === 'sem_mensagem')>Sem mensagem</option>
                             </select>
                         </label>
 

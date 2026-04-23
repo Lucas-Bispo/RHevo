@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Filtro de Eventos Sem Retorno no Painel eSocial
+
+**Acao realizada:**
+- Adicionado suporte a `retorno=sem_mensagem` no painel eSocial.
+- A listagem passou a filtrar eventos sem `mensagem_retorno`.
+- O formulario de filtros agora permite selecionar `Com mensagem` ou `Sem mensagem`.
+- O resumo de filtros ativos exibe `Retorno: Sem mensagem`.
+- Criado teste focado para validar a nova filtragem.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php`: `12` testes verdes e `67` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Filtro de Retorno no Formulario do Painel eSocial
 
 **Acao realizada:**

@@ -301,6 +301,42 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('value="com_mensagem" selected', false);
     }
 
+    public function test_eventos_index_can_filter_events_without_return_message(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 88,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 88,
+            'evento' => 'S-1000',
+            'status' => 'processado',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Evento recebido com sucesso.',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 88,
+            'evento' => 'S-1010',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => null,
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['retorno' => 'sem_mensagem']));
+
+        $response
+            ->assertOk()
+            ->assertSee('rubricas')
+            ->assertDontSee('parametros_orgao_publico')
+            ->assertSee('Retorno: Sem mensagem')
+            ->assertSee('value="sem_mensagem" selected', false);
+    }
+
     public function test_eventos_index_shows_active_filters_summary(): void
     {
         $user = User::factory()->create([
