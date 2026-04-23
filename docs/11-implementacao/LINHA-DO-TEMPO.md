@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Normalizacao de Natureza Juridica por CPF no S-1000
+
+**Acao realizada:**
+- Ajustada a sincronizacao dos parametros institucionais para descartar `natureza_juridica` quando o `S-1000` usa inscricao por CPF.
+- Preservado o envio de `natJurid` apenas para inscricoes por CNPJ.
+- Ampliado teste focado para garantir que um valor enviado indevidamente em contexto CPF nao seja persistido no metadata nem serializado no payload.
+- Documentada a regra na trilha funcional e nas regras eSocial.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Services/OrgaoPublico/AtualizarParametrosOrgaoService.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/OrgaoPublicoTest.php`: `13` testes verdes e `79` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Compatibilidade de Classificacao no S-1000
 
 **Acao realizada:**

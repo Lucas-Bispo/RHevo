@@ -14,6 +14,7 @@
 - `iniValid` e `fimValid` devem respeitar vigencia logica.
 - A tela institucional deve indicar se a vigencia do `S-1000` esta ativa, futura, encerrada ou nao definida.
 - Eventos de tabela nao devem nascer com vigencia futura incoerente.
+- No `S-1000`, a natureza juridica deve ser descartada quando a inscricao institucional for por `CPF`.
 
 ### Admissao e ingresso
 - `S-2200` so pode ser usado para categorias permitidas.

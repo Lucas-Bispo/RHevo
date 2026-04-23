@@ -518,7 +518,7 @@ class OrgaoPublicoTest extends TestCase
                 'tipo_inscricao' => '2',
                 'numero_inscricao' => '52998224725',
                 'classificacao_tributaria' => '21',
-                'natureza_juridica' => '',
+                'natureza_juridica' => '1244',
                 'inicio_validade' => '2026-04',
                 'fim_validade' => '',
                 'ambiente_esocial' => 'homologacao',
@@ -529,6 +529,10 @@ class OrgaoPublicoTest extends TestCase
                 'observacoes' => '',
             ])
             ->assertRedirect(route('orgao-publico.show'));
+
+        $tenant->refresh();
+
+        $this->assertNull($tenant->metadata['orgao_publico']['natureza_juridica']);
 
         $evento = EventoEsocial::query()
             ->where('tenant_id', $tenant->id)

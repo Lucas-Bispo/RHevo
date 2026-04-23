@@ -16,11 +16,14 @@ class AtualizarParametrosOrgaoService
     {
         return DB::transaction(function () use ($tenant, $payload) {
             $metadata = $tenant->metadata ?? [];
+            $tipoInscricao = (string) $payload['tipo_inscricao'];
             $metadata['orgao_publico'] = [
-                'tipo_inscricao' => (string) $payload['tipo_inscricao'],
+                'tipo_inscricao' => $tipoInscricao,
                 'numero_inscricao' => (string) $payload['numero_inscricao'],
                 'classificacao_tributaria' => $this->nullableString($payload['classificacao_tributaria'] ?? null),
-                'natureza_juridica' => $this->nullableString($payload['natureza_juridica'] ?? null),
+                'natureza_juridica' => $tipoInscricao === '1'
+                    ? $this->nullableString($payload['natureza_juridica'] ?? null)
+                    : null,
                 'inicio_validade' => (string) $payload['inicio_validade'],
                 'fim_validade' => $this->nullableString($payload['fim_validade'] ?? null),
                 'ambiente_esocial' => (string) $payload['ambiente_esocial'],

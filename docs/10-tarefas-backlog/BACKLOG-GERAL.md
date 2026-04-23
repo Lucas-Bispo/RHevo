@@ -1469,6 +1469,33 @@ Documento consolidado a partir de `docs/obsidian/10-Tasks-Macro-Projeto.md` e ma
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versao:** 1.0
 
+### PRODUTO-S1000-NATUREZA-JURIDICA-CPF - 23/04/2026
+
+**Descricao:**
+Normalizar a natureza juridica do `S-1000` para que inscricoes institucionais por CPF nao persistam `natJurid` no metadata nem no payload do evento.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Services/OrgaoPublico/AtualizarParametrosOrgaoService.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- descartar `natureza_juridica` no service quando `tipo_inscricao = 2`;
+- garantir que metadata e payload fiquem sem natureza juridica para CPF;
+- cobrir o comportamento com teste focado do `S-1000`;
+- registrar a regra na documentacao.
+
+**Resultado:**
+- inscricoes por CPF passaram a persistir `natureza_juridica = null` no metadata institucional;
+- payload do `S-1000` segue sem `natJurid` para CPF;
+- teste focado cobre envio indevido de natureza juridica em contexto CPF;
+- regra registrada na documentacao funcional e eSocial.
+
 ### DIAGNOSTICO-PERFORMANCE-E-EVOLUCAO-ESOCIAL-INICIAL - 20/04/2026
 
 **Descricao:**  
