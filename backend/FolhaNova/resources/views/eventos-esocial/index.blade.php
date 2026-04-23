@@ -9,6 +9,7 @@
             'Evento' => $filtros['evento'],
             'Status' => $filtros['status'] !== '' ? ucfirst($filtros['status']) : '',
             'Ambiente' => $filtros['ambiente'] !== '' ? ucfirst($filtros['ambiente']) : '',
+            'Origem' => $filtros['origem'],
             'Retorno' => $filtros['retorno'] === 'com_mensagem'
                 ? 'Com mensagem'
                 : ($filtros['retorno'] === 'sem_mensagem' ? 'Sem mensagem' : ''),
@@ -142,6 +143,16 @@
                                 <option value="">Todos</option>
                                 <option value="homologacao" @selected($filtros['ambiente'] === 'homologacao')>Homologacao</option>
                                 <option value="producao" @selected($filtros['ambiente'] === 'producao')>Producao</option>
+                            </select>
+                        </label>
+
+                        <label class="form-control w-full xl:w-52">
+                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Origem</span>
+                            <select name="origem" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                <option value="">Todas</option>
+                                @foreach ($origensDisponiveis as $origemDisponivel)
+                                    <option value="{{ $origemDisponivel }}" @selected($filtros['origem'] === $origemDisponivel)>{{ $origemDisponivel }}</option>
+                                @endforeach
                             </select>
                         </label>
 

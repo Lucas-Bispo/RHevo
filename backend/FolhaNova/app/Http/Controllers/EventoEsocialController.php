@@ -17,6 +17,7 @@ class EventoEsocialController extends Controller
         $evento = trim((string) $request->string('evento'));
         $status = trim((string) $request->string('status'));
         $ambiente = trim((string) $request->string('ambiente'));
+        $origem = trim((string) $request->string('origem'));
         $retorno = trim((string) $request->string('retorno'));
         $retorno = in_array($retorno, ['com_mensagem', 'sem_mensagem'], true) ? $retorno : '';
 
@@ -32,6 +33,7 @@ class EventoEsocialController extends Controller
                         ->orWhere('status', 'like', "%{$search}%")
                         ->orWhere('protocolo', 'like', "%{$search}%")
                         ->orWhere('recibo', 'like', "%{$search}%")
+                        ->orWhere('payload->origem', 'like', "%{$search}%")
                         ->orWhereHas('servidor', fn ($servidorQuery) => $servidorQuery
                             ->where('matricula', 'like', "%{$search}%")
                             ->orWhereHas('pessoa', fn ($personQuery) => $personQuery
@@ -42,6 +44,7 @@ class EventoEsocialController extends Controller
             ->when($evento !== '', fn ($query) => $query->where('evento', $evento))
             ->when($status !== '', fn ($query) => $query->where('status', $status))
             ->when($ambiente !== '', fn ($query) => $query->where('ambiente', $ambiente))
+            ->when($origem !== '', fn ($query) => $query->where('payload->origem', $origem))
             ->when($retorno === 'com_mensagem', fn ($query) => $query->whereNotNull('mensagem_retorno'))
             ->when($retorno === 'sem_mensagem', fn ($query) => $query->whereNull('mensagem_retorno'))
             ->latest('updated_at')
@@ -69,6 +72,7 @@ class EventoEsocialController extends Controller
                 'evento' => $evento,
                 'status' => $status,
                 'ambiente' => $ambiente,
+                'origem' => $origem,
                 'retorno' => $retorno,
             ],
             'eventosDisponiveis' => (clone $baseQuery)
@@ -76,6 +80,13 @@ class EventoEsocialController extends Controller
                 ->distinct()
                 ->orderBy('evento')
                 ->pluck('evento'),
+            'origensDisponiveis' => (clone $baseQuery)
+                ->get()
+                ->pluck('payload.origem')
+                ->filter()
+                ->unique()
+                ->sort()
+                ->values(),
         ]);
     }
 

@@ -217,8 +217,7 @@ class EventosEsocialIndexTest extends TestCase
             ->get(route('eventos-esocial.index', ['evento' => 'S-1010']))
             ->assertOk()
             ->assertSee('S-1010')
-            ->assertDontSee('parametros_orgao_publico')
-            ->assertDontSee('cadastro_inicial_servidor')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('evento')->all() === ['S-1010'])
             ->assertSee('value="S-1010" selected', false);
     }
 
@@ -258,7 +257,7 @@ class EventosEsocialIndexTest extends TestCase
             ->get(route('eventos-esocial.index', ['ambiente' => 'producao']))
             ->assertOk()
             ->assertSee('rubricas')
-            ->assertDontSee('parametros_orgao_publico')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('ambiente')->every(fn ($ambiente) => $ambiente === 'producao'))
             ->assertSee('value="producao" selected', false)
             ->assertSee('Ambiente: Producao');
     }
@@ -296,7 +295,7 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('Com retorno')
             ->assertSee('Mensagens registradas')
             ->assertSee('parametros_orgao_publico')
-            ->assertDontSee('cadastro_inicial_servidor')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->every(fn ($evento) => filled($evento->mensagem_retorno)))
             ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false)
             ->assertSee('value="com_mensagem" selected', false);
     }
@@ -332,7 +331,7 @@ class EventosEsocialIndexTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('rubricas')
-            ->assertDontSee('parametros_orgao_publico')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->every(fn ($evento) => blank($evento->mensagem_retorno)))
             ->assertSee('Retorno: Sem mensagem')
             ->assertSee('value="sem_mensagem" selected', false);
     }
@@ -383,6 +382,7 @@ class EventosEsocialIndexTest extends TestCase
                 'evento' => 'S-1000',
                 'status' => 'erro',
                 'ambiente' => 'homologacao',
+                'origem' => 'parametros_orgao_publico',
                 'retorno' => 'com_mensagem',
             ]))
             ->assertOk()
@@ -391,8 +391,41 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('Evento: S-1000')
             ->assertSee('Status: Erro')
             ->assertSee('Ambiente: Homologacao')
+            ->assertSee('Origem: parametros_orgao_publico')
             ->assertSee('Retorno: Com mensagem')
             ->assertSee('href="'.route('eventos-esocial.index').'"', false);
+    }
+
+    public function test_eventos_index_can_filter_by_payload_origin(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 90,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 90,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 90,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['origem' => 'parametros_orgao_publico']))
+            ->assertOk()
+            ->assertSee('parametros_orgao_publico')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('payload.origem')->unique()->values()->all() === ['parametros_orgao_publico'])
+            ->assertSee('Origem: parametros_orgao_publico')
+            ->assertSee('value="parametros_orgao_publico" selected', false);
     }
 
     public function test_eventos_index_shows_return_summary_in_listing(): void

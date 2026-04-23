@@ -2,6 +2,29 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Filtro por Origem no Painel eSocial
+
+**Acao realizada:**
+- Adicionado filtro `Origem` no formulario principal do painel eSocial.
+- O painel passou a filtrar pelo campo `payload.origem` e exibir a origem ativa no resumo de filtros.
+- A tela de detalhe do evento ganhou o atalho `Mesma origem`.
+- Ajustados testes focados do painel e do detalhe para validar a nova navegacao operacional.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php` e `tests/Feature/EventoEsocialShowTest.php`: `20` testes verdes e `108` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Atalhos de Apoio S-1010 na Criacao de Rubrica
 
 **Acao realizada:**

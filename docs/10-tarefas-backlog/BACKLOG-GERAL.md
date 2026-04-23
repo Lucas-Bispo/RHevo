@@ -1826,6 +1826,36 @@ Adicionar uma caixa de apoio `S-1010` na tela de criacao de rubrica para encurta
 - a navegacao de ida e volta durante a parametrizacao ficou mais curta;
 - teste focado de CRUD de rubricas ficou verde.
 
+### PRODUTO-ESOCIAL-FILTRO-ORIGEM - 23/04/2026
+
+**Descricao:**
+Adicionar leitura e filtragem por `origem` no painel operacional de eventos eSocial, incluindo atalho contextual no detalhe.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- incluir `origem` como filtro operacional no painel;
+- reaproveitar o campo `payload.origem` sem alterar o modelo de dados;
+- evidenciar a origem no resumo de filtros ativos;
+- adicionar atalho `Mesma origem` no detalhe do evento e validar a navegacao com testes focados.
+
+**Resultado:**
+- o painel eSocial passou a filtrar eventos por `origem`;
+- o formulario principal agora oferece select de origem com opcoes derivadas da base do tenant;
+- o resumo de filtros ativos passou a exibir a origem selecionada;
+- o detalhe do evento ganhou atalho para retornar ao painel pela mesma origem;
+- testes focados do painel e do detalhe ficaram verdes.
+
 ### PRODUTO-S1010-ATALHOS-CONTEXTUAIS-EDICAO - 23/04/2026
 
 **Descricao:**
