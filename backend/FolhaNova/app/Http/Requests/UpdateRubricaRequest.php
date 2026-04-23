@@ -61,6 +61,7 @@ class UpdateRubricaRequest extends FormRequest
                 'nullable',
                 'date',
                 'after_or_equal:inicio_validade',
+                Rule::when($this->boolean('ativo'), ['after_or_equal:today']),
             ],
             'ativo' => ['required', 'boolean'],
         ];

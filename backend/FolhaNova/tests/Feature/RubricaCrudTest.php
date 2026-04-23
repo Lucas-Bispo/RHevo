@@ -166,6 +166,47 @@ class RubricaCrudTest extends TestCase
             ->assertSessionHasErrors('fim_validade');
     }
 
+    public function test_user_can_not_update_active_rubrica_with_past_end_of_validity(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 93,
+        ]);
+
+        $rubrica = Rubrica::create([
+            'tenant_id' => 93,
+            'codigo' => 'RUB-VIG-ATV',
+            'nome' => 'Rubrica com vigencia ativa',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'inicio_validade' => '2026-01-01',
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.edit', $rubrica))
+            ->put(route('rubricas.update', $rubrica), [
+                'codigo' => 'RUB-VIG-ATV',
+                'nome' => 'Rubrica ativa encerrada no passado',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-VIG-ATV',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '2026-04-22',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.edit', $rubrica))
+            ->assertSessionHasErrors('fim_validade');
+    }
+
     public function test_user_can_not_create_rubrica_with_invalid_vigencia_range(): void
     {
         $user = User::factory()->create([
@@ -215,6 +256,34 @@ class RubricaCrudTest extends TestCase
                 'inicio_validade' => '2026-01-01',
                 'fim_validade' => '',
                 'ativo' => '0',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.create'))
+            ->assertSessionHasErrors('fim_validade');
+    }
+
+    public function test_user_can_not_create_active_rubrica_with_past_end_of_validity(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 94,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.create'))
+            ->post(route('rubricas.store'), [
+                'codigo' => 'RUB-PAST',
+                'nome' => 'Rubrica ativa com fim passado',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-PAST',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '2026-04-22',
+                'ativo' => '1',
             ]);
 
         $response

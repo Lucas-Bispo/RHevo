@@ -46,6 +46,7 @@
 - Rubricas devem ter inicio de validade informado para preparar eventos de tabela do `S-1010`.
 - Quando houver fim de validade da rubrica, ele nao pode ser anterior ao inicio da validade.
 - Rubricas marcadas como inativas devem informar `fim_validade` para preservar encerramento consistente na trilha do `S-1010`.
+- Rubricas marcadas como ativas nao devem ser salvas com `fim_validade` anterior a data atual.
 - Compatibilidade entre rubrica e categoria do trabalhador deve ser verificada.
 - Codigos de incidencia e rubricas especificas de grupos nao podem ser usados em categorias incompativeis.
 
