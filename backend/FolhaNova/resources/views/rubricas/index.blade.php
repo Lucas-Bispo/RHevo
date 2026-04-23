@@ -70,6 +70,24 @@
             </a>
         </div>
 
+        <div class="grid gap-4 md:grid-cols-3">
+            <a href="{{ route('rubricas.index', ['incidencia' => 'irrf']) }}" class="stat-card block transition hover:border-fuchsia-400/40 hover:bg-fuchsia-500/5 focus:outline-none focus:ring-2 focus:ring-fuchsia-400/50">
+                <p class="text-sm text-slate-400">IRRF</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['irrf'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-fuchsia-300">Incidencia tributavel</p>
+            </a>
+            <a href="{{ route('rubricas.index', ['incidencia' => 'inss']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
+                <p class="text-sm text-slate-400">INSS</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['inss'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-cyan-300">Base previdenciaria</p>
+            </a>
+            <a href="{{ route('rubricas.index', ['incidencia' => 'fgts']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">FGTS</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['fgts'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Base fundiaria</p>
+            </a>
+        </div>
+
         <div class="grid gap-6 xl:grid-cols-[1.8fr_1fr]">
             <div class="panel-surface rounded-3xl p-6">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">

@@ -237,6 +237,66 @@ class RubricasIndexTest extends TestCase
             ->assertSee('value="irrf" selected', false);
     }
 
+    public function test_rubricas_index_links_incidencia_summaries_to_filters(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 71,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 71,
+            'codigo' => 'IRRF-001',
+            'nome' => 'Verba tributavel',
+            'natureza' => '1002',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 71,
+            'codigo' => 'INSS-001',
+            'nome' => 'Verba previdenciaria',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => false,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 71,
+            'codigo' => 'FGTS-001',
+            'nome' => 'Verba fundiaria',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => true,
+            'ativo' => true,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index'))
+            ->assertOk()
+            ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'irrf']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'inss']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'fgts']).'"', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['incidencia' => 'fgts']))
+            ->assertOk()
+            ->assertSee('Verba fundiaria')
+            ->assertDontSee('Verba tributavel')
+            ->assertDontSee('Verba previdenciaria')
+            ->assertSee('value="fgts" selected', false);
+    }
+
     public function test_authenticated_user_can_filter_rubricas_with_codigo_esocial(): void
     {
         $user = User::factory()->create([

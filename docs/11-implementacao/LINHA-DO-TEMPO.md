@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Atalhos por Incidencia na Listagem de Rubricas
+
+**Acao realizada:**
+- Adicionados cards por incidencia na listagem de rubricas.
+- Os cards `IRRF`, `INSS` e `FGTS` agora funcionam como atalhos operacionais.
+- Controller passou a calcular as contagens por incidencia no resumo da tela.
+- Criado teste focado cobrindo os links e a filtragem por incidencia.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricasIndexTest.php`: `9` testes verdes e `62` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Atalhos por Tipo na Listagem de Rubricas
 
 **Acao realizada:**

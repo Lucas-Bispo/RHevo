@@ -31,6 +31,7 @@
 - Normalizacao e unicidade do codigo eSocial da rubrica por tenant para evitar parametrizacao duplicada do `S-1010`.
 - Filtros de rubricas por tipo, incidencia e situacao de codigo eSocial, incluindo pendencias sem codigo.
 - Cards de rubricas para abrir rapidamente a listagem filtrada por tipo `Provento`, `Desconto` e `Informativa`.
+- Cards de rubricas para abrir rapidamente a listagem filtrada por incidencia `IRRF`, `INSS` e `FGTS`.
 - Cards de rubricas para abrir rapidamente a listagem filtrada por status `Ativas` e `Inativas`.
 - Resumo visual de filtros ativos na listagem de rubricas com acao para limpar filtros.
 - Atalho de rubricas para abrir o painel eSocial filtrado pela trilha `S-1010`.
