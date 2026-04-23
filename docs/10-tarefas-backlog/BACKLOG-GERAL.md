@@ -1800,6 +1800,32 @@ Consolidar o fluxo oficial de desenvolvimento do projeto, incorporando regras ma
 - workflow do projeto reforcado com protocolo explicito antes e depois de cada implementacao
 - regra de precedencia entre planos documentada
 - proxima frente do produto alinhada com a trilha estrutural antes do retorno ao historico funcional
+### PRODUTO-S1010-ATALHOS-CONTEXTUAIS-EDICAO - 23/04/2026
+
+**Descricao:**
+Expandir a caixa de revisao `S-1010` na edicao de rubrica com atalhos contextuais coerentes com o cadastro aberto.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- reaproveitar os filtros operacionais ja existentes na listagem de rubricas;
+- adaptar os atalhos ao contexto atual de status, tipo, codigo eSocial e incidencias;
+- evitar links inaplicaveis para incidencias nao marcadas;
+- validar a leitura da tela com teste focado de edicao.
+
+**Resultado:**
+- a edicao de rubrica passou a oferecer atalhos contextuais para `status`, `tipo`, `codigo eSocial` e incidencias ativas;
+- rubricas com codigo agora apontam para a base parametrizada, enquanto pendencias continuam apontando para `sem codigo`;
+- incidencias nao marcadas deixaram de gerar atalhos desnecessarios;
+- teste focado de CRUD de rubricas ficou verde.
+
 ### PRODUTO-S1010-VIGENCIA-RUBRICAS - 23/04/2026
 
 **Descricao:**

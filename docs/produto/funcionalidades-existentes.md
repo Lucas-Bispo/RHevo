@@ -36,6 +36,7 @@
 - Resumo visual de filtros ativos na listagem de rubricas com acao para limpar filtros.
 - Atalho de rubricas para abrir o painel eSocial filtrado pela trilha `S-1010`.
 - Atalhos de revisao S-1010 na edicao de rubrica para painel eSocial e pendencias sem codigo.
+- Atalhos contextuais na edicao de rubrica para revisar status, tipo, codigo e incidencias da mesma trilha `S-1010`.
 - Controle inicial de vigencia das rubricas para preparar `S-1010`, com inicio obrigatorio e fim opcional validado.
 
 ## RH operacional

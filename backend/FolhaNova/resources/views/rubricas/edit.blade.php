@@ -3,6 +3,25 @@
         Editar rubrica
     </x-slot>
 
+    @php
+        $statusFiltro = $rubrica->ativo ? 'ativos' : 'inativos';
+        $statusRotulo = $rubrica->ativo ? 'Ver rubricas ativas' : 'Ver rubricas inativas';
+        $tipoRotulo = match ($rubrica->tipo) {
+            'provento' => 'Ver proventos',
+            'desconto' => 'Ver descontos',
+            default => 'Ver informativas',
+        };
+        $codigoEsocialFiltro = filled($rubrica->codigo_esocial) ? 'com_codigo' : 'sem_codigo';
+        $codigoEsocialRotulo = filled($rubrica->codigo_esocial)
+            ? 'Ver rubricas com codigo'
+            : 'Ver pendencias sem codigo';
+        $incidencias = collect([
+            'irrf' => $rubrica->incide_irrf,
+            'inss' => $rubrica->incide_inss,
+            'fgts' => $rubrica->incide_fgts,
+        ])->filter();
+    @endphp
+
     <section class="space-y-6">
         <div class="grid gap-6 xl:grid-cols-[1.7fr_1fr]">
             <div class="panel-surface rounded-3xl p-6">
@@ -53,7 +72,15 @@
                     <h3 class="mt-3 text-xl font-semibold text-white">Parametrizacao eSocial</h3>
                     <div class="mt-4 flex flex-col gap-3">
                         <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1010']) }}" class="btn btn-ghost btn-sm">Ver S-1010 no painel</a>
-                        <a href="{{ route('rubricas.index', ['esocial' => 'sem_codigo']) }}" class="btn btn-ghost btn-sm">Ver pendencias sem codigo</a>
+                        <a href="{{ route('rubricas.index', ['esocial' => $codigoEsocialFiltro]) }}" class="btn btn-ghost btn-sm">{{ $codigoEsocialRotulo }}</a>
+                        <a href="{{ route('rubricas.index', ['status' => $statusFiltro]) }}" class="btn btn-ghost btn-sm">{{ $statusRotulo }}</a>
+                        <a href="{{ route('rubricas.index', ['tipo' => $rubrica->tipo]) }}" class="btn btn-ghost btn-sm">{{ $tipoRotulo }}</a>
+
+                        @foreach ($incidencias as $incidencia => $ativo)
+                            <a href="{{ route('rubricas.index', ['incidencia' => $incidencia]) }}" class="btn btn-ghost btn-sm">
+                                Ver base {{ strtoupper($incidencia) }}
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>

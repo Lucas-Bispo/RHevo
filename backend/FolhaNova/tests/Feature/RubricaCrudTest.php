@@ -169,8 +169,51 @@ class RubricaCrudTest extends TestCase
             ->assertSee('Revisao S-1010')
             ->assertSee('Ver S-1010 no painel')
             ->assertSee('Ver pendencias sem codigo')
+            ->assertSee('Ver rubricas ativas')
+            ->assertSee('Ver proventos')
+            ->assertSee('Ver base IRRF')
+            ->assertSee('Ver base INSS')
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false)
-            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false);
+            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['status' => 'ativos']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['tipo' => 'provento']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'irrf']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'inss']).'"', false);
+    }
+
+    public function test_rubrica_edit_screen_adapts_contextual_s1010_shortcuts_to_current_rubrica(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 69,
+        ]);
+
+        $rubrica = Rubrica::create([
+            'tenant_id' => 69,
+            'codigo' => 'DESC-FGTS',
+            'nome' => 'Desconto consignado FGTS',
+            'natureza' => '9219',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => true,
+            'codigo_esocial' => 'S1010-DESC-FGTS',
+            'ativo' => false,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.edit', $rubrica))
+            ->assertOk()
+            ->assertSee('Ver rubricas com codigo')
+            ->assertSee('Ver rubricas inativas')
+            ->assertSee('Ver descontos')
+            ->assertSee('Ver base FGTS')
+            ->assertDontSee('Ver base IRRF')
+            ->assertDontSee('Ver base INSS')
+            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'com_codigo']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['status' => 'inativos']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['tipo' => 'desconto']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'fgts']).'"', false);
     }
 
     public function test_user_can_not_create_rubrica_with_textual_natureza(): void

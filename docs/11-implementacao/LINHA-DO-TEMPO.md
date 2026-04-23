@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Atalhos Contextuais na Edicao de Rubrica
+
+**Acao realizada:**
+- Expandida a caixa `Revisao S-1010` na tela de edicao de rubrica.
+- Adicionados atalhos contextuais para `status`, `tipo`, `codigo eSocial` e incidencias marcadas na rubrica atual.
+- Rubricas com codigo passaram a apontar para a base parametrizada, enquanto pendencias continuam levando para `sem codigo`.
+- Criado teste focado cobrindo a adaptacao dos atalhos conforme o cadastro aberto.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php`: `9` testes verdes e `51` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Atalhos por Incidencia na Listagem de Rubricas
 
 **Acao realizada:**
