@@ -1469,6 +1469,32 @@ Documento consolidado a partir de `docs/obsidian/10-Tasks-Macro-Projeto.md` e ma
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versao:** 1.0
 
+### PRODUTO-RUBRICAS-FILTROS-ATIVOS - 23/04/2026
+
+**Descricao:**
+Exibir resumo dos filtros ativos na listagem de rubricas para facilitar revisao manual da base `S-1010`, especialmente pendencias sem codigo eSocial.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- montar resumo visual dos filtros ativos na view;
+- incluir busca, status, tipo, incidencia e situacao eSocial;
+- adicionar acao `Limpar filtros`;
+- cobrir o comportamento com teste focado.
+
+**Resultado:**
+- listagem de rubricas passou a exibir bloco `Filtros ativos`;
+- busca, status, tipo, incidencia e situacao eSocial aparecem como badges;
+- bloco inclui acao `Limpar filtros`;
+- teste focado cobre filtros combinados e link de limpeza.
+
 ### PRODUTO-PAINEL-ESOCIAL-FILTRO-SEM-RETORNO - 23/04/2026
 
 **Descricao:**

@@ -219,4 +219,44 @@ class RubricasIndexTest extends TestCase
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
             ->assertSee('value="sem_codigo" selected', false);
     }
+
+    public function test_rubricas_index_shows_active_filters_summary(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 68,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 68,
+            'codigo' => 'IRRF-SEM-COD',
+            'nome' => 'Gratificacao sem codigo',
+            'natureza' => '1002',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'codigo_esocial' => null,
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', [
+                'q' => 'Gratificacao',
+                'status' => 'ativos',
+                'tipo' => 'provento',
+                'incidencia' => 'irrf',
+                'esocial' => 'sem_codigo',
+            ]));
+
+        $response
+            ->assertOk()
+            ->assertSee('Filtros ativos')
+            ->assertSee('Busca: Gratificacao')
+            ->assertSee('Status: Ativas')
+            ->assertSee('Tipo: Provento')
+            ->assertSee('Incidencia: IRRF')
+            ->assertSee('eSocial: Sem codigo')
+            ->assertSee('href="'.route('rubricas.index').'"', false);
+    }
 }

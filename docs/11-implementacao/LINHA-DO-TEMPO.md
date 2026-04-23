@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Filtros Ativos na Listagem de Rubricas S-1010
+
+**Acao realizada:**
+- Adicionado bloco `Filtros ativos` na listagem de rubricas.
+- O bloco passa a exibir busca, status, tipo, incidencia e situacao eSocial quando aplicados.
+- Incluida acao `Limpar filtros` para retornar a listagem completa.
+- Criado teste focado com filtros combinados para validar a leitura operacional.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricasIndexTest.php`: `6` testes verdes e `37` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Filtro de Eventos Sem Retorno no Painel eSocial
 
 **Acao realizada:**

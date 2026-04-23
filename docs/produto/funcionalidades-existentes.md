@@ -30,6 +30,7 @@
 - Normalizacao previa dos campos de rubrica para preservar unicidade por tenant mesmo com espacos no preenchimento.
 - Normalizacao e unicidade do codigo eSocial da rubrica por tenant para evitar parametrizacao duplicada do `S-1010`.
 - Filtros de rubricas por tipo, incidencia e situacao de codigo eSocial, incluindo pendencias sem codigo.
+- Resumo visual de filtros ativos na listagem de rubricas com acao para limpar filtros.
 - Atalho de rubricas para abrir o painel eSocial filtrado pela trilha `S-1010`.
 - Atalhos de revisao S-1010 na edicao de rubrica para painel eSocial e pendencias sem codigo.
 - Controle inicial de vigencia das rubricas para preparar `S-1010`, com inicio obrigatorio e fim opcional validado.

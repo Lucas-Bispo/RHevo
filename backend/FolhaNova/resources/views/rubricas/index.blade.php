@@ -3,6 +3,20 @@
         Rubricas
     </x-slot>
 
+    @php
+        $filtrosAtivos = collect([
+            'Busca' => $filtros['q'],
+            'Status' => $filtros['status'] === 'ativos'
+                ? 'Ativas'
+                : ($filtros['status'] === 'inativos' ? 'Inativas' : ''),
+            'Tipo' => $filtros['tipo'] !== '' ? ucfirst($filtros['tipo']) : '',
+            'Incidencia' => $filtros['incidencia'] !== '' ? strtoupper($filtros['incidencia']) : '',
+            'eSocial' => $filtros['esocial'] === 'com_codigo'
+                ? 'Com codigo'
+                : ($filtros['esocial'] === 'sem_codigo' ? 'Sem codigo' : ''),
+        ])->filter();
+    @endphp
+
     <section class="space-y-6">
         @if (session('status'))
             <div class="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
@@ -112,6 +126,20 @@
                         </form>
                     </div>
                 </div>
+
+                @if ($filtrosAtivos->isNotEmpty())
+                    <div class="mt-6 flex flex-col gap-3 rounded-2xl border border-cyan-400/20 bg-cyan-500/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.25em] text-cyan-200">Filtros ativos</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                @foreach ($filtrosAtivos as $rotulo => $valor)
+                                    <span class="badge badge-outline badge-info">{{ $rotulo }}: {{ $valor }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                        <a href="{{ route('rubricas.index') }}" class="btn btn-ghost btn-sm">Limpar filtros</a>
+                    </div>
+                @endif
 
                 <div class="mt-6 overflow-x-auto">
                     <table class="table">
