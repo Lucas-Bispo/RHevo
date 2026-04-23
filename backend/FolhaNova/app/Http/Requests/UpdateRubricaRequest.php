@@ -48,6 +48,8 @@ class UpdateRubricaRequest extends FormRequest
             'incide_inss' => ['required', 'boolean'],
             'incide_fgts' => ['required', 'boolean'],
             'codigo_esocial' => ['nullable', 'string', 'max:30'],
+            'inicio_validade' => ['required', 'date'],
+            'fim_validade' => ['nullable', 'date', 'after_or_equal:inicio_validade'],
             'ativo' => ['required', 'boolean'],
         ];
     }

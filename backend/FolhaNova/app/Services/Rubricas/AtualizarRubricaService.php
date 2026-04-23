@@ -20,6 +20,8 @@ class AtualizarRubricaService
             'incide_inss' => (bool) $payload['incide_inss'],
             'incide_fgts' => (bool) $payload['incide_fgts'],
             'codigo_esocial' => $this->nullableString($payload['codigo_esocial'] ?? null),
+            'inicio_validade' => $payload['inicio_validade'],
+            'fim_validade' => $payload['fim_validade'] ?? null,
             'ativo' => (bool) $payload['ativo'],
         ]);
 

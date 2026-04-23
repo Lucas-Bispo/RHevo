@@ -20,6 +20,8 @@ class Rubrica extends Model
         'incide_inss',
         'incide_fgts',
         'codigo_esocial',
+        'inicio_validade',
+        'fim_validade',
         'ativo',
     ];
 
@@ -29,6 +31,8 @@ class Rubrica extends Model
             'incide_irrf' => 'boolean',
             'incide_inss' => 'boolean',
             'incide_fgts' => 'boolean',
+            'inicio_validade' => 'date',
+            'fim_validade' => 'date',
             'ativo' => 'boolean',
         ];
     }

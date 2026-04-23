@@ -27,6 +27,8 @@ class RubricasIndexTest extends TestCase
             'incide_inss' => true,
             'incide_fgts' => true,
             'codigo_esocial' => 'S1010-NOT',
+            'inicio_validade' => '2026-01-01',
+            'fim_validade' => '2026-12-31',
             'ativo' => true,
         ]);
 
@@ -39,6 +41,9 @@ class RubricasIndexTest extends TestCase
             ->assertSee('Rubricas')
             ->assertSee('Adicional noturno')
             ->assertSee('Natureza eSocial 1002')
+            ->assertSee('Vigencia:')
+            ->assertSee('01/01/2026')
+            ->assertSee('ate 31/12/2026')
             ->assertSee('S1010-NOT')
             ->assertSee('Ver S-1010 no painel')
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false);

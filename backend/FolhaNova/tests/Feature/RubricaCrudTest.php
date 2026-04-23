@@ -43,6 +43,8 @@ class RubricaCrudTest extends TestCase
                 'incide_inss' => '1',
                 'incide_fgts' => '0',
                 'codigo_esocial' => 'S1010-GRAT',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '2026-12-31',
                 'ativo' => '1',
             ]);
 
@@ -59,6 +61,8 @@ class RubricaCrudTest extends TestCase
             'incide_irrf' => true,
             'incide_inss' => true,
             'incide_fgts' => false,
+            'inicio_validade' => '2026-01-01 00:00:00',
+            'fim_validade' => '2026-12-31 00:00:00',
             'ativo' => true,
         ]);
     }
@@ -92,6 +96,8 @@ class RubricaCrudTest extends TestCase
                 'incide_inss' => '0',
                 'incide_fgts' => '0',
                 'codigo_esocial' => 'S1010-DESC',
+                'inicio_validade' => '2026-02-01',
+                'fim_validade' => '2026-12-31',
                 'ativo' => '0',
             ]);
 
@@ -104,8 +110,38 @@ class RubricaCrudTest extends TestCase
             'nome' => 'Desconto sindical',
             'natureza' => '9219',
             'codigo_esocial' => 'S1010-DESC',
+            'inicio_validade' => '2026-02-01 00:00:00',
+            'fim_validade' => '2026-12-31 00:00:00',
             'ativo' => false,
         ]);
+    }
+
+    public function test_user_can_not_create_rubrica_with_invalid_vigencia_range(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 67,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.create'))
+            ->post(route('rubricas.store'), [
+                'codigo' => 'RUB-VIG',
+                'nome' => 'Rubrica com vigencia invalida',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-VIG',
+                'inicio_validade' => '2026-12-31',
+                'fim_validade' => '2026-01-01',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.create'))
+            ->assertSessionHasErrors('fim_validade');
     }
 
     public function test_rubrica_edit_screen_shows_s1010_review_shortcuts(): void
@@ -190,6 +226,8 @@ class RubricaCrudTest extends TestCase
                 'incide_inss' => '1',
                 'incide_fgts' => '0',
                 'codigo_esocial' => '',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '',
                 'ativo' => '1',
             ]);
 

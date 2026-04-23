@@ -43,6 +43,7 @@
                     <ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">
                         <li>Codigo: {{ $rubrica->codigo }}</li>
                         <li>Tipo: {{ ucfirst($rubrica->tipo) }}</li>
+                        <li>Vigencia: {{ $rubrica->inicio_validade?->format('d/m/Y') ?? 'Nao informada' }}@if ($rubrica->fim_validade) ate {{ $rubrica->fim_validade->format('d/m/Y') }}@endif</li>
                         <li>Status: {{ $rubrica->ativo ? 'Ativa' : 'Inativa' }}</li>
                     </ul>
                 </div>

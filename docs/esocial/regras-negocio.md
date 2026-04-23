@@ -40,6 +40,8 @@
 - A natureza da rubrica deve ser tratada como codigo `natRubr` numerico de 4 digitos no cadastro local.
 - Campos de rubrica devem ser normalizados antes da validacao para impedir duplicidade operacional mascarada por espacos.
 - Rubricas sem codigo eSocial devem ficar visiveis como pendencias de parametrizacao para o `S-1010`.
+- Rubricas devem ter inicio de validade informado para preparar eventos de tabela do `S-1010`.
+- Quando houver fim de validade da rubrica, ele nao pode ser anterior ao inicio da validade.
 - Compatibilidade entre rubrica e categoria do trabalhador deve ser verificada.
 - Codigos de incidencia e rubricas especificas de grupos nao podem ser usados em categorias incompativeis.
 

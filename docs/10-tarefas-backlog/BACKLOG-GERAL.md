@@ -1529,3 +1529,38 @@ Consolidar o fluxo oficial de desenvolvimento do projeto, incorporando regras ma
 - workflow do projeto reforcado com protocolo explicito antes e depois de cada implementacao
 - regra de precedencia entre planos documentada
 - proxima frente do produto alinhada com a trilha estrutural antes do retorno ao historico funcional
+### PRODUTO-S1010-VIGENCIA-RUBRICAS - 23/04/2026
+
+**Descricao:**
+Adicionar controle inicial de vigencia nas rubricas para preparar a evolucao do `S-1010`, com inicio obrigatorio, fim opcional e validacao temporal simples.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/database/migrations/*_add_vigencia_to_rubricas_table.php`
+- `backend/FolhaNova/app/Models/Rubrica.php`
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/app/Services/Rubricas/RegistrarRubricaService.php`
+- `backend/FolhaNova/app/Services/Rubricas/AtualizarRubricaService.php`
+- `backend/FolhaNova/resources/views/rubricas/partials/form-fields.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- criar campos de vigencia inicial/final nas rubricas;
+- validar inicio obrigatorio e fim posterior ou igual ao inicio;
+- exibir vigencia na lista e na edicao;
+- cobrir cadastro, edicao e listagem com testes focados.
+
+**Resultado:**
+- rubricas passaram a armazenar `inicio_validade` e `fim_validade`;
+- cadastro e edicao exigem inicio de validade e rejeitam fim anterior ao inicio;
+- listagem e edicao exibem a vigencia da rubrica;
+- testes focados de rubricas ficaram verdes.

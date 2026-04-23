@@ -2,6 +2,36 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Vigencia Inicial das Rubricas S-1010
+
+**Acao realizada:**
+- Adicionados campos de inicio e fim de validade na tabela de rubricas.
+- Cadastro e edicao de rubricas passaram a exigir inicio de validade.
+- Fim de validade passou a ser opcional, mas nao pode ser anterior ao inicio.
+- Listagem e tela de edicao agora exibem a vigencia da rubrica para revisao do `S-1010`.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/database/migrations/2026_04_23_000000_add_vigencia_to_rubricas_table.php`
+- `backend/FolhaNova/app/Models/Rubrica.php`
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/app/Services/Rubricas/RegistrarRubricaService.php`
+- `backend/FolhaNova/app/Services/Rubricas/AtualizarRubricaService.php`
+- `backend/FolhaNova/resources/views/rubricas/partials/form-fields.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php` e `tests/Feature/RubricasIndexTest.php`: `12` testes verdes e `56` assercoes.
+
+**Status:** Concluido
+
 ### 22/04/2026 - Atalhos de Revisao S-1010 na Rubrica
 
 **Acao realizada:**

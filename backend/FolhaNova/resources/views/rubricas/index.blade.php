@@ -136,6 +136,13 @@
                                     <td>
                                         <p>{{ ucfirst($rubrica->tipo) }}</p>
                                         <p class="text-xs text-slate-500">Natureza eSocial {{ $rubrica->natureza }}</p>
+                                        <p class="text-xs text-slate-500">
+                                            Vigencia:
+                                            {{ $rubrica->inicio_validade?->format('d/m/Y') ?? 'Nao informada' }}
+                                            @if ($rubrica->fim_validade)
+                                                ate {{ $rubrica->fim_validade->format('d/m/Y') }}
+                                            @endif
+                                        </p>
                                     </td>
                                     <td class="text-sm text-slate-300">
                                         IRRF {{ $rubrica->incide_irrf ? 'sim' : 'nao' }} /
