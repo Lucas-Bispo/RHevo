@@ -75,6 +75,7 @@
 - Filtro do painel eSocial por `origem` do payload, com leitura da origem ativa no resumo de filtros.
 - Filtro do painel eSocial para eventos com ou sem mensagem de retorno registrada, disponivel no card e no formulario principal.
 - Tela de detalhe do evento eSocial com atalhos para retornar ao painel filtrado por evento, status, ambiente, origem ou contexto de retorno.
+- Tela de detalhe do evento eSocial com atalho para retornar ao painel pelo mesmo contexto institucional ou vinculado.
 - Atalho do detalhe eSocial para abrir o servidor vinculado quando o evento possuir vinculo funcional.
 
 ## O que ainda nao existe em operacao real

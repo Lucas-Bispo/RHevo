@@ -148,6 +148,26 @@
 
 **Status:** Concluido
 
+### 24/04/2026 - Atalho de Contexto no Detalhe do Evento eSocial
+
+**Acao realizada:**
+- O detalhe do evento eSocial passou a exibir o atalho `Mesmo contexto`.
+- Eventos institucionais agora retornam ao painel com `contexto=institucional`.
+- Eventos vinculados a servidor agora retornam ao painel com `contexto=vinculado`.
+- O teste do detalhe foi ampliado para validar os dois cenarios.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventoEsocialShowTest.php`: atalho `Mesmo contexto` validado no detalhe institucional e no detalhe vinculado.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Inicio de Vigencia Coerente para Rubrica Ativa
 
 **Acao realizada:**

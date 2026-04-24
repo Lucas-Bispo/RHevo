@@ -1,3 +1,29 @@
+### PRODUTO-DETALHE-ESOCIAL-ATALHO-CONTEXTO - 24/04/2026
+
+**Descricao:**
+Adicionar no detalhe do evento eSocial um atalho para retornar ao painel pelo mesmo contexto operacional do registro atual.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- identificar no detalhe se o evento eSocial e institucional ou vinculado a servidor;
+- adicionar atalho `Mesmo contexto` apontando para o filtro correspondente do painel;
+- preservar os atalhos existentes por evento, status, ambiente, origem e retorno;
+- cobrir a nova navegacao com teste focado.
+
+**Resultado:**
+- o detalhe do evento eSocial passou a oferecer retorno rapido para o mesmo contexto operacional;
+- eventos institucionais agora voltam ao painel com `contexto=institucional`;
+- eventos vinculados a servidor agora voltam ao painel com `contexto=vinculado`;
+- teste focado cobre os dois cenarios.
+
 ### PRODUTO-PAINEL-ESOCIAL-CONTEXTO-INSTITUCIONAL-VINCULADO - 24/04/2026
 
 **Descricao:**
