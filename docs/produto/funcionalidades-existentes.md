@@ -41,6 +41,7 @@
 - Controle inicial de vigencia das rubricas para preparar `S-1010`, com inicio obrigatorio e fim opcional validado.
 - Inativacao de rubrica agora exige `fim_validade`, reforcando encerramento coerente para a trilha `S-1010`.
 - Rubricas ativas agora bloqueiam `fim_validade` passado para evitar vigencia encerrada incoerente no `S-1010`.
+- Rubricas ativas agora bloqueiam `inicio_validade` futuro para manter vigencia operacional coerente no `S-1010`.
 
 ## RH operacional
 - Listagem de servidores com filtros por busca e situacao.

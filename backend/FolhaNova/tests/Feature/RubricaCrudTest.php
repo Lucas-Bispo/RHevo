@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Rubrica;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class RubricaCrudTest extends TestCase
@@ -168,6 +169,8 @@ class RubricaCrudTest extends TestCase
 
     public function test_user_can_not_update_active_rubrica_with_past_end_of_validity(): void
     {
+        $pastDate = Carbon::today()->subDay()->toDateString();
+
         $user = User::factory()->create([
             'tenant_id' => 93,
         ]);
@@ -198,13 +201,56 @@ class RubricaCrudTest extends TestCase
                 'incide_fgts' => '0',
                 'codigo_esocial' => 'S1010-VIG-ATV',
                 'inicio_validade' => '2026-01-01',
-                'fim_validade' => '2026-04-22',
+                'fim_validade' => $pastDate,
                 'ativo' => '1',
             ]);
 
         $response
             ->assertRedirect(route('rubricas.edit', $rubrica))
             ->assertSessionHasErrors('fim_validade');
+    }
+
+    public function test_user_can_not_update_active_rubrica_with_future_start_of_validity(): void
+    {
+        $futureDate = Carbon::today()->addDay()->toDateString();
+
+        $user = User::factory()->create([
+            'tenant_id' => 95,
+        ]);
+
+        $rubrica = Rubrica::create([
+            'tenant_id' => 95,
+            'codigo' => 'RUB-INI-FUT',
+            'nome' => 'Rubrica ativa atual',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'inicio_validade' => '2026-01-01',
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.edit', $rubrica))
+            ->put(route('rubricas.update', $rubrica), [
+                'codigo' => 'RUB-INI-FUT',
+                'nome' => 'Rubrica ativa futura',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-INI-FUT',
+                'inicio_validade' => $futureDate,
+                'fim_validade' => '',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.edit', $rubrica))
+            ->assertSessionHasErrors('inicio_validade');
     }
 
     public function test_user_can_not_create_rubrica_with_invalid_vigencia_range(): void
@@ -265,6 +311,8 @@ class RubricaCrudTest extends TestCase
 
     public function test_user_can_not_create_active_rubrica_with_past_end_of_validity(): void
     {
+        $pastDate = Carbon::today()->subDay()->toDateString();
+
         $user = User::factory()->create([
             'tenant_id' => 94,
         ]);
@@ -282,13 +330,81 @@ class RubricaCrudTest extends TestCase
                 'incide_fgts' => '0',
                 'codigo_esocial' => 'S1010-PAST',
                 'inicio_validade' => '2026-01-01',
-                'fim_validade' => '2026-04-22',
+                'fim_validade' => $pastDate,
                 'ativo' => '1',
             ]);
 
         $response
             ->assertRedirect(route('rubricas.create'))
             ->assertSessionHasErrors('fim_validade');
+    }
+
+    public function test_user_can_not_create_active_rubrica_with_future_start_of_validity(): void
+    {
+        $futureDate = Carbon::today()->addDay()->toDateString();
+
+        $user = User::factory()->create([
+            'tenant_id' => 96,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.create'))
+            ->post(route('rubricas.store'), [
+                'codigo' => 'RUB-FUT',
+                'nome' => 'Rubrica ativa futura',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-FUT',
+                'inicio_validade' => $futureDate,
+                'fim_validade' => '',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.create'))
+            ->assertSessionHasErrors('inicio_validade');
+    }
+
+    public function test_user_can_create_inactive_rubrica_with_future_start_of_validity(): void
+    {
+        $futureDate = Carbon::today()->addDay()->toDateString();
+        $futureEndDate = Carbon::today()->addDays(10)->toDateString();
+
+        $user = User::factory()->create([
+            'tenant_id' => 97,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->post(route('rubricas.store'), [
+                'codigo' => 'RUB-FUT-INAT',
+                'nome' => 'Rubrica futura inativa',
+                'natureza' => '1000',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-FUT-INAT',
+                'inicio_validade' => $futureDate,
+                'fim_validade' => $futureEndDate,
+                'ativo' => '0',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.index'))
+            ->assertSessionHas('status');
+
+        $this->assertDatabaseHas('rubricas', [
+            'tenant_id' => 97,
+            'codigo' => 'RUB-FUT-INAT',
+            'inicio_validade' => $futureDate.' 00:00:00',
+            'fim_validade' => $futureEndDate.' 00:00:00',
+            'ativo' => false,
+        ]);
     }
 
     public function test_rubrica_edit_screen_shows_s1010_review_shortcuts(): void

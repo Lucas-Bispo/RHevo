@@ -55,7 +55,11 @@ class UpdateRubricaRequest extends FormRequest
                     ->ignore($rubrica?->id)
                     ->where(fn ($query) => $query->where('tenant_id', $tenantId)),
             ],
-            'inicio_validade' => ['required', 'date'],
+            'inicio_validade' => [
+                'required',
+                'date',
+                Rule::when($this->boolean('ativo'), ['before_or_equal:today']),
+            ],
             'fim_validade' => [
                 Rule::requiredIf(fn () => ! $this->boolean('ativo')),
                 'nullable',

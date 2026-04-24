@@ -1912,6 +1912,34 @@ Impedir que rubricas marcadas como ativas sejam salvas com `fim_validade` ja enc
 - testes focados de CRUD validaram criacao e edicao com bloqueio do encerramento passado;
 - documentacao funcional e eSocial foi atualizada.
 
+### PRODUTO-S1010-INICIO-ATIVO-COERENTE - 23/04/2026
+
+**Descricao:**
+Impedir que rubricas marcadas como ativas sejam salvas com `inicio_validade` futuro, reforcando coerencia operacional da vigencia no `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- bloquear `inicio_validade` futuro quando a rubrica estiver ativa;
+- preservar a possibilidade de vigencia futura para rubricas ainda nao ativas;
+- cobrir criacao e edicao com testes focados;
+- registrar a regra nas documentacoes funcionais.
+
+**Resultado:**
+- rubricas ativas passaram a rejeitar `inicio_validade` posterior a data atual;
+- a leitura de vigencia ativa ficou coerente com o estado operacional da rubrica;
+- testes focados de CRUD validaram criacao e edicao com bloqueio do inicio futuro;
+- documentacao funcional e eSocial foi atualizada.
+
 ### PRODUTO-S1010-ATALHOS-CONTEXTUAIS-EDICAO - 23/04/2026
 
 **Descricao:**

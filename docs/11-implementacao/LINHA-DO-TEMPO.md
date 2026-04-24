@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 23/04/2026 - Inicio de Vigencia Coerente para Rubrica Ativa
+
+**Acao realizada:**
+- Ajustada a validacao de rubricas para bloquear `inicio_validade` futuro quando a rubrica estiver ativa.
+- Preservada a possibilidade de vigencia futura para rubricas ainda nao ativas.
+- Criados testes focados para impedir criacao e edicao de rubricas ativas com inicio posterior a data atual.
+- Documentada a regra nas trilhas funcional e eSocial.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Requests/StoreRubricaRequest.php`
+- `backend/FolhaNova/app/Http/Requests/UpdateRubricaRequest.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php`: `15` testes verdes e `84` assercoes.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Vigencia Coerente para Rubrica Ativa
 
 **Acao realizada:**
