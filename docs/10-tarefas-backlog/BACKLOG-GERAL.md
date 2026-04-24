@@ -1,3 +1,137 @@
+### PRODUTO-DASHBOARD-TRIAGEM-S1000 - 24/04/2026
+
+**Descricao:**
+Adicionar ao dashboard um resumo operacional do `S-1000`, aproximando a leitura institucional da home do projeto.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/DashboardController.php`
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- recuperar no dashboard o tenant atual, os parametros institucionais e o ultimo evento `S-1000`;
+- exibir nome do orgao, ambiente, status de vigencia e status do evento na home;
+- adicionar atalhos para `orgao publico` e para o painel filtrado em `S-1000`;
+- cobrir a nova leitura com teste focado do dashboard.
+
+**Resultado:**
+- o dashboard passou a exibir um bloco `Triagem S-1000` com leitura institucional resumida;
+- a navegacao manual para revisar o orgao publico e o painel `S-1000` ficou mais curta;
+- a home agora concentra leitura operacional das frentes `S-1000`, `S-1010` e painel eSocial;
+- teste focado do dashboard cobre o novo resumo institucional.
+
+### PRODUTO-DASHBOARD-TRIAGEM-VIGENCIA-S1010 - 24/04/2026
+
+**Descricao:**
+Levar a triagem de vigencia das rubricas para o dashboard operacional, aproximando a validacao manual inicial da trilha `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/DashboardController.php`
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- calcular contagens de vigencia ativa, futura e encerrada das rubricas no dashboard;
+- expor essas leituras na area de validacao manual e em um bloco de triagem `S-1010`;
+- adicionar atalhos para abrir a listagem de rubricas ja filtrada por vigencia;
+- cobrir a nova leitura com teste focado do dashboard.
+
+**Resultado:**
+- o dashboard passou a mostrar a distribuicao de vigencia das rubricas;
+- a massa demo pode ser triada a partir da home sem entrar primeiro no modulo de rubricas;
+- a tabela de validacao manual agora cita explicitamente a leitura de vigencia;
+- teste focado do dashboard cobre os novos atalhos e indicadores.
+
+### PRODUTO-DEMO-RUBRICAS-VIGENCIA-S1010 - 24/04/2026
+
+**Descricao:**
+Atualizar a massa demo de rubricas para refletir os novos cenarios de vigencia `ativa`, `futura` e `encerrada`, facilitando a validacao manual da trilha `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/database/seeders/DemoDataSeeder.php`
+- `backend/FolhaNova/tests/Feature/DemoDataSeederTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- incluir datas de vigencia coerentes nas rubricas demo;
+- garantir ao menos um exemplo ativo, um futuro e um encerrado;
+- ampliar o teste do seeder para validar as janelas de vigencia;
+- reaplicar a massa demo no banco local para revisao manual.
+
+**Resultado:**
+- a massa demo passou a cobrir rubricas com vigencia ativa, futura e encerrada;
+- o teste do seeder agora confirma a distribuicao dessas janelas;
+- a base local fica mais alinhada com os filtros e atalhos novos da trilha `S-1010`;
+- a validacao manual pode ser feita com a conta demo existente.
+
+### PRODUTO-S1010-ATALHOS-VIGENCIA-RUBRICAS - 24/04/2026
+
+**Descricao:**
+Levar a leitura operacional de vigencia das rubricas para os atalhos laterais de criacao e edicao, encurtando a navegacao da trilha `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/rubricas/create.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar atalhos de vigencia ativa, futura e encerrada na tela de criacao;
+- adaptar a tela de edicao para abrir a mesma janela de vigencia da rubrica atual;
+- cobrir a navegacao contextual com testes focados de CRUD;
+- registrar a rodada na documentacao operacional.
+
+**Resultado:**
+- a tela de criacao passou a oferecer atalhos diretos para rubricas com vigencia ativa, futura e encerrada;
+- a tela de edicao agora aponta para a mesma janela de vigencia da rubrica aberta;
+- os atalhos contextuais seguem integrados aos links de status, tipo, incidencias e codigo eSocial;
+- testes focados de CRUD passaram a cobrir a nova navegacao lateral.
+
+### PRODUTO-S1010-VIGENCIA-OPERACIONAL-RUBRICAS - 24/04/2026
+
+**Descricao:**
+Expandir a leitura operacional das rubricas com filtro e atalhos por status de vigencia para acelerar a revisao manual da base `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- calcular status de vigencia `ativa`, `futura` e `encerrada` na listagem de rubricas;
+- adicionar cards operacionais para cada janela de vigencia;
+- incluir filtro `vigencia` no formulario principal e no resumo de filtros ativos;
+- cobrir a nova leitura com testes focados.
+
+**Resultado:**
+- a listagem de rubricas passou a exibir atalhos por vigencia `ativa`, `futura` e `encerrada`;
+- o formulario principal agora permite filtrar a base por janela de vigencia;
+- a tabela mostra badge operacional de vigencia para cada rubrica;
+- testes focados cobrem links, filtro selecionado e resumo de filtros ativos.
+
 ### PRODUTO-RUBRICAS-ATALHOS-REVISAO-S1010 - 22/04/2026
 
 **Descricao:**

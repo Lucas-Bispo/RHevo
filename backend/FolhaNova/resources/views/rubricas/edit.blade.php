@@ -4,6 +4,7 @@
     </x-slot>
 
     @php
+        $hoje = now()->startOfDay();
         $statusFiltro = $rubrica->ativo ? 'ativos' : 'inativos';
         $statusRotulo = $rubrica->ativo ? 'Ver rubricas ativas' : 'Ver rubricas inativas';
         $tipoRotulo = match ($rubrica->tipo) {
@@ -15,6 +16,18 @@
         $codigoEsocialRotulo = filled($rubrica->codigo_esocial)
             ? 'Ver rubricas com codigo'
             : 'Ver pendencias sem codigo';
+        $vigenciaFiltro = match (true) {
+            blank($rubrica->inicio_validade) => 'sem_inicio',
+            $rubrica->inicio_validade->gt($hoje) => 'futura',
+            $rubrica->fim_validade !== null && $rubrica->fim_validade->lt($hoje) => 'encerrada',
+            default => 'ativa',
+        };
+        $vigenciaRotulo = match ($vigenciaFiltro) {
+            'futura' => 'Ver vigencia futura',
+            'encerrada' => 'Ver vigencia encerrada',
+            'sem_inicio' => 'Ver rubricas sem inicio',
+            default => 'Ver vigencia ativa',
+        };
         $incidencias = collect([
             'irrf' => $rubrica->incide_irrf,
             'inss' => $rubrica->incide_inss,
@@ -74,6 +87,7 @@
                         <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1010']) }}" class="btn btn-ghost btn-sm">Ver S-1010 no painel</a>
                         <a href="{{ route('rubricas.index', ['esocial' => $codigoEsocialFiltro]) }}" class="btn btn-ghost btn-sm">{{ $codigoEsocialRotulo }}</a>
                         <a href="{{ route('rubricas.index', ['status' => $statusFiltro]) }}" class="btn btn-ghost btn-sm">{{ $statusRotulo }}</a>
+                        <a href="{{ route('rubricas.index', ['vigencia' => $vigenciaFiltro]) }}" class="btn btn-ghost btn-sm">{{ $vigenciaRotulo }}</a>
                         <a href="{{ route('rubricas.index', ['tipo' => $rubrica->tipo]) }}" class="btn btn-ghost btn-sm">{{ $tipoRotulo }}</a>
 
                         @foreach ($incidencias as $incidencia => $ativo)

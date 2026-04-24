@@ -51,6 +51,9 @@
                         <a href="{{ route('rubricas.index', ['esocial' => 'sem_codigo']) }}" class="btn btn-ghost btn-sm">Ver pendencias sem codigo</a>
                         <a href="{{ route('rubricas.index', ['esocial' => 'com_codigo']) }}" class="btn btn-ghost btn-sm">Ver rubricas com codigo</a>
                         <a href="{{ route('rubricas.index', ['status' => 'ativos']) }}" class="btn btn-ghost btn-sm">Ver rubricas ativas</a>
+                        <a href="{{ route('rubricas.index', ['vigencia' => 'ativa']) }}" class="btn btn-ghost btn-sm">Ver vigencia ativa</a>
+                        <a href="{{ route('rubricas.index', ['vigencia' => 'futura']) }}" class="btn btn-ghost btn-sm">Ver vigencia futura</a>
+                        <a href="{{ route('rubricas.index', ['vigencia' => 'encerrada']) }}" class="btn btn-ghost btn-sm">Ver vigencia encerrada</a>
                     </div>
                 </div>
             </div>

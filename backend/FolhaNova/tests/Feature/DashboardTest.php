@@ -5,8 +5,13 @@ namespace Tests\Feature;
 use App\Models\EventoEsocial;
 use App\Models\Rubrica;
 use App\Models\Servidor;
+use App\Models\Tenant;
 use App\Models\User;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class DashboardTest extends TestCase
@@ -15,13 +20,37 @@ class DashboardTest extends TestCase
 
     public function test_dashboard_uses_current_tenant_operational_counts(): void
     {
+        Carbon::setTestNow('2026-04-24 10:00:00');
+
+        $this->ensureTenantsTableExists();
+
+        $tenant = Tenant::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'name' => 'Prefeitura Painel Demo',
+            'slug' => 'prefeitura-painel-demo',
+            'domain' => 'prefeitura-painel-demo.local',
+            'database' => 'tenant_dashboard_demo',
+            'is_active' => true,
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2026-01',
+                    'fim_validade' => '',
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
         $user = User::factory()->create([
-            'tenant_id' => 91,
+            'tenant_id' => $tenant->id,
         ]);
 
         Servidor::query()->create([
-            'tenant_id' => 91,
-            'pessoa_id' => $this->createPessoaId(91, 'Servidor Ativo Demo', '529.982.247-25'),
+            'tenant_id' => $tenant->id,
+            'pessoa_id' => $this->createPessoaId($tenant->id, 'Servidor Ativo Demo', '529.982.247-25'),
             'matricula' => 'DASH-001',
             'tipo_vinculo' => 'estatutario',
             'data_admissao' => '2026-01-10',
@@ -40,7 +69,7 @@ class DashboardTest extends TestCase
         ]);
 
         Rubrica::query()->create([
-            'tenant_id' => 91,
+            'tenant_id' => $tenant->id,
             'codigo' => 'DASH-RUB',
             'nome' => 'Rubrica dashboard',
             'natureza' => '1000',
@@ -49,11 +78,51 @@ class DashboardTest extends TestCase
             'incide_inss' => true,
             'incide_fgts' => true,
             'codigo_esocial' => null,
+            'inicio_validade' => '2026-01-01',
             'ativo' => true,
         ]);
 
+        Rubrica::query()->create([
+            'tenant_id' => $tenant->id,
+            'codigo' => 'DASH-RUB-FUT',
+            'nome' => 'Rubrica futura dashboard',
+            'natureza' => '1002',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'codigo_esocial' => 'S1010-FUT',
+            'inicio_validade' => '2026-06-01',
+            'fim_validade' => '2026-12-31',
+            'ativo' => false,
+        ]);
+
+        Rubrica::query()->create([
+            'tenant_id' => $tenant->id,
+            'codigo' => 'DASH-RUB-ENC',
+            'nome' => 'Rubrica encerrada dashboard',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'codigo_esocial' => 'S1010-ENC',
+            'inicio_validade' => '2025-01-01',
+            'fim_validade' => '2026-03-31',
+            'ativo' => false,
+        ]);
+
         EventoEsocial::query()->create([
-            'tenant_id' => 91,
+            'tenant_id' => $tenant->id,
+            'servidor_id' => null,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'dashboard_orgao_test'],
+        ]);
+
+        EventoEsocial::query()->create([
+            'tenant_id' => $tenant->id,
             'evento' => 'S-1010',
             'status' => 'erro',
             'ambiente' => 'homologacao',
@@ -70,12 +139,47 @@ class DashboardTest extends TestCase
             ->assertSee('Servidores ativos')
             ->assertSee('Eventos com erro')
             ->assertSee('Rubricas sem codigo')
+            ->assertSee('Vigencia ativa')
+            ->assertSee('Vigencia futura')
+            ->assertSee('Vigencia encerrada')
+            ->assertSee('Triagem S-1000')
+            ->assertSee('Prefeitura Painel Demo')
+            ->assertSee('Evento S-1000')
+            ->assertSee('Abrir orgao publico')
+            ->assertSee('Abrir S-1000')
+            ->assertSee('Triagem S-1010')
             ->assertSee('Triagem eSocial')
             ->assertSee('Fila operacional')
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'ativa']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'futura']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'encerrada']).'"', false)
+            ->assertSee('href="'.route('orgao-publico.show').'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1000']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'erro']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'pendente']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false);
+
+        Carbon::setTestNow();
+    }
+
+    private function ensureTenantsTableExists(): void
+    {
+        if (Schema::hasTable('tenants')) {
+            return;
+        }
+
+        Schema::create('tenants', function (Blueprint $table): void {
+            $table->id();
+            $table->uuid('uuid')->unique();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('domain')->unique();
+            $table->string('database')->unique();
+            $table->boolean('is_active')->default(true);
+            $table->json('metadata')->nullable();
+            $table->timestamps();
+        });
     }
 
     private function createPessoaId(int $tenantId, string $nome, string $cpf): int

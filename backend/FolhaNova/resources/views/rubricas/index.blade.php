@@ -14,6 +14,13 @@
             'eSocial' => $filtros['esocial'] === 'com_codigo'
                 ? 'Com codigo'
                 : ($filtros['esocial'] === 'sem_codigo' ? 'Sem codigo' : ''),
+            'Vigencia' => match ($filtros['vigencia']) {
+                'ativa' => 'Ativa',
+                'futura' => 'Futura',
+                'encerrada' => 'Encerrada',
+                'sem_inicio' => 'Sem inicio',
+                default => '',
+            },
         ])->filter();
     @endphp
 
@@ -88,6 +95,24 @@
             </a>
         </div>
 
+        <div class="grid gap-4 md:grid-cols-3">
+            <a href="{{ route('rubricas.index', ['vigencia' => 'ativa']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">Vigencia ativa</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['vigencia_ativa'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Rubricas validas na data atual</p>
+            </a>
+            <a href="{{ route('rubricas.index', ['vigencia' => 'futura']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
+                <p class="text-sm text-slate-400">Vigencia futura</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['vigencia_futura'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-amber-300">Entrada programada para frente</p>
+            </a>
+            <a href="{{ route('rubricas.index', ['vigencia' => 'encerrada']) }}" class="stat-card block transition hover:border-rose-400/40 hover:bg-rose-500/5 focus:outline-none focus:ring-2 focus:ring-rose-400/50">
+                <p class="text-sm text-slate-400">Vigencia encerrada</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['vigencia_encerrada'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-rose-300">Historico fora da janela atual</p>
+            </a>
+        </div>
+
         <div class="grid gap-6 xl:grid-cols-[1.8fr_1fr]">
             <div class="panel-surface rounded-3xl p-6">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -155,6 +180,17 @@
                                 </select>
                             </label>
 
+                            <label class="form-control w-full xl:w-48">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Vigencia</span>
+                                <select name="vigencia" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                    <option value="">Todas</option>
+                                    <option value="ativa" @selected($filtros['vigencia'] === 'ativa')>Ativa</option>
+                                    <option value="futura" @selected($filtros['vigencia'] === 'futura')>Futura</option>
+                                    <option value="encerrada" @selected($filtros['vigencia'] === 'encerrada')>Encerrada</option>
+                                    <option value="sem_inicio" @selected($filtros['vigencia'] === 'sem_inicio')>Sem inicio</option>
+                                </select>
+                            </label>
+
                             <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-auto xl:flex-none">
                                 <button type="submit" class="btn btn-info w-full sm:w-auto">Filtrar</button>
                                 <a href="{{ route('rubricas.index') }}" class="btn btn-ghost w-full sm:w-auto">Limpar</a>
@@ -216,6 +252,27 @@
                                     <td>
                                         <span class="badge badge-outline {{ $rubrica->ativo ? 'badge-success' : 'badge-warning' }}">
                                             {{ $rubrica->ativo ? 'Ativa' : 'Inativa' }}
+                                        </span>
+                                        @php
+                                            $hoje = now()->startOfDay();
+                                            $vigenciaAtual = 'Sem inicio';
+                                            $vigenciaTone = 'badge-ghost';
+
+                                            if ($rubrica->inicio_validade) {
+                                                if ($rubrica->inicio_validade->gt($hoje)) {
+                                                    $vigenciaAtual = 'Vigencia futura';
+                                                    $vigenciaTone = 'badge-warning';
+                                                } elseif ($rubrica->fim_validade && $rubrica->fim_validade->lt($hoje)) {
+                                                    $vigenciaAtual = 'Vigencia encerrada';
+                                                    $vigenciaTone = 'badge-error';
+                                                } else {
+                                                    $vigenciaAtual = 'Vigencia ativa';
+                                                    $vigenciaTone = 'badge-success';
+                                                }
+                                            }
+                                        @endphp
+                                        <span class="badge badge-outline {{ $vigenciaTone }}">
+                                            {{ $vigenciaAtual }}
                                         </span>
                                     </td>
                                     <td class="text-right">

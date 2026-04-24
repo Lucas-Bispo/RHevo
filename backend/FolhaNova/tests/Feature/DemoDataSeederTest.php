@@ -10,6 +10,7 @@ use App\Models\User;
 use Database\Seeders\DemoDataSeeder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
 
@@ -19,6 +20,8 @@ class DemoDataSeederTest extends TestCase
 
     public function test_demo_data_seeder_creates_manual_validation_dataset(): void
     {
+        Carbon::setTestNow('2026-04-24 10:00:00');
+
         $this->ensureTenantsTableExists();
 
         $this->seed(DemoDataSeeder::class);
@@ -44,7 +47,45 @@ class DemoDataSeederTest extends TestCase
             'tenant_id' => $tenant->id,
             'codigo' => 'DESC-SIND',
             'codigo_esocial' => null,
+            'inicio_validade' => '2026-01-01 00:00:00',
         ]);
+
+        $this->assertDatabaseHas('rubricas', [
+            'tenant_id' => $tenant->id,
+            'codigo' => 'AUX-ALIM',
+            'inicio_validade' => '2026-06-01 00:00:00',
+            'fim_validade' => '2026-12-31 00:00:00',
+            'ativo' => false,
+        ]);
+
+        $this->assertDatabaseHas('rubricas', [
+            'tenant_id' => $tenant->id,
+            'codigo' => 'RUB-INAT',
+            'inicio_validade' => '2025-01-01 00:00:00',
+            'fim_validade' => '2026-03-31 00:00:00',
+            'ativo' => false,
+        ]);
+
+        $this->assertSame(3, Rubrica::query()
+            ->where('tenant_id', $tenant->id)
+            ->whereDate('inicio_validade', '<=', '2026-04-24')
+            ->where(function ($query) {
+                $query->whereNull('fim_validade')->orWhereDate('fim_validade', '>=', '2026-04-24');
+            })
+            ->count());
+
+        $this->assertSame(1, Rubrica::query()
+            ->where('tenant_id', $tenant->id)
+            ->whereDate('inicio_validade', '>', '2026-04-24')
+            ->count());
+
+        $this->assertSame(1, Rubrica::query()
+            ->where('tenant_id', $tenant->id)
+            ->whereNotNull('fim_validade')
+            ->whereDate('fim_validade', '<', '2026-04-24')
+            ->count());
+
+        Carbon::setTestNow();
     }
 
     private function ensureTenantsTableExists(): void

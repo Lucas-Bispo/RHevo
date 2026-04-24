@@ -2,6 +2,111 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 24/04/2026 - Leitura Operacional de Vigencia nas Rubricas S-1010
+
+**Acao realizada:**
+- Adicionados cards operacionais de vigencia `ativa`, `futura` e `encerrada` na listagem de rubricas.
+- O formulario principal passou a aceitar filtro `vigencia`, integrado ao resumo de filtros ativos.
+- Cada linha da tabela agora exibe badge com a situacao de vigencia da rubrica.
+- Criados testes focados para validar links, filtro selecionado e leitura operacional da nova coluna.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricasIndexTest.php`: filtros e atalhos de vigencia cobertos em conjunto com a suite da listagem de rubricas.
+
+**Status:** Concluido
+
+### 24/04/2026 - Atalhos de Vigencia na Trilha S-1010 das Rubricas
+
+**Acao realizada:**
+- A tela de criacao de rubrica passou a oferecer atalhos para bases com vigencia `ativa`, `futura` e `encerrada`.
+- A tela de edicao passou a abrir diretamente a mesma janela de vigencia da rubrica atual.
+- Mantida a integracao dos atalhos novos com os links existentes de status, tipo, codigo e incidencias.
+- Criados testes focados para confirmar a navegacao lateral da criacao e da edicao.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/rubricas/create.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/RubricaCrudTest.php`: atalhos de vigencia cobertos junto da suite de criacao e edicao de rubricas.
+
+**Status:** Concluido
+
+### 24/04/2026 - Massa Demo de Rubricas com Vigencia para S-1010
+
+**Acao realizada:**
+- A massa demo de rubricas passou a armazenar datas coerentes para cenarios `ativo`, `futuro` e `encerrado`.
+- O seeder foi ajustado para deixar a validacao manual alinhada com os filtros e atalhos novos da listagem.
+- O teste de `DemoDataSeeder` passou a validar as janelas de vigencia da base demo.
+- A base local foi preparada para navegacao manual com a conta `test@example.com`.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/database/seeders/DemoDataSeeder.php`
+- `backend/FolhaNova/tests/Feature/DemoDataSeederTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/DemoDataSeederTest.php`: validacao da massa demo ampliada para vigencia de rubricas.
+- `php artisan db:seed`: reaplicado para deixar a base local pronta para revisao manual.
+
+**Status:** Concluido
+
+### 24/04/2026 - Triagem de Vigencia S-1010 no Dashboard
+
+**Acao realizada:**
+- O dashboard passou a calcular e exibir contagens de rubricas com vigencia `ativa`, `futura` e `encerrada`.
+- A area de validacao manual agora aponta explicitamente para a revisao da vigencia das rubricas.
+- Criado um bloco `Triagem S-1010` com atalhos diretos para abrir a listagem filtrada por vigencia.
+- O teste do dashboard foi ampliado para validar os novos indicadores e links operacionais.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/DashboardController.php`
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/DashboardTest.php`: triagem de vigencia validada junto da leitura operacional do dashboard.
+
+**Status:** Concluido
+
+### 24/04/2026 - Triagem S-1000 no Dashboard
+
+**Acao realizada:**
+- O dashboard passou a recuperar o resumo institucional do tenant atual para exibir a base do `S-1000`.
+- A home agora mostra nome do orgao, ambiente, status de vigencia e status do ultimo evento institucional.
+- Foram adicionados atalhos diretos para abrir o modulo `Orgao Publico` e o painel filtrado por `S-1000`.
+- O teste do dashboard foi ampliado para validar a nova leitura institucional.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/DashboardController.php`
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/DashboardTest.php`: resumo institucional e atalhos `S-1000` validados na home.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Inicio de Vigencia Coerente para Rubrica Ativa
 
 **Acao realizada:**

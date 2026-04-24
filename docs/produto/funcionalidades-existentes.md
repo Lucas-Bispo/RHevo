@@ -5,7 +5,9 @@
 - Login customizado com Livewire.
 - Rotas de autenticacao auxiliares via Volt.
 - Dashboard inicial.
+- Triagem `S-1000` no dashboard com resumo do orgao, ambiente, vigencia e status do evento institucional.
 - Triagem eSocial no dashboard com atalhos para eventos com erro, pendentes e com retorno.
+- Triagem `S-1010` no dashboard com atalhos para rubricas de vigencia ativa, futura e encerrada.
 - Perfil do usuario autenticado.
 - Navegacao lateral para modulos principais.
 - Modulo de parametros do orgao publico para o tenant atual.
@@ -36,9 +38,13 @@
 - Resumo visual de filtros ativos na listagem de rubricas com acao para limpar filtros.
 - Atalho de rubricas para abrir o painel eSocial filtrado pela trilha `S-1010`.
 - Atalhos de apoio `S-1010` na criacao de rubrica para painel, pendencias sem codigo, base parametrizada e rubricas ativas.
+- Atalhos de apoio `S-1010` na criacao de rubrica agora tambem cobrem janelas de vigencia ativa, futura e encerrada.
 - Atalhos de revisao S-1010 na edicao de rubrica para painel eSocial e pendencias sem codigo.
 - Atalhos contextuais na edicao de rubrica para revisar status, tipo, codigo e incidencias da mesma trilha `S-1010`.
+- Atalhos contextuais na edicao de rubrica agora tambem acompanham a janela de vigencia atual da rubrica aberta.
 - Controle inicial de vigencia das rubricas para preparar `S-1010`, com inicio obrigatorio e fim opcional validado.
+- Leitura operacional de vigencia das rubricas com badges, filtro dedicado e atalhos para janelas ativa, futura e encerrada.
+- Massa demo local de rubricas agora inclui exemplos navegaveis de vigencia ativa, futura e encerrada para validacao manual.
 - Inativacao de rubrica agora exige `fim_validade`, reforcando encerramento coerente para a trilha `S-1010`.
 - Rubricas ativas agora bloqueiam `fim_validade` passado para evitar vigencia encerrada incoerente no `S-1010`.
 - Rubricas ativas agora bloqueiam `inicio_validade` futuro para manter vigencia operacional coerente no `S-1010`.
