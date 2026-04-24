@@ -20,6 +20,8 @@ class EventoEsocialController extends Controller
         $origem = trim((string) $request->string('origem'));
         $retorno = trim((string) $request->string('retorno'));
         $retorno = in_array($retorno, ['com_mensagem', 'sem_mensagem'], true) ? $retorno : '';
+        $contexto = trim((string) $request->string('contexto'));
+        $contexto = in_array($contexto, ['institucional', 'vinculado'], true) ? $contexto : '';
 
         $baseQuery = EventoEsocial::query()
             ->with(['servidor.pessoa'])
@@ -47,6 +49,8 @@ class EventoEsocialController extends Controller
             ->when($origem !== '', fn ($query) => $query->where('payload->origem', $origem))
             ->when($retorno === 'com_mensagem', fn ($query) => $query->whereNotNull('mensagem_retorno'))
             ->when($retorno === 'sem_mensagem', fn ($query) => $query->whereNull('mensagem_retorno'))
+            ->when($contexto === 'institucional', fn ($query) => $query->whereNull('servidor_id'))
+            ->when($contexto === 'vinculado', fn ($query) => $query->whereNotNull('servidor_id'))
             ->latest('updated_at')
             ->latest('id')
             ->paginate(12)
@@ -66,6 +70,8 @@ class EventoEsocialController extends Controller
                 's2200' => (clone $baseQuery)->where('evento', 'S-2200')->count(),
                 'homologacao' => (clone $baseQuery)->where('ambiente', 'homologacao')->count(),
                 'producao' => (clone $baseQuery)->where('ambiente', 'producao')->count(),
+                'institucionais' => (clone $baseQuery)->whereNull('servidor_id')->count(),
+                'vinculados' => (clone $baseQuery)->whereNotNull('servidor_id')->count(),
             ],
             'filtros' => [
                 'q' => $search,
@@ -74,6 +80,7 @@ class EventoEsocialController extends Controller
                 'ambiente' => $ambiente,
                 'origem' => $origem,
                 'retorno' => $retorno,
+                'contexto' => $contexto,
             ],
             'eventosDisponiveis' => (clone $baseQuery)
                 ->select('evento')

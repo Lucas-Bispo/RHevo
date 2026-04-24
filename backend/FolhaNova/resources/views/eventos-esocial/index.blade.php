@@ -13,6 +13,9 @@
             'Retorno' => $filtros['retorno'] === 'com_mensagem'
                 ? 'Com mensagem'
                 : ($filtros['retorno'] === 'sem_mensagem' ? 'Sem mensagem' : ''),
+            'Contexto' => $filtros['contexto'] === 'institucional'
+                ? 'Institucional'
+                : ($filtros['contexto'] === 'vinculado' ? 'Vinculado a servidor' : ''),
         ])->filter();
     @endphp
 
@@ -93,6 +96,19 @@
             </a>
         </div>
 
+        <div class="grid gap-4 md:grid-cols-2">
+            <a href="{{ route('eventos-esocial.index', ['contexto' => 'institucional']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
+                <p class="text-sm text-slate-400">Institucionais</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['institucionais'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-cyan-300">Eventos sem vinculo funcional</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['contexto' => 'vinculado']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">Vinculados</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['vinculados'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Eventos ligados a servidor</p>
+            </a>
+        </div>
+
         <div class="grid gap-6 xl:grid-cols-[1.85fr_1fr]">
             <div class="panel-surface rounded-3xl p-6">
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -162,6 +178,15 @@
                                 <option value="">Todos</option>
                                 <option value="com_mensagem" @selected($filtros['retorno'] === 'com_mensagem')>Com mensagem</option>
                                 <option value="sem_mensagem" @selected($filtros['retorno'] === 'sem_mensagem')>Sem mensagem</option>
+                            </select>
+                        </label>
+
+                        <label class="form-control w-full xl:w-52">
+                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Contexto</span>
+                            <select name="contexto" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                <option value="">Todos</option>
+                                <option value="institucional" @selected($filtros['contexto'] === 'institucional')>Institucional</option>
+                                <option value="vinculado" @selected($filtros['contexto'] === 'vinculado')>Vinculado a servidor</option>
                             </select>
                         </label>
 

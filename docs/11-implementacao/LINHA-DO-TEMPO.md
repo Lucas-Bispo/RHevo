@@ -127,6 +127,27 @@
 
 **Status:** Concluido
 
+### 24/04/2026 - Triagem por Contexto no Painel eSocial
+
+**Acao realizada:**
+- Adicionado filtro `Contexto` no painel eSocial para separar eventos institucionais e eventos vinculados a servidor.
+- O painel passou a exibir cards `Institucionais` e `Vinculados` no resumo operacional.
+- O bloco de filtros ativos agora mostra quando a triagem por contexto esta aplicada.
+- Criados testes focados para validar os novos links e a filtragem por contexto.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/EventosEsocialIndexTest.php`: triagem por contexto coberta junto do painel eSocial.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Inicio de Vigencia Coerente para Rubrica Ativa
 
 **Acao realizada:**

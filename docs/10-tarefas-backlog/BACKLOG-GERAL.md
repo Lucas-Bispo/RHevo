@@ -1,3 +1,30 @@
+### PRODUTO-PAINEL-ESOCIAL-CONTEXTO-INSTITUCIONAL-VINCULADO - 24/04/2026
+
+**Descricao:**
+Adicionar ao painel eSocial a leitura operacional por contexto, separando eventos institucionais de eventos vinculados a servidor.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- incluir filtro `contexto` no painel de eventos;
+- calcular contagens para eventos `institucionais` e `vinculados`;
+- expor cards e select de filtro para essa triagem;
+- cobrir a nova leitura com testes focados do painel.
+
+**Resultado:**
+- o painel eSocial passou a separar eventos institucionais dos eventos ligados a servidor;
+- a triagem operacional ficou mais direta para revisar `S-1000` e eventos funcionais sem misturar os dois contextos;
+- o resumo de filtros ativos agora exibe o contexto selecionado;
+- testes focados cobrem os links e a filtragem por contexto.
+
 ### PRODUTO-S1000-ATALHOS-CONTEXTUAIS-ORGAO - 24/04/2026
 
 **Descricao:**

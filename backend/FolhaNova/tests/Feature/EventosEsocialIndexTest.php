@@ -262,6 +262,113 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('Ambiente: Producao');
     }
 
+    public function test_eventos_index_can_filter_by_contexto(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 91,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 91,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $pessoa = Pessoa::create([
+            'tenant_id' => 91,
+            'nome_completo' => 'Servidor Contexto',
+            'cpf' => '529.982.247-25',
+        ]);
+
+        $servidor = Servidor::create([
+            'tenant_id' => 91,
+            'pessoa_id' => $pessoa->id,
+            'matricula' => 'CTX-9101',
+            'tipo_vinculo' => 'estatutario',
+            'data_admissao' => '2026-04-20',
+            'salario_base' => 4500,
+            'situacao' => 'ativo',
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 91,
+            'servidor_id' => $servidor->id,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['contexto' => 'institucional']))
+            ->assertOk()
+            ->assertSee('Evento institucional')
+            ->assertDontSee('Servidor Contexto')
+            ->assertSee('Contexto: Institucional')
+            ->assertSee('value="institucional" selected', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['contexto' => 'vinculado']))
+            ->assertOk()
+            ->assertSee('Servidor Contexto')
+            ->assertDontSee('Evento institucional')
+            ->assertSee('Contexto: Vinculado a servidor')
+            ->assertSee('value="vinculado" selected', false);
+    }
+
+    public function test_eventos_index_links_context_summaries_to_filters(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 92,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 92,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $pessoa = Pessoa::create([
+            'tenant_id' => 92,
+            'nome_completo' => 'Servidor Vinculado',
+            'cpf' => '111.444.777-35',
+        ]);
+
+        $servidor = Servidor::create([
+            'tenant_id' => 92,
+            'pessoa_id' => $pessoa->id,
+            'matricula' => 'CTX-9201',
+            'tipo_vinculo' => 'estatutario',
+            'data_admissao' => '2026-04-20',
+            'salario_base' => 4800,
+            'situacao' => 'ativo',
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 92,
+            'servidor_id' => $servidor->id,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('Institucionais')
+            ->assertSee('Vinculados')
+            ->assertSee('href="'.route('eventos-esocial.index', ['contexto' => 'institucional']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['contexto' => 'vinculado']).'"', false);
+    }
+
     public function test_eventos_index_can_filter_events_with_return_message(): void
     {
         $user = User::factory()->create([
