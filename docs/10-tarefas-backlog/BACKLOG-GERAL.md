@@ -1,3 +1,29 @@
+### PRODUTO-S1000-ATALHOS-CONTEXTUAIS-ORGAO - 24/04/2026
+
+**Descricao:**
+Adicionar atalhos contextuais no modulo `Orgao Publico` para retornar ao painel eSocial do `S-1000` pelo mesmo status ou ambiente do evento atual.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- reaproveitar o evento `S-1000` ja exibido no modulo institucional;
+- adicionar atalhos `Mesmo status` e `Mesmo ambiente` no card do evento atual;
+- manter o link geral para o painel `S-1000`;
+- cobrir a navegacao com teste focado do modulo.
+
+**Resultado:**
+- o modulo `Orgao Publico` agora abre o painel `S-1000` pelo mesmo status do evento atual;
+- o card institucional tambem consegue filtrar o painel pelo mesmo ambiente do evento;
+- a leitura operacional do `S-1000` ficou mais proxima do padrao do detalhe eSocial;
+- teste focado passou a cobrir os atalhos contextuais.
+
 ### PRODUTO-DASHBOARD-TRIAGEM-S1000 - 24/04/2026
 
 **Descricao:**

@@ -24,6 +24,7 @@
 - Leitura operacional do status de vigencia institucional do `S-1000`.
 - Normalizacao da natureza juridica do `S-1000`, evitando persistencia de `natJurid` em inscricoes por CPF.
 - Atalho do orgao publico para abrir o painel eSocial filtrado pela trilha `S-1000`.
+- Atalhos contextuais no orgao publico para abrir o painel `S-1000` pelo mesmo status ou ambiente do evento institucional atual.
 - Modulo inicial de lotacoes com listagem, cadastro e edicao.
 - Modulo inicial de cargos com listagem, cadastro e edicao.
 - Modulo inicial de funcoes com listagem, cadastro e edicao.

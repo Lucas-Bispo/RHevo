@@ -107,6 +107,26 @@
 
 **Status:** Concluido
 
+### 24/04/2026 - Atalhos Contextuais do S-1000 no Orgao Publico
+
+**Acao realizada:**
+- O card do evento `S-1000` no modulo `Orgao Publico` passou a exibir atalhos `Mesmo status` e `Mesmo ambiente`.
+- Os atalhos retornam ao painel eSocial mantendo a trilha `S-1000` e refinando a triagem operacional.
+- O link geral para abrir o painel `S-1000` foi preservado.
+- O teste do modulo institucional foi ampliado para validar a nova navegacao contextual.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `tests/Feature/OrgaoPublicoTest.php`: atalhos contextuais do `S-1000` validados junto do modulo institucional.
+
+**Status:** Concluido
+
 ### 23/04/2026 - Inicio de Vigencia Coerente para Rubrica Ativa
 
 **Acao realizada:**
