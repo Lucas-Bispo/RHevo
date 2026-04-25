@@ -122,6 +122,71 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('>1<', false);
     }
 
+    public function test_eventos_index_links_recent_day_summaries_to_status_and_date_filters(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 95,
+        ]);
+
+        $eventoPendenteHoje = EventoEsocial::create([
+            'tenant_id' => 95,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $eventoErroHoje = EventoEsocial::create([
+            'tenant_id' => 95,
+            'evento' => 'S-1010',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 95,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ])->forceFill([
+            'updated_at' => now()->subDay(),
+        ])->saveQuietly();
+
+        $eventoPendenteHoje->forceFill([
+            'updated_at' => now()->setTime(9, 10),
+        ])->saveQuietly();
+
+        $eventoErroHoje->forceFill([
+            'updated_at' => now()->setTime(11, 45),
+        ])->saveQuietly();
+
+        $hoje = now()->toDateString();
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('Pendentes hoje')
+            ->assertSee('Erros hoje')
+            ->assertSee('Fila recente do dia')
+            ->assertSee('Prioridades abertas no dia')
+            ->assertSee('status=pendente', false)
+            ->assertSee('status=erro', false)
+            ->assertSee('data='.$hoje, false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['status' => 'erro', 'data' => $hoje]))
+            ->assertOk()
+            ->assertSee('Status: Erro')
+            ->assertSee('Data: '.now()->format('d/m/Y'))
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->every(
+                fn ($evento) => $evento->status === 'erro' && optional($evento->updated_at)->toDateString() === $hoje
+            ));
+    }
+
     public function test_eventos_index_links_pending_summary_to_pending_filter(): void
     {
         $user = User::factory()->create([
@@ -306,7 +371,7 @@ class EventosEsocialIndexTest extends TestCase
             ->get(route('eventos-esocial.index', ['contexto' => 'institucional']))
             ->assertOk()
             ->assertSee('Evento institucional')
-            ->assertDontSee('Servidor Contexto')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->every(fn ($evento) => $evento->servidor_id === null))
             ->assertSee('Contexto: Institucional')
             ->assertSee('value="institucional" selected', false);
 
@@ -367,6 +432,115 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('Vinculados')
             ->assertSee('href="'.route('eventos-esocial.index', ['contexto' => 'institucional']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['contexto' => 'vinculado']).'"', false);
+    }
+
+    public function test_eventos_index_can_filter_by_servidor(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 93,
+        ]);
+
+        $pessoaA = Pessoa::create([
+            'tenant_id' => 93,
+            'nome_completo' => 'Aline Martins',
+            'cpf' => '123.456.789-10',
+        ]);
+
+        $pessoaB = Pessoa::create([
+            'tenant_id' => 93,
+            'nome_completo' => 'Bruno Nogueira',
+            'cpf' => '123.456.789-11',
+        ]);
+
+        $servidorA = Servidor::create([
+            'tenant_id' => 93,
+            'pessoa_id' => $pessoaA->id,
+            'matricula' => 'MAT-9301',
+            'tipo_vinculo' => 'estatutario',
+            'data_admissao' => '2026-04-20',
+            'salario_base' => 4100,
+            'situacao' => 'ativo',
+        ]);
+
+        $servidorB = Servidor::create([
+            'tenant_id' => 93,
+            'pessoa_id' => $pessoaB->id,
+            'matricula' => 'MAT-9302',
+            'tipo_vinculo' => 'estatutario',
+            'data_admissao' => '2026-04-20',
+            'salario_base' => 4200,
+            'situacao' => 'ativo',
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 93,
+            'servidor_id' => $servidorA->id,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 93,
+            'servidor_id' => $servidorB->id,
+            'evento' => 'S-1200',
+            'status' => 'erro',
+            'ambiente' => 'producao',
+            'payload' => ['origem' => 'folha_pagamento'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['servidor' => $servidorB->id]))
+            ->assertOk()
+            ->assertSee('Servidor: Bruno Nogueira - MAT-9302')
+            ->assertSee('folha_pagamento')
+            ->assertSee('Bruno Nogueira')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('servidor_id')->every(fn ($servidorId) => $servidorId === $servidorB->id))
+            ->assertSee('value="'.$servidorB->id.'" selected', false);
+    }
+
+    public function test_eventos_index_can_filter_by_update_date(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 94,
+        ]);
+
+        $eventoMesmoDia = EventoEsocial::create([
+            'tenant_id' => 94,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $eventoOutroDia = EventoEsocial::create([
+            'tenant_id' => 94,
+            'evento' => 'S-1010',
+            'status' => 'erro',
+            'ambiente' => 'producao',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        $eventoMesmoDia->forceFill([
+            'updated_at' => now()->setDate(2026, 4, 24)->setTime(9, 15),
+        ])->saveQuietly();
+
+        $eventoOutroDia->forceFill([
+            'updated_at' => now()->setDate(2026, 4, 23)->setTime(18, 45),
+        ])->saveQuietly();
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['data' => '2026-04-24']))
+            ->assertOk()
+            ->assertSee('S-1000')
+            ->assertSee('Data: 24/04/2026')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->every(
+                fn ($evento) => optional($evento->updated_at)->toDateString() === '2026-04-24'
+            ))
+            ->assertSee('value="2026-04-24"', false);
     }
 
     public function test_eventos_index_can_filter_events_with_return_message(): void

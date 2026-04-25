@@ -1,3 +1,88 @@
+### PRODUTO-PAINEL-ESOCIAL-STATUS-DO-DIA - 24/04/2026
+
+**Descricao:**
+Expandir a leitura operacional do painel eSocial com cards dedicados para eventos pendentes e com erro atualizados no dia.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- calcular no painel os eventos `pendente` e `erro` atualizados hoje;
+- criar cards operacionais para abrir o painel com `status` e `data` do dia ja combinados;
+- manter o painel principal sem alterar o comportamento dos filtros existentes;
+- cobrir a navegacao com testes focados da listagem.
+
+**Resultado:**
+- o painel eSocial agora destaca pendencias e erros atualizados no dia;
+- os cards novos abrem a listagem ja combinando `status` e `data`;
+- a leitura operacional do que exige atencao no mesmo dia ficou mais direta;
+- testes focados cobrem os atalhos e a filtragem combinada.
+
+### PRODUTO-PAINEL-ESOCIAL-FILTRO-DATA - 24/04/2026
+
+**Descricao:**
+Expandir a leitura operacional do painel eSocial com filtro por data de atualizacao e atalho contextual no detalhe do evento.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar filtro opcional de `data` no painel eSocial usando a trilha de `updated_at`;
+- exibir a data ativa no resumo visual de filtros;
+- incluir no detalhe do evento o atalho `Mesma data`;
+- cobrir filtro e navegacao com testes focados do painel e do detalhe.
+
+**Resultado:**
+- o painel eSocial agora aceita filtrar eventos pela data de atualizacao do registro;
+- o resumo de filtros ativos evidencia a data operacional selecionada;
+- o detalhe do evento ganhou o atalho `Mesma data` para voltar ao painel pela mesma janela diaria;
+- testes focados cobrem a filtragem e a navegacao contextual por data.
+
+### PRODUTO-PAINEL-ESOCIAL-FILTRO-SERVIDOR - 24/04/2026
+
+**Descricao:**
+Expandir a leitura operacional do painel eSocial com filtro dedicado por servidor vinculado e atalho contextual no detalhe do evento.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar filtro opcional de `servidor` no painel eSocial sem impactar os filtros ja existentes;
+- exibir o servidor ativo no resumo visual de filtros;
+- incluir no detalhe do evento o atalho `Mesmo servidor` quando houver vinculo funcional;
+- cobrir filtro e navegacao com testes focados do painel e do detalhe.
+
+**Resultado:**
+- o painel eSocial agora aceita filtrar eventos por servidor vinculado;
+- o resumo de filtros ativos evidencia o nome e a matricula do servidor selecionado;
+- o detalhe do evento ganhou o atalho `Mesmo servidor` para voltar ao painel pela mesma trilha funcional;
+- testes focados cobrem a filtragem e a navegacao contextual por servidor.
+
 ### AMBIENTE-LOCAL-LOGIN-DEMO-WSL - 24/04/2026
 
 **Descricao:**

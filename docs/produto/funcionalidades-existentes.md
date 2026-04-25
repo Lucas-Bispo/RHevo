@@ -74,12 +74,17 @@
 - Resumo da mensagem de retorno exibido diretamente na listagem do painel eSocial.
 - Resumo visual de filtros ativos no painel eSocial com acao para limpar filtros.
 - Cards do painel eSocial para filtrar eventos por ambiente de homologacao ou producao.
+- Cards do painel eSocial para filtrar pendencias e erros atualizados no dia.
 - Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010` e `S-2200`.
 - Card do painel eSocial para filtrar eventos sem mensagem de retorno registrada.
 - Filtro do painel eSocial por `origem` do payload, com leitura da origem ativa no resumo de filtros.
 - Filtro do painel eSocial para eventos com ou sem mensagem de retorno registrada, disponivel no card e no formulario principal.
+- Filtro do painel eSocial por servidor vinculado, com leitura do servidor ativo no resumo de filtros.
+- Filtro do painel eSocial por data de atualizacao, com leitura da data ativa no resumo de filtros.
 - Tela de detalhe do evento eSocial com atalhos para retornar ao painel filtrado por evento, status, ambiente, origem ou contexto de retorno.
 - Tela de detalhe do evento eSocial com atalho para retornar ao painel pelo mesmo contexto institucional ou vinculado.
+- Tela de detalhe do evento eSocial com atalho para retornar ao painel pelo mesmo servidor vinculado.
+- Tela de detalhe do evento eSocial com atalho para retornar ao painel pela mesma data de atualizacao do registro.
 - Atalho do detalhe eSocial para abrir o servidor vinculado quando o evento possuir vinculo funcional.
 
 ## O que ainda nao existe em operacao real

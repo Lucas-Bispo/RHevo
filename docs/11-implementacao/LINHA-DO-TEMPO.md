@@ -1,6 +1,73 @@
 # FolhaNova - Linha do Tempo
 **Documento gerado automaticamente em:** 19 de abril de 2026
-**Versão:** 1.0
+**VersÃ£o:** 1.0
+
+### 24/04/2026 - Cards de Status do Dia no Painel eSocial
+
+**Acao realizada:**
+- Adicionados cards operacionais para eventos `pendente` e `erro` atualizados no dia.
+- Os novos cards passaram a abrir a listagem com `status` e `data` ja combinados.
+- O painel ganhou uma leitura mais curta para acompanhar prioridades recentes sem depender de montagem manual dos filtros.
+- O teste da listagem foi ampliado para validar a navegacao e a filtragem combinada por dia.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/EventosEsocialIndexTest.php tests/Feature/EventoEsocialShowTest.php` no `WSL Ubuntu 24.04`.
+
+**Status:** Concluido
+
+### 24/04/2026 - Filtro por Data no Painel eSocial
+
+**Acao realizada:**
+- Adicionado filtro opcional por data de atualizacao no painel eSocial.
+- O resumo de filtros ativos passou a evidenciar a data operacional selecionada.
+- A tela de detalhe do evento ganhou o atalho `Mesma data` para retornar ao painel pela mesma janela diaria.
+- Os testes de painel e detalhe foram ampliados para validar o novo fluxo operacional.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/EventosEsocialIndexTest.php tests/Feature/EventoEsocialShowTest.php` no `WSL Ubuntu 24.04`.
+
+**Status:** Concluido
+
+### 24/04/2026 - Filtro por Servidor no Painel eSocial
+
+**Acao realizada:**
+- Adicionado filtro opcional por servidor vinculado no painel eSocial.
+- O resumo de filtros ativos passou a evidenciar nome e matricula do servidor selecionado.
+- A tela de detalhe do evento ganhou o atalho `Mesmo servidor` para retornar ao painel pela mesma trilha funcional.
+- Os testes de painel e detalhe foram ampliados para validar o novo fluxo operacional.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/EventosEsocialIndexTest.php tests/Feature/EventoEsocialShowTest.php` no `WSL Ubuntu 24.04`.
+
+**Status:** Concluido
 
 ### 24/04/2026 - Ambiente Local Preparado para Teste Manual no WSL
 
@@ -2153,3 +2220,4 @@
 - O unico erro novo registrado no log durante a rodada foi a tentativa invalida de usar `php artisan route:list --compact`, opcao inexistente nesta versao, sem impacto funcional.
 
 **Status:** Ambiente local no ar.
+
