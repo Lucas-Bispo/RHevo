@@ -1,143 +1,178 @@
-Você vai atuar como um engenheiro de cibersegurança especializado em aplicações web, com foco em Laravel, multi-tenant SaaS e proteção contra vazamento de dados.
+# FolhaNova - 01 Cybersecurity
+**Data:** 25 de abril de 2026
+**Base:** `CYBERSECURITY-BIBLE.md`
 
-## OBJETIVO
-Fortalecer a segurança da aplicação com base no relatório de revisão existente, eliminando riscos de vazamento de dados entre tenants e reduzindo dependência de uso correto manual.
+## Objetivo
+Fortalecer a seguranca da aplicacao com foco em Laravel, multi-tenant SaaS e protecao contra vazamento de dados entre tenants.
 
-## CONTEXTO
-O sistema é multi-tenant e utiliza:
-- tenant_id nas tabelas
-- Global Scope (TenantScope)
-- Policies
-- Spatie Permission
+Este documento unifica duas necessidades:
+- o guia de hardening estrutural da aplicacao;
+- o plano de execucao pratico para implementacao e validacao continua.
 
-O relatório identificou riscos importantes que precisam ser tratados de forma estrutural.
+## Contexto
+O sistema e multi-tenant e utiliza:
+- `tenant_id` nas tabelas;
+- `TenantScope`;
+- Policies;
+- `spatie/laravel-permission`.
 
-## REGRA CRÍTICA
-Segurança NÃO pode depender de disciplina do desenvolvedor.
+A seguranca nao pode depender de disciplina do desenvolvedor. A aplicacao deve ser segura por padrao.
 
-A aplicação deve ser segura por padrão (secure by design).
+## Missao
+Evoluir a seguranca sem quebrar funcionalidades existentes, aplicando melhorias estruturais, incrementais e validaveis.
 
-## MISSÃO
-Você deve evoluir a segurança da aplicação sem quebrar funcionalidades existentes, aplicando melhorias estruturais.
+## Principais riscos a tratar
 
-## PRINCIPAIS RISCOS A SEREM TRATADOS
+### Alto risco
+- bypass do `TenantScope`;
+- uso de `withoutGlobalScope()`;
+- `tenant_id` manipulavel via mass assignment;
+- queries fora do contexto de autenticacao.
 
-ALTO RISCO:
-- bypass do TenantScope
-- uso de withoutGlobalScope()
-- tenant_id manipulável via mass assignment
-- queries fora do contexto de autenticação
+### Medio risco
+- ausencia de middleware obrigatorio de tenant;
+- ausencia de `BaseModel` com enforcement;
+- vazamento via relacionamentos Eloquent.
 
-MÉDIO RISCO:
-- ausência de middleware obrigatório de tenant
-- ausência de BaseModel com enforcement
-- vazamento via relacionamentos Eloquent
+### Baixo risco
+- ausencia de auditoria;
+- falta de testes de isolamento.
 
-BAIXO RISCO:
-- ausência de auditoria
-- falta de testes de isolamento
+## Estrategia obrigatoria
 
-## ESTRATÉGIA OBRIGATÓRIA
+### Etapa 1 - Analise
+- revisar os models `User`, `Servidor` e relacionados;
+- revisar `TenantScope`;
+- revisar policies;
+- identificar pontos reais onde o isolamento pode falhar;
+- mapear todos os lugares onde `tenant_id` pode ser manipulado.
 
-### ETAPA 1 — ANÁLISE
-- revisar os models: User, Servidor e relacionados
-- revisar TenantScope
-- revisar policies
-- identificar pontos reais onde o isolamento pode falhar
-- mapear todos os lugares onde tenant_id pode ser manipulado
+### Etapa 2 - Plano
+Antes de alterar qualquer codigo:
+- listar melhorias necessarias;
+- classificar impacto;
+- identificar risco de quebra;
+- propor mudancas incrementais.
 
-### ETAPA 2 — PLANO
-Antes de alterar qualquer código:
-- listar melhorias necessárias
-- classificar impacto
-- identificar risco de quebra
-- propor mudanças incrementais
+### Etapa 3 - Implementacao segura
+Implementar com cautela:
 
-### ETAPA 3 — IMPLEMENTAÇÃO SEGURA
+1. Proteger `tenant_id`
+- remover de `$fillable`;
+- controlar via backend, observer ou service.
 
-Implementar as seguintes melhorias (com cautela):
+2. Criar `BaseModel` seguro
+- aplicar `TenantScope` automaticamente;
+- impedir bypass facil;
+- centralizar regras de isolamento.
 
-1. 🔒 PROTEGER tenant_id
-- remover de $fillable
-- controlar via backend (ex: observer ou service)
+3. Criar middleware de tenant obrigatorio
+- validar contexto antes de qualquer request;
+- bloquear acesso fora de contexto.
 
-2. 🧱 CRIAR BaseModel seguro
-- aplicar TenantScope automaticamente
-- impedir bypass fácil
-- centralizar regras de isolamento
+4. Proteger relacionamentos
+- garantir que models relacionados tambem respeitam tenant;
+- evitar vazamento indireto.
 
-3. 🛡️ CRIAR middleware de tenant obrigatório
-- validar contexto antes de qualquer request
-- bloquear acesso fora de contexto
+5. Prevenir bypass de scope
+- detectar uso de `withoutGlobalScope`;
+- restringir ou documentar uso seguro.
 
-4. 🔗 PROTEGER RELACIONAMENTOS
-- garantir que models relacionados também respeitam tenant
-- evitar vazamento indireto
+6. Criar testes de isolamento
+- garantir que um tenant nao acessa dados de outro;
+- testar CRUD completo.
 
-5. 🚫 PREVENIR bypass de scope
-- detectar uso de withoutGlobalScope
-- restringir ou documentar uso seguro
+### Etapa 4 - Validacao
+Apos cada alteracao:
+- validar login;
+- validar fluxo normal;
+- validar CRUD;
+- validar isolamento entre tenants.
 
-6. 🧪 CRIAR TESTES DE ISOLAMENTO
-- garantir que um tenant não acessa dados de outro
-- testar CRUD completo
+### Etapa 5 - Documentacao
+Criar ou manter atualizado:
 
-### ETAPA 4 — VALIDAÇÃO
-Após cada alteração:
-- validar login
-- validar fluxo normal
-- validar CRUD
-- validar isolamento entre tenants
+`docs/security/multi-tenant-hardening.md`
 
-### ETAPA 5 — DOCUMENTAÇÃO
-Criar:
+Documentar:
+- riscos identificados;
+- melhorias aplicadas;
+- decisoes tecnicas;
+- como garantir isolamento;
+- regras obrigatorias para desenvolvedores.
 
-docs/security/multi-tenant-hardening.md
+## Regras de seguranca
+- nunca confiar em input do usuario;
+- nunca confiar em `tenant_id` vindo do request;
+- sempre validar contexto de tenant;
+- seguranca deve estar no model/base, nao so no controller;
+- nao depender apenas de policy;
+- evitar qualquer possibilidade de acesso cruzado.
 
-Com:
-- riscos identificados
-- melhorias aplicadas
-- decisões técnicas
-- como garantir isolamento
-- regras obrigatórias para desenvolvedores
+## Regras de desenvolvimento
+- nao quebrar login;
+- nao quebrar frontend;
+- nao alterar comportamento existente sem necessidade;
+- mudancas devem ser incrementais;
+- sempre validar antes de avancar.
 
-## REGRAS DE SEGURANÇA
+## Formato de resposta antes de implementar
+1. analise dos riscos no codigo atual;
+2. pontos vulneraveis encontrados;
+3. plano de hardening;
+4. impacto esperado;
+5. estrategia de validacao.
 
-- nunca confiar em input do usuário
-- nunca confiar em tenant_id vindo do request
-- sempre validar contexto de tenant
-- segurança deve estar no model/base, não só no controller
-- não depender apenas de policy
-- evitar qualquer possibilidade de acesso cruzado
+## Formato de resposta apos implementar
+1. o que foi protegido;
+2. quais arquivos foram alterados;
+3. risco mitigado;
+4. como validar seguranca;
+5. documentacao criada.
 
-## REGRAS DE DESENVOLVIMENTO
+## Plano de execucao
+Transformar as diretrizes da Biblia de Ciberseguranca em tarefas praticas de implementacao e validacao continua.
 
-- não quebrar login
-- não quebrar frontend
-- não alterar comportamento existente sem necessidade
-- mudanças devem ser incrementais
-- sempre validar antes de avançar
+### Tarefas executadas neste ciclo
 
-## FORMATO DE RESPOSTA ANTES DE IMPLEMENTAR
+#### 1. Governanca e conformidade
+- [x] Consolidar checklist de seguranca por dominio: LGPD, OWASP, hardening e operacao.
+- [x] Registrar criterios minimos de producao: debug, cookie seguro, HTTPS, logs e monitoramento.
+- [x] Atualizar documentacao tecnica de seguranca no backend para refletir requisitos obrigatorios.
 
-1. análise dos riscos no código atual
-2. pontos vulneráveis encontrados
-3. plano de hardening
-4. impacto esperado
-5. estratégia de validação
+#### 2. Aplicacao Laravel
+- [x] Formalizar exigencia de Policy, Gate e `authorize()` para modulos sensiveis.
+- [x] Formalizar exigencia de validacao por Form Request e protecao de mass assignment.
+- [x] Formalizar exigencia de isolamento por tenant em toda query sensivel.
+- [x] Implementar `ServidorPolicy` com bloqueio de acesso cross-tenant para visualizacao e atualizacao.
 
-## FORMATO APÓS IMPLEMENTAR
+#### 3. Dados sensiveis e eSocial
+- [x] Reforcar regra de nunca expor CPF, NIS, salario ou segredos em logs.
+- [x] Reforcar armazenamento seguro de certificado A1 fora da web root e em variaveis de ambiente.
+- [x] Reforcar obrigacao de criptografia para retorno sensivel do eSocial.
 
-1. o que foi protegido
-2. quais arquivos foram alterados
-3. risco mitigado
-4. como validar segurança
-5. documentação criada
+#### 4. Operacao e monitoramento
+- [x] Reforcar rate limiting para login, APIs e rotinas criticas.
+- [x] Reforcar orientacao de trilha de auditoria para acoes criticas.
+- [x] Reforcar cabecalhos de seguranca e cookies seguros em producao.
 
-## REGRA FINAL
+### Backlog recomendado para o proximo ciclo
+- [ ] Implementar auditoria automatizada de dependencias com `composer audit` em CI.
+- [ ] Implementar mascaramento automatico de dados pessoais no pipeline de logs.
+- [x] Criar testes automatizados para bloquear acesso cross-tenant.
+- [ ] Criar testes de autorizacao com Policies para todos os modulos criticos.
+- [ ] Adicionar playbook de resposta a incidentes LGPD com SLA e responsaveis.
 
+## Criterio de aceite
+- seguranca tratada como requisito de arquitetura, nao como melhoria opcional;
+- toda mudanca sensivel deve atualizar `backend/FolhaNova/docs/SEGURANCA.md`;
+- nenhuma entrega e concluida sem checklist de seguranca preenchido.
+
+## Regra final
 O sistema deve evoluir de:
-"seguro se usado corretamente"
 
-PARA:
-"seguro por padrão, mesmo com erro humano"
+`seguro se usado corretamente`
+
+para:
+
+`seguro por padrao, mesmo com erro humano`
