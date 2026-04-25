@@ -10,6 +10,7 @@ use App\Services\Rubricas\RegistrarRubricaService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class RubricaController extends Controller
 {
@@ -20,10 +21,15 @@ class RubricaController extends Controller
         $status = trim((string) $request->string('status'));
         $tipo = trim((string) $request->string('tipo'));
         $tipo = in_array($tipo, ['provento', 'desconto', 'informativa'], true) ? $tipo : '';
+        $natureza = trim((string) $request->string('natureza'));
+        $natureza = preg_match('/^\d{4}$/', $natureza) === 1 ? $natureza : '';
         $incidencia = trim((string) $request->string('incidencia'));
         $incidencia = in_array($incidencia, ['irrf', 'inss', 'fgts'], true) ? $incidencia : '';
         $esocial = trim((string) $request->string('esocial'));
         $esocial = in_array($esocial, ['com_codigo', 'sem_codigo'], true) ? $esocial : '';
+        $vigencia = trim((string) $request->string('vigencia'));
+        $vigencia = in_array($vigencia, ['ativa', 'futura', 'encerrada', 'sem_inicio'], true) ? $vigencia : '';
+        $today = Carbon::today()->toDateString();
 
         $baseQuery = Rubrica::query()
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
@@ -41,9 +47,11 @@ class RubricaController extends Controller
             })
             ->when($status !== '', fn ($query) => $query->where('ativo', $status === 'ativos'))
             ->when($tipo !== '', fn ($query) => $query->where('tipo', $tipo))
+            ->when($natureza !== '', fn ($query) => $query->where('natureza', $natureza))
             ->when($incidencia !== '', fn ($query) => $query->where("incide_{$incidencia}", true))
             ->when($esocial === 'com_codigo', fn ($query) => $query->whereNotNull('codigo_esocial'))
             ->when($esocial === 'sem_codigo', fn ($query) => $query->whereNull('codigo_esocial'))
+            ->when($vigencia !== '', fn ($query) => $this->applyVigenciaFilter($query, $vigencia, $today))
             ->orderBy('nome')
             ->paginate(12)
             ->withQueryString();
@@ -62,13 +70,18 @@ class RubricaController extends Controller
                 'fgts' => (clone $baseQuery)->where('incide_fgts', true)->count(),
                 'com_codigo_esocial' => (clone $baseQuery)->whereNotNull('codigo_esocial')->count(),
                 'sem_codigo_esocial' => (clone $baseQuery)->whereNull('codigo_esocial')->count(),
+                'vigencia_ativa' => $this->countByVigencia(clone $baseQuery, 'ativa', $today),
+                'vigencia_futura' => $this->countByVigencia(clone $baseQuery, 'futura', $today),
+                'vigencia_encerrada' => $this->countByVigencia(clone $baseQuery, 'encerrada', $today),
             ],
             'filtros' => [
                 'q' => $search,
                 'status' => $status,
                 'tipo' => $tipo,
+                'natureza' => $natureza,
                 'incidencia' => $incidencia,
                 'esocial' => $esocial,
+                'vigencia' => $vigencia,
             ],
         ]);
     }
@@ -110,5 +123,27 @@ class RubricaController extends Controller
             ->whereKey($rubrica->id)
             ->when($request->user()?->tenant_id, fn ($query, $tenantId) => $query->where('tenant_id', $tenantId))
             ->firstOrFail();
+    }
+
+    private function applyVigenciaFilter($query, string $vigencia, string $today)
+    {
+        return match ($vigencia) {
+            'ativa' => $query
+                ->whereDate('inicio_validade', '<=', $today)
+                ->where(function ($nestedQuery) use ($today) {
+                    $nestedQuery
+                        ->whereNull('fim_validade')
+                        ->orWhereDate('fim_validade', '>=', $today);
+                }),
+            'futura' => $query->whereDate('inicio_validade', '>', $today),
+            'encerrada' => $query->whereNotNull('fim_validade')->whereDate('fim_validade', '<', $today),
+            'sem_inicio' => $query->whereNull('inicio_validade'),
+            default => $query,
+        };
+    }
+
+    private function countByVigencia($query, string $vigencia, string $today): int
+    {
+        return $this->applyVigenciaFilter($query, $vigencia, $today)->count();
     }
 }

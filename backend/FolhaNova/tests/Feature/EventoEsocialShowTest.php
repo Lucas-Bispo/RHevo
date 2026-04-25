@@ -51,6 +51,9 @@ class EventoEsocialShowTest extends TestCase
                 ],
             ],
         ]);
+        $evento->forceFill([
+            'updated_at' => now()->setDate(2026, 4, 24)->setTime(15, 30),
+        ])->saveQuietly();
 
         $response = $this
             ->actingAs($user)
@@ -65,11 +68,17 @@ class EventoEsocialShowTest extends TestCase
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-2200']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['status' => 'processado']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['ambiente' => 'producao']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['contexto' => 'vinculado']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['data' => '2026-04-24']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['origem' => 'cadastro_inicial_servidor']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['servidor' => $servidor->id]).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'com_mensagem']).'"', false)
             ->assertSee('Com retorno')
             ->assertSee('Mesmo ambiente')
+            ->assertSee('Mesmo contexto')
+            ->assertSee('Mesma data')
             ->assertSee('Mesma origem')
+            ->assertSee('Mesmo servidor')
             ->assertSee('Abrir servidor')
             ->assertSee('href="'.route('servidores.show', $servidor).'"', false);
     }
@@ -159,6 +168,8 @@ class EventoEsocialShowTest extends TestCase
             ->get(route('eventos-esocial.show', $evento))
             ->assertOk()
             ->assertSee('Sem retorno')
+            ->assertSee('Mesmo contexto')
+            ->assertSee('href="'.route('eventos-esocial.index', ['contexto' => 'institucional']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'sem_mensagem']).'"', false);
     }
 

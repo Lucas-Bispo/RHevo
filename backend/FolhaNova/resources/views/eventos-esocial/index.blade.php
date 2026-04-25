@@ -13,6 +13,11 @@
             'Retorno' => $filtros['retorno'] === 'com_mensagem'
                 ? 'Com mensagem'
                 : ($filtros['retorno'] === 'sem_mensagem' ? 'Sem mensagem' : ''),
+            'Contexto' => $filtros['contexto'] === 'institucional'
+                ? 'Institucional'
+                : ($filtros['contexto'] === 'vinculado' ? 'Vinculado a servidor' : ''),
+            'Servidor' => $filtros['servidor_label'],
+            'Data' => $filtros['data_label'],
         ])->filter();
     @endphp
 
@@ -35,6 +40,16 @@
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['total'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-cyan-300">Rastreabilidade operacional</p>
             </div>
+            <a href="{{ route('eventos-esocial.index', ['status' => 'pendente', 'data' => $resumo['hoje']]) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
+                <p class="text-sm text-slate-400">Pendentes hoje</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['pendentes_hoje'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-amber-300">Fila recente do dia</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['status' => 'erro', 'data' => $resumo['hoje']]) }}" class="stat-card block transition hover:border-rose-400/40 hover:bg-rose-500/5 focus:outline-none focus:ring-2 focus:ring-rose-400/50">
+                <p class="text-sm text-slate-400">Erros hoje</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['erros_hoje'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-rose-300">Prioridades abertas no dia</p>
+            </a>
             <a href="{{ route('eventos-esocial.index', ['status' => 'pendente']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
                 <p class="text-sm text-slate-400">Pendentes</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['pendentes'], 0, ',', '.') }}</p>
@@ -90,6 +105,19 @@
                 <p class="text-sm text-slate-400">Producao</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['producao'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-fuchsia-300">Eventos em ambiente definitivo</p>
+            </a>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+            <a href="{{ route('eventos-esocial.index', ['contexto' => 'institucional']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
+                <p class="text-sm text-slate-400">Institucionais</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['institucionais'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-cyan-300">Eventos sem vinculo funcional</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['contexto' => 'vinculado']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">Vinculados</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['vinculados'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Eventos ligados a servidor</p>
             </a>
         </div>
 
@@ -163,6 +191,37 @@
                                 <option value="com_mensagem" @selected($filtros['retorno'] === 'com_mensagem')>Com mensagem</option>
                                 <option value="sem_mensagem" @selected($filtros['retorno'] === 'sem_mensagem')>Sem mensagem</option>
                             </select>
+                        </label>
+
+                        <label class="form-control w-full xl:w-52">
+                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Contexto</span>
+                            <select name="contexto" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                <option value="">Todos</option>
+                                <option value="institucional" @selected($filtros['contexto'] === 'institucional')>Institucional</option>
+                                <option value="vinculado" @selected($filtros['contexto'] === 'vinculado')>Vinculado a servidor</option>
+                            </select>
+                        </label>
+
+                        <label class="form-control w-full xl:w-64">
+                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Servidor</span>
+                            <select name="servidor" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                <option value="">Todos</option>
+                                @foreach ($servidoresDisponiveis as $servidorDisponivel)
+                                    <option value="{{ $servidorDisponivel->id }}" @selected((string) $filtros['servidor'] === (string) $servidorDisponivel->id)>
+                                        {{ $servidorDisponivel->pessoa?->nome_completo ?? 'Servidor sem nome' }} - {{ $servidorDisponivel->matricula }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </label>
+
+                        <label class="form-control w-full xl:w-44">
+                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Data</span>
+                            <input
+                                type="date"
+                                name="data"
+                                value="{{ $filtros['data'] }}"
+                                class="input input-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white"
+                            >
                         </label>
 
                         <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-auto xl:flex-none">

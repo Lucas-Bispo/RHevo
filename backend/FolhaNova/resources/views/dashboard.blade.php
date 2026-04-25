@@ -63,9 +63,16 @@
                             </tr>
                             <tr>
                                 <td>Rubricas</td>
-                                <td>Filtros com codigo, sem codigo, tipo e incidencia.</td>
+                                <td>Filtros com codigo, sem codigo, tipo, incidencia e vigencia.</td>
                                 <td class="text-right">
                                     <a href="{{ route('rubricas.index', ['esocial' => 'sem_codigo']) }}" class="btn btn-ghost btn-sm">Abrir pendencias</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Vigencia das rubricas</td>
+                                <td>Base ativa, futuras programacoes e historico encerrado do `S-1010`.</td>
+                                <td class="text-right">
+                                    <a href="{{ route('rubricas.index', ['vigencia' => 'futura']) }}" class="btn btn-ghost btn-sm">Abrir vigencias</a>
                                 </td>
                             </tr>
                             <tr>
@@ -89,6 +96,18 @@
                             <span class="badge badge-warning badge-outline">{{ number_format($resumo['rubricas_sem_codigo'], 0, ',', '.') }}</span>
                         </li>
                         <li class="flex items-center justify-between">
+                            <span>Vigencia ativa</span>
+                            <span class="badge badge-success badge-outline">{{ number_format($resumo['rubricas_vigencia_ativa'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span>Vigencia futura</span>
+                            <span class="badge badge-info badge-outline">{{ number_format($resumo['rubricas_vigencia_futura'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span>Vigencia encerrada</span>
+                            <span class="badge badge-error badge-outline">{{ number_format($resumo['rubricas_vigencia_encerrada'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
                             <span>Eventos com retorno</span>
                             <span class="badge badge-info badge-outline">{{ number_format($resumo['eventos_com_retorno'], 0, ',', '.') }}</span>
                         </li>
@@ -101,6 +120,57 @@
                             <span class="badge badge-info badge-outline">Ativo</span>
                         </li>
                     </ul>
+                </div>
+
+                @if ($orgaoPublicoResumo)
+                    <div class="panel-surface rounded-3xl p-6">
+                        <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Triagem S-1000</p>
+                        <h3 class="mt-3 text-xl font-semibold text-white">Base institucional</h3>
+                        <dl class="mt-4 space-y-3 text-sm text-slate-200">
+                            <div class="flex items-start justify-between gap-4">
+                                <dt>Orgao</dt>
+                                <dd class="text-right text-white">{{ $orgaoPublicoResumo['nome'] }}</dd>
+                            </div>
+                            <div class="flex items-start justify-between gap-4">
+                                <dt>Ambiente</dt>
+                                <dd class="text-right text-white">{{ $orgaoPublicoResumo['ambiente'] }}</dd>
+                            </div>
+                            <div class="flex items-start justify-between gap-4">
+                                <dt>Vigencia</dt>
+                                <dd class="text-right">
+                                    <span class="text-white">{{ $orgaoPublicoResumo['vigencia_label'] }}</span>
+                                    <span class="block text-xs text-slate-500">{{ $orgaoPublicoResumo['vigencia_detail'] }}</span>
+                                </dd>
+                            </div>
+                            <div class="flex items-start justify-between gap-4">
+                                <dt>Evento S-1000</dt>
+                                <dd class="text-right text-white">{{ $orgaoPublicoResumo['evento_status'] }}</dd>
+                            </div>
+                        </dl>
+                        <div class="mt-4 flex flex-wrap gap-3">
+                            <a href="{{ route('orgao-publico.show') }}" class="btn btn-ghost btn-sm">Abrir orgao publico</a>
+                            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000']) }}" class="btn btn-ghost btn-sm">Abrir S-1000</a>
+                        </div>
+                    </div>
+                @endif
+
+                <div class="panel-surface rounded-3xl p-6">
+                    <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Triagem S-1010</p>
+                    <h3 class="mt-3 text-xl font-semibold text-white">Vigencia das rubricas</h3>
+                    <div class="mt-4 space-y-3 text-sm text-slate-200">
+                        <a href="{{ route('rubricas.index', ['vigencia' => 'ativa']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-emerald-400/40 hover:bg-emerald-500/5">
+                            <span>Rubricas com vigencia ativa</span>
+                            <span class="badge badge-success badge-outline">{{ number_format($resumo['rubricas_vigencia_ativa'], 0, ',', '.') }}</span>
+                        </a>
+                        <a href="{{ route('rubricas.index', ['vigencia' => 'futura']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-sky-400/40 hover:bg-sky-500/5">
+                            <span>Rubricas com vigencia futura</span>
+                            <span class="badge badge-info badge-outline">{{ number_format($resumo['rubricas_vigencia_futura'], 0, ',', '.') }}</span>
+                        </a>
+                        <a href="{{ route('rubricas.index', ['vigencia' => 'encerrada']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-rose-400/40 hover:bg-rose-500/5">
+                            <span>Rubricas com vigencia encerrada</span>
+                            <span class="badge badge-error badge-outline">{{ number_format($resumo['rubricas_vigencia_encerrada'], 0, ',', '.') }}</span>
+                        </a>
+                    </div>
                 </div>
 
                 <div class="panel-surface rounded-3xl p-6">

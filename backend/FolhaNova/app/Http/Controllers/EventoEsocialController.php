@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EventoEsocial;
 use App\Services\EventosEsocial\ReprocessarEventoEsocialService;
+use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,10 +21,37 @@ class EventoEsocialController extends Controller
         $origem = trim((string) $request->string('origem'));
         $retorno = trim((string) $request->string('retorno'));
         $retorno = in_array($retorno, ['com_mensagem', 'sem_mensagem'], true) ? $retorno : '';
+        $contexto = trim((string) $request->string('contexto'));
+        $contexto = in_array($contexto, ['institucional', 'vinculado'], true) ? $contexto : '';
+        $servidor = $request->integer('servidor');
+        $servidor = $servidor > 0 ? $servidor : 0;
+        $data = trim((string) $request->string('data'));
+        $dataSelecionada = null;
+
+        if ($data !== '') {
+            try {
+                $dataSelecionada = Carbon::createFromFormat('Y-m-d', $data)->startOfDay();
+            } catch (\Throwable) {
+                $data = '';
+            }
+        }
 
         $baseQuery = EventoEsocial::query()
             ->with(['servidor.pessoa'])
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
+
+        $servidoresDisponiveis = (clone $baseQuery)
+            ->whereNotNull('servidor_id')
+            ->get()
+            ->pluck('servidor')
+            ->filter()
+            ->unique('id')
+            ->sortBy(fn ($servidorItem) => $servidorItem->pessoa?->nome_completo ?? $servidorItem->matricula)
+            ->values();
+
+        $servidorSelecionado = $servidor > 0
+            ? $servidoresDisponiveis->firstWhere('id', $servidor)
+            : null;
 
         $eventos = (clone $baseQuery)
             ->when($search !== '', function ($query) use ($search) {
@@ -47,6 +75,10 @@ class EventoEsocialController extends Controller
             ->when($origem !== '', fn ($query) => $query->where('payload->origem', $origem))
             ->when($retorno === 'com_mensagem', fn ($query) => $query->whereNotNull('mensagem_retorno'))
             ->when($retorno === 'sem_mensagem', fn ($query) => $query->whereNull('mensagem_retorno'))
+            ->when($contexto === 'institucional', fn ($query) => $query->whereNull('servidor_id'))
+            ->when($contexto === 'vinculado', fn ($query) => $query->whereNotNull('servidor_id'))
+            ->when($servidorSelecionado, fn ($query) => $query->where('servidor_id', $servidorSelecionado->id))
+            ->when($dataSelecionada, fn ($query) => $query->whereDate('updated_at', $dataSelecionada->toDateString()))
             ->latest('updated_at')
             ->latest('id')
             ->paginate(12)
@@ -55,10 +87,19 @@ class EventoEsocialController extends Controller
         return view('eventos-esocial.index', [
             'eventos' => $eventos,
             'resumo' => [
+                'hoje' => now()->toDateString(),
                 'total' => (clone $baseQuery)->count(),
                 'pendentes' => (clone $baseQuery)->where('status', 'pendente')->count(),
                 'processados' => (clone $baseQuery)->where('status', 'processado')->count(),
                 'erros' => (clone $baseQuery)->where('status', 'erro')->count(),
+                'pendentes_hoje' => (clone $baseQuery)
+                    ->where('status', 'pendente')
+                    ->whereDate('updated_at', now()->toDateString())
+                    ->count(),
+                'erros_hoje' => (clone $baseQuery)
+                    ->where('status', 'erro')
+                    ->whereDate('updated_at', now()->toDateString())
+                    ->count(),
                 'com_retorno' => (clone $baseQuery)->whereNotNull('mensagem_retorno')->count(),
                 'sem_retorno' => (clone $baseQuery)->whereNull('mensagem_retorno')->count(),
                 's1000' => (clone $baseQuery)->where('evento', 'S-1000')->count(),
@@ -66,6 +107,8 @@ class EventoEsocialController extends Controller
                 's2200' => (clone $baseQuery)->where('evento', 'S-2200')->count(),
                 'homologacao' => (clone $baseQuery)->where('ambiente', 'homologacao')->count(),
                 'producao' => (clone $baseQuery)->where('ambiente', 'producao')->count(),
+                'institucionais' => (clone $baseQuery)->whereNull('servidor_id')->count(),
+                'vinculados' => (clone $baseQuery)->whereNotNull('servidor_id')->count(),
             ],
             'filtros' => [
                 'q' => $search,
@@ -74,6 +117,13 @@ class EventoEsocialController extends Controller
                 'ambiente' => $ambiente,
                 'origem' => $origem,
                 'retorno' => $retorno,
+                'contexto' => $contexto,
+                'servidor' => $servidorSelecionado?->id,
+                'servidor_label' => $servidorSelecionado
+                    ? trim(($servidorSelecionado->pessoa?->nome_completo ?? 'Servidor').' - '.$servidorSelecionado->matricula)
+                    : '',
+                'data' => $dataSelecionada?->toDateString() ?? '',
+                'data_label' => $dataSelecionada?->format('d/m/Y') ?? '',
             ],
             'eventosDisponiveis' => (clone $baseQuery)
                 ->select('evento')
@@ -87,6 +137,7 @@ class EventoEsocialController extends Controller
                 ->unique()
                 ->sort()
                 ->values(),
+            'servidoresDisponiveis' => $servidoresDisponiveis,
         ]);
     }
 

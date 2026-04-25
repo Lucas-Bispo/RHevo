@@ -142,11 +142,11 @@ class DemoDataSeeder extends Seeder
             ],
         ]);
 
-        $this->rubrica($tenant, 'VENC', 'Vencimento base', '1000', 'provento', true, true, true, 'S1010-VENC', true);
-        $this->rubrica($tenant, 'AD-NOT', 'Adicional noturno', '1002', 'provento', true, true, true, 'S1010-ADNOT', true);
-        $this->rubrica($tenant, 'DESC-SIND', 'Desconto sindical', '9219', 'desconto', false, false, false, null, true);
-        $this->rubrica($tenant, 'AUX-ALIM', 'Auxilio alimentacao', '1801', 'informativa', false, false, false, null, true);
-        $this->rubrica($tenant, 'RUB-INAT', 'Rubrica inativa historica', '1002', 'provento', true, true, false, 'S1010-INAT', false);
+        $this->rubrica($tenant, 'VENC', 'Vencimento base', '1000', 'provento', true, true, true, 'S1010-VENC', true, '2026-01-01');
+        $this->rubrica($tenant, 'AD-NOT', 'Adicional noturno', '1002', 'provento', true, true, true, 'S1010-ADNOT', true, '2026-02-01');
+        $this->rubrica($tenant, 'DESC-SIND', 'Desconto sindical', '9219', 'desconto', false, false, false, null, true, '2026-01-01');
+        $this->rubrica($tenant, 'AUX-ALIM', 'Auxilio alimentacao programado', '1801', 'informativa', false, false, false, null, false, '2026-06-01', '2026-12-31');
+        $this->rubrica($tenant, 'RUB-INAT', 'Rubrica inativa historica', '1002', 'provento', true, true, false, 'S1010-INAT', false, '2025-01-01', '2026-03-31');
 
         $this->evento($tenant, null, 'S-1000', 'processado', 'homologacao', 'PROTO-S1000', 'REC-S1000', 'Evento S-1000 processado no ambiente demo.', [
             'origem' => 'parametros_orgao_publico',
@@ -235,7 +235,9 @@ class DemoDataSeeder extends Seeder
         bool $incideInss,
         bool $incideFgts,
         ?string $codigoEsocial,
-        bool $ativo
+        bool $ativo,
+        string $inicioValidade,
+        ?string $fimValidade = null
     ): Rubrica {
         return Rubrica::query()->updateOrCreate(
             ['tenant_id' => $tenant->id, 'codigo' => $codigo],
@@ -247,6 +249,8 @@ class DemoDataSeeder extends Seeder
                 'incide_inss' => $incideInss,
                 'incide_fgts' => $incideFgts,
                 'codigo_esocial' => $codigoEsocial,
+                'inicio_validade' => $inicioValidade,
+                'fim_validade' => $fimValidade,
                 'ativo' => $ativo,
             ],
         );

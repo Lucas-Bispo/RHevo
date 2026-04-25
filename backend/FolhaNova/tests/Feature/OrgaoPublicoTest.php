@@ -60,6 +60,68 @@ class OrgaoPublicoTest extends TestCase
             ->assertSee('2026-04 ate Em aberto');
     }
 
+    public function test_orgao_publico_edit_screen_explains_context_for_cnpj(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2026-04',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.edit'))
+            ->assertOk()
+            ->assertSee('Consistencia S-1000')
+            ->assertSee('Contexto por CNPJ')
+            ->assertSee('classificacao tributaria 85', false)
+            ->assertSee('natureza juridica')
+            ->assertSee('A combinacao atual esta alinhada com a regra de CNPJ.');
+    }
+
+    public function test_orgao_publico_edit_screen_explains_context_for_cpf(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '2',
+                    'numero_inscricao' => '529.982.247-25',
+                    'classificacao_tributaria' => '21',
+                    'natureza_juridica' => null,
+                    'inicio_validade' => '2026-04',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.edit'))
+            ->assertOk()
+            ->assertSee('Consistencia S-1000')
+            ->assertSee('Contexto por CPF')
+            ->assertSee('classificacao tributaria 21', false)
+            ->assertSee('sera descartada no payload do `S-1000`.', false)
+            ->assertSee('A combinacao atual esta alinhada com a regra de CPF.');
+    }
+
     public function test_orgao_publico_screen_shows_classificacao_tributaria_description(): void
     {
         $tenant = $this->createTenant([
@@ -200,8 +262,13 @@ class OrgaoPublicoTest extends TestCase
             ->assertSee('Detalhar evento')
             ->assertSee('Ver S-1000 no painel')
             ->assertSee('Abrir S-1000 no painel')
+            ->assertSee('Mesmo status')
+            ->assertSee('Mesmo ambiente')
             ->assertSee('href="'.route('eventos-esocial.show', $evento).'"', false)
-            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1000']).'"', false);
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1000']).'"', false)
+            ->assertSee('evento=S-1000', false)
+            ->assertSee('status=pendente', false)
+            ->assertSee('ambiente=homologacao', false);
     }
 
     public function test_user_can_update_orgao_publico_and_generate_pending_s1000(): void

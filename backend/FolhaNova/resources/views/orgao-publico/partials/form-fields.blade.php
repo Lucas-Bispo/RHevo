@@ -1,3 +1,44 @@
+@php
+    $tipoInscricaoAtual = old('tipo_inscricao', $parametros['tipo_inscricao'] ?? '1');
+    $classificacaoAtual = old('classificacao_tributaria', $parametros['classificacao_tributaria'] ?? null);
+    $naturezaJuridicaAtual = old('natureza_juridica', $parametros['natureza_juridica'] ?? null);
+    $regrasContextuais = $tipoInscricaoAtual === '2'
+        ? [
+            'heading' => 'Contexto por CPF',
+            'tone' => $classificacaoAtual === '21' ? 'border-cyan-400/20 bg-cyan-500/10 text-cyan-100' : 'border-amber-400/20 bg-amber-500/10 text-amber-100',
+            'items' => [
+                'Use `classificacao tributaria 21` para o recorte atual do produto.',
+                'A `natureza juridica` nao se aplica e sera descartada no payload do `S-1000`.',
+                $classificacaoAtual !== null && $classificacaoAtual !== '21'
+                    ? 'A combinacao atual pede ajuste antes do salvamento.'
+                    : 'A combinacao atual esta alinhada com a regra de CPF.',
+            ],
+        ]
+        : [
+            'heading' => 'Contexto por CNPJ',
+            'tone' => $classificacaoAtual === '85' && filled($naturezaJuridicaAtual)
+                ? 'border-emerald-400/20 bg-emerald-500/10 text-emerald-100'
+                : 'border-amber-400/20 bg-amber-500/10 text-amber-100',
+            'items' => [
+                'Use `classificacao tributaria 85` para administracao publica direta, autarquias e fundacoes.',
+                'A `natureza juridica` e obrigatoria para inscricoes por CNPJ neste modulo.',
+                ($classificacaoAtual !== null && $classificacaoAtual !== '85') || blank($naturezaJuridicaAtual)
+                    ? 'A combinacao atual pede ajuste antes do salvamento.'
+                    : 'A combinacao atual esta alinhada com a regra de CNPJ.',
+            ],
+        ];
+@endphp
+
+<div class="rounded-3xl border px-5 py-4 {{ $regrasContextuais['tone'] }}">
+    <p class="text-xs uppercase tracking-[0.35em]">Consistencia S-1000</p>
+    <h3 class="mt-2 text-lg font-semibold">{{ $regrasContextuais['heading'] }}</h3>
+    <ul class="mt-3 space-y-2 text-sm leading-6">
+        @foreach ($regrasContextuais['items'] as $item)
+            <li>{{ $item }}</li>
+        @endforeach
+    </ul>
+</div>
+
 <div class="space-y-4">
     <div>
         <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Identificacao do ente</p>
@@ -8,7 +49,7 @@
         @include('servidores.partials.field', ['name' => 'name', 'label' => 'Nome do orgao', 'required' => true, 'placeholder' => 'Prefeitura Municipal', 'value' => old('name', $tenant->name)])
         @include('servidores.partials.select', ['name' => 'tipo_inscricao', 'label' => 'Tipo de inscricao', 'required' => true, 'options' => ['1' => 'CNPJ', '2' => 'CPF'], 'value' => old('tipo_inscricao', $parametros['tipo_inscricao'] ?? '1')])
         @include('servidores.partials.field', ['name' => 'numero_inscricao', 'label' => 'Numero de inscricao', 'required' => true, 'placeholder' => '00.000.000/0001-00', 'value' => old('numero_inscricao', $parametros['numero_inscricao'] ?? null)])
-        @include('servidores.partials.field', ['name' => 'natureza_juridica', 'label' => 'Natureza juridica', 'required' => old('tipo_inscricao', $parametros['tipo_inscricao'] ?? '1') === '1', 'placeholder' => 'Ex.: 1244', 'value' => old('natureza_juridica', $parametros['natureza_juridica'] ?? null)])
+        @include('servidores.partials.field', ['name' => 'natureza_juridica', 'label' => 'Natureza juridica', 'required' => $tipoInscricaoAtual === '1', 'placeholder' => 'Ex.: 1244', 'value' => $naturezaJuridicaAtual])
         @include('servidores.partials.select', ['name' => 'classificacao_tributaria', 'label' => 'Classificacao tributaria', 'required' => true, 'options' => ['21' => '21 - Pessoa fisica equiparada / contexto por CPF', '85' => '85 - Administracao publica direta, autarquias e fundacoes'], 'value' => old('classificacao_tributaria', $parametros['classificacao_tributaria'] ?? null)])
         @include('servidores.partials.select', ['name' => 'ambiente_esocial', 'label' => 'Ambiente eSocial', 'required' => true, 'options' => ['homologacao' => 'Homologacao', 'producao' => 'Producao'], 'value' => old('ambiente_esocial', $parametros['ambiente_esocial'] ?? 'homologacao')])
     </div>

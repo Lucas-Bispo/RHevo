@@ -25,15 +25,25 @@ class RubricaCrudTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('Cadastro de rubrica')
+            ->assertSee('Consistencia S-1010')
+            ->assertSee('Rubrica ativa na janela atual')
+            ->assertSee('Sem codigo eSocial: a rubrica continua como pendencia de parametrizacao do S-1010.')
+            ->assertSee('A combinacao atual pede ajuste antes do salvamento.')
             ->assertSee('Apoio S-1010')
             ->assertSee('Ver S-1010 no painel')
             ->assertSee('Ver pendencias sem codigo')
             ->assertSee('Ver rubricas com codigo')
             ->assertSee('Ver rubricas ativas')
+            ->assertSee('Ver vigencia ativa')
+            ->assertSee('Ver vigencia futura')
+            ->assertSee('Ver vigencia encerrada')
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'com_codigo']).'"', false)
-            ->assertSee('href="'.route('rubricas.index', ['status' => 'ativos']).'"', false);
+            ->assertSee('href="'.route('rubricas.index', ['status' => 'ativos']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'ativa']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'futura']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'encerrada']).'"', false);
     }
 
     public function test_user_can_create_rubrica(): void
@@ -409,6 +419,8 @@ class RubricaCrudTest extends TestCase
 
     public function test_rubrica_edit_screen_shows_s1010_review_shortcuts(): void
     {
+        Carbon::setTestNow('2026-04-24 10:00:00');
+
         $user = User::factory()->create([
             'tenant_id' => 66,
         ]);
@@ -422,6 +434,8 @@ class RubricaCrudTest extends TestCase
             'incide_irrf' => true,
             'incide_inss' => true,
             'incide_fgts' => false,
+            'codigo_esocial' => 'S1010-REV',
+            'inicio_validade' => '2026-01-01',
             'ativo' => true,
         ]);
 
@@ -429,23 +443,35 @@ class RubricaCrudTest extends TestCase
             ->actingAs($user)
             ->get(route('rubricas.edit', $rubrica))
             ->assertOk()
+            ->assertSee('Consistencia S-1010')
+            ->assertSee('Rubrica ativa na janela atual')
+            ->assertSee('A rubrica atual ja esta identificada com codigo eSocial para a parametrizacao.')
+            ->assertSee('A combinacao atual esta alinhada com as regras operacionais ja ativas no cadastro.')
             ->assertSee('Revisao S-1010')
             ->assertSee('Ver S-1010 no painel')
-            ->assertSee('Ver pendencias sem codigo')
+            ->assertSee('Ver rubricas com codigo')
             ->assertSee('Ver rubricas ativas')
+            ->assertSee('Ver vigencia ativa')
+            ->assertSee('Mesma natureza 1000')
             ->assertSee('Ver proventos')
             ->assertSee('Ver base IRRF')
             ->assertSee('Ver base INSS')
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false)
-            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'com_codigo']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['status' => 'ativos']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'ativa']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['tipo' => 'provento']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['natureza' => '1000']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'irrf']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'inss']).'"', false);
+
+        Carbon::setTestNow();
     }
 
     public function test_rubrica_edit_screen_adapts_contextual_s1010_shortcuts_to_current_rubrica(): void
     {
+        Carbon::setTestNow('2026-04-24 10:00:00');
+
         $user = User::factory()->create([
             'tenant_id' => 69,
         ]);
@@ -460,6 +486,8 @@ class RubricaCrudTest extends TestCase
             'incide_inss' => false,
             'incide_fgts' => true,
             'codigo_esocial' => 'S1010-DESC-FGTS',
+            'inicio_validade' => '2025-01-01',
+            'fim_validade' => '2026-03-31',
             'ativo' => false,
         ]);
 
@@ -467,16 +495,27 @@ class RubricaCrudTest extends TestCase
             ->actingAs($user)
             ->get(route('rubricas.edit', $rubrica))
             ->assertOk()
+            ->assertSee('Consistencia S-1010')
+            ->assertSee('Rubrica inativa ou programada')
+            ->assertSee('Rubricas inativas precisam informar fim de validade para preservar o encerramento da trilha.')
+            ->assertSee('A rubrica atual ja esta identificada com codigo eSocial para a parametrizacao.')
+            ->assertSee('A combinacao atual esta alinhada com as regras operacionais ja ativas no cadastro.')
             ->assertSee('Ver rubricas com codigo')
             ->assertSee('Ver rubricas inativas')
+            ->assertSee('Ver vigencia encerrada')
+            ->assertSee('Mesma natureza 9219')
             ->assertSee('Ver descontos')
             ->assertSee('Ver base FGTS')
             ->assertDontSee('Ver base IRRF')
             ->assertDontSee('Ver base INSS')
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'com_codigo']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['status' => 'inativos']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'encerrada']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['tipo' => 'desconto']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['natureza' => '9219']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'fgts']).'"', false);
+
+        Carbon::setTestNow();
     }
 
     public function test_user_can_not_create_rubrica_with_textual_natureza(): void

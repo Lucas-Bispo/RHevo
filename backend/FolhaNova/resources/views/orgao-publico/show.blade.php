@@ -164,6 +164,8 @@
                                 <div class="mt-4 flex flex-wrap gap-3">
                                     <a href="{{ route('eventos-esocial.show', $eventoS1000) }}" class="btn btn-ghost btn-sm">Detalhar evento</a>
                                     <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000']) }}" class="btn btn-ghost btn-sm">Abrir S-1000 no painel</a>
+                                    <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000', 'status' => $eventoS1000->status]) }}" class="btn btn-ghost btn-sm">Mesmo status</a>
+                                    <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000', 'ambiente' => $eventoS1000->ambiente]) }}" class="btn btn-ghost btn-sm">Mesmo ambiente</a>
                                 </div>
                             </div>
                         @else

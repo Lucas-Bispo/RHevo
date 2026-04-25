@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Rubrica;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class RubricasIndexTest extends TestCase
@@ -237,6 +238,48 @@ class RubricasIndexTest extends TestCase
             ->assertSee('value="irrf" selected', false);
     }
 
+    public function test_authenticated_user_can_filter_rubricas_by_natureza(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 98,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 98,
+            'codigo' => 'NAT-1000',
+            'nome' => 'Vencimento basico',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => true,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 98,
+            'codigo' => 'NAT-9201',
+            'nome' => 'Desconto consignado',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['natureza' => '9201']));
+
+        $response
+            ->assertOk()
+            ->assertSee('Desconto consignado')
+            ->assertDontSee('Vencimento basico')
+            ->assertSee('value="9201"', false)
+            ->assertSee('Natureza: 9201');
+    }
+
     public function test_rubricas_index_links_incidencia_summaries_to_filters(): void
     {
         $user = User::factory()->create([
@@ -295,6 +338,144 @@ class RubricasIndexTest extends TestCase
             ->assertDontSee('Verba tributavel')
             ->assertDontSee('Verba previdenciaria')
             ->assertSee('value="fgts" selected', false);
+    }
+
+    public function test_authenticated_user_can_filter_rubricas_by_vigencia(): void
+    {
+        Carbon::setTestNow('2026-04-24 10:00:00');
+
+        $user = User::factory()->create([
+            'tenant_id' => 72,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 72,
+            'codigo' => 'VIG-ATIVA',
+            'nome' => 'Rubrica vigente',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'inicio_validade' => '2026-01-01',
+            'fim_validade' => null,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 72,
+            'codigo' => 'VIG-FUTURA',
+            'nome' => 'Rubrica futura',
+            'natureza' => '1002',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'inicio_validade' => '2026-05-01',
+            'fim_validade' => null,
+            'ativo' => false,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 72,
+            'codigo' => 'VIG-ENC',
+            'nome' => 'Rubrica encerrada',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'inicio_validade' => '2025-01-01',
+            'fim_validade' => '2026-03-31',
+            'ativo' => false,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['vigencia' => 'futura']));
+
+        $response
+            ->assertOk()
+            ->assertSee('Rubrica futura')
+            ->assertDontSee('Rubrica vigente')
+            ->assertDontSee('Rubrica encerrada')
+            ->assertSee('value="futura" selected', false)
+            ->assertSee('Vigencia: Futura');
+
+        Carbon::setTestNow();
+    }
+
+    public function test_rubricas_index_links_vigencia_summaries_to_filters(): void
+    {
+        Carbon::setTestNow('2026-04-24 10:00:00');
+
+        $user = User::factory()->create([
+            'tenant_id' => 73,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 73,
+            'codigo' => 'ATIVA-001',
+            'nome' => 'Rubrica atual',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => true,
+            'inicio_validade' => '2026-01-01',
+            'fim_validade' => null,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 73,
+            'codigo' => 'FUT-001',
+            'nome' => 'Rubrica programada',
+            'natureza' => '1002',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'inicio_validade' => '2026-05-10',
+            'fim_validade' => null,
+            'ativo' => false,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 73,
+            'codigo' => 'ENC-001',
+            'nome' => 'Rubrica historica',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'inicio_validade' => '2025-01-01',
+            'fim_validade' => '2026-03-20',
+            'ativo' => false,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index'))
+            ->assertOk()
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'ativa']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'futura']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'encerrada']).'"', false)
+            ->assertSee('Vigencia ativa')
+            ->assertSee('Vigencia futura')
+            ->assertSee('Vigencia encerrada');
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['vigencia' => 'encerrada']))
+            ->assertOk()
+            ->assertSee('Rubrica historica')
+            ->assertDontSee('Rubrica atual')
+            ->assertDontSee('Rubrica programada')
+            ->assertSee('value="encerrada" selected', false);
+
+        Carbon::setTestNow();
     }
 
     public function test_authenticated_user_can_filter_rubricas_with_codigo_esocial(): void
@@ -411,8 +592,10 @@ class RubricasIndexTest extends TestCase
                 'q' => 'Gratificacao',
                 'status' => 'ativos',
                 'tipo' => 'provento',
+                'natureza' => '1002',
                 'incidencia' => 'irrf',
                 'esocial' => 'sem_codigo',
+                'vigencia' => 'ativa',
             ]));
 
         $response
@@ -421,8 +604,10 @@ class RubricasIndexTest extends TestCase
             ->assertSee('Busca: Gratificacao')
             ->assertSee('Status: Ativas')
             ->assertSee('Tipo: Provento')
+            ->assertSee('Natureza: 1002')
             ->assertSee('Incidencia: IRRF')
             ->assertSee('eSocial: Sem codigo')
+            ->assertSee('Vigencia: Ativa')
             ->assertSee('href="'.route('rubricas.index').'"', false);
     }
 }

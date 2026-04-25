@@ -32,6 +32,8 @@
                             $retornoFiltro = $eventoEsocial->mensagem_retorno ? 'com_mensagem' : 'sem_mensagem';
                             $retornoLabel = $eventoEsocial->mensagem_retorno ? 'Com retorno' : 'Sem retorno';
                             $origemEvento = data_get($eventoEsocial->payload, 'origem');
+                            $contextoFiltro = $eventoEsocial->servidor ? 'vinculado' : 'institucional';
+                            $dataEvento = optional($eventoEsocial->updated_at)->toDateString();
                         @endphp
                         @if ($eventoEsocial->status === 'erro')
                             <div class="flex max-w-md flex-col gap-2 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-3 text-sm text-amber-100">
@@ -46,8 +48,15 @@
                         <a href="{{ route('eventos-esocial.index', ['evento' => $eventoEsocial->evento]) }}" class="btn btn-ghost">Mesmo evento</a>
                         <a href="{{ route('eventos-esocial.index', ['status' => $eventoEsocial->status]) }}" class="btn btn-ghost">Mesmo status</a>
                         <a href="{{ route('eventos-esocial.index', ['ambiente' => $eventoEsocial->ambiente]) }}" class="btn btn-ghost">Mesmo ambiente</a>
+                        <a href="{{ route('eventos-esocial.index', ['contexto' => $contextoFiltro]) }}" class="btn btn-ghost">Mesmo contexto</a>
+                        @if ($dataEvento)
+                            <a href="{{ route('eventos-esocial.index', ['data' => $dataEvento]) }}" class="btn btn-ghost">Mesma data</a>
+                        @endif
                         @if ($origemEvento)
                             <a href="{{ route('eventos-esocial.index', ['origem' => $origemEvento]) }}" class="btn btn-ghost">Mesma origem</a>
+                        @endif
+                        @if ($eventoEsocial->servidor)
+                            <a href="{{ route('eventos-esocial.index', ['servidor' => $eventoEsocial->servidor->id]) }}" class="btn btn-ghost">Mesmo servidor</a>
                         @endif
                         <a href="{{ route('eventos-esocial.index', ['retorno' => $retornoFiltro]) }}" class="btn btn-ghost">{{ $retornoLabel }}</a>
                         @if ($eventoEsocial->servidor)
