@@ -131,4 +131,80 @@ class ServidorDetailTest extends TestCase
         $this->assertSame('302', $evento->payload['vinculo']['categoria_esocial']);
         $this->assertSame('afastado', $evento->payload['vinculo']['situacao']);
     }
+
+    public function test_user_cannot_access_servidor_from_another_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 14,
+        ]);
+
+        $pessoa = Pessoa::create([
+            'tenant_id' => 99,
+            'nome_completo' => 'Servidor Outro Tenant',
+            'cpf' => '999.888.777-66',
+        ]);
+
+        $servidor = Servidor::create([
+            'tenant_id' => 99,
+            'pessoa_id' => $pessoa->id,
+            'matricula' => 'OUT-001',
+            'tipo_vinculo' => 'estatutario',
+            'situacao' => 'ativo',
+            'salario_base' => 7200,
+            'data_admissao' => '2025-01-10',
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('servidores.show', $servidor));
+
+        $response->assertForbidden();
+    }
+
+    public function test_user_cannot_update_servidor_from_another_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 14,
+        ]);
+
+        $pessoa = Pessoa::create([
+            'tenant_id' => 99,
+            'nome_completo' => 'Servidor Bloqueado',
+            'cpf' => '999.888.777-55',
+        ]);
+
+        $servidor = Servidor::create([
+            'tenant_id' => 99,
+            'pessoa_id' => $pessoa->id,
+            'matricula' => 'OUT-002',
+            'tipo_vinculo' => 'estatutario',
+            'categoria_esocial' => '301',
+            'regime_previdenciario' => 'rpps',
+            'situacao' => 'ativo',
+            'salario_base' => 8100,
+            'data_admissao' => '2026-01-10',
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->put(route('servidores.update', $servidor), [
+                'nome_completo' => 'Tentativa Invalida',
+                'cpf' => '99988877755',
+                'matricula' => 'OUT-002',
+                'tipo_vinculo' => 'estatutario',
+                'categoria_esocial' => '302',
+                'regime_previdenciario' => 'rpps',
+                'data_admissao' => '2026-01-10',
+                'salario_base' => '8100.00',
+                'situacao' => 'ativo',
+            ]);
+
+        $response->assertForbidden();
+
+        $this->assertDatabaseHas('servidores', [
+            'id' => $servidor->id,
+            'tenant_id' => 99,
+            'categoria_esocial' => '301',
+        ]);
+    }
 }
