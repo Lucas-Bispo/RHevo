@@ -14,6 +14,12 @@ use Illuminate\Support\Carbon;
 
 class RubricaController extends Controller
 {
+    public function __construct()
+    {
+        // SECURITY: aplica policy em todas as rotas resource de rubricas.
+        $this->authorizeResource(Rubrica::class, 'rubrica');
+    }
+
     public function index(Request $request): View
     {
         $tenantId = $request->user()?->tenant_id;

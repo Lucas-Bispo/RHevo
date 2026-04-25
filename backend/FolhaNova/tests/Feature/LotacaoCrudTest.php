@@ -92,4 +92,37 @@ class LotacaoCrudTest extends TestCase
             'ativa' => false,
         ]);
     }
+
+    public function test_user_cannot_update_lotacao_from_another_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 32,
+        ]);
+
+        $lotacao = Lotacao::create([
+            'tenant_id' => 99,
+            'codigo' => 'OUT-LOT',
+            'nome' => 'Lotacao Bloqueada',
+            'tipo' => 'departamento',
+            'ativa' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->put(route('lotacoes.update', $lotacao), [
+                'codigo' => 'OUT-LOT',
+                'nome' => 'Tentativa Invalida',
+                'tipo' => 'gabinete',
+                'codigo_esocial' => 'S1005-OUT',
+                'ativa' => '0',
+            ]);
+
+        $response->assertForbidden();
+
+        $this->assertDatabaseHas('lotacoes', [
+            'id' => $lotacao->id,
+            'tenant_id' => 99,
+            'nome' => 'Lotacao Bloqueada',
+        ]);
+    }
 }

@@ -89,4 +89,36 @@ class CargoCrudTest extends TestCase
             'ativo' => false,
         ]);
     }
+
+    public function test_user_cannot_update_cargo_from_another_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 42,
+        ]);
+
+        $cargo = Cargo::create([
+            'tenant_id' => 99,
+            'codigo' => 'OUT-01',
+            'nome' => 'Cargo Bloqueado',
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->put(route('cargos.update', $cargo), [
+                'codigo' => 'OUT-01',
+                'nome' => 'Tentativa Invalida',
+                'descricao' => 'Nao deveria atualizar',
+                'codigo_esocial' => 'S1030-OUT',
+                'ativo' => '0',
+            ]);
+
+        $response->assertForbidden();
+
+        $this->assertDatabaseHas('cargos', [
+            'id' => $cargo->id,
+            'tenant_id' => 99,
+            'nome' => 'Cargo Bloqueado',
+        ]);
+    }
 }

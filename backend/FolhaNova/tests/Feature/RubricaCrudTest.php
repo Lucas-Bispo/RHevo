@@ -136,6 +136,49 @@ class RubricaCrudTest extends TestCase
         ]);
     }
 
+    public function test_user_cannot_update_rubrica_from_another_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 62,
+        ]);
+
+        $rubrica = Rubrica::create([
+            'tenant_id' => 99,
+            'codigo' => 'OUT-RUB',
+            'nome' => 'Rubrica Bloqueada',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->put(route('rubricas.update', $rubrica), [
+                'codigo' => 'OUT-RUB',
+                'nome' => 'Tentativa Invalida',
+                'natureza' => '9219',
+                'tipo' => 'desconto',
+                'incide_irrf' => '0',
+                'incide_inss' => '0',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-OUT',
+                'inicio_validade' => '2026-02-01',
+                'fim_validade' => '2026-12-31',
+                'ativo' => '0',
+            ]);
+
+        $response->assertForbidden();
+
+        $this->assertDatabaseHas('rubricas', [
+            'id' => $rubrica->id,
+            'tenant_id' => 99,
+            'nome' => 'Rubrica Bloqueada',
+        ]);
+    }
+
     public function test_user_can_not_update_inactive_rubrica_without_end_of_validity(): void
     {
         $user = User::factory()->create([

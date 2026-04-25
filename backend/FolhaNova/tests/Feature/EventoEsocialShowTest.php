@@ -224,6 +224,26 @@ class EventoEsocialShowTest extends TestCase
         $this
             ->actingAs($user)
             ->post(route('eventos-esocial.reprocessar', $evento))
-            ->assertNotFound();
+            ->assertForbidden();
+    }
+
+    public function test_user_cannot_open_evento_from_another_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 82,
+        ]);
+
+        $evento = EventoEsocial::create([
+            'tenant_id' => 83,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.show', $evento))
+            ->assertForbidden();
     }
 }

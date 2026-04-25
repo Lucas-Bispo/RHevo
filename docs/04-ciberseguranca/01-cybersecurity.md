@@ -145,6 +145,8 @@ Transformar as diretrizes da Biblia de Ciberseguranca em tarefas praticas de imp
 - [x] Formalizar exigencia de validacao por Form Request e protecao de mass assignment.
 - [x] Formalizar exigencia de isolamento por tenant em toda query sensivel.
 - [x] Implementar `ServidorPolicy` com bloqueio de acesso cross-tenant para visualizacao e atualizacao.
+- [x] Expandir policies multi-tenant para `Cargo`, `Lotacao`, `Funcao` e `Rubrica` com `authorizeResource()`.
+- [x] Proteger `EventoEsocial` e `OrgaoPublico` com policies por tenant e bloqueio explicito de acesso fora do contexto autenticado.
 
 #### 3. Dados sensiveis e eSocial
 - [x] Reforcar regra de nunca expor CPF, NIS, salario ou segredos em logs.
@@ -160,7 +162,7 @@ Transformar as diretrizes da Biblia de Ciberseguranca em tarefas praticas de imp
 - [ ] Implementar auditoria automatizada de dependencias com `composer audit` em CI.
 - [ ] Implementar mascaramento automatico de dados pessoais no pipeline de logs.
 - [x] Criar testes automatizados para bloquear acesso cross-tenant.
-- [ ] Criar testes de autorizacao com Policies para todos os modulos criticos.
+- [ ] Criar testes de autorizacao com Policies para modulos administrativos e operacionais correlatos que ainda dependem de regras locais.
 - [ ] Adicionar playbook de resposta a incidentes LGPD com SLA e responsaveis.
 
 ## Criterio de aceite

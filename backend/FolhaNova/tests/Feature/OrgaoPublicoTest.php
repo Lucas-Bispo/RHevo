@@ -614,6 +614,44 @@ class OrgaoPublicoTest extends TestCase
         $this->assertNull(data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.contato'));
     }
 
+    public function test_user_without_tenant_cannot_open_orgao_publico_screen(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => null,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.show'))
+            ->assertForbidden();
+    }
+
+    public function test_user_without_tenant_cannot_update_orgao_publico(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => null,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Prefeitura sem tenant',
+                'tipo_inscricao' => '1',
+                'numero_inscricao' => '11222333000181',
+                'classificacao_tributaria' => '85',
+                'natureza_juridica' => '1244',
+                'inicio_validade' => '2026-04',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'homologacao',
+                'contato_nome' => '',
+                'contato_cpf' => '',
+                'contato_email' => '',
+                'telefone' => '',
+                'observacoes' => '',
+            ])
+            ->assertForbidden();
+    }
+
     private function createTenant(array $overrides = []): Tenant
     {
         $this->ensureTenantsTableExists();

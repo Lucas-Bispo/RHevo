@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 
 class EventoEsocialController extends Controller
 {
+    public function __construct()
+    {
+        // SECURITY: aplica policy nas rotas de listagem e detalhe do painel eSocial.
+        $this->authorizeResource(EventoEsocial::class, 'eventoEsocial');
+    }
+
     public function index(Request $request): View
     {
         $tenantId = $request->user()?->tenant_id;
@@ -157,6 +163,7 @@ class EventoEsocialController extends Controller
         EventoEsocial $eventoEsocial,
         ReprocessarEventoEsocialService $service
     ): RedirectResponse {
+        $this->authorize('update', $eventoEsocial);
         $eventoEsocial = $this->resolveEvento($request, $eventoEsocial);
 
         if ($eventoEsocial->status !== 'erro') {
