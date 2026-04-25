@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
 
 class LotacaoController extends Controller
 {
+    public function __construct()
+    {
+        // SECURITY: aplica policy em todas as rotas resource de lotacoes.
+        $this->authorizeResource(Lotacao::class, 'lotacao');
+    }
+
     public function index(Request $request): View
     {
         $tenantId = $request->user()?->tenant_id;

@@ -13,6 +13,12 @@ use Illuminate\Http\Request;
 
 class CargoController extends Controller
 {
+    public function __construct()
+    {
+        // SECURITY: aplica policy em todas as rotas resource de cargos.
+        $this->authorizeResource(Cargo::class, 'cargo');
+    }
+
     public function index(Request $request): View
     {
         $tenantId = $request->user()?->tenant_id;

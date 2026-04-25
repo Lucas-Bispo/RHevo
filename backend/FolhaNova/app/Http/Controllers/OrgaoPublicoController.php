@@ -14,7 +14,10 @@ class OrgaoPublicoController extends Controller
 {
     public function show(Request $request): View
     {
+        $this->authorize('viewAny', Tenant::class);
         $tenant = $this->resolveTenant($request);
+        abort_if($tenant === null, 403);
+        $this->authorize('view', $tenant);
         $parametros = $tenant !== null ? ($tenant->metadata['orgao_publico'] ?? []) : [];
 
         return view('orgao-publico.show', [
@@ -27,8 +30,10 @@ class OrgaoPublicoController extends Controller
 
     public function edit(Request $request): View
     {
+        $this->authorize('viewAny', Tenant::class);
         $tenant = $this->resolveTenant($request);
-        abort_if($tenant === null, 404);
+        abort_if($tenant === null, 403);
+        $this->authorize('update', $tenant);
 
         return view('orgao-publico.edit', [
             'tenant' => $tenant,
@@ -41,8 +46,10 @@ class OrgaoPublicoController extends Controller
         UpdateOrgaoPublicoRequest $request,
         AtualizarParametrosOrgaoService $service
     ): RedirectResponse {
+        $this->authorize('viewAny', Tenant::class);
         $tenant = $this->resolveTenant($request);
-        abort_if($tenant === null, 404);
+        abort_if($tenant === null, 403);
+        $this->authorize('update', $tenant);
 
         $tenant = $service->execute($tenant, $request->validated());
 

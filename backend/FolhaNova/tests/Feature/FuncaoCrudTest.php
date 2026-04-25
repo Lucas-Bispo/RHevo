@@ -89,4 +89,36 @@ class FuncaoCrudTest extends TestCase
             'ativo' => false,
         ]);
     }
+
+    public function test_user_cannot_update_funcao_from_another_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 52,
+        ]);
+
+        $funcao = Funcao::create([
+            'tenant_id' => 99,
+            'codigo' => 'OUT-FUN',
+            'nome' => 'Funcao Bloqueada',
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->put(route('funcoes.update', $funcao), [
+                'codigo' => 'OUT-FUN',
+                'nome' => 'Tentativa Invalida',
+                'descricao' => 'Nao deveria atualizar',
+                'codigo_esocial' => 'S1040-OUT',
+                'ativo' => '0',
+            ]);
+
+        $response->assertForbidden();
+
+        $this->assertDatabaseHas('funcoes', [
+            'id' => $funcao->id,
+            'tenant_id' => 99,
+            'nome' => 'Funcao Bloqueada',
+        ]);
+    }
 }
