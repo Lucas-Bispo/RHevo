@@ -1,3 +1,27 @@
+### AMBIENTE-LOCAL-LOGIN-DEMO-WSL - 24/04/2026
+
+**Descricao:**
+Garantir que o bootstrap local de teste manual no `WSL Ubuntu 24.04` crie tenant demo, usuario local e permita subir backend e frontend de forma previsivel.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/scripts/ensure_local_login.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- corrigir o script de login local para criar a tabela `tenants` quando necessario;
+- garantir tenant demo com metadados institucionais minimos para navegacao manual;
+- recriar o usuario `test@example.com` vinculado ao tenant demo;
+- subir backend e frontend em sessoes destacadas no `WSL` e validar as rotas principais.
+
+**Resultado:**
+- o script local passou a garantir a existencia da tabela `tenants` no banco sqlite de desenvolvimento;
+- a conta `test@example.com` agora fica vinculada ao tenant demo com metadados minimos do orgao publico;
+- backend e Vite foram deixados ativos em sessoes `tmux` no `WSL Ubuntu 24.04`;
+- `/login` respondeu `200`, `/dashboard` sem sessao redirecionou para `/login` e o Vite respondeu em `127.0.0.1:5173`.
+
 ### PRODUTO-S1010-CONSISTENCIA-FORMULARIO - 24/04/2026
 
 **Descricao:**

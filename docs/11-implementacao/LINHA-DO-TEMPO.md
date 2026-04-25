@@ -2,6 +2,29 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 24/04/2026 - Ambiente Local Preparado para Teste Manual no WSL
+
+**Acao realizada:**
+- Ajustado o script `ensure_local_login.php` para garantir a tabela `tenants` e montar um tenant demo local quando necessario.
+- Recriada a conta `test@example.com` com `tenant_id=1` e contexto institucional minimo para navegacao manual.
+- Validado o build do frontend com `npm run build` no `WSL Ubuntu 24.04`.
+- Subidos backend e frontend em sessoes `tmux` destacadas (`folhanova-back` e `folhanova-vite`) para teste manual continuo.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/scripts/ensure_local_login.php`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php scripts/ensure_local_login.php`: usuario demo recriado com `tenant_id=1`.
+- `npm run build`: build concluido com sucesso no `WSL Ubuntu 24.04`.
+- `GET /login`: `200 OK` em `http://127.0.0.1:8000/login`.
+- `GET /dashboard` sem sessao: `302` para `http://127.0.0.1:8000/login`.
+- `GET http://127.0.0.1:5173/@vite/client`: resposta valida do Vite dev server.
+- `tmux ls`: sessoes `folhanova-back` e `folhanova-vite` ativas.
+
+**Status:** Concluido
+
 ### 24/04/2026 - Consistencia Operacional do S-1010 nos Formularios de Rubricas
 
 **Acao realizada:**
