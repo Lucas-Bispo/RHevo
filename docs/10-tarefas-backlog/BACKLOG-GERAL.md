@@ -1,3 +1,29 @@
+### PRODUTO-S1000-CONSISTENCIA-EDIT - 24/04/2026
+
+**Descricao:**
+Evidenciar na tela de edicao do orgao publico as regras de consistencia entre tipo de inscricao, classificacao tributaria e natureza juridica para reduzir erro operacional no `S-1000`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- montar um bloco contextual de consistencia dentro da tela de edicao do `S-1000`;
+- explicar o comportamento esperado para inscricoes por `CNPJ` e `CPF`;
+- sinalizar quando a combinacao atual pede ajuste antes do salvamento;
+- cobrir a leitura com testes focados do modulo institucional.
+
+**Resultado:**
+- a tela de edicao do orgao publico passou a exibir um bloco contextual de consistencia para o `S-1000`;
+- inscricoes por `CNPJ` agora recebem orientacao visual sobre `classTrib 85` e obrigatoriedade de `natJurid`;
+- inscricoes por `CPF` agora deixam explicito que `classTrib 21` e o recorte atual e que `natJurid` sera descartada;
+- testes focados do modulo institucional cobrem os dois contextos.
+
 ### PRODUTO-S1010-FILTRO-NATUREZA-RUBRICAS - 24/04/2026
 
 **Descricao:**

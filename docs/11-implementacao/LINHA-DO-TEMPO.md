@@ -2,6 +2,26 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 24/04/2026 - Consistencia Operacional do S-1000 na Edicao do Orgao Publico
+
+**Acao realizada:**
+- Adicionado um bloco contextual de consistencia na tela de edicao do orgao publico.
+- O formulario passou a orientar explicitamente os cenarios de `CNPJ` e `CPF` antes do salvamento.
+- O contexto por `CNPJ` agora reforca o uso de `classTrib 85` e a obrigatoriedade de `natJurid`.
+- O contexto por `CPF` agora deixa claro o uso de `classTrib 21` e o descarte de `natJurid` no payload.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/OrgaoPublicoTest.php` no `WSL Ubuntu 24.04`: `15` testes verdes e `96` assercoes.
+
+**Status:** Concluido
+
 ### 24/04/2026 - Filtro por Natureza eSocial nas Rubricas S-1010
 
 **Acao realizada:**

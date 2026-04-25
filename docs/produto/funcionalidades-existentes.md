@@ -21,6 +21,7 @@
 - Classificacao tributaria do `S-1000` controlada por lista inicial de codigos suportados pelo produto.
 - Compatibilidade inicial entre tipo de inscricao institucional e classificacao tributaria no `S-1000`.
 - Validacao de CPF/CNPJ institucional por digito verificador no fluxo do `S-1000`.
+- Tela de edicao do orgao publico agora exibe orientacao contextual de consistencia para `CPF`/`CNPJ`, `classTrib` e `natJurid`.
 - Leitura operacional do status de vigencia institucional do `S-1000`.
 - Normalizacao da natureza juridica do `S-1000`, evitando persistencia de `natJurid` em inscricoes por CPF.
 - Atalho do orgao publico para abrir o painel eSocial filtrado pela trilha `S-1000`.
