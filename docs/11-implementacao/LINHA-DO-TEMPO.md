@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 24/04/2026 - Consistencia Operacional do S-1010 nos Formularios de Rubricas
+
+**Acao realizada:**
+- Adicionado um bloco contextual de consistencia nas telas de criacao e edicao de rubricas.
+- O formulario passou a orientar explicitamente as regras locais ja ativas para `natRubr`, vigencia, status e codigo eSocial.
+- Rubricas ativas agora exibem a leitura da janela atual, enquanto rubricas inativas reforcam a exigencia de `fim_validade`.
+- Rubricas sem codigo eSocial seguem destacadas como pendencia operacional da trilha `S-1010`.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/rubricas/create.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/partials/consistency-guide.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/RubricaCrudTest.php` no `WSL Ubuntu 24.04`: `16` testes verdes e `115` assercoes.
+
+**Status:** Concluido
+
 ### 24/04/2026 - Consistencia Operacional do S-1000 na Edicao do Orgao Publico
 
 **Acao realizada:**

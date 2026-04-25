@@ -60,6 +60,7 @@
                 <form method="POST" action="{{ route('rubricas.update', $rubrica) }}" class="mt-6 space-y-8">
                     @csrf
                     @method('PUT')
+                    @include('rubricas.partials.consistency-guide')
                     @include('rubricas.partials.form-fields')
 
                     <div class="flex flex-wrap items-center gap-3 border-t border-white/10 pt-6">

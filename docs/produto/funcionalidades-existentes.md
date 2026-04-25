@@ -42,6 +42,7 @@
 - Atalho de rubricas para abrir o painel eSocial filtrado pela trilha `S-1010`.
 - Atalhos de apoio `S-1010` na criacao de rubrica para painel, pendencias sem codigo, base parametrizada e rubricas ativas.
 - Atalhos de apoio `S-1010` na criacao de rubrica agora tambem cobrem janelas de vigencia ativa, futura e encerrada.
+- Formularios de criacao e edicao de rubricas agora exibem um bloco de consistencia operacional do `S-1010`.
 - Atalhos de revisao S-1010 na edicao de rubrica para painel eSocial e pendencias sem codigo.
 - Atalhos contextuais na edicao de rubrica para revisar status, tipo, codigo e incidencias da mesma trilha `S-1010`.
 - Atalho contextual na edicao de rubrica para revisar rapidamente a base da mesma natureza eSocial.

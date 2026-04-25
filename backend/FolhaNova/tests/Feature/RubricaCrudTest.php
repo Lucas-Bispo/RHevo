@@ -25,6 +25,10 @@ class RubricaCrudTest extends TestCase
         $response
             ->assertOk()
             ->assertSee('Cadastro de rubrica')
+            ->assertSee('Consistencia S-1010')
+            ->assertSee('Rubrica ativa na janela atual')
+            ->assertSee('Sem codigo eSocial: a rubrica continua como pendencia de parametrizacao do S-1010.')
+            ->assertSee('A combinacao atual pede ajuste antes do salvamento.')
             ->assertSee('Apoio S-1010')
             ->assertSee('Ver S-1010 no painel')
             ->assertSee('Ver pendencias sem codigo')
@@ -430,6 +434,7 @@ class RubricaCrudTest extends TestCase
             'incide_irrf' => true,
             'incide_inss' => true,
             'incide_fgts' => false,
+            'codigo_esocial' => 'S1010-REV',
             'inicio_validade' => '2026-01-01',
             'ativo' => true,
         ]);
@@ -438,9 +443,13 @@ class RubricaCrudTest extends TestCase
             ->actingAs($user)
             ->get(route('rubricas.edit', $rubrica))
             ->assertOk()
+            ->assertSee('Consistencia S-1010')
+            ->assertSee('Rubrica ativa na janela atual')
+            ->assertSee('A rubrica atual ja esta identificada com codigo eSocial para a parametrizacao.')
+            ->assertSee('A combinacao atual esta alinhada com as regras operacionais ja ativas no cadastro.')
             ->assertSee('Revisao S-1010')
             ->assertSee('Ver S-1010 no painel')
-            ->assertSee('Ver pendencias sem codigo')
+            ->assertSee('Ver rubricas com codigo')
             ->assertSee('Ver rubricas ativas')
             ->assertSee('Ver vigencia ativa')
             ->assertSee('Mesma natureza 1000')
@@ -448,7 +457,7 @@ class RubricaCrudTest extends TestCase
             ->assertSee('Ver base IRRF')
             ->assertSee('Ver base INSS')
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false)
-            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['esocial' => 'com_codigo']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['status' => 'ativos']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'ativa']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['tipo' => 'provento']).'"', false)
@@ -486,6 +495,11 @@ class RubricaCrudTest extends TestCase
             ->actingAs($user)
             ->get(route('rubricas.edit', $rubrica))
             ->assertOk()
+            ->assertSee('Consistencia S-1010')
+            ->assertSee('Rubrica inativa ou programada')
+            ->assertSee('Rubricas inativas precisam informar fim de validade para preservar o encerramento da trilha.')
+            ->assertSee('A rubrica atual ja esta identificada com codigo eSocial para a parametrizacao.')
+            ->assertSee('A combinacao atual esta alinhada com as regras operacionais ja ativas no cadastro.')
             ->assertSee('Ver rubricas com codigo')
             ->assertSee('Ver rubricas inativas')
             ->assertSee('Ver vigencia encerrada')

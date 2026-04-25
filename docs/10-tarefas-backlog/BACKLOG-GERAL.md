@@ -1,3 +1,31 @@
+### PRODUTO-S1010-CONSISTENCIA-FORMULARIO - 24/04/2026
+
+**Descricao:**
+Evidenciar nas telas de criacao e edicao das rubricas as regras operacionais ja adotadas para `natRubr`, vigencia, status e pendencia de codigo eSocial no `S-1010`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/rubricas/create.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/partials/consistency-guide.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- criar um bloco contextual de consistencia para o `S-1010` reaproveitavel nas telas de criacao e edicao;
+- orientar o comportamento esperado para `natRubr`, vigencia ativa/inativa e codigo eSocial;
+- sinalizar quando a combinacao atual pede ajuste antes do salvamento;
+- cobrir a leitura com testes focados de CRUD.
+
+**Resultado:**
+- as telas de criacao e edicao de rubricas passaram a exibir um bloco contextual de consistencia para o `S-1010`;
+- o formulario agora orienta explicitamente `natRubr`, status, vigencia e pendencia de codigo eSocial;
+- a leitura muda conforme a rubrica esteja ativa, inativa ou ainda sem codigo eSocial;
+- testes focados de CRUD cobrem a nova orientacao visual.
+
 ### PRODUTO-S1000-CONSISTENCIA-EDIT - 24/04/2026
 
 **Descricao:**
