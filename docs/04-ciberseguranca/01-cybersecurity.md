@@ -16,6 +16,7 @@ Transformar as diretrizes da Bíblia de Cibersegurança em tarefas práticas de 
 - [x] Formalizar exigência de Policy/Gate/`authorize()` para módulos sensíveis.
 - [x] Formalizar exigência de validação por Form Request + proteção de mass assignment.
 - [x] Formalizar exigência de isolamento por tenant em toda query sensível.
+- [x] Implementar `ServidorPolicy` com bloqueio de acesso cross-tenant para visualização e atualização.
 
 ### 3) Dados sensíveis e eSocial
 - [x] Reforçar regra de nunca expor CPF/NIS/salário/segredos em logs.
@@ -30,7 +31,7 @@ Transformar as diretrizes da Bíblia de Cibersegurança em tarefas práticas de 
 ## Backlog recomendado (próximo ciclo)
 - [ ] Implementar auditoria automatizada de dependências (`composer audit`) em CI.
 - [ ] Implementar mascaramento automático de dados pessoais no pipeline de logs.
-- [ ] Criar testes automatizados para bloquear acesso cross-tenant.
+- [x] Criar testes automatizados para bloquear acesso cross-tenant.
 - [ ] Criar testes de autorização (Policies) para todos os módulos críticos.
 - [ ] Adicionar playbook de resposta a incidentes LGPD (com SLA e responsáveis).
 

@@ -16,6 +16,12 @@ use Illuminate\Http\Request;
 
 class ServidorController extends Controller
 {
+    public function __construct()
+    {
+        // SECURITY: aplica policy em todas as rotas resource de servidor.
+        $this->authorizeResource(Servidor::class, 'servidor');
+    }
+
     /**
      * Lista operacional inicial de servidores com foco no modulo de admissao.
      */
