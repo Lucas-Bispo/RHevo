@@ -33,6 +33,7 @@
 - Normalizacao previa dos campos de rubrica para preservar unicidade por tenant mesmo com espacos no preenchimento.
 - Normalizacao e unicidade do codigo eSocial da rubrica por tenant para evitar parametrizacao duplicada do `S-1010`.
 - Filtros de rubricas por tipo, incidencia e situacao de codigo eSocial, incluindo pendencias sem codigo.
+- Filtro dedicado de rubricas por natureza eSocial (`natRubr`) com leitura no resumo de filtros ativos.
 - Cards de rubricas para abrir rapidamente a listagem filtrada por tipo `Provento`, `Desconto` e `Informativa`.
 - Cards de rubricas para abrir rapidamente a listagem filtrada por incidencia `IRRF`, `INSS` e `FGTS`.
 - Cards de rubricas para abrir rapidamente a listagem filtrada por status `Ativas` e `Inativas`.
@@ -42,6 +43,7 @@
 - Atalhos de apoio `S-1010` na criacao de rubrica agora tambem cobrem janelas de vigencia ativa, futura e encerrada.
 - Atalhos de revisao S-1010 na edicao de rubrica para painel eSocial e pendencias sem codigo.
 - Atalhos contextuais na edicao de rubrica para revisar status, tipo, codigo e incidencias da mesma trilha `S-1010`.
+- Atalho contextual na edicao de rubrica para revisar rapidamente a base da mesma natureza eSocial.
 - Atalhos contextuais na edicao de rubrica agora tambem acompanham a janela de vigencia atual da rubrica aberta.
 - Controle inicial de vigencia das rubricas para preparar `S-1010`, com inicio obrigatorio e fim opcional validado.
 - Leitura operacional de vigencia das rubricas com badges, filtro dedicado e atalhos para janelas ativa, futura e encerrada.

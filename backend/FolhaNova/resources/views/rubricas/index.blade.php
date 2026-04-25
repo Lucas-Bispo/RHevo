@@ -10,6 +10,7 @@
                 ? 'Ativas'
                 : ($filtros['status'] === 'inativos' ? 'Inativas' : ''),
             'Tipo' => $filtros['tipo'] !== '' ? ucfirst($filtros['tipo']) : '',
+            'Natureza' => $filtros['natureza'],
             'Incidencia' => $filtros['incidencia'] !== '' ? strtoupper($filtros['incidencia']) : '',
             'eSocial' => $filtros['esocial'] === 'com_codigo'
                 ? 'Com codigo'
@@ -159,6 +160,20 @@
                                     <option value="desconto" @selected($filtros['tipo'] === 'desconto')>Desconto</option>
                                     <option value="informativa" @selected($filtros['tipo'] === 'informativa')>Informativa</option>
                                 </select>
+                            </label>
+
+                            <label class="form-control w-full xl:w-40">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Natureza</span>
+                                <input
+                                    type="search"
+                                    name="natureza"
+                                    inputmode="numeric"
+                                    pattern="[0-9]{4}"
+                                    maxlength="4"
+                                    value="{{ $filtros['natureza'] }}"
+                                    placeholder="1000"
+                                    class="input input-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500"
+                                >
                             </label>
 
                             <label class="form-control w-full xl:w-48">

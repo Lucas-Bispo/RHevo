@@ -21,6 +21,8 @@ class RubricaController extends Controller
         $status = trim((string) $request->string('status'));
         $tipo = trim((string) $request->string('tipo'));
         $tipo = in_array($tipo, ['provento', 'desconto', 'informativa'], true) ? $tipo : '';
+        $natureza = trim((string) $request->string('natureza'));
+        $natureza = preg_match('/^\d{4}$/', $natureza) === 1 ? $natureza : '';
         $incidencia = trim((string) $request->string('incidencia'));
         $incidencia = in_array($incidencia, ['irrf', 'inss', 'fgts'], true) ? $incidencia : '';
         $esocial = trim((string) $request->string('esocial'));
@@ -45,6 +47,7 @@ class RubricaController extends Controller
             })
             ->when($status !== '', fn ($query) => $query->where('ativo', $status === 'ativos'))
             ->when($tipo !== '', fn ($query) => $query->where('tipo', $tipo))
+            ->when($natureza !== '', fn ($query) => $query->where('natureza', $natureza))
             ->when($incidencia !== '', fn ($query) => $query->where("incide_{$incidencia}", true))
             ->when($esocial === 'com_codigo', fn ($query) => $query->whereNotNull('codigo_esocial'))
             ->when($esocial === 'sem_codigo', fn ($query) => $query->whereNull('codigo_esocial'))
@@ -75,6 +78,7 @@ class RubricaController extends Controller
                 'q' => $search,
                 'status' => $status,
                 'tipo' => $tipo,
+                'natureza' => $natureza,
                 'incidencia' => $incidencia,
                 'esocial' => $esocial,
                 'vigencia' => $vigencia,

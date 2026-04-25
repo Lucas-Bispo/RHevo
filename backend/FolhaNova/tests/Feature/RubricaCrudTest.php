@@ -443,6 +443,7 @@ class RubricaCrudTest extends TestCase
             ->assertSee('Ver pendencias sem codigo')
             ->assertSee('Ver rubricas ativas')
             ->assertSee('Ver vigencia ativa')
+            ->assertSee('Mesma natureza 1000')
             ->assertSee('Ver proventos')
             ->assertSee('Ver base IRRF')
             ->assertSee('Ver base INSS')
@@ -451,6 +452,7 @@ class RubricaCrudTest extends TestCase
             ->assertSee('href="'.route('rubricas.index', ['status' => 'ativos']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'ativa']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['tipo' => 'provento']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['natureza' => '1000']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'irrf']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'inss']).'"', false);
 
@@ -487,6 +489,7 @@ class RubricaCrudTest extends TestCase
             ->assertSee('Ver rubricas com codigo')
             ->assertSee('Ver rubricas inativas')
             ->assertSee('Ver vigencia encerrada')
+            ->assertSee('Mesma natureza 9219')
             ->assertSee('Ver descontos')
             ->assertSee('Ver base FGTS')
             ->assertDontSee('Ver base IRRF')
@@ -495,6 +498,7 @@ class RubricaCrudTest extends TestCase
             ->assertSee('href="'.route('rubricas.index', ['status' => 'inativos']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'encerrada']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['tipo' => 'desconto']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['natureza' => '9219']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'fgts']).'"', false);
 
         Carbon::setTestNow();

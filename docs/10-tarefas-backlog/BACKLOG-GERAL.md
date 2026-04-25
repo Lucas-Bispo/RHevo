@@ -1,3 +1,32 @@
+### PRODUTO-S1010-FILTRO-NATUREZA-RUBRICAS - 24/04/2026
+
+**Descricao:**
+Expandir a leitura operacional do `S-1010` com filtro dedicado por natureza eSocial (`natRubr`) na listagem de rubricas e atalho contextual na edicao.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar filtro dedicado de `natureza` no controller e no formulario principal da listagem;
+- exibir a natureza ativa no resumo de filtros para leitura operacional;
+- incluir atalho `Mesma natureza` na tela de edicao da rubrica;
+- cobrir o filtro e o atalho com testes focados.
+
+**Resultado:**
+- a listagem de rubricas passou a aceitar filtro dedicado por `natureza` eSocial (`natRubr`);
+- o resumo de filtros ativos agora mostra a natureza selecionada junto dos demais filtros operacionais;
+- a tela de edicao ganhou atalho `Mesma natureza` para revisar rapidamente a base da mesma classificacao;
+- testes focados de listagem e edicao cobrem o novo filtro e a navegacao contextual.
+
 ### PRODUTO-DETALHE-ESOCIAL-ATALHO-CONTEXTO - 24/04/2026
 
 **Descricao:**

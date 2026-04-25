@@ -89,6 +89,7 @@
                         <a href="{{ route('rubricas.index', ['status' => $statusFiltro]) }}" class="btn btn-ghost btn-sm">{{ $statusRotulo }}</a>
                         <a href="{{ route('rubricas.index', ['vigencia' => $vigenciaFiltro]) }}" class="btn btn-ghost btn-sm">{{ $vigenciaRotulo }}</a>
                         <a href="{{ route('rubricas.index', ['tipo' => $rubrica->tipo]) }}" class="btn btn-ghost btn-sm">{{ $tipoRotulo }}</a>
+                        <a href="{{ route('rubricas.index', ['natureza' => $rubrica->natureza]) }}" class="btn btn-ghost btn-sm">Mesma natureza {{ $rubrica->natureza }}</a>
 
                         @foreach ($incidencias as $incidencia => $ativo)
                             <a href="{{ route('rubricas.index', ['incidencia' => $incidencia]) }}" class="btn btn-ghost btn-sm">

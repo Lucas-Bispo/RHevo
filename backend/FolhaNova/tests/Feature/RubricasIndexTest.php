@@ -238,6 +238,48 @@ class RubricasIndexTest extends TestCase
             ->assertSee('value="irrf" selected', false);
     }
 
+    public function test_authenticated_user_can_filter_rubricas_by_natureza(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 98,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 98,
+            'codigo' => 'NAT-1000',
+            'nome' => 'Vencimento basico',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => true,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 98,
+            'codigo' => 'NAT-9201',
+            'nome' => 'Desconto consignado',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['natureza' => '9201']));
+
+        $response
+            ->assertOk()
+            ->assertSee('Desconto consignado')
+            ->assertDontSee('Vencimento basico')
+            ->assertSee('value="9201"', false)
+            ->assertSee('Natureza: 9201');
+    }
+
     public function test_rubricas_index_links_incidencia_summaries_to_filters(): void
     {
         $user = User::factory()->create([
@@ -550,6 +592,7 @@ class RubricasIndexTest extends TestCase
                 'q' => 'Gratificacao',
                 'status' => 'ativos',
                 'tipo' => 'provento',
+                'natureza' => '1002',
                 'incidencia' => 'irrf',
                 'esocial' => 'sem_codigo',
                 'vigencia' => 'ativa',
@@ -561,6 +604,7 @@ class RubricasIndexTest extends TestCase
             ->assertSee('Busca: Gratificacao')
             ->assertSee('Status: Ativas')
             ->assertSee('Tipo: Provento')
+            ->assertSee('Natureza: 1002')
             ->assertSee('Incidencia: IRRF')
             ->assertSee('eSocial: Sem codigo')
             ->assertSee('Vigencia: Ativa')

@@ -2,6 +2,29 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **Versão:** 1.0
 
+### 24/04/2026 - Filtro por Natureza eSocial nas Rubricas S-1010
+
+**Acao realizada:**
+- Adicionado filtro dedicado por natureza eSocial (`natRubr`) na listagem de rubricas.
+- O resumo de filtros ativos agora evidencia a natureza selecionada junto da leitura operacional existente.
+- A tela de edicao da rubrica passou a oferecer o atalho contextual `Mesma natureza`.
+- Criados testes focados para validar o filtro novo e a navegacao contextual da edicao.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/RubricaController.php`
+- `backend/FolhaNova/resources/views/rubricas/index.blade.php`
+- `backend/FolhaNova/resources/views/rubricas/edit.blade.php`
+- `backend/FolhaNova/tests/Feature/RubricasIndexTest.php`
+- `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/RubricasIndexTest.php tests/Feature/RubricaCrudTest.php` no `WSL Ubuntu 24.04`: `28` testes verdes e `189` assercoes.
+
+**Status:** Concluido
+
 ### 24/04/2026 - Leitura Operacional de Vigencia nas Rubricas S-1010
 
 **Acao realizada:**
