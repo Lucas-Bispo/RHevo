@@ -1,3 +1,33 @@
+### PRODUTO-S1005-S1020-PRONTIDAO-LOTACOES - 28/04/2026
+
+**Descricao:**
+Adicionar leitura operacional de prontidao `S-1005/S-1020` na listagem de lotacoes, separando lotacoes prontas de pendencias estruturais.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/LotacaoController.php`
+- `backend/FolhaNova/resources/views/lotacoes/index.blade.php`
+- `backend/FolhaNova/tests/Feature/LotacoesIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- consultar os MDs de produto/eSocial e os PDFs locais do eSocial por `S-1005`, `S-1020`, `codLotacao` e `tpLotacao`;
+- calcular lotacoes prontas como ativas e com codigo eSocial informado;
+- calcular pendencias como complemento operacional dessa regra;
+- adicionar cards e filtro de prontidao na listagem;
+- exibir a prontidao ativa no resumo visual de filtros;
+- cobrir a leitura com teste focado da listagem.
+
+**Resultado:**
+- a listagem de lotacoes passou a exibir cards `Prontas S-1005/S-1020` e `Pendencias S-1005/S-1020`;
+- o formulario principal ganhou o filtro `Prontidao`;
+- lotacoes prontas sao as ativas com codigo eSocial informado;
+- o resumo de filtros ativos mostra `Prontidao S-1005/S-1020`;
+- teste focado cobre cards, filtro e escopo da base pronta.
+
 ### PRODUTO-DASHBOARD-PRONTIDAO-S1000 - 28/04/2026
 
 **Descricao:**

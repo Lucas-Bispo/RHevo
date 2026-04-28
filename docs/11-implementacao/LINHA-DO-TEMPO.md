@@ -2,6 +2,29 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **VersÃ£o:** 1.0
 
+### 28/04/2026 - Prontidao S-1005/S-1020 na Listagem de Lotacoes
+
+**Acao realizada:**
+- Conferidos os documentos de produto/eSocial e os PDFs locais do eSocial por termos ligados a `S-1005`, `S-1020`, `codLotacao`, `tpLotacao` e `infoLotacao`.
+- Adicionado filtro operacional `prontidao` na listagem de lotacoes.
+- Criados cards `Prontas S-1005/S-1020` e `Pendencias S-1005/S-1020`.
+- Lotacoes prontas foram definidas, nesta etapa, como ativas e com codigo eSocial informado.
+- O resumo visual de filtros passou a exibir `Prontidao S-1005/S-1020`.
+- A leitura lateral do modulo passou a explicar o criterio de prontidao usado nesta etapa.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/LotacaoController.php`
+- `backend/FolhaNova/resources/views/lotacoes/index.blade.php`
+- `backend/FolhaNova/tests/Feature/LotacoesIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/LotacoesIndexTest.php`: `3` testes verdes e `20` assercoes.
+
+**Status:** Concluido
+
 ### 28/04/2026 - Prontidao S-1000 no Dashboard
 
 **Acao realizada:**

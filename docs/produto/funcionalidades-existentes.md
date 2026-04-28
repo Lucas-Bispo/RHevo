@@ -30,6 +30,9 @@
 - Atalho do orgao publico para abrir o painel eSocial filtrado pela trilha `S-1000`.
 - Atalhos contextuais no orgao publico para abrir o painel `S-1000` pelo mesmo status ou ambiente do evento institucional atual.
 - Modulo inicial de lotacoes com listagem, cadastro e edicao.
+- Filtro de prontidao `S-1005/S-1020` na listagem de lotacoes, separando lotacoes ativas com codigo eSocial das pendencias estruturais.
+- Cards `Prontas S-1005/S-1020` e `Pendencias S-1005/S-1020` na listagem de lotacoes.
+- Resumo visual de filtros ativos na listagem de lotacoes com acao para limpar filtros.
 - Modulo inicial de cargos com listagem, cadastro e edicao.
 - Modulo inicial de funcoes com listagem, cadastro e edicao.
 - Modulo inicial de rubricas com listagem, cadastro e edicao.
