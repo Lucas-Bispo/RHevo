@@ -122,6 +122,51 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('>1<', false);
     }
 
+    public function test_eventos_index_can_open_local_reprocessing_queue(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 96,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 96,
+            'evento' => 'S-1000',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Falha de validacao institucional.',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 96,
+            'evento' => 'S-1010',
+            'status' => 'processado',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Evento aceito.',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('Reprocessamento')
+            ->assertSee('Eventos prontos para reenfileirar')
+            ->assertSee('href="'.route('eventos-esocial.index', ['acao' => 'reprocessamento']).'"', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['acao' => 'reprocessamento']))
+            ->assertOk()
+            ->assertSee('Acao: Reprocessamento local')
+            ->assertSee('value="reprocessamento" selected', false)
+            ->assertSee('Falha de validacao institucional.')
+            ->assertDontSee('Evento aceito.')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->every(
+                fn ($evento) => $evento->status === 'erro'
+            ));
+    }
+
     public function test_eventos_index_links_recent_day_summaries_to_status_and_date_filters(): void
     {
         $user = User::factory()->create([

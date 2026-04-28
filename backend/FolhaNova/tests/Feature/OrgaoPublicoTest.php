@@ -178,6 +178,76 @@ class OrgaoPublicoTest extends TestCase
             ->assertSee('Ativa sem fim informado');
     }
 
+    public function test_orgao_publico_screen_shows_s1000_readiness_when_base_is_consistent(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2020-01',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        EventoEsocial::query()->create([
+            'tenant_id' => $tenant->id,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.show'))
+            ->assertOk()
+            ->assertSee('Prontidao S-1000')
+            ->assertSee('Base S-1000 pronta')
+            ->assertSee('Parametros minimos e evento local estao consistentes.')
+            ->assertSee('Identificacao, classificacao, vigencia e evento local estao prontos');
+    }
+
+    public function test_orgao_publico_screen_lists_s1000_readiness_pending_items(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => null,
+                    'inicio_validade' => '2099-01',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.show'))
+            ->assertOk()
+            ->assertSee('Base S-1000 com pendencias')
+            ->assertSee('Revise os itens antes de preparar transmissao futura.')
+            ->assertSee('Informe a natureza juridica para inscricoes por CNPJ.')
+            ->assertSee('A vigencia do S-1000 ainda esta futura.')
+            ->assertSee('Gere ou sincronize o evento S-1000 local.')
+            ->assertSee('Corrigir parametros');
+    }
+
     public function test_orgao_publico_screen_shows_future_and_closed_validity_statuses(): void
     {
         $tenant = $this->createTenant([

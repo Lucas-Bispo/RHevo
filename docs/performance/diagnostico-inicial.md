@@ -133,3 +133,13 @@ Atacar primeiro:
 - O dashboard autenticado apresentou a primeira melhora estrutural relevante desta investigação.
 - Após colocar o runtime local em modo otimizado, o dashboard caiu de uma faixa anterior acima de `6s` para medições em torno de `2.3s` e até `0.4s` em execução aquecida.
 - O login via Livewire também melhorou de forma moderada, embora ainda mantenha variância alta em request frio.
+
+## Validacao WSL nativo em 28/04/2026
+- A copia nativa em `~/RHevo/backend/FolhaNova` foi recriada a partir do workspace em `/mnt/c/Users/lukao/Documents/Projetos/RHevo`.
+- O `.env` da copia nativa passou a apontar o SQLite para `/home/predador/RHevo/backend/FolhaNova/database/database.sqlite`.
+- O bootstrap em `/mnt/c/...` continuou apresentando custo alto e instabilidade de TTFB.
+- No filesystem nativo do WSL, com `APP_DEBUG=false`, `SESSION_DRIVER=database` e `CACHE_STORE=database`, as medicoes ficaram:
+  - `php artisan about --only=environment,drivers`: `0.58s`;
+  - `GET /login`: aproximadamente `0.026s` a `0.030s`;
+  - `GET /` seguindo redirect para login: aproximadamente `0.045s`.
+- Conclusao operacional: para desenvolvimento e validacao de performance, a aplicacao deve rodar em `~/RHevo/backend/FolhaNova`; o workspace em `/mnt/c/...` pode continuar servindo como referencia/editavel no Windows, mas nao deve ser usado para benchmark.

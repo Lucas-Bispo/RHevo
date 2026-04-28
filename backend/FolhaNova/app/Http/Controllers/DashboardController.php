@@ -36,6 +36,8 @@ class DashboardController extends Controller
                 'rubricas_vigencia_ativa' => $this->countRubricasByVigencia(clone $rubricas, 'ativa', $today),
                 'rubricas_vigencia_futura' => $this->countRubricasByVigencia(clone $rubricas, 'futura', $today),
                 'rubricas_vigencia_encerrada' => $this->countRubricasByVigencia(clone $rubricas, 'encerrada', $today),
+                'rubricas_s1010_prontas' => $this->countRubricasByProntidao(clone $rubricas, 'pronta', $today),
+                'rubricas_s1010_pendentes' => $this->countRubricasByProntidao(clone $rubricas, 'pendente', $today),
             ],
             'orgaoPublicoResumo' => $this->resolveOrgaoPublicoResumo($tenant),
         ]);
@@ -58,8 +60,29 @@ class DashboardController extends Controller
         };
     }
 
+    private function countRubricasByProntidao($query, string $prontidao, string $today): int
+    {
+        $applyPronta = function ($nestedQuery) use ($today): void {
+            $nestedQuery
+                ->where('ativo', true)
+                ->whereNotNull('codigo_esocial')
+                ->whereDate('inicio_validade', '<=', $today)
+                ->where(function ($dateQuery) use ($today) {
+                    $dateQuery
+                        ->whereNull('fim_validade')
+                        ->orWhereDate('fim_validade', '>=', $today);
+                });
+        };
+
+        return match ($prontidao) {
+            'pronta' => $query->where($applyPronta)->count(),
+            'pendente' => $query->whereNot($applyPronta)->count(),
+            default => 0,
+        };
+    }
+
     /**
-     * @return array{nome: string, ambiente: string, vigencia_label: string, vigencia_detail: string, evento_status: string}|null
+     * @return array{nome: string, ambiente: string, vigencia_label: string, vigencia_detail: string, evento_status: string, prontidao_label: string, prontidao_detail: string, prontidao_pendencias: int}|null
      */
     private function resolveOrgaoPublicoResumo(?Tenant $tenant): ?array
     {
@@ -97,6 +120,7 @@ class DashboardController extends Controller
             ->where('evento', 'S-1000')
             ->latest('id')
             ->first();
+        $prontidao = $this->resolveProntidaoS1000($parametros, $evento);
 
         return [
             'nome' => $tenant->name,
@@ -104,6 +128,69 @@ class DashboardController extends Controller
             'vigencia_label' => $vigencia['label'],
             'vigencia_detail' => $vigencia['detail'],
             'evento_status' => $evento?->status ? ucfirst($evento->status) : 'Nao gerado',
+            'prontidao_label' => $prontidao['label'],
+            'prontidao_detail' => $prontidao['detail'],
+            'prontidao_pendencias' => count($prontidao['pendencias']),
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $parametros
+     * @return array{label: string, detail: string, pendencias: array<int, string>}
+     */
+    private function resolveProntidaoS1000(array $parametros, ?EventoEsocial $eventoS1000): array
+    {
+        $pendencias = [];
+        $tipoInscricao = (string) ($parametros['tipo_inscricao'] ?? '');
+        $classificacaoTributaria = (string) ($parametros['classificacao_tributaria'] ?? '');
+        $inicioValidade = trim((string) ($parametros['inicio_validade'] ?? ''));
+        $fimValidade = trim((string) ($parametros['fim_validade'] ?? ''));
+        $competenciaAtual = now()->format('Y-m');
+
+        if (! in_array($tipoInscricao, ['1', '2'], true)) {
+            $pendencias[] = 'tipo_inscricao';
+        }
+
+        if (blank($parametros['numero_inscricao'] ?? null)) {
+            $pendencias[] = 'numero_inscricao';
+        }
+
+        if ($classificacaoTributaria === '') {
+            $pendencias[] = 'classificacao_tributaria';
+        }
+
+        if ($tipoInscricao === '1' && blank($parametros['natureza_juridica'] ?? null)) {
+            $pendencias[] = 'natureza_juridica';
+        }
+
+        if ($inicioValidade === '') {
+            $pendencias[] = 'inicio_validade';
+        }
+
+        if ($inicioValidade !== '' && $inicioValidade > $competenciaAtual) {
+            $pendencias[] = 'vigencia_futura';
+        }
+
+        if ($fimValidade !== '' && $fimValidade < $competenciaAtual) {
+            $pendencias[] = 'vigencia_encerrada';
+        }
+
+        if ($eventoS1000 === null) {
+            $pendencias[] = 'evento_local';
+        }
+
+        if ($pendencias !== []) {
+            return [
+                'label' => 'Base S-1000 com pendencias',
+                'detail' => 'Revise o orgao publico antes da integracao futura.',
+                'pendencias' => $pendencias,
+            ];
+        }
+
+        return [
+            'label' => 'Base S-1000 pronta',
+            'detail' => 'Parametros institucionais e evento local estao consistentes.',
+            'pendencias' => [],
         ];
     }
 }

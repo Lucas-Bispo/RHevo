@@ -29,6 +29,8 @@ class EventoEsocialController extends Controller
         $retorno = in_array($retorno, ['com_mensagem', 'sem_mensagem'], true) ? $retorno : '';
         $contexto = trim((string) $request->string('contexto'));
         $contexto = in_array($contexto, ['institucional', 'vinculado'], true) ? $contexto : '';
+        $acao = trim((string) $request->string('acao'));
+        $acao = $acao === 'reprocessamento' ? $acao : '';
         $servidor = $request->integer('servidor');
         $servidor = $servidor > 0 ? $servidor : 0;
         $data = trim((string) $request->string('data'));
@@ -83,6 +85,7 @@ class EventoEsocialController extends Controller
             ->when($retorno === 'sem_mensagem', fn ($query) => $query->whereNull('mensagem_retorno'))
             ->when($contexto === 'institucional', fn ($query) => $query->whereNull('servidor_id'))
             ->when($contexto === 'vinculado', fn ($query) => $query->whereNotNull('servidor_id'))
+            ->when($acao === 'reprocessamento', fn ($query) => $query->where('status', 'erro'))
             ->when($servidorSelecionado, fn ($query) => $query->where('servidor_id', $servidorSelecionado->id))
             ->when($dataSelecionada, fn ($query) => $query->whereDate('updated_at', $dataSelecionada->toDateString()))
             ->latest('updated_at')
@@ -98,6 +101,7 @@ class EventoEsocialController extends Controller
                 'pendentes' => (clone $baseQuery)->where('status', 'pendente')->count(),
                 'processados' => (clone $baseQuery)->where('status', 'processado')->count(),
                 'erros' => (clone $baseQuery)->where('status', 'erro')->count(),
+                'reprocessaveis' => (clone $baseQuery)->where('status', 'erro')->count(),
                 'pendentes_hoje' => (clone $baseQuery)
                     ->where('status', 'pendente')
                     ->whereDate('updated_at', now()->toDateString())
@@ -124,6 +128,8 @@ class EventoEsocialController extends Controller
                 'origem' => $origem,
                 'retorno' => $retorno,
                 'contexto' => $contexto,
+                'acao' => $acao,
+                'acao_label' => $acao === 'reprocessamento' ? 'Reprocessamento local' : '',
                 'servidor' => $servidorSelecionado?->id,
                 'servidor_label' => $servidorSelecionado
                     ? trim(($servidorSelecionado->pessoa?->nome_completo ?? 'Servidor').' - '.$servidorSelecionado->matricula)

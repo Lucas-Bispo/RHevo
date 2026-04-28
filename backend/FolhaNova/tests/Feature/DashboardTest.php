@@ -84,6 +84,21 @@ class DashboardTest extends TestCase
 
         Rubrica::query()->create([
             'tenant_id' => $tenant->id,
+            'codigo' => 'DASH-RUB-OK',
+            'nome' => 'Rubrica pronta dashboard',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'codigo_esocial' => 'S1010-OK',
+            'inicio_validade' => '2026-01-01',
+            'fim_validade' => null,
+            'ativo' => true,
+        ]);
+
+        Rubrica::query()->create([
+            'tenant_id' => $tenant->id,
             'codigo' => 'DASH-RUB-FUT',
             'nome' => 'Rubrica futura dashboard',
             'natureza' => '1002',
@@ -139,18 +154,28 @@ class DashboardTest extends TestCase
             ->assertSee('Servidores ativos')
             ->assertSee('Eventos com erro')
             ->assertSee('Rubricas sem codigo')
+            ->assertSee('Prontas S-1010')
+            ->assertSee('Pendencias S-1010')
             ->assertSee('Vigencia ativa')
             ->assertSee('Vigencia futura')
             ->assertSee('Vigencia encerrada')
             ->assertSee('Triagem S-1000')
             ->assertSee('Prefeitura Painel Demo')
             ->assertSee('Evento S-1000')
+            ->assertSee('Prontidao')
+            ->assertSee('Base S-1000 pronta')
+            ->assertSee('Parametros institucionais e evento local estao consistentes.')
+            ->assertSee('Pendencias')
             ->assertSee('Abrir orgao publico')
             ->assertSee('Abrir S-1000')
             ->assertSee('Triagem S-1010')
+            ->assertSee('Prontidao das rubricas')
+            ->assertSee('Rubricas prontas S-1010')
             ->assertSee('Triagem eSocial')
             ->assertSee('Fila operacional')
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['prontidao' => 'pronta']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['prontidao' => 'pendente']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'ativa']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'futura']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'encerrada']).'"', false)

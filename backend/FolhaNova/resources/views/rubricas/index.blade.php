@@ -22,6 +22,11 @@
                 'sem_inicio' => 'Sem inicio',
                 default => '',
             },
+            'Prontidao S-1010' => match ($filtros['prontidao']) {
+                'pronta' => 'Pronta',
+                'pendente' => 'Com pendencias',
+                default => '',
+            },
         ])->filter();
     @endphp
 
@@ -57,6 +62,19 @@
                 <p class="text-sm text-slate-400">Sem codigo eSocial</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['sem_codigo_esocial'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-amber-300">Pendencias do S-1010</p>
+            </a>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
+            <a href="{{ route('rubricas.index', ['prontidao' => 'pronta']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">Prontas S-1010</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1010_prontas'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Ativas, vigentes e com codigo eSocial</p>
+            </a>
+            <a href="{{ route('rubricas.index', ['prontidao' => 'pendente']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
+                <p class="text-sm text-slate-400">Pendencias S-1010</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1010_pendentes'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-amber-300">Revisar codigo, status ou vigencia</p>
             </a>
         </div>
 
@@ -206,6 +224,15 @@
                                 </select>
                             </label>
 
+                            <label class="form-control w-full xl:w-52">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Prontidao</span>
+                                <select name="prontidao" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                    <option value="">Todas</option>
+                                    <option value="pronta" @selected($filtros['prontidao'] === 'pronta')>Pronta S-1010</option>
+                                    <option value="pendente" @selected($filtros['prontidao'] === 'pendente')>Com pendencias S-1010</option>
+                                </select>
+                            </label>
+
                             <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-auto xl:flex-none">
                                 <button type="submit" class="btn btn-info w-full sm:w-auto">Filtrar</button>
                                 <a href="{{ route('rubricas.index') }}" class="btn btn-ghost w-full sm:w-auto">Limpar</a>
@@ -319,6 +346,7 @@
                         <li>As incidencias ajudam a reduzir inconsistencias futuras em calculo e envio.</li>
                         <li>A natureza deve ser informada como codigo numerico de 4 digitos para aproximar o cadastro do `natRubr`.</li>
                         <li>O codigo interno atende a operacao; o codigo eSocial prepara o espelhamento oficial.</li>
+                        <li>A prontidao S-1010 considera rubricas ativas, vigentes na data atual e com codigo eSocial informado.</li>
                     </ul>
                 </div>
             </div>

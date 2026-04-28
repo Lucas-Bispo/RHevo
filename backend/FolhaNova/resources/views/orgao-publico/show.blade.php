@@ -151,6 +151,25 @@
 
                 <div class="space-y-6">
                     <div class="panel-surface rounded-3xl p-6">
+                        <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Prontidao S-1000</p>
+                        <h3 class="mt-3 text-xl font-semibold text-white">{{ $prontidaoS1000['label'] }}</h3>
+                        <p class="mt-2 text-sm {{ $prontidaoS1000['tone'] }}">{{ $prontidaoS1000['detail'] }}</p>
+
+                        @if ($prontidaoS1000['pendencias'] !== [])
+                            <ul class="mt-4 space-y-2 text-sm leading-6 text-slate-300">
+                                @foreach ($prontidaoS1000['pendencias'] as $pendencia)
+                                    <li>{{ $pendencia }}</li>
+                                @endforeach
+                            </ul>
+                            <a href="{{ route('orgao-publico.edit') }}" class="btn btn-ghost btn-sm mt-4">Corrigir parametros</a>
+                        @else
+                            <div class="mt-4 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 p-4 text-sm text-emerald-100">
+                                Identificacao, classificacao, vigencia e evento local estao prontos para a proxima etapa de integracao.
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="panel-surface rounded-3xl p-6">
                         <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Evento atual</p>
                         <h3 class="mt-3 text-xl font-semibold text-white">Trilha do S-1000</h3>
                         @if ($eventoS1000)

@@ -19,12 +19,14 @@ class OrgaoPublicoController extends Controller
         abort_if($tenant === null, 403);
         $this->authorize('view', $tenant);
         $parametros = $tenant !== null ? ($tenant->metadata['orgao_publico'] ?? []) : [];
+        $eventoS1000 = $this->resolveEventoS1000($tenant);
 
         return view('orgao-publico.show', [
             'tenant' => $tenant,
             'parametros' => $parametros,
-            'eventoS1000' => $this->resolveEventoS1000($tenant),
+            'eventoS1000' => $eventoS1000,
             'vigenciaStatus' => $this->resolveVigenciaStatus($parametros),
+            'prontidaoS1000' => $this->resolveProntidaoS1000($parametros, $eventoS1000),
         ]);
     }
 
@@ -122,6 +124,68 @@ class OrgaoPublicoController extends Controller
             'label' => 'Vigencia ativa',
             'detail' => $fim !== '' ? "Ativa ate {$fim}" : 'Ativa sem fim informado',
             'tone' => 'text-emerald-300',
+        ];
+    }
+
+    /**
+     * @param  array<string, mixed>  $parametros
+     * @return array{label: string, detail: string, tone: string, pendencias: array<int, string>}
+     */
+    private function resolveProntidaoS1000(array $parametros, ?EventoEsocial $eventoS1000): array
+    {
+        $pendencias = [];
+        $tipoInscricao = (string) ($parametros['tipo_inscricao'] ?? '');
+        $classificacaoTributaria = (string) ($parametros['classificacao_tributaria'] ?? '');
+        $inicioValidade = trim((string) ($parametros['inicio_validade'] ?? ''));
+        $fimValidade = trim((string) ($parametros['fim_validade'] ?? ''));
+        $competenciaAtual = now()->format('Y-m');
+
+        if (! in_array($tipoInscricao, ['1', '2'], true)) {
+            $pendencias[] = 'Informe o tipo de inscricao do empregador.';
+        }
+
+        if (blank($parametros['numero_inscricao'] ?? null)) {
+            $pendencias[] = 'Informe o numero de inscricao do empregador.';
+        }
+
+        if ($classificacaoTributaria === '') {
+            $pendencias[] = 'Informe a classificacao tributaria.';
+        }
+
+        if ($tipoInscricao === '1' && blank($parametros['natureza_juridica'] ?? null)) {
+            $pendencias[] = 'Informe a natureza juridica para inscricoes por CNPJ.';
+        }
+
+        if ($inicioValidade === '') {
+            $pendencias[] = 'Informe o inicio de validade do S-1000.';
+        }
+
+        if ($inicioValidade !== '' && $inicioValidade > $competenciaAtual) {
+            $pendencias[] = 'A vigencia do S-1000 ainda esta futura.';
+        }
+
+        if ($fimValidade !== '' && $fimValidade < $competenciaAtual) {
+            $pendencias[] = 'A vigencia do S-1000 esta encerrada.';
+        }
+
+        if ($eventoS1000 === null) {
+            $pendencias[] = 'Gere ou sincronize o evento S-1000 local.';
+        }
+
+        if ($pendencias !== []) {
+            return [
+                'label' => 'Base S-1000 com pendencias',
+                'detail' => 'Revise os itens antes de preparar transmissao futura.',
+                'tone' => 'text-amber-300',
+                'pendencias' => $pendencias,
+            ];
+        }
+
+        return [
+            'label' => 'Base S-1000 pronta',
+            'detail' => 'Parametros minimos e evento local estao consistentes.',
+            'tone' => 'text-emerald-300',
+            'pendencias' => [],
         ];
     }
 }

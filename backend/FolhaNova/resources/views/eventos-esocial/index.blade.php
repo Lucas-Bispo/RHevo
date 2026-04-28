@@ -16,6 +16,7 @@
             'Contexto' => $filtros['contexto'] === 'institucional'
                 ? 'Institucional'
                 : ($filtros['contexto'] === 'vinculado' ? 'Vinculado a servidor' : ''),
+            'Acao' => $filtros['acao_label'],
             'Servidor' => $filtros['servidor_label'],
             'Data' => $filtros['data_label'],
         ])->filter();
@@ -64,6 +65,11 @@
                 <p class="text-sm text-slate-400">Com erro</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['erros'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-rose-300">Prioridade para reprocessamento</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['acao' => 'reprocessamento']) }}" class="stat-card block transition hover:border-orange-400/40 hover:bg-orange-500/5 focus:outline-none focus:ring-2 focus:ring-orange-400/50">
+                <p class="text-sm text-slate-400">Reprocessamento</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['reprocessaveis'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-orange-300">Eventos prontos para reenfileirar</p>
             </a>
             <a href="{{ route('eventos-esocial.index', ['retorno' => 'com_mensagem']) }}" class="stat-card block transition hover:border-sky-400/40 hover:bg-sky-500/5 focus:outline-none focus:ring-2 focus:ring-sky-400/50">
                 <p class="text-sm text-slate-400">Com retorno</p>
@@ -199,6 +205,14 @@
                                 <option value="">Todos</option>
                                 <option value="institucional" @selected($filtros['contexto'] === 'institucional')>Institucional</option>
                                 <option value="vinculado" @selected($filtros['contexto'] === 'vinculado')>Vinculado a servidor</option>
+                            </select>
+                        </label>
+
+                        <label class="form-control w-full xl:w-52">
+                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Acao</span>
+                            <select name="acao" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                <option value="">Todas</option>
+                                <option value="reprocessamento" @selected($filtros['acao'] === 'reprocessamento')>Reprocessamento local</option>
                             </select>
                         </label>
 

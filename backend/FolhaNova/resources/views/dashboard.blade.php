@@ -96,6 +96,14 @@
                             <span class="badge badge-warning badge-outline">{{ number_format($resumo['rubricas_sem_codigo'], 0, ',', '.') }}</span>
                         </li>
                         <li class="flex items-center justify-between">
+                            <span>Prontas S-1010</span>
+                            <span class="badge badge-success badge-outline">{{ number_format($resumo['rubricas_s1010_prontas'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span>Pendencias S-1010</span>
+                            <span class="badge badge-warning badge-outline">{{ number_format($resumo['rubricas_s1010_pendentes'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
                             <span>Vigencia ativa</span>
                             <span class="badge badge-success badge-outline">{{ number_format($resumo['rubricas_vigencia_ativa'], 0, ',', '.') }}</span>
                         </li>
@@ -146,6 +154,17 @@
                                 <dt>Evento S-1000</dt>
                                 <dd class="text-right text-white">{{ $orgaoPublicoResumo['evento_status'] }}</dd>
                             </div>
+                            <div class="flex items-start justify-between gap-4">
+                                <dt>Prontidao</dt>
+                                <dd class="text-right">
+                                    <span class="text-white">{{ $orgaoPublicoResumo['prontidao_label'] }}</span>
+                                    <span class="block text-xs text-slate-500">{{ $orgaoPublicoResumo['prontidao_detail'] }}</span>
+                                </dd>
+                            </div>
+                            <div class="flex items-start justify-between gap-4">
+                                <dt>Pendencias</dt>
+                                <dd class="text-right text-white">{{ number_format($orgaoPublicoResumo['prontidao_pendencias'], 0, ',', '.') }}</dd>
+                            </div>
                         </dl>
                         <div class="mt-4 flex flex-wrap gap-3">
                             <a href="{{ route('orgao-publico.show') }}" class="btn btn-ghost btn-sm">Abrir orgao publico</a>
@@ -156,8 +175,16 @@
 
                 <div class="panel-surface rounded-3xl p-6">
                     <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Triagem S-1010</p>
-                    <h3 class="mt-3 text-xl font-semibold text-white">Vigencia das rubricas</h3>
+                    <h3 class="mt-3 text-xl font-semibold text-white">Prontidao das rubricas</h3>
                     <div class="mt-4 space-y-3 text-sm text-slate-200">
+                        <a href="{{ route('rubricas.index', ['prontidao' => 'pronta']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-emerald-400/40 hover:bg-emerald-500/5">
+                            <span>Rubricas prontas S-1010</span>
+                            <span class="badge badge-success badge-outline">{{ number_format($resumo['rubricas_s1010_prontas'], 0, ',', '.') }}</span>
+                        </a>
+                        <a href="{{ route('rubricas.index', ['prontidao' => 'pendente']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-amber-400/40 hover:bg-amber-500/5">
+                            <span>Pendencias S-1010</span>
+                            <span class="badge badge-warning badge-outline">{{ number_format($resumo['rubricas_s1010_pendentes'], 0, ',', '.') }}</span>
+                        </a>
                         <a href="{{ route('rubricas.index', ['vigencia' => 'ativa']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-emerald-400/40 hover:bg-emerald-500/5">
                             <span>Rubricas com vigencia ativa</span>
                             <span class="badge badge-success badge-outline">{{ number_format($resumo['rubricas_vigencia_ativa'], 0, ',', '.') }}</span>

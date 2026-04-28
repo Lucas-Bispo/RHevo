@@ -35,6 +35,8 @@ class RubricaController extends Controller
         $esocial = in_array($esocial, ['com_codigo', 'sem_codigo'], true) ? $esocial : '';
         $vigencia = trim((string) $request->string('vigencia'));
         $vigencia = in_array($vigencia, ['ativa', 'futura', 'encerrada', 'sem_inicio'], true) ? $vigencia : '';
+        $prontidao = trim((string) $request->string('prontidao'));
+        $prontidao = in_array($prontidao, ['pronta', 'pendente'], true) ? $prontidao : '';
         $today = Carbon::today()->toDateString();
 
         $baseQuery = Rubrica::query()
@@ -58,6 +60,7 @@ class RubricaController extends Controller
             ->when($esocial === 'com_codigo', fn ($query) => $query->whereNotNull('codigo_esocial'))
             ->when($esocial === 'sem_codigo', fn ($query) => $query->whereNull('codigo_esocial'))
             ->when($vigencia !== '', fn ($query) => $this->applyVigenciaFilter($query, $vigencia, $today))
+            ->when($prontidao !== '', fn ($query) => $this->applyProntidaoFilter($query, $prontidao, $today))
             ->orderBy('nome')
             ->paginate(12)
             ->withQueryString();
@@ -79,6 +82,8 @@ class RubricaController extends Controller
                 'vigencia_ativa' => $this->countByVigencia(clone $baseQuery, 'ativa', $today),
                 'vigencia_futura' => $this->countByVigencia(clone $baseQuery, 'futura', $today),
                 'vigencia_encerrada' => $this->countByVigencia(clone $baseQuery, 'encerrada', $today),
+                's1010_prontas' => $this->countByProntidao(clone $baseQuery, 'pronta', $today),
+                's1010_pendentes' => $this->countByProntidao(clone $baseQuery, 'pendente', $today),
             ],
             'filtros' => [
                 'q' => $search,
@@ -88,6 +93,7 @@ class RubricaController extends Controller
                 'incidencia' => $incidencia,
                 'esocial' => $esocial,
                 'vigencia' => $vigencia,
+                'prontidao' => $prontidao,
             ],
         ]);
     }
@@ -151,5 +157,31 @@ class RubricaController extends Controller
     private function countByVigencia($query, string $vigencia, string $today): int
     {
         return $this->applyVigenciaFilter($query, $vigencia, $today)->count();
+    }
+
+    private function applyProntidaoFilter($query, string $prontidao, string $today)
+    {
+        $applyPronta = function ($nestedQuery) use ($today): void {
+            $nestedQuery
+                ->where('ativo', true)
+                ->whereNotNull('codigo_esocial')
+                ->whereDate('inicio_validade', '<=', $today)
+                ->where(function ($dateQuery) use ($today) {
+                    $dateQuery
+                        ->whereNull('fim_validade')
+                        ->orWhereDate('fim_validade', '>=', $today);
+                });
+        };
+
+        return match ($prontidao) {
+            'pronta' => $query->where($applyPronta),
+            'pendente' => $query->whereNot($applyPronta),
+            default => $query,
+        };
+    }
+
+    private function countByProntidao($query, string $prontidao, string $today): int
+    {
+        return $this->applyProntidaoFilter($query, $prontidao, $today)->count();
     }
 }

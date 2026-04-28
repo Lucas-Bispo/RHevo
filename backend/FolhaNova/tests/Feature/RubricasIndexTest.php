@@ -280,6 +280,76 @@ class RubricasIndexTest extends TestCase
             ->assertSee('Natureza: 9201');
     }
 
+    public function test_rubricas_index_can_filter_by_s1010_readiness(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 99,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 99,
+            'codigo' => 'S1010-OK',
+            'nome' => 'Rubrica pronta S1010',
+            'natureza' => '1000',
+            'tipo' => 'provento',
+            'incide_irrf' => true,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'codigo_esocial' => 'RUB-OK',
+            'inicio_validade' => Carbon::today()->subMonth()->toDateString(),
+            'fim_validade' => null,
+            'ativo' => true,
+        ]);
+
+        Rubrica::create([
+            'tenant_id' => 99,
+            'codigo' => 'S1010-PEND',
+            'nome' => 'Rubrica pendente S1010',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => false,
+            'incide_fgts' => false,
+            'codigo_esocial' => null,
+            'inicio_validade' => Carbon::today()->subMonth()->toDateString(),
+            'fim_validade' => null,
+            'ativo' => true,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index'))
+            ->assertOk()
+            ->assertSee('Prontas S-1010')
+            ->assertSee('Pendencias S-1010')
+            ->assertSee('href="'.route('rubricas.index', ['prontidao' => 'pronta']).'"', false)
+            ->assertSee('href="'.route('rubricas.index', ['prontidao' => 'pendente']).'"', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['prontidao' => 'pronta']))
+            ->assertOk()
+            ->assertSee('Rubrica pronta S1010')
+            ->assertDontSee('Rubrica pendente S1010')
+            ->assertSee('Prontidao S-1010: Pronta')
+            ->assertSee('value="pronta" selected', false)
+            ->assertViewHas('rubricas', fn ($rubricas) => $rubricas->getCollection()->every(
+                fn ($rubrica) => $rubrica->ativo
+                    && filled($rubrica->codigo_esocial)
+                    && $rubrica->inicio_validade?->lte(Carbon::today())
+                    && ($rubrica->fim_validade === null || $rubrica->fim_validade->gte(Carbon::today()))
+            ));
+
+        $this
+            ->actingAs($user)
+            ->get(route('rubricas.index', ['prontidao' => 'pendente']))
+            ->assertOk()
+            ->assertSee('Rubrica pendente S1010')
+            ->assertDontSee('Rubrica pronta S1010')
+            ->assertSee('Prontidao S-1010: Com pendencias')
+            ->assertSee('value="pendente" selected', false);
+    }
+
     public function test_rubricas_index_links_incidencia_summaries_to_filters(): void
     {
         $user = User::factory()->create([
