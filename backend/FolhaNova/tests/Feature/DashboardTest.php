@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Cargo;
 use App\Models\EventoEsocial;
+use App\Models\Funcao;
 use App\Models\Lotacao;
 use App\Models\Rubrica;
 use App\Models\Servidor;
@@ -96,6 +98,54 @@ class DashboardTest extends TestCase
             'ativa' => true,
         ]);
 
+        Cargo::query()->create([
+            'tenant_id' => $tenant->id,
+            'codigo' => 'DASH-CAR-OK',
+            'nome' => 'Cargo pronto dashboard',
+            'codigo_esocial' => 'S1030-OK',
+            'ativo' => true,
+        ]);
+
+        Cargo::query()->create([
+            'tenant_id' => $tenant->id,
+            'codigo' => 'DASH-CAR-PEND',
+            'nome' => 'Cargo pendente dashboard',
+            'codigo_esocial' => null,
+            'ativo' => true,
+        ]);
+
+        Cargo::query()->create([
+            'tenant_id' => 92,
+            'codigo' => 'DASH-CAR-OUTRO',
+            'nome' => 'Cargo outro tenant',
+            'codigo_esocial' => 'S1030-OUTRO',
+            'ativo' => true,
+        ]);
+
+        Funcao::query()->create([
+            'tenant_id' => $tenant->id,
+            'codigo' => 'DASH-FUN-OK',
+            'nome' => 'Funcao pronta dashboard',
+            'codigo_esocial' => 'S1040-OK',
+            'ativo' => true,
+        ]);
+
+        Funcao::query()->create([
+            'tenant_id' => $tenant->id,
+            'codigo' => 'DASH-FUN-PEND',
+            'nome' => 'Funcao pendente dashboard',
+            'codigo_esocial' => null,
+            'ativo' => true,
+        ]);
+
+        Funcao::query()->create([
+            'tenant_id' => 92,
+            'codigo' => 'DASH-FUN-OUTRO',
+            'nome' => 'Funcao outro tenant',
+            'codigo_esocial' => 'S1040-OUTRO',
+            'ativo' => true,
+        ]);
+
         Rubrica::query()->create([
             'tenant_id' => $tenant->id,
             'codigo' => 'DASH-RUB',
@@ -186,6 +236,10 @@ class DashboardTest extends TestCase
             ->assertSee('Pendencias S-1010')
             ->assertSee('Prontas S-1005/S-1020')
             ->assertSee('Pendencias S-1005/S-1020')
+            ->assertSee('Prontos S-1030')
+            ->assertSee('Pendencias S-1030')
+            ->assertSee('Prontas S-1040')
+            ->assertSee('Pendencias S-1040')
             ->assertSee('Vigencia ativa')
             ->assertSee('Vigencia futura')
             ->assertSee('Vigencia encerrada')
@@ -202,6 +256,10 @@ class DashboardTest extends TestCase
             ->assertSee('Prontidao das lotacoes')
             ->assertSee('Lotacoes prontas')
             ->assertSee('Pendencias estruturais')
+            ->assertSee('Triagem S-1030/S-1040')
+            ->assertSee('Prontidao ocupacional')
+            ->assertSee('Cargos prontos S-1030')
+            ->assertSee('Funcoes prontas S-1040')
             ->assertSee('Triagem S-1010')
             ->assertSee('Prontidao das rubricas')
             ->assertSee('Rubricas prontas S-1010')
@@ -213,6 +271,10 @@ class DashboardTest extends TestCase
             ->assertSee('href="'.route('lotacoes.index', ['prontidao' => 'pronta']).'"', false)
             ->assertSee('href="'.route('lotacoes.index', ['prontidao' => 'pendente']).'"', false)
             ->assertSee('href="'.route('lotacoes.index', ['status' => 'ativas']).'"', false)
+            ->assertSee('href="'.route('cargos.index', ['prontidao' => 'pronto']).'"', false)
+            ->assertSee('href="'.route('cargos.index', ['prontidao' => 'pendente']).'"', false)
+            ->assertSee('href="'.route('funcoes.index', ['prontidao' => 'pronta']).'"', false)
+            ->assertSee('href="'.route('funcoes.index', ['prontidao' => 'pendente']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'ativa']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'futura']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'encerrada']).'"', false)

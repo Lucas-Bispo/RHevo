@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cargo;
 use App\Models\EventoEsocial;
+use App\Models\Funcao;
 use App\Models\Lotacao;
 use App\Models\Rubrica;
 use App\Models\Servidor;
@@ -24,6 +26,10 @@ class DashboardController extends Controller
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
         $lotacoes = Lotacao::query()
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
+        $cargos = Cargo::query()
+            ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
+        $funcoes = Funcao::query()
+            ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
         $eventos = EventoEsocial::query()
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
         $tenant = $tenantId !== null ? Tenant::query()->find($tenantId) : null;
@@ -43,6 +49,10 @@ class DashboardController extends Controller
                 'rubricas_s1010_pendentes' => $this->countRubricasByProntidao(clone $rubricas, 'pendente', $today),
                 'lotacoes_s1005_prontas' => $this->countLotacoesByProntidao(clone $lotacoes, 'pronta'),
                 'lotacoes_s1005_pendentes' => $this->countLotacoesByProntidao(clone $lotacoes, 'pendente'),
+                'cargos_s1030_prontos' => $this->countCargosByProntidao(clone $cargos, 'pronto'),
+                'cargos_s1030_pendentes' => $this->countCargosByProntidao(clone $cargos, 'pendente'),
+                'funcoes_s1040_prontas' => $this->countFuncoesByProntidao(clone $funcoes, 'pronta'),
+                'funcoes_s1040_pendentes' => $this->countFuncoesByProntidao(clone $funcoes, 'pendente'),
             ],
             'orgaoPublicoResumo' => $this->resolveOrgaoPublicoResumo($tenant),
         ]);
@@ -91,6 +101,36 @@ class DashboardController extends Controller
         $applyPronta = function ($nestedQuery): void {
             $nestedQuery
                 ->where('ativa', true)
+                ->whereNotNull('codigo_esocial');
+        };
+
+        return match ($prontidao) {
+            'pronta' => $query->where($applyPronta)->count(),
+            'pendente' => $query->whereNot($applyPronta)->count(),
+            default => 0,
+        };
+    }
+
+    private function countCargosByProntidao($query, string $prontidao): int
+    {
+        $applyPronto = function ($nestedQuery): void {
+            $nestedQuery
+                ->where('ativo', true)
+                ->whereNotNull('codigo_esocial');
+        };
+
+        return match ($prontidao) {
+            'pronto' => $query->where($applyPronto)->count(),
+            'pendente' => $query->whereNot($applyPronto)->count(),
+            default => 0,
+        };
+    }
+
+    private function countFuncoesByProntidao($query, string $prontidao): int
+    {
+        $applyPronta = function ($nestedQuery): void {
+            $nestedQuery
+                ->where('ativo', true)
                 ->whereNotNull('codigo_esocial');
         };
 

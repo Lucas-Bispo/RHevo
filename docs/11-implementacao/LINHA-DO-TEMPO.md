@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **VersÃ£o:** 1.0
 
+### 29/04/2026 - Prontidao S-1030/S-1040 no Dashboard
+
+**Acao realizada:**
+- O dashboard passou a calcular cargos prontos e pendentes para a trilha `S-1030`.
+- O dashboard passou a calcular funcoes prontas e pendentes para a trilha `S-1040`.
+- A leitura demo passou a exibir os totais de `Prontos S-1030`, `Pendencias S-1030`, `Prontas S-1040` e `Pendencias S-1040`.
+- A triagem `S-1030/S-1040` ganhou atalhos para abrir cargos e funcoes prontos ou pendentes.
+- O criterio reutiliza a regra entregue nas listagens: cadastro ativo com codigo eSocial informado.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/DashboardController.php`
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/DashboardTest.php`: `1` teste verde e `57` assercoes.
+
+**Status:** Concluido
+
 ### 28/04/2026 - Prontidao S-1040 na Listagem de Funcoes
 
 **Acao realizada:**
