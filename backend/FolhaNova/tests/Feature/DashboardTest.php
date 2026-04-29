@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\EventoEsocial;
+use App\Models\Lotacao;
 use App\Models\Rubrica;
 use App\Models\Servidor;
 use App\Models\Tenant;
@@ -66,6 +67,33 @@ class DashboardTest extends TestCase
             'data_admissao' => '2026-01-10',
             'salario_base' => 4500,
             'situacao' => 'ativo',
+        ]);
+
+        Lotacao::query()->create([
+            'tenant_id' => $tenant->id,
+            'codigo' => 'DASH-LOT-OK',
+            'nome' => 'Lotacao pronta dashboard',
+            'tipo' => 'secretaria',
+            'codigo_esocial' => 'S1020-OK',
+            'ativa' => true,
+        ]);
+
+        Lotacao::query()->create([
+            'tenant_id' => $tenant->id,
+            'codigo' => 'DASH-LOT-PEND',
+            'nome' => 'Lotacao pendente dashboard',
+            'tipo' => 'setor',
+            'codigo_esocial' => null,
+            'ativa' => true,
+        ]);
+
+        Lotacao::query()->create([
+            'tenant_id' => 92,
+            'codigo' => 'DASH-LOT-OUTRO',
+            'nome' => 'Lotacao outro tenant',
+            'tipo' => 'secretaria',
+            'codigo_esocial' => 'S1020-OUTRO',
+            'ativa' => true,
         ]);
 
         Rubrica::query()->create([
@@ -156,6 +184,8 @@ class DashboardTest extends TestCase
             ->assertSee('Rubricas sem codigo')
             ->assertSee('Prontas S-1010')
             ->assertSee('Pendencias S-1010')
+            ->assertSee('Prontas S-1005/S-1020')
+            ->assertSee('Pendencias S-1005/S-1020')
             ->assertSee('Vigencia ativa')
             ->assertSee('Vigencia futura')
             ->assertSee('Vigencia encerrada')
@@ -168,6 +198,10 @@ class DashboardTest extends TestCase
             ->assertSee('Pendencias')
             ->assertSee('Abrir orgao publico')
             ->assertSee('Abrir S-1000')
+            ->assertSee('Triagem S-1005/S-1020')
+            ->assertSee('Prontidao das lotacoes')
+            ->assertSee('Lotacoes prontas')
+            ->assertSee('Pendencias estruturais')
             ->assertSee('Triagem S-1010')
             ->assertSee('Prontidao das rubricas')
             ->assertSee('Rubricas prontas S-1010')
@@ -176,6 +210,9 @@ class DashboardTest extends TestCase
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['prontidao' => 'pronta']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['prontidao' => 'pendente']).'"', false)
+            ->assertSee('href="'.route('lotacoes.index', ['prontidao' => 'pronta']).'"', false)
+            ->assertSee('href="'.route('lotacoes.index', ['prontidao' => 'pendente']).'"', false)
+            ->assertSee('href="'.route('lotacoes.index', ['status' => 'ativas']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'ativa']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'futura']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['vigencia' => 'encerrada']).'"', false)

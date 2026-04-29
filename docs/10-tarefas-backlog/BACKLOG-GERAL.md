@@ -1,3 +1,30 @@
+### PRODUTO-DASHBOARD-PRONTIDAO-S1005-S1020 - 28/04/2026
+
+**Descricao:**
+Levar para o dashboard a leitura de prontidao `S-1005/S-1020`, exibindo atalhos para lotacoes prontas e pendencias estruturais.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/DashboardController.php`
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- reutilizar o criterio da listagem de lotacoes para prontidao `S-1005/S-1020`;
+- calcular lotacoes prontas e pendentes no dashboard;
+- exibir atalhos de triagem para abrir lotacoes prontas, pendentes e ativas;
+- cobrir a leitura com teste focado do dashboard.
+
+**Resultado:**
+- o dashboard passou a calcular lotacoes prontas e pendentes para `S-1005/S-1020`;
+- a leitura demo exibe os totais de prontidao de lotacoes;
+- a triagem `S-1005/S-1020` ganhou atalhos para `Lotacoes prontas` e `Pendencias estruturais`;
+- teste focado do dashboard cobre os novos atalhos e contadores.
+
 ### PRODUTO-S1005-S1020-PRONTIDAO-LOTACOES - 28/04/2026
 
 **Descricao:**

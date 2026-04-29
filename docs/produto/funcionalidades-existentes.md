@@ -10,6 +10,7 @@
 - Triagem eSocial no dashboard com atalhos para eventos com erro, pendentes e com retorno.
 - Triagem `S-1010` no dashboard com atalhos para rubricas de vigencia ativa, futura e encerrada.
 - Triagem `S-1010` no dashboard com contadores e atalhos de prontidao das rubricas.
+- Triagem `S-1005/S-1020` no dashboard com contadores e atalhos de prontidao das lotacoes.
 - Perfil do usuario autenticado.
 - Navegacao lateral para modulos principais.
 - Modulo de parametros do orgao publico para o tenant atual.

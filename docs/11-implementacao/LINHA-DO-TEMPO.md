@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **VersÃ£o:** 1.0
 
+### 28/04/2026 - Prontidao S-1005/S-1020 no Dashboard
+
+**Acao realizada:**
+- O dashboard passou a calcular lotacoes prontas e pendentes para a trilha `S-1005/S-1020`.
+- A leitura demo passou a exibir os totais de `Prontas S-1005/S-1020` e `Pendencias S-1005/S-1020`.
+- A triagem `S-1005/S-1020` ganhou atalhos para abrir lotacoes prontas, pendencias estruturais e lotacoes ativas.
+- O criterio reutiliza a regra entregue na listagem: lotacao ativa com codigo eSocial informado.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/DashboardController.php`
+- `backend/FolhaNova/resources/views/dashboard.blade.php`
+- `backend/FolhaNova/tests/Feature/DashboardTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/DashboardTest.php`: `1` teste verde e `45` assercoes.
+
+**Status:** Concluido
+
 ### 28/04/2026 - Prontidao S-1005/S-1020 na Listagem de Lotacoes
 
 **Acao realizada:**

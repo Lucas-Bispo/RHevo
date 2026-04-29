@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventoEsocial;
+use App\Models\Lotacao;
 use App\Models\Rubrica;
 use App\Models\Servidor;
 use App\Models\Tenant;
@@ -21,6 +22,8 @@ class DashboardController extends Controller
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
         $rubricas = Rubrica::query()
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
+        $lotacoes = Lotacao::query()
+            ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
         $eventos = EventoEsocial::query()
             ->when($tenantId, fn ($query) => $query->where('tenant_id', $tenantId));
         $tenant = $tenantId !== null ? Tenant::query()->find($tenantId) : null;
@@ -38,6 +41,8 @@ class DashboardController extends Controller
                 'rubricas_vigencia_encerrada' => $this->countRubricasByVigencia(clone $rubricas, 'encerrada', $today),
                 'rubricas_s1010_prontas' => $this->countRubricasByProntidao(clone $rubricas, 'pronta', $today),
                 'rubricas_s1010_pendentes' => $this->countRubricasByProntidao(clone $rubricas, 'pendente', $today),
+                'lotacoes_s1005_prontas' => $this->countLotacoesByProntidao(clone $lotacoes, 'pronta'),
+                'lotacoes_s1005_pendentes' => $this->countLotacoesByProntidao(clone $lotacoes, 'pendente'),
             ],
             'orgaoPublicoResumo' => $this->resolveOrgaoPublicoResumo($tenant),
         ]);
@@ -72,6 +77,21 @@ class DashboardController extends Controller
                         ->whereNull('fim_validade')
                         ->orWhereDate('fim_validade', '>=', $today);
                 });
+        };
+
+        return match ($prontidao) {
+            'pronta' => $query->where($applyPronta)->count(),
+            'pendente' => $query->whereNot($applyPronta)->count(),
+            default => 0,
+        };
+    }
+
+    private function countLotacoesByProntidao($query, string $prontidao): int
+    {
+        $applyPronta = function ($nestedQuery): void {
+            $nestedQuery
+                ->where('ativa', true)
+                ->whereNotNull('codigo_esocial');
         };
 
         return match ($prontidao) {

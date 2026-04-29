@@ -69,6 +69,13 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>Lotacoes</td>
+                                <td>Prontidao S-1005/S-1020, codigo eSocial e status da estrutura.</td>
+                                <td class="text-right">
+                                    <a href="{{ route('lotacoes.index', ['prontidao' => 'pendente']) }}" class="btn btn-ghost btn-sm">Abrir pendencias</a>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>Vigencia das rubricas</td>
                                 <td>Base ativa, futuras programacoes e historico encerrado do `S-1010`.</td>
                                 <td class="text-right">
@@ -102,6 +109,14 @@
                         <li class="flex items-center justify-between">
                             <span>Pendencias S-1010</span>
                             <span class="badge badge-warning badge-outline">{{ number_format($resumo['rubricas_s1010_pendentes'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span>Prontas S-1005/S-1020</span>
+                            <span class="badge badge-success badge-outline">{{ number_format($resumo['lotacoes_s1005_prontas'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span>Pendencias S-1005/S-1020</span>
+                            <span class="badge badge-warning badge-outline">{{ number_format($resumo['lotacoes_s1005_pendentes'], 0, ',', '.') }}</span>
                         </li>
                         <li class="flex items-center justify-between">
                             <span>Vigencia ativa</span>
@@ -172,6 +187,25 @@
                         </div>
                     </div>
                 @endif
+
+                <div class="panel-surface rounded-3xl p-6">
+                    <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Triagem S-1005/S-1020</p>
+                    <h3 class="mt-3 text-xl font-semibold text-white">Prontidao das lotacoes</h3>
+                    <div class="mt-4 space-y-3 text-sm text-slate-200">
+                        <a href="{{ route('lotacoes.index', ['prontidao' => 'pronta']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-emerald-400/40 hover:bg-emerald-500/5">
+                            <span>Lotacoes prontas</span>
+                            <span class="badge badge-success badge-outline">{{ number_format($resumo['lotacoes_s1005_prontas'], 0, ',', '.') }}</span>
+                        </a>
+                        <a href="{{ route('lotacoes.index', ['prontidao' => 'pendente']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-amber-400/40 hover:bg-amber-500/5">
+                            <span>Pendencias estruturais</span>
+                            <span class="badge badge-warning badge-outline">{{ number_format($resumo['lotacoes_s1005_pendentes'], 0, ',', '.') }}</span>
+                        </a>
+                        <a href="{{ route('lotacoes.index', ['status' => 'ativas']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-cyan-400/40 hover:bg-cyan-500/5">
+                            <span>Lotacoes ativas</span>
+                            <span class="badge badge-info badge-outline">Revisar</span>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="panel-surface rounded-3xl p-6">
                     <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Triagem S-1010</p>
