@@ -39,6 +39,9 @@
 - Cards `Prontos S-1030` e `Pendencias S-1030` na listagem de cargos.
 - Resumo visual de filtros ativos na listagem de cargos com acao para limpar filtros.
 - Modulo inicial de funcoes com listagem, cadastro e edicao.
+- Filtro de prontidao `S-1040` na listagem de funcoes, separando funcoes ativas com codigo eSocial das pendencias funcionais.
+- Cards `Prontas S-1040` e `Pendencias S-1040` na listagem de funcoes.
+- Resumo visual de filtros ativos na listagem de funcoes com acao para limpar filtros.
 - Modulo inicial de rubricas com listagem, cadastro e edicao.
 - Validacao inicial de rubricas para `S-1010`, exigindo natureza eSocial (`natRubr`) numerica de 4 digitos.
 - Normalizacao previa dos campos de rubrica para preservar unicidade por tenant mesmo com espacos no preenchimento.

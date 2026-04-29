@@ -33,6 +33,62 @@ class FuncoesIndexTest extends TestCase
             ->assertOk()
             ->assertSee('Funcoes')
             ->assertSee('Supervisor de Unidade')
-            ->assertSee('S1040-SUP');
+            ->assertSee('S1040-SUP')
+            ->assertSee('Prontas S-1040')
+            ->assertSee('Pendencias S-1040')
+            ->assertSee('Base para S-1040');
+    }
+
+    public function test_funcoes_index_filters_by_esocial_readiness(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 54,
+        ]);
+
+        Funcao::create([
+            'tenant_id' => 54,
+            'codigo' => 'COORD',
+            'nome' => 'Coordenador Parametrizado',
+            'codigo_esocial' => 'S1040-COORD',
+            'ativo' => true,
+        ]);
+
+        Funcao::create([
+            'tenant_id' => 54,
+            'codigo' => 'DIR',
+            'nome' => 'Diretor sem Parametrizacao',
+            'codigo_esocial' => null,
+            'ativo' => true,
+        ]);
+
+        Funcao::create([
+            'tenant_id' => 54,
+            'codigo' => 'ANT',
+            'nome' => 'Funcao Antiga',
+            'codigo_esocial' => 'S1040-ANT',
+            'ativo' => false,
+        ]);
+
+        $readyResponse = $this
+            ->actingAs($user)
+            ->get(route('funcoes.index', ['prontidao' => 'pronta']));
+
+        $readyResponse
+            ->assertOk()
+            ->assertSee('Coordenador Parametrizado')
+            ->assertDontSee('Diretor sem Parametrizacao')
+            ->assertDontSee('Funcao Antiga')
+            ->assertSee('Prontidao S-1040: Pronta');
+
+        $pendingResponse = $this
+            ->actingAs($user)
+            ->get(route('funcoes.index', ['prontidao' => 'pendente']));
+
+        $pendingResponse
+            ->assertOk()
+            ->assertSee('Diretor sem Parametrizacao')
+            ->assertSee('Funcao Antiga')
+            ->assertDontSee('Coordenador Parametrizado')
+            ->assertSee('Prontidao S-1040: Com pendencias');
     }
 }

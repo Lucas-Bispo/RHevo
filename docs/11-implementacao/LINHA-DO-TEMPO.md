@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **VersÃ£o:** 1.0
 
+### 28/04/2026 - Prontidao S-1040 na Listagem de Funcoes
+
+**Acao realizada:**
+- Adicionado filtro operacional `prontidao` na listagem de funcoes.
+- Criados cards `Prontas S-1040` e `Pendencias S-1040`.
+- Funcoes prontas foram definidas, nesta etapa, como ativas e com codigo eSocial informado.
+- O resumo visual de filtros passou a exibir `Prontidao S-1040`.
+- A leitura lateral do modulo passou a explicar o criterio de prontidao usado nesta etapa.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/FuncaoController.php`
+- `backend/FolhaNova/resources/views/funcoes/index.blade.php`
+- `backend/FolhaNova/tests/Feature/FuncoesIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/FuncoesIndexTest.php`: `2` testes verdes e `17` assercoes.
+
+**Status:** Concluido
+
 ### 28/04/2026 - Prontidao S-1030 na Listagem de Cargos
 
 **Acao realizada:**

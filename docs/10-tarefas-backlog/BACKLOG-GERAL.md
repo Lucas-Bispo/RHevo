@@ -1,3 +1,33 @@
+### PRODUTO-S1040-PRONTIDAO-FUNCOES - 28/04/2026
+
+**Descricao:**
+Adicionar leitura operacional de prontidao `S-1040` na listagem de funcoes, separando funcoes prontas de pendencias funcionais.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/FuncaoController.php`
+- `backend/FolhaNova/resources/views/funcoes/index.blade.php`
+- `backend/FolhaNova/tests/Feature/FuncoesIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- aplicar nas funcoes o mesmo padrao de prontidao usado em cargos;
+- calcular funcoes prontas como ativas e com codigo eSocial informado;
+- calcular pendencias como complemento operacional dessa regra;
+- adicionar cards e filtro de prontidao na listagem;
+- exibir a prontidao ativa no resumo visual de filtros;
+- cobrir a leitura com teste focado da listagem.
+
+**Resultado:**
+- a listagem de funcoes passou a exibir cards `Prontas S-1040` e `Pendencias S-1040`;
+- o formulario principal ganhou o filtro `Prontidao`;
+- funcoes prontas sao as ativas com codigo eSocial informado;
+- o resumo de filtros ativos mostra `Prontidao S-1040`;
+- teste focado cobre cards, filtro e escopo da base pronta.
+
 ### PRODUTO-S1030-PRONTIDAO-CARGOS - 28/04/2026
 
 **Descricao:**
