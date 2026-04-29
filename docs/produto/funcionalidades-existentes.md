@@ -92,7 +92,7 @@
 - Resumo visual de filtros ativos no painel eSocial com acao para limpar filtros.
 - Cards do painel eSocial para filtrar eventos por ambiente de homologacao ou producao.
 - Cards do painel eSocial para filtrar pendencias e erros atualizados no dia.
-- Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010` e `S-2200`.
+- Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010`, `S-1030`, `S-1040` e `S-2200`.
 - Card do painel eSocial para filtrar eventos sem mensagem de retorno registrada.
 - Filtro do painel eSocial por `origem` do payload, com leitura da origem ativa no resumo de filtros.
 - Filtro do painel eSocial para eventos com ou sem mensagem de retorno registrada, disponivel no card e no formulario principal.

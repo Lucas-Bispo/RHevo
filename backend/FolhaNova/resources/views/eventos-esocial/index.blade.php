@@ -83,7 +83,7 @@
             </a>
         </div>
 
-        <div class="grid gap-4 md:grid-cols-3">
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
                 <p class="text-sm text-slate-400">S-1000</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1000'], 0, ',', '.') }}</p>
@@ -93,6 +93,16 @@
                 <p class="text-sm text-slate-400">S-1010</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1010'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-sky-300">Rubricas</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1030']) }}" class="stat-card block transition hover:border-teal-400/40 hover:bg-teal-500/5 focus:outline-none focus:ring-2 focus:ring-teal-400/50">
+                <p class="text-sm text-slate-400">S-1030</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1030'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-teal-300">Cargos</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1040']) }}" class="stat-card block transition hover:border-violet-400/40 hover:bg-violet-500/5 focus:outline-none focus:ring-2 focus:ring-violet-400/50">
+                <p class="text-sm text-slate-400">S-1040</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1040'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-violet-300">Funcoes</p>
             </a>
             <a href="{{ route('eventos-esocial.index', ['evento' => 'S-2200']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
                 <p class="text-sm text-slate-400">S-2200</p>

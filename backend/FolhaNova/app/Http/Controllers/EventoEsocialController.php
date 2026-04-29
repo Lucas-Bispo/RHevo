@@ -114,6 +114,8 @@ class EventoEsocialController extends Controller
                 'sem_retorno' => (clone $baseQuery)->whereNull('mensagem_retorno')->count(),
                 's1000' => (clone $baseQuery)->where('evento', 'S-1000')->count(),
                 's1010' => (clone $baseQuery)->where('evento', 'S-1010')->count(),
+                's1030' => (clone $baseQuery)->where('evento', 'S-1030')->count(),
+                's1040' => (clone $baseQuery)->where('evento', 'S-1040')->count(),
                 's2200' => (clone $baseQuery)->where('evento', 'S-2200')->count(),
                 'homologacao' => (clone $baseQuery)->where('ambiente', 'homologacao')->count(),
                 'producao' => (clone $baseQuery)->where('ambiente', 'producao')->count(),

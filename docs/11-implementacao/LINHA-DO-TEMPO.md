@@ -2,6 +2,27 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **VersÃ£o:** 1.0
 
+### 29/04/2026 - Atalhos S-1030/S-1040 no Painel eSocial
+
+**Acao realizada:**
+- O painel eSocial passou a calcular os totais de eventos `S-1030` e `S-1040`.
+- A faixa de eventos prioritarios ganhou cards dedicados para cargos e funcoes.
+- Os atalhos abrem a listagem ja filtrada pela trilha selecionada.
+- A entrega preserva os cards existentes de `S-1000`, `S-1010` e `S-2200`.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/EventosEsocialIndexTest.php`: `20` testes verdes e `127` assercoes.
+
+**Status:** Concluido
+
 ### 29/04/2026 - Prontidao S-1030/S-1040 no Dashboard
 
 **Acao realizada:**

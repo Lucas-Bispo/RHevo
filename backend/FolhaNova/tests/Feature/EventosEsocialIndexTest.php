@@ -308,6 +308,22 @@ class EventosEsocialIndexTest extends TestCase
 
         EventoEsocial::create([
             'tenant_id' => 82,
+            'evento' => 'S-1030',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cargos'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 82,
+            'evento' => 'S-1040',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'funcoes'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 82,
             'evento' => 'S-2200',
             'status' => 'pendente',
             'ambiente' => 'homologacao',
@@ -320,15 +336,18 @@ class EventosEsocialIndexTest extends TestCase
             ->assertOk()
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1000']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1030']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1040']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-2200']).'"', false);
 
         $this
             ->actingAs($user)
-            ->get(route('eventos-esocial.index', ['evento' => 'S-1010']))
+            ->get(route('eventos-esocial.index', ['evento' => 'S-1040']))
             ->assertOk()
-            ->assertSee('S-1010')
-            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('evento')->all() === ['S-1010'])
-            ->assertSee('value="S-1010" selected', false);
+            ->assertSee('S-1040')
+            ->assertSee('funcoes')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('evento')->all() === ['S-1040'])
+            ->assertSee('value="S-1040" selected', false);
     }
 
     public function test_eventos_index_links_environment_summaries_to_environment_filters(): void

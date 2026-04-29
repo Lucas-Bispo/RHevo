@@ -1,3 +1,29 @@
+### PRODUTO-PAINEL-ESOCIAL-ATALHOS-S1030-S1040 - 29/04/2026
+
+**Descricao:**
+Ampliar os atalhos de eventos prioritarios no painel eSocial para incluir as trilhas `S-1030` e `S-1040`.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
+- `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- adicionar contadores de eventos `S-1030` e `S-1040` no resumo do painel;
+- exibir cards dedicados para cargos e funcoes;
+- preservar os cards atuais de `S-1000`, `S-1010` e `S-2200`;
+- cobrir os novos atalhos e o filtro por evento com teste focado.
+
+**Resultado:**
+- o painel eSocial passou a destacar `S-1030` e `S-1040` como eventos prioritarios;
+- os cards abrem a listagem filtrada pela respectiva trilha;
+- teste focado cobre links, contadores e filtragem por `S-1040`.
+
 ### PRODUTO-DASHBOARD-PRONTIDAO-S1030-S1040 - 29/04/2026
 
 **Descricao:**
