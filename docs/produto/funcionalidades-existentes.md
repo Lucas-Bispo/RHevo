@@ -35,6 +35,9 @@
 - Cards `Prontas S-1005/S-1020` e `Pendencias S-1005/S-1020` na listagem de lotacoes.
 - Resumo visual de filtros ativos na listagem de lotacoes com acao para limpar filtros.
 - Modulo inicial de cargos com listagem, cadastro e edicao.
+- Filtro de prontidao `S-1030` na listagem de cargos, separando cargos ativos com codigo eSocial das pendencias ocupacionais.
+- Cards `Prontos S-1030` e `Pendencias S-1030` na listagem de cargos.
+- Resumo visual de filtros ativos na listagem de cargos com acao para limpar filtros.
 - Modulo inicial de funcoes com listagem, cadastro e edicao.
 - Modulo inicial de rubricas com listagem, cadastro e edicao.
 - Validacao inicial de rubricas para `S-1010`, exigindo natureza eSocial (`natRubr`) numerica de 4 digitos.

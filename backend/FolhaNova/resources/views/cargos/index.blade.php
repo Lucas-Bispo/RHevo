@@ -3,6 +3,20 @@
         Cargos
     </x-slot>
 
+    @php
+        $filtrosAtivos = collect([
+            'Busca' => $filtros['q'],
+            'Status' => $filtros['status'] === 'ativos'
+                ? 'Ativos'
+                : ($filtros['status'] === 'inativos' ? 'Inativos' : ''),
+            'Prontidao S-1030' => match ($filtros['prontidao']) {
+                'pronto' => 'Pronto',
+                'pendente' => 'Com pendencias',
+                default => '',
+            },
+        ])->filter();
+    @endphp
+
     <section class="space-y-6">
         @if (session('status'))
             <div class="rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
@@ -10,26 +24,44 @@
             </div>
         @endif
 
-        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <div class="stat-card">
                 <p class="text-sm text-slate-400">Total de cargos</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['total'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-cyan-300">Base ocupacional do orgao</p>
             </div>
-            <div class="stat-card">
+            <a href="{{ route('cargos.index', ['status' => 'ativos']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
                 <p class="text-sm text-slate-400">Ativos</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['ativos'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-emerald-300">Disponiveis para vinculos</p>
-            </div>
-            <div class="stat-card">
+            </a>
+            <a href="{{ route('cargos.index', ['status' => 'inativos']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
                 <p class="text-sm text-slate-400">Inativos</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['inativos'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-amber-300">Preservando historico</p>
-            </div>
+            </a>
+            <a href="{{ route('cargos.index', ['prontidao' => 'pronto']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">Prontos S-1030</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1030_prontos'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Ativos com codigo eSocial</p>
+            </a>
+            <a href="{{ route('cargos.index', ['prontidao' => 'pendente']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
+                <p class="text-sm text-slate-400">Pendencias S-1030</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1030_pendentes'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-amber-300">Revisar codigo ou status</p>
+            </a>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-2">
             <div class="stat-card">
                 <p class="text-sm text-slate-400">Com codigo eSocial</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['com_codigo_esocial'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-cyan-300">Base para S-1030</p>
+            </div>
+            <div class="stat-card">
+                <p class="text-sm text-slate-400">Sem codigo eSocial</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['sem_codigo_esocial'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-amber-300">Pendencia ocupacional</p>
             </div>
         </div>
 
@@ -67,6 +99,15 @@
                                 </select>
                             </label>
 
+                            <label class="form-control w-full xl:w-52">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Prontidao</span>
+                                <select name="prontidao" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                    <option value="">Todos</option>
+                                    <option value="pronto" @selected($filtros['prontidao'] === 'pronto')>Pronto S-1030</option>
+                                    <option value="pendente" @selected($filtros['prontidao'] === 'pendente')>Com pendencias</option>
+                                </select>
+                            </label>
+
                             <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-auto xl:flex-none">
                                 <button type="submit" class="btn btn-info w-full sm:w-auto">Filtrar</button>
                                 <a href="{{ route('cargos.index') }}" class="btn btn-ghost w-full sm:w-auto">Limpar</a>
@@ -74,6 +115,20 @@
                         </form>
                     </div>
                 </div>
+
+                @if ($filtrosAtivos->isNotEmpty())
+                    <div class="mt-6 flex flex-col gap-3 rounded-2xl border border-cyan-400/20 bg-cyan-500/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.25em] text-cyan-200">Filtros ativos</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                @foreach ($filtrosAtivos as $rotulo => $valor)
+                                    <span class="badge badge-outline badge-info">{{ $rotulo }}: {{ $valor }}</span>
+                                @endforeach
+                            </div>
+                        </div>
+                        <a href="{{ route('cargos.index') }}" class="btn btn-ghost btn-sm">Limpar filtros</a>
+                    </div>
+                @endif
 
                 <div class="mt-6 overflow-x-auto">
                     <table class="table">
@@ -126,6 +181,7 @@
                     <ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">
                         <li>O cargo estabiliza a classificacao ocupacional do vinculo.</li>
                         <li>O codigo interno serve a operacao; o codigo eSocial prepara o espelhamento governamental.</li>
+                        <li>Cargos prontos nesta etapa sao ativos e possuem codigo eSocial informado.</li>
                         <li>Esse cadastro reduz inconsistencias na admissao e nas futuras alteracoes contratuais.</li>
                     </ul>
                 </div>

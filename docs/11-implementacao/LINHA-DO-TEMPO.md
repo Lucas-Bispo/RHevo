@@ -2,6 +2,28 @@
 **Documento gerado automaticamente em:** 19 de abril de 2026
 **VersÃ£o:** 1.0
 
+### 28/04/2026 - Prontidao S-1030 na Listagem de Cargos
+
+**Acao realizada:**
+- Adicionado filtro operacional `prontidao` na listagem de cargos.
+- Criados cards `Prontos S-1030` e `Pendencias S-1030`.
+- Cargos prontos foram definidos, nesta etapa, como ativos e com codigo eSocial informado.
+- O resumo visual de filtros passou a exibir `Prontidao S-1030`.
+- A leitura lateral do modulo passou a explicar o criterio de prontidao usado nesta etapa.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Controllers/CargoController.php`
+- `backend/FolhaNova/resources/views/cargos/index.blade.php`
+- `backend/FolhaNova/tests/Feature/CargosIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/CargosIndexTest.php`: `2` testes verdes e `17` assercoes.
+
+**Status:** Concluido
+
 ### 28/04/2026 - Prontidao S-1005/S-1020 no Dashboard
 
 **Acao realizada:**

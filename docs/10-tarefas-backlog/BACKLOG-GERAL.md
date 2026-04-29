@@ -1,3 +1,33 @@
+### PRODUTO-S1030-PRONTIDAO-CARGOS - 28/04/2026
+
+**Descricao:**
+Adicionar leitura operacional de prontidao `S-1030` na listagem de cargos, separando cargos prontos de pendencias ocupacionais.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Controllers/CargoController.php`
+- `backend/FolhaNova/resources/views/cargos/index.blade.php`
+- `backend/FolhaNova/tests/Feature/CargosIndexTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
+- `docs/11-implementacao/LINHA-DO-TEMPO.md`
+
+**Plano:**
+- aplicar nos cargos o mesmo padrao de prontidao usado em lotacoes e rubricas;
+- calcular cargos prontos como ativos e com codigo eSocial informado;
+- calcular pendencias como complemento operacional dessa regra;
+- adicionar cards e filtro de prontidao na listagem;
+- exibir a prontidao ativa no resumo visual de filtros;
+- cobrir a leitura com teste focado da listagem.
+
+**Resultado:**
+- a listagem de cargos passou a exibir cards `Prontos S-1030` e `Pendencias S-1030`;
+- o formulario principal ganhou o filtro `Prontidao`;
+- cargos prontos sao os ativos com codigo eSocial informado;
+- o resumo de filtros ativos mostra `Prontidao S-1030`;
+- teste focado cobre cards, filtro e escopo da base pronta.
+
 ### PRODUTO-DASHBOARD-PRONTIDAO-S1005-S1020 - 28/04/2026
 
 **Descricao:**
