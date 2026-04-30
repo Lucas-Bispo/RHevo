@@ -9,6 +9,7 @@
             'Evento' => $filtros['evento'],
             'Status' => $filtros['status'] !== '' ? ucfirst($filtros['status']) : '',
             'Ambiente' => $filtros['ambiente'] !== '' ? ucfirst($filtros['ambiente']) : '',
+            'Grupo' => $filtros['grupo_label'],
             'Origem' => $filtros['origem'],
             'Retorno' => $filtros['retorno'] === 'com_mensagem'
                 ? 'Com mensagem'
@@ -111,6 +112,24 @@
             </a>
         </div>
 
+        <div class="grid gap-4 md:grid-cols-3">
+            <a href="{{ route('eventos-esocial.index', ['grupo' => 'tabelas']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
+                <p class="text-sm text-slate-400">Eventos de tabela</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['grupo_tabelas'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-cyan-300">Bases S-1000 a S-1040</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['grupo' => 'nao_periodicos']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">Nao periodicos</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['grupo_nao_periodicos'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Vinculos e movimentacoes</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['grupo' => 'periodicos']) }}" class="stat-card block transition hover:border-indigo-400/40 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-400/50">
+                <p class="text-sm text-slate-400">Periodicos</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['grupo_periodicos'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-indigo-300">Folha, beneficios e pagamentos</p>
+            </a>
+        </div>
+
         <div class="grid gap-4 md:grid-cols-2">
             <a href="{{ route('eventos-esocial.index', ['ambiente' => 'homologacao']) }}" class="stat-card block transition hover:border-indigo-400/40 hover:bg-indigo-500/5 focus:outline-none focus:ring-2 focus:ring-indigo-400/50">
                 <p class="text-sm text-slate-400">Homologacao</p>
@@ -187,6 +206,16 @@
                                 <option value="">Todos</option>
                                 <option value="homologacao" @selected($filtros['ambiente'] === 'homologacao')>Homologacao</option>
                                 <option value="producao" @selected($filtros['ambiente'] === 'producao')>Producao</option>
+                            </select>
+                        </label>
+
+                        <label class="form-control w-full xl:w-52">
+                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Grupo</span>
+                            <select name="grupo" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                <option value="">Todos</option>
+                                @foreach ($gruposDisponiveis as $grupoChave => $grupoDisponivel)
+                                    <option value="{{ $grupoChave }}" @selected($filtros['grupo'] === $grupoChave)>{{ $grupoDisponivel['label'] }}</option>
+                                @endforeach
                             </select>
                         </label>
 
@@ -341,6 +370,7 @@
                     <ul class="mt-4 space-y-3 text-sm leading-6 text-slate-300">
                         <li>O painel une eventos institucionais e eventos ligados a servidores no mesmo fluxo.</li>
                         <li>Os filtros ajudam a separar pendencias de homologacao e producao antes da integracao real.</li>
+                        <li>A leitura por grupo prepara a futura montagem de lotes sem misturar tabelas, nao periodicos e periodicos.</li>
                         <li>A tela de detalhe expande payload, retorno e dados do vinculo sem misturar isso ao cadastro.</li>
                     </ul>
                 </div>

@@ -6,6 +6,7 @@ use App\Models\Cargo;
 use App\Models\EventoEsocial;
 use App\Models\Funcao;
 use App\Models\Lotacao;
+use App\Models\Pessoa;
 use App\Models\Rubrica;
 use App\Models\Servidor;
 use App\Models\Tenant;
@@ -122,6 +123,29 @@ class DashboardTest extends TestCase
             'ativo' => true,
         ]);
 
+        $servidorPronto = Servidor::query()->create([
+            'tenant_id' => $tenant->id,
+            'pessoa_id' => $this->createPessoaId($tenant->id, 'Servidor S2200 Pronto', '390.533.447-05', '1990-02-10'),
+            'lotacao_id' => Lotacao::query()->where('tenant_id', $tenant->id)->where('codigo', 'DASH-LOT-OK')->value('id'),
+            'cargo_id' => Cargo::query()->where('tenant_id', $tenant->id)->where('codigo', 'DASH-CAR-OK')->value('id'),
+            'matricula' => 'DASH-S2200-OK',
+            'tipo_vinculo' => 'estatutario',
+            'categoria_esocial' => '301',
+            'regime_previdenciario' => 'rp',
+            'data_admissao' => '2026-02-01',
+            'salario_base' => 4800,
+            'situacao' => 'ativo',
+        ]);
+
+        EventoEsocial::query()->create([
+            'tenant_id' => $tenant->id,
+            'servidor_id' => $servidorPronto->id,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'dashboard_s2200_test'],
+        ]);
+
         Funcao::query()->create([
             'tenant_id' => $tenant->id,
             'codigo' => 'DASH-FUN-OK',
@@ -232,6 +256,8 @@ class DashboardTest extends TestCase
             ->assertSee('Servidores ativos')
             ->assertSee('Eventos com erro')
             ->assertSee('Rubricas sem codigo')
+            ->assertSee('Prontos S-2200')
+            ->assertSee('Pendencias S-2200')
             ->assertSee('Prontas S-1010')
             ->assertSee('Pendencias S-1010')
             ->assertSee('Prontas S-1005/S-1020')
@@ -252,6 +278,9 @@ class DashboardTest extends TestCase
             ->assertSee('Pendencias')
             ->assertSee('Abrir orgao publico')
             ->assertSee('Abrir S-1000')
+            ->assertSee('Triagem S-2200')
+            ->assertSee('Prontidao das admissoes')
+            ->assertSee('Servidores prontos S-2200')
             ->assertSee('Triagem S-1005/S-1020')
             ->assertSee('Prontidao das lotacoes')
             ->assertSee('Lotacoes prontas')
@@ -266,6 +295,9 @@ class DashboardTest extends TestCase
             ->assertSee('Triagem eSocial')
             ->assertSee('Fila operacional')
             ->assertSee('href="'.route('rubricas.index', ['esocial' => 'sem_codigo']).'"', false)
+            ->assertSee('href="'.route('servidores.index', ['prontidao' => 'pronto']).'"', false)
+            ->assertSee('href="'.route('servidores.index', ['prontidao' => 'pendente']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-2200']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['prontidao' => 'pronta']).'"', false)
             ->assertSee('href="'.route('rubricas.index', ['prontidao' => 'pendente']).'"', false)
             ->assertSee('href="'.route('lotacoes.index', ['prontidao' => 'pronta']).'"', false)
@@ -306,12 +338,13 @@ class DashboardTest extends TestCase
         });
     }
 
-    private function createPessoaId(int $tenantId, string $nome, string $cpf): int
+    private function createPessoaId(int $tenantId, string $nome, string $cpf, ?string $dataNascimento = null): int
     {
-        return \App\Models\Pessoa::query()->create([
+        return Pessoa::query()->create([
             'tenant_id' => $tenantId,
             'nome_completo' => $nome,
             'cpf' => $cpf,
+            'data_nascimento' => $dataNascimento,
         ])->id;
     }
 }

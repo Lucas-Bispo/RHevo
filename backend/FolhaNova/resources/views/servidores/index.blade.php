@@ -31,6 +31,16 @@
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['sem_lotacao'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-rose-300">Revisar antes do envio governamental</p>
             </div>
+            <a href="{{ route('servidores.index', ['prontidao' => 'pronto']) }}" class="stat-card block transition hover:border-emerald-400/40 hover:bg-emerald-500/5 focus:outline-none focus:ring-2 focus:ring-emerald-400/50">
+                <p class="text-sm text-slate-400">Prontos S-2200</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s2200_prontos'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-emerald-300">Admissoes com base local consistente</p>
+            </a>
+            <a href="{{ route('servidores.index', ['prontidao' => 'pendente']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
+                <p class="text-sm text-slate-400">Pendencias S-2200</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s2200_pendentes'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-amber-300">Revisar cadastro e evento local</p>
+            </a>
         </div>
 
         <div class="grid gap-6 xl:grid-cols-[1.8fr_1fr]">
@@ -68,6 +78,15 @@
                                 </select>
                             </label>
 
+                            <label class="form-control w-full xl:w-52">
+                                <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Prontidao</span>
+                                <select name="prontidao" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                    <option value="">Todas</option>
+                                    <option value="pronto" @selected($filtros['prontidao'] === 'pronto')>Prontos S-2200</option>
+                                    <option value="pendente" @selected($filtros['prontidao'] === 'pendente')>Pendencias S-2200</option>
+                                </select>
+                            </label>
+
                             <div class="flex w-full flex-col gap-3 sm:flex-row xl:w-auto xl:flex-none">
                                 <button type="submit" class="btn btn-info w-full sm:w-auto">Filtrar</button>
                                 <a href="{{ route('servidores.index') }}" class="btn btn-ghost w-full sm:w-auto">Limpar</a>
@@ -75,6 +94,26 @@
                         </form>
                     </div>
                 </div>
+
+                @if ($filtros['q'] !== '' || $filtros['situacao'] !== '' || $filtros['prontidao'] !== '')
+                    <div class="mt-6 flex flex-wrap items-center gap-2 text-sm text-slate-300">
+                        <span class="text-xs uppercase tracking-[0.25em] text-slate-500">Filtros ativos</span>
+
+                        @if ($filtros['q'] !== '')
+                            <span class="badge badge-outline">Busca: {{ $filtros['q'] }}</span>
+                        @endif
+
+                        @if ($filtros['situacao'] !== '')
+                            <span class="badge badge-outline">Situacao: {{ ucfirst($filtros['situacao']) }}</span>
+                        @endif
+
+                        @if ($filtros['prontidao'] !== '')
+                            <span class="badge badge-outline">Prontidao S-2200: {{ $filtros['prontidao'] === 'pronto' ? 'Prontos' : 'Pendencias' }}</span>
+                        @endif
+
+                        <a href="{{ route('servidores.index') }}" class="btn btn-ghost btn-xs">Limpar filtros</a>
+                    </div>
+                @endif
 
                 <div class="mt-6 overflow-x-auto">
                     <table class="table">
@@ -147,6 +186,11 @@
                         <li>Lotacao e cargo prontos para refletir tabelas S-1005 e estrutura organizacional.</li>
                         <li>Rastreabilidade do evento inicial para posterior envio ao governo.</li>
                     </ul>
+                    <div class="mt-5 flex flex-wrap gap-3">
+                        <a href="{{ route('servidores.index', ['prontidao' => 'pronto']) }}" class="btn btn-outline btn-success btn-sm">Prontos S-2200</a>
+                        <a href="{{ route('servidores.index', ['prontidao' => 'pendente']) }}" class="btn btn-outline btn-warning btn-sm">Pendencias S-2200</a>
+                        <a href="{{ route('eventos-esocial.index', ['evento' => 'S-2200']) }}" class="btn btn-outline btn-info btn-sm">Painel S-2200</a>
+                    </div>
                 </div>
 
                 <div class="panel-surface rounded-3xl p-6">

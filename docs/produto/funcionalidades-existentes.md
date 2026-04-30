@@ -1,5 +1,5 @@
 # Funcionalidades Existentes
-**Atualizado em:** 28/04/2026
+**Atualizado em:** 30/04/2026
 
 ## Plataforma administrativa
 - Login customizado com Livewire.
@@ -7,6 +7,7 @@
 - Dashboard inicial.
 - Triagem `S-1000` no dashboard com resumo do orgao, ambiente, vigencia e status do evento institucional.
 - Triagem `S-1000` no dashboard com leitura de prontidao operacional e quantidade de pendencias.
+- Triagem `S-2200` no dashboard com contadores e atalhos de prontidao das admissoes.
 - Triagem eSocial no dashboard com atalhos para eventos com erro, pendentes e com retorno.
 - Triagem `S-1010` no dashboard com atalhos para rubricas de vigencia ativa, futura e encerrada.
 - Triagem `S-1010` no dashboard com contadores e atalhos de prontidao das rubricas.
@@ -73,6 +74,9 @@
 ## RH operacional
 - Listagem de servidores com filtros por busca e situacao.
 - Resumo operacional de base ativa, pendencias de `S-2200` e vinculos sem lotacao.
+- Filtro de prontidao `S-2200` na listagem de servidores, separando admissoes prontas de pendencias cadastrais e de evento local.
+- Cards `Prontos S-2200` e `Pendencias S-2200` na listagem de servidores.
+- Resumo visual de filtros ativos na listagem de servidores com acao para limpar filtros.
 - Cadastro inicial de admissao com criacao de pessoa, vinculo funcional e evento eSocial pendente.
 - Tela de detalhe do servidor com leitura consolidada do cadastro e dos eventos vinculados.
 - Atalho do detalhe do servidor para abrir o detalhe de cada evento eSocial vinculado.
@@ -90,6 +94,8 @@
 - Acao de reprocessamento local direto na listagem do painel para eventos com erro.
 - Resumo da mensagem de retorno exibido diretamente na listagem do painel eSocial.
 - Resumo visual de filtros ativos no painel eSocial com acao para limpar filtros.
+- Filtro do painel eSocial por grupo operacional, separando eventos de tabela, nao periodicos e periodicos.
+- Cards do painel eSocial para abrir eventos de tabela, eventos nao periodicos e eventos periodicos.
 - Cards do painel eSocial para filtrar eventos por ambiente de homologacao ou producao.
 - Cards do painel eSocial para filtrar pendencias e erros atualizados no dia.
 - Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010`, `S-1030`, `S-1040` e `S-2200`.

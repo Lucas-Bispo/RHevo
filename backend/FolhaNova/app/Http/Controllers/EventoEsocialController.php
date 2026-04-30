@@ -24,6 +24,8 @@ class EventoEsocialController extends Controller
         $evento = trim((string) $request->string('evento'));
         $status = trim((string) $request->string('status'));
         $ambiente = trim((string) $request->string('ambiente'));
+        $grupo = trim((string) $request->string('grupo'));
+        $grupo = array_key_exists($grupo, $this->gruposEsocial()) ? $grupo : '';
         $origem = trim((string) $request->string('origem'));
         $retorno = trim((string) $request->string('retorno'));
         $retorno = in_array($retorno, ['com_mensagem', 'sem_mensagem'], true) ? $retorno : '';
@@ -80,6 +82,7 @@ class EventoEsocialController extends Controller
             ->when($evento !== '', fn ($query) => $query->where('evento', $evento))
             ->when($status !== '', fn ($query) => $query->where('status', $status))
             ->when($ambiente !== '', fn ($query) => $query->where('ambiente', $ambiente))
+            ->when($grupo !== '', fn ($query) => $this->applyGrupoFilter($query, $grupo))
             ->when($origem !== '', fn ($query) => $query->where('payload->origem', $origem))
             ->when($retorno === 'com_mensagem', fn ($query) => $query->whereNotNull('mensagem_retorno'))
             ->when($retorno === 'sem_mensagem', fn ($query) => $query->whereNull('mensagem_retorno'))
@@ -117,6 +120,9 @@ class EventoEsocialController extends Controller
                 's1030' => (clone $baseQuery)->where('evento', 'S-1030')->count(),
                 's1040' => (clone $baseQuery)->where('evento', 'S-1040')->count(),
                 's2200' => (clone $baseQuery)->where('evento', 'S-2200')->count(),
+                'grupo_tabelas' => $this->countGrupo(clone $baseQuery, 'tabelas'),
+                'grupo_nao_periodicos' => $this->countGrupo(clone $baseQuery, 'nao_periodicos'),
+                'grupo_periodicos' => $this->countGrupo(clone $baseQuery, 'periodicos'),
                 'homologacao' => (clone $baseQuery)->where('ambiente', 'homologacao')->count(),
                 'producao' => (clone $baseQuery)->where('ambiente', 'producao')->count(),
                 'institucionais' => (clone $baseQuery)->whereNull('servidor_id')->count(),
@@ -127,6 +133,8 @@ class EventoEsocialController extends Controller
                 'evento' => $evento,
                 'status' => $status,
                 'ambiente' => $ambiente,
+                'grupo' => $grupo,
+                'grupo_label' => $grupo !== '' ? $this->grupoLabel($grupo) : '',
                 'origem' => $origem,
                 'retorno' => $retorno,
                 'contexto' => $contexto,
@@ -152,6 +160,7 @@ class EventoEsocialController extends Controller
                 ->sort()
                 ->values(),
             'servidoresDisponiveis' => $servidoresDisponiveis,
+            'gruposDisponiveis' => $this->gruposEsocial(),
         ]);
     }
 
@@ -193,5 +202,45 @@ class EventoEsocialController extends Controller
             ->whereKey($eventoEsocial->id)
             ->when($request->user()?->tenant_id, fn ($query, $tenantId) => $query->where('tenant_id', $tenantId))
             ->firstOrFail();
+    }
+
+    /**
+     * @return array<string, array{label: string, eventos: array<int, string>}>
+     */
+    private function gruposEsocial(): array
+    {
+        return [
+            'tabelas' => [
+                'label' => 'Eventos de tabela',
+                'eventos' => ['S-1000', 'S-1005', 'S-1010', 'S-1020', 'S-1030', 'S-1040'],
+            ],
+            'nao_periodicos' => [
+                'label' => 'Eventos nao periodicos',
+                'eventos' => ['S-2200', 'S-2205', 'S-2206', 'S-2230', 'S-2299'],
+            ],
+            'periodicos' => [
+                'label' => 'Eventos periodicos',
+                'eventos' => ['S-1200', 'S-1202', 'S-1207', 'S-1210'],
+            ],
+        ];
+    }
+
+    private function applyGrupoFilter($query, string $grupo)
+    {
+        $eventos = $this->gruposEsocial()[$grupo]['eventos'] ?? [];
+
+        return $eventos === []
+            ? $query
+            : $query->whereIn('evento', $eventos);
+    }
+
+    private function countGrupo($query, string $grupo): int
+    {
+        return $this->applyGrupoFilter($query, $grupo)->count();
+    }
+
+    private function grupoLabel(string $grupo): string
+    {
+        return $this->gruposEsocial()[$grupo]['label'] ?? '';
     }
 }

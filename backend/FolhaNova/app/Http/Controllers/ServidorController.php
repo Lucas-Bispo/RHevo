@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreServidorRequest;
 use App\Http\Requests\UpdateServidorRequest;
-use App\Models\Servidor;
 use App\Models\Cargo;
 use App\Models\Funcao;
 use App\Models\Lotacao;
+use App\Models\Servidor;
 use App\Services\Servidores\AtualizarServidorService;
 use App\Services\Servidores\RegistrarAdmissaoService;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class ServidorController extends Controller
 {
@@ -30,6 +32,7 @@ class ServidorController extends Controller
         $tenantId = $request->user()?->tenant_id;
         $search = trim((string) $request->string('q'));
         $status = trim((string) $request->string('situacao'));
+        $prontidao = trim((string) $request->string('prontidao'));
 
         $baseQuery = Servidor::query()
             ->with(['pessoa', 'lotacao', 'cargo'])
@@ -47,6 +50,7 @@ class ServidorController extends Controller
                 });
             })
             ->when($status !== '', fn ($query) => $query->where('situacao', $status))
+            ->when($prontidao !== '', fn ($query) => $this->applyProntidaoS2200Filter($query, $prontidao))
             ->orderByDesc('data_admissao')
             ->orderBy('matricula')
             ->paginate(12)
@@ -59,6 +63,8 @@ class ServidorController extends Controller
                 ->whereDoesntHave('eventosEsocial', fn ($query) => $query->where('evento', 'S-2200'))
                 ->count(),
             'sem_lotacao' => (clone $baseQuery)->whereNull('lotacao_id')->count(),
+            's2200_prontos' => $this->countByProntidaoS2200(clone $baseQuery, 'pronto'),
+            's2200_pendentes' => $this->countByProntidaoS2200(clone $baseQuery, 'pendente'),
         ];
 
         return view('servidores.index', [
@@ -67,6 +73,7 @@ class ServidorController extends Controller
             'filtros' => [
                 'q' => $search,
                 'situacao' => $status,
+                'prontidao' => $prontidao,
             ],
         ]);
     }
@@ -124,8 +131,8 @@ class ServidorController extends Controller
     }
 
     /**
-     * @param  class-string<\Illuminate\Database\Eloquent\Model>  $modelClass
-     * @return \Illuminate\Support\Collection<int, \Illuminate\Database\Eloquent\Model>
+     * @param  class-string<Model>  $modelClass
+     * @return Collection<int, Model>
      */
     private function lookupOptions(string $modelClass, ?int $tenantId)
     {
@@ -141,5 +148,33 @@ class ServidorController extends Controller
             ->whereKey($servidor->id)
             ->when($request->user()?->tenant_id, fn ($query, $tenantId) => $query->where('tenant_id', $tenantId))
             ->firstOrFail();
+    }
+
+    private function applyProntidaoS2200Filter($query, string $prontidao)
+    {
+        $applyPronto = function ($nestedQuery): void {
+            $nestedQuery
+                ->where('situacao', 'ativo')
+                ->whereNotNull('lotacao_id')
+                ->whereNotNull('cargo_id')
+                ->whereNotNull('categoria_esocial')
+                ->whereNotNull('regime_previdenciario')
+                ->whereNotNull('data_admissao')
+                ->whereHas('pessoa', fn ($personQuery) => $personQuery
+                    ->whereNotNull('cpf')
+                    ->whereNotNull('data_nascimento'))
+                ->whereHas('eventosEsocial', fn ($eventQuery) => $eventQuery->where('evento', 'S-2200'));
+        };
+
+        return match ($prontidao) {
+            'pronto' => $query->where($applyPronto),
+            'pendente' => $query->whereNot($applyPronto),
+            default => $query,
+        };
+    }
+
+    private function countByProntidaoS2200($query, string $prontidao): int
+    {
+        return $this->applyProntidaoS2200Filter($query, $prontidao)->count();
     }
 }

@@ -37,6 +37,8 @@ class DashboardController extends Controller
         return view('dashboard', [
             'resumo' => [
                 'servidores_ativos' => (clone $servidores)->where('situacao', 'ativo')->count(),
+                'servidores_s2200_prontos' => $this->countServidoresByProntidao(clone $servidores, 'pronto'),
+                'servidores_s2200_pendentes' => $this->countServidoresByProntidao(clone $servidores, 'pendente'),
                 'eventos_pendentes' => (clone $eventos)->where('status', 'pendente')->count(),
                 'rubricas_ativas' => (clone $rubricas)->where('ativo', true)->count(),
                 'eventos_com_erro' => (clone $eventos)->where('status', 'erro')->count(),
@@ -71,6 +73,29 @@ class DashboardController extends Controller
                 ->count(),
             'futura' => $query->whereDate('inicio_validade', '>', $today)->count(),
             'encerrada' => $query->whereNotNull('fim_validade')->whereDate('fim_validade', '<', $today)->count(),
+            default => 0,
+        };
+    }
+
+    private function countServidoresByProntidao($query, string $prontidao): int
+    {
+        $applyPronto = function ($nestedQuery): void {
+            $nestedQuery
+                ->where('situacao', 'ativo')
+                ->whereNotNull('lotacao_id')
+                ->whereNotNull('cargo_id')
+                ->whereNotNull('categoria_esocial')
+                ->whereNotNull('regime_previdenciario')
+                ->whereNotNull('data_admissao')
+                ->whereHas('pessoa', fn ($personQuery) => $personQuery
+                    ->whereNotNull('cpf')
+                    ->whereNotNull('data_nascimento'))
+                ->whereHas('eventosEsocial', fn ($eventQuery) => $eventQuery->where('evento', 'S-2200'));
+        };
+
+        return match ($prontidao) {
+            'pronto' => $query->where($applyPronto)->count(),
+            'pendente' => $query->whereNot($applyPronto)->count(),
             default => 0,
         };
     }

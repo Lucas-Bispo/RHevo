@@ -350,6 +350,76 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('value="S-1040" selected', false);
     }
 
+    public function test_eventos_index_can_filter_by_esocial_group(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 97,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 97,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 97,
+            'evento' => 'S-1010',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 97,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 97,
+            'evento' => 'S-1202',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'folha_rpps'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('Eventos de tabela')
+            ->assertSee('Nao periodicos')
+            ->assertSee('Periodicos')
+            ->assertSee('href="'.route('eventos-esocial.index', ['grupo' => 'tabelas']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['grupo' => 'nao_periodicos']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['grupo' => 'periodicos']).'"', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['grupo' => 'tabelas']))
+            ->assertOk()
+            ->assertSee('Grupo: Eventos de tabela')
+            ->assertSee('parametros_orgao_publico')
+            ->assertSee('rubricas')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('evento')->every(
+                fn ($evento) => in_array($evento, ['S-1000', 'S-1010'], true)
+            ))
+            ->assertSee('value="tabelas" selected', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['grupo' => 'periodicos']))
+            ->assertOk()
+            ->assertSee('Grupo: Eventos periodicos')
+            ->assertSee('folha_rpps')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('evento')->all() === ['S-1202']);
+    }
+
     public function test_eventos_index_links_environment_summaries_to_environment_filters(): void
     {
         $user = User::factory()->create([

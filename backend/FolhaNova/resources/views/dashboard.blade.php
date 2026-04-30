@@ -110,6 +110,14 @@
                             <span class="badge badge-warning badge-outline">{{ number_format($resumo['rubricas_sem_codigo'], 0, ',', '.') }}</span>
                         </li>
                         <li class="flex items-center justify-between">
+                            <span>Prontos S-2200</span>
+                            <span class="badge badge-success badge-outline">{{ number_format($resumo['servidores_s2200_prontos'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
+                            <span>Pendencias S-2200</span>
+                            <span class="badge badge-warning badge-outline">{{ number_format($resumo['servidores_s2200_pendentes'], 0, ',', '.') }}</span>
+                        </li>
+                        <li class="flex items-center justify-between">
                             <span>Prontas S-1010</span>
                             <span class="badge badge-success badge-outline">{{ number_format($resumo['rubricas_s1010_prontas'], 0, ',', '.') }}</span>
                         </li>
@@ -210,6 +218,25 @@
                         </div>
                     </div>
                 @endif
+
+                <div class="panel-surface rounded-3xl p-6">
+                    <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Triagem S-2200</p>
+                    <h3 class="mt-3 text-xl font-semibold text-white">Prontidao das admissoes</h3>
+                    <div class="mt-4 space-y-3 text-sm text-slate-200">
+                        <a href="{{ route('servidores.index', ['prontidao' => 'pronto']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-emerald-400/40 hover:bg-emerald-500/5">
+                            <span>Servidores prontos S-2200</span>
+                            <span class="badge badge-success badge-outline">{{ number_format($resumo['servidores_s2200_prontos'], 0, ',', '.') }}</span>
+                        </a>
+                        <a href="{{ route('servidores.index', ['prontidao' => 'pendente']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-amber-400/40 hover:bg-amber-500/5">
+                            <span>Pendencias S-2200</span>
+                            <span class="badge badge-warning badge-outline">{{ number_format($resumo['servidores_s2200_pendentes'], 0, ',', '.') }}</span>
+                        </a>
+                        <a href="{{ route('eventos-esocial.index', ['evento' => 'S-2200']) }}" class="flex items-center justify-between rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 transition hover:border-cyan-400/40 hover:bg-cyan-500/5">
+                            <span>Eventos S-2200</span>
+                            <span class="badge badge-info badge-outline">Revisar</span>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="panel-surface rounded-3xl p-6">
                     <p class="text-xs uppercase tracking-[0.35em] text-slate-400">Triagem S-1005/S-1020</p>
