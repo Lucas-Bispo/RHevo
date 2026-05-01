@@ -86,6 +86,7 @@
 - Cards `Prontos S-2200` e `Pendencias S-2200` na listagem de servidores.
 - Resumo visual de filtros ativos na listagem de servidores com acao para limpar filtros.
 - Cadastro inicial de admissao com criacao de pessoa, vinculo funcional e evento eSocial pendente.
+- Normalizacao e unicidade de matricula por tenant no cadastro de servidores para reduzir duplicidades operacionais no `S-2200`.
 - Tela de detalhe do servidor com leitura consolidada do cadastro e dos eventos vinculados.
 - Atalho do detalhe do servidor para abrir o detalhe de cada evento eSocial vinculado.
 - Edicao do cadastro do servidor com sincronizacao do payload do `S-2200` pendente.

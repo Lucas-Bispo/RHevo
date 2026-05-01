@@ -13,6 +13,8 @@ class StoreServidorRequest extends FormRequest
             'cpf' => $this->formatCpf((string) $this->input('cpf')),
             'cep' => $this->formatCep($this->input('cep')),
             'uf' => $this->input('uf') ? strtoupper((string) $this->input('uf')) : null,
+            'matricula' => $this->upperTrimmed('matricula'),
+            'categoria_esocial' => $this->nullableTrimmed('categoria_esocial'),
         ]);
     }
 
@@ -115,5 +117,17 @@ class StoreServidorRequest extends FormRequest
         }
 
         return preg_replace('/(\d{5})(\d{3})/', '$1-$2', $digits) ?: (string) $cep;
+    }
+
+    private function upperTrimmed(string $key): string
+    {
+        return strtoupper(trim((string) $this->input($key)));
+    }
+
+    private function nullableTrimmed(string $key): ?string
+    {
+        $value = trim((string) $this->input($key));
+
+        return $value === '' ? null : $value;
     }
 }

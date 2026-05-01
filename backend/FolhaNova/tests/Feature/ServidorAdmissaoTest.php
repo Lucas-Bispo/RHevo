@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Models\Cargo;
-use App\Models\EventoEsocial;
 use App\Models\Funcao;
 use App\Models\Lotacao;
 use App\Models\Pessoa;
@@ -120,6 +119,57 @@ class ServidorAdmissaoTest extends TestCase
             'evento' => 'S-2200',
             'status' => 'pendente',
             'ambiente' => 'homologacao',
+        ]);
+    }
+
+    public function test_user_cannot_register_servidor_with_duplicate_normalized_matricula_in_same_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 101,
+        ]);
+
+        $pessoa = Pessoa::create([
+            'tenant_id' => 101,
+            'nome_completo' => 'Servidor Base',
+            'cpf' => '529.982.247-25',
+        ]);
+
+        Servidor::create([
+            'tenant_id' => 101,
+            'pessoa_id' => $pessoa->id,
+            'matricula' => 'ADM-0001',
+            'tipo_vinculo' => 'estatutario',
+            'situacao' => 'ativo',
+            'salario_base' => 4200,
+            'data_admissao' => '2026-04-20',
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('servidores.create'))
+            ->post(route('servidores.store'), [
+                'nome_completo' => 'Servidor Duplicado',
+                'cpf' => '39053344705',
+                'data_nascimento' => '1990-01-15',
+                'email' => 'duplicado@prefeitura.gov.br',
+                'matricula' => ' adm-0001 ',
+                'tipo_vinculo' => 'estatutario',
+                'categoria_esocial' => ' 301 ',
+                'regime_previdenciario' => 'rpps',
+                'data_admissao' => '2026-04-20',
+                'salario_base' => '4200.00',
+                'situacao' => 'ativo',
+                'ambiente_esocial' => 'homologacao',
+            ]);
+
+        $response
+            ->assertRedirect(route('servidores.create'))
+            ->assertSessionHasErrors('matricula');
+
+        $this->assertSame(1, Servidor::query()->where('tenant_id', 101)->where('matricula', 'ADM-0001')->count());
+        $this->assertDatabaseMissing('pessoas', [
+            'tenant_id' => 101,
+            'nome_completo' => 'Servidor Duplicado',
         ]);
     }
 }

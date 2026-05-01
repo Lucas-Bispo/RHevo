@@ -21,6 +21,7 @@
 - `CPF` do trabalhador deve ser valido e consistente com data de nascimento.
 - `data_admissao` nao pode violar coerencia temporal do vinculo.
 - `matricula` deve ser unica no contexto contratual aplicavel.
+- `matricula` deve ser normalizada antes da validacao para impedir duplicidade mascarada por caixa ou espacos.
 
 ### Alteracao cadastral
 - `S-2205` deve alterar apenas dados cadastrais.
