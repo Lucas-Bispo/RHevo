@@ -50,7 +50,7 @@
         @include('servidores.partials.select', ['name' => 'tipo_inscricao', 'label' => 'Tipo de inscricao', 'required' => true, 'options' => ['1' => 'CNPJ', '2' => 'CPF'], 'value' => old('tipo_inscricao', $parametros['tipo_inscricao'] ?? '1')])
         @include('servidores.partials.field', ['name' => 'numero_inscricao', 'label' => 'Numero de inscricao', 'required' => true, 'placeholder' => '00.000.000/0001-00', 'value' => old('numero_inscricao', $parametros['numero_inscricao'] ?? null)])
         @include('servidores.partials.field', ['name' => 'natureza_juridica', 'label' => 'Natureza juridica', 'required' => $tipoInscricaoAtual === '1', 'placeholder' => 'Ex.: 1244', 'value' => $naturezaJuridicaAtual])
-        @include('servidores.partials.select', ['name' => 'classificacao_tributaria', 'label' => 'Classificacao tributaria', 'required' => true, 'options' => ['21' => '21 - Pessoa fisica equiparada / contexto por CPF', '85' => '85 - Administracao publica direta, autarquias e fundacoes'], 'value' => old('classificacao_tributaria', $parametros['classificacao_tributaria'] ?? null)])
+        @include('servidores.partials.select', ['name' => 'classificacao_tributaria', 'label' => 'Classificacao tributaria', 'required' => true, 'options' => \App\Support\Esocial\ClassificacoesTributarias::options(), 'value' => old('classificacao_tributaria', $parametros['classificacao_tributaria'] ?? null)])
         @include('servidores.partials.select', ['name' => 'ambiente_esocial', 'label' => 'Ambiente eSocial', 'required' => true, 'options' => ['homologacao' => 'Homologacao', 'producao' => 'Producao'], 'value' => old('ambiente_esocial', $parametros['ambiente_esocial'] ?? 'homologacao')])
     </div>
 </div>

@@ -2,13 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Support\Esocial\ClassificacoesTributarias;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
 class UpdateOrgaoPublicoRequest extends FormRequest
 {
-    private const CLASSIFICACOES_TRIBUTARIAS_PERMITIDAS = ['21', '85'];
-
     protected function prepareForValidation(): void
     {
         $this->merge([
@@ -42,7 +42,7 @@ class UpdateOrgaoPublicoRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'tipo_inscricao' => ['required', 'in:1,2'],
             'numero_inscricao' => ['required', 'string', 'max:18'],
-            'classificacao_tributaria' => ['required', 'in:'.implode(',', self::CLASSIFICACOES_TRIBUTARIAS_PERMITIDAS)],
+            'classificacao_tributaria' => ['required', Rule::in(ClassificacoesTributarias::codes())],
             'natureza_juridica' => ['nullable', 'digits:4'],
             'inicio_validade' => ['required', 'regex:/^\d{4}-(0[1-9]|1[0-2])$/'],
             'fim_validade' => ['nullable', 'regex:/^\d{4}-(0[1-9]|1[0-2])$/'],
@@ -75,12 +75,12 @@ class UpdateOrgaoPublicoRequest extends FormRequest
                 $validator->errors()->add('natureza_juridica', 'Informe a natureza juridica para inscricoes por CNPJ.');
             }
 
-            if ($tipoInscricao === '1' && $classificacaoTributaria === '21') {
-                $validator->errors()->add('classificacao_tributaria', 'Use a classificacao tributaria compativel com inscricao por CNPJ nesta etapa.');
-            }
-
-            if ($tipoInscricao === '2' && $classificacaoTributaria === '85') {
-                $validator->errors()->add('classificacao_tributaria', 'Use a classificacao tributaria compativel com inscricao por CPF nesta etapa.');
+            if (
+                in_array($tipoInscricao, ['1', '2'], true)
+                && $classificacaoTributaria !== ''
+                && ! ClassificacoesTributarias::isCompatibleWithTipoInscricao($classificacaoTributaria, $tipoInscricao)
+            ) {
+                $validator->errors()->add('classificacao_tributaria', 'Use uma classificacao tributaria compativel com o tipo de inscricao nesta etapa.');
             }
 
             if ($contatoCpf !== '' && ! $this->isValidCpf($contatoCpf)) {
@@ -119,7 +119,7 @@ class UpdateOrgaoPublicoRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'classificacao_tributaria.in' => 'Selecione uma classificacao tributaria permitida para esta etapa do S-1000.',
+            'classificacao_tributaria.in' => 'Selecione uma classificacao tributaria suportada pelo recorte atual do S-1000.',
         ];
     }
 

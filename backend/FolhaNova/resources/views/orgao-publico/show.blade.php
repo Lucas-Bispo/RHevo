@@ -8,13 +8,9 @@
         $naturezaJuridicaLabel = $tipoInscricao === '2'
             ? 'Nao se aplica para inscricao por CPF'
             : ($parametros['natureza_juridica'] ?? 'Nao informada');
-        $classificacoesTributarias = [
-            '21' => '21 - Pessoa fisica equiparada / contexto por CPF',
-            '85' => '85 - Administracao publica direta, autarquias e fundacoes',
-        ];
         $classificacaoTributaria = $parametros['classificacao_tributaria'] ?? null;
         $classificacaoTributariaLabel = $classificacaoTributaria
-            ? ($classificacoesTributarias[$classificacaoTributaria] ?? $classificacaoTributaria)
+            ? (\App\Support\Esocial\ClassificacoesTributarias::label($classificacaoTributaria) ?? $classificacaoTributaria)
             : 'Nao informada';
         $vigenciaLabel = isset($parametros['inicio_validade'])
             ? (($parametros['inicio_validade'] ?? 'Nao definido').' ate '.($parametros['fim_validade'] ?? 'Em aberto'))
