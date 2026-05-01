@@ -8,10 +8,11 @@
     $fimAtual = old('fim_validade', optional($rubrica->fim_validade ?? null)->format('Y-m-d'));
     $inicioData = filled($inicioAtual) ? \Illuminate\Support\Carbon::parse($inicioAtual)->startOfDay() : null;
     $fimData = filled($fimAtual) ? \Illuminate\Support\Carbon::parse($fimAtual)->startOfDay() : null;
+    $naturezaLabel = \App\Support\Esocial\NaturezasRubrica::label($naturezaAtual);
 
     $combinacaoInvalida = false;
 
-    if (! preg_match('/^\d{4}$/', $naturezaAtual)) {
+    if ($naturezaLabel === null) {
         $combinacaoInvalida = true;
     }
 
@@ -42,7 +43,11 @@
     <p class="text-xs uppercase tracking-[0.35em]">Consistencia S-1010</p>
     <h3 class="mt-2 text-lg font-semibold">{{ $heading }}</h3>
     <ul class="mt-3 space-y-2 text-sm leading-6">
-        <li>`natRubr` deve permanecer como codigo numerico de 4 digitos.</li>
+        <li>
+            {{ $naturezaLabel !== null
+                ? "Natureza suportada no recorte atual: {$naturezaLabel}."
+                : '`natRubr` deve usar uma natureza suportada pelo recorte atual do S-1010.' }}
+        </li>
         <li>
             {{ $ativoAtual
                 ? 'Rubricas ativas precisam iniciar ate hoje e nao podem encerrar no passado.'

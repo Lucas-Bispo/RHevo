@@ -1,5 +1,5 @@
 # Plano de Implementacao eSocial
-**Atualizado em:** 20/04/2026
+**Atualizado em:** 01/05/2026
 
 ## Trilha 1 - Fundacao institucional
 1. Fechar `S-1000`
@@ -51,6 +51,11 @@
    - assinatura;
    - envio;
    - consulta de retorno.
+
+## Decisao de sequenciamento
+- A integracao real com o governo fica por ultimo.
+- Antes dela, o projeto deve esgotar o preparo local possivel: validacoes, consistencia cadastral, eventos locais, painel operacional, historico funcional e prontidao dos dados.
+- XML assinado, envio e consulta oficial so entram depois que os fluxos locais estiverem estabilizados e testados.
 
 ## Proxima implementacao sugerida
 - `S-2205 - Alteracao cadastral do trabalhador`, quando a frente ativa do produto retornar ao historico funcional

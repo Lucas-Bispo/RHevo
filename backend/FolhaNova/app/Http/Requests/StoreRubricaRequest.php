@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Support\Esocial\NaturezasRubrica;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -37,7 +38,7 @@ class StoreRubricaRequest extends FormRequest
                 Rule::unique('rubricas', 'codigo')->where(fn ($query) => $query->where('tenant_id', $tenantId)),
             ],
             'nome' => ['required', 'string', 'max:255'],
-            'natureza' => ['required', 'string', 'regex:/^\d{4}$/'],
+            'natureza' => ['required', 'string', 'regex:/^\d{4}$/', Rule::in(NaturezasRubrica::codes())],
             'tipo' => ['required', Rule::in(['provento', 'desconto', 'informativa'])],
             'incide_irrf' => ['required', 'boolean'],
             'incide_inss' => ['required', 'boolean'],
@@ -61,6 +62,16 @@ class StoreRubricaRequest extends FormRequest
                 Rule::when($this->boolean('ativo'), ['after_or_equal:today']),
             ],
             'ativo' => ['required', 'boolean'],
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'natureza.in' => 'Selecione uma natureza de rubrica suportada pelo recorte atual do S-1010.',
         ];
     }
 

@@ -1,7 +1,7 @@
 <div class="grid gap-4 md:grid-cols-2">
     @include('cargos.partials.field', ['name' => 'codigo', 'label' => 'Codigo interno', 'required' => true, 'placeholder' => 'RUB-001', 'value' => old('codigo', $rubrica->codigo ?? null)])
     @include('cargos.partials.field', ['name' => 'nome', 'label' => 'Nome da rubrica', 'required' => true, 'placeholder' => 'Gratificacao de funcao', 'value' => old('nome', $rubrica->nome ?? null)])
-    @include('cargos.partials.field', ['name' => 'natureza', 'label' => 'Natureza eSocial (natRubr)', 'required' => true, 'placeholder' => '1000', 'value' => old('natureza', $rubrica->natureza ?? null)])
+    @include('cargos.partials.select', ['name' => 'natureza', 'label' => 'Natureza eSocial (natRubr)', 'required' => true, 'options' => \App\Support\Esocial\NaturezasRubrica::options(), 'value' => old('natureza', $rubrica->natureza ?? null)])
     @include('cargos.partials.select', ['name' => 'tipo', 'label' => 'Tipo de rubrica', 'required' => true, 'options' => ['provento' => 'Provento', 'desconto' => 'Desconto', 'informativa' => 'Informativa'], 'value' => old('tipo', $rubrica->tipo ?? null)])
     @include('cargos.partials.field', ['name' => 'codigo_esocial', 'label' => 'Codigo eSocial', 'placeholder' => 'S1010-GRAT', 'value' => old('codigo_esocial', $rubrica->codigo_esocial ?? null)])
     @include('cargos.partials.field', ['name' => 'inicio_validade', 'label' => 'Inicio da validade', 'type' => 'date', 'required' => true, 'value' => old('inicio_validade', optional($rubrica->inicio_validade)->format('Y-m-d'))])

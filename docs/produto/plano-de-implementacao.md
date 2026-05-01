@@ -1,5 +1,5 @@
 # Plano de Implementacao
-**Atualizado em:** 20/04/2026
+**Atualizado em:** 01/05/2026
 
 ## Etapa concluida nesta rodada
 - Mapeamento funcional do projeto.
@@ -26,6 +26,7 @@
 - Evoluir rubricas com regras mais profundas de `S-1010`.
 - Evoluir o painel de eventos com acoes de processamento e reprocessamento.
 - Depois voltar ao historico funcional com a base estrutural mais completa.
+- Deixar a integracao real com o governo para a ultima macroetapa, depois da consistencia local dos cadastros, eventos e fluxos operacionais.
 
 ## Regra de continuidade
 - a ordem macro de evolucao do produto deve partir deste documento;

@@ -27,6 +27,9 @@ class RubricaCrudTest extends TestCase
             ->assertSee('Cadastro de rubrica')
             ->assertSee('Consistencia S-1010')
             ->assertSee('Rubrica ativa na janela atual')
+            ->assertSee('1000 - Vencimento, salario ou soldo')
+            ->assertSee('9201 - Desconto previdenciario oficial')
+            ->assertSee('9219 - Outros descontos consignados ou retencoes')
             ->assertSee('Sem codigo eSocial: a rubrica continua como pendencia de parametrizacao do S-1010.')
             ->assertSee('A combinacao atual pede ajuste antes do salvamento.')
             ->assertSee('Apoio S-1010')
@@ -488,6 +491,7 @@ class RubricaCrudTest extends TestCase
             ->assertOk()
             ->assertSee('Consistencia S-1010')
             ->assertSee('Rubrica ativa na janela atual')
+            ->assertSee('Natureza suportada no recorte atual: 1000 - Vencimento, salario ou soldo.')
             ->assertSee('A rubrica atual ja esta identificada com codigo eSocial para a parametrizacao.')
             ->assertSee('A combinacao atual esta alinhada com as regras operacionais ja ativas no cadastro.')
             ->assertSee('Revisao S-1010')
@@ -540,6 +544,7 @@ class RubricaCrudTest extends TestCase
             ->assertOk()
             ->assertSee('Consistencia S-1010')
             ->assertSee('Rubrica inativa ou programada')
+            ->assertSee('Natureza suportada no recorte atual: 9219 - Outros descontos consignados ou retencoes.')
             ->assertSee('Rubricas inativas precisam informar fim de validade para preservar o encerramento da trilha.')
             ->assertSee('A rubrica atual ja esta identificada com codigo eSocial para a parametrizacao.')
             ->assertSee('A combinacao atual esta alinhada com as regras operacionais ja ativas no cadastro.')
@@ -582,6 +587,39 @@ class RubricaCrudTest extends TestCase
             ]);
 
         $response->assertSessionHasErrors('natureza');
+    }
+
+    public function test_user_can_not_create_rubrica_with_unsupported_natureza(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 70,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.create'))
+            ->post(route('rubricas.store'), [
+                'codigo' => 'RUB-NAT-OUT',
+                'nome' => 'Rubrica fora do recorte',
+                'natureza' => '9999',
+                'tipo' => 'provento',
+                'incide_irrf' => '1',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-NAT-OUT',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.create'))
+            ->assertSessionHasErrors('natureza');
+
+        $this->assertDatabaseMissing('rubricas', [
+            'tenant_id' => 70,
+            'codigo' => 'RUB-NAT-OUT',
+        ]);
     }
 
     public function test_user_can_not_create_rubrica_with_duplicate_codigo_surrounded_by_spaces(): void

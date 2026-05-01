@@ -48,6 +48,7 @@
 - Resumo visual de filtros ativos na listagem de funcoes com acao para limpar filtros.
 - Modulo inicial de rubricas com listagem, cadastro e edicao.
 - Validacao inicial de rubricas para `S-1010`, exigindo natureza eSocial (`natRubr`) numerica de 4 digitos.
+- Catalogo local inicial de naturezas de rubrica suportadas para `S-1010`, bloqueando `natRubr` fora do recorte preparado pelo produto.
 - Normalizacao previa dos campos de rubrica para preservar unicidade por tenant mesmo com espacos no preenchimento.
 - Normalizacao e unicidade do codigo eSocial da rubrica por tenant para evitar parametrizacao duplicada do `S-1010`.
 - Filtros de rubricas por tipo, incidencia e situacao de codigo eSocial, incluindo pendencias sem codigo.

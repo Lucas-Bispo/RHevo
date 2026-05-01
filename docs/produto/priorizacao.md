@@ -1,5 +1,5 @@
 # Priorizacao
-**Atualizado em:** 20/04/2026
+**Atualizado em:** 01/05/2026
 
 ## Ordem escolhida
 1. Admissao inicial de servidor.
@@ -24,7 +24,8 @@
 - `5. Parametros do orgao publico`: implementacao inicial concluida.
 - `6. Rubricas`: implementacao inicial concluida.
 - `7. Painel operacional de eventos eSocial`: implementacao inicial concluida.
-- Proxima frente recomendada: `8. aprofundar S-1000, S-1010 e a operacao do painel de eventos`.
+- Proxima frente ativa: `8. aprofundar S-1000, S-1010 e a operacao local do painel de eventos`.
+- Integracao real com governo, incluindo XML assinado, envio e consulta oficial, fica deliberadamente por ultimo.
 
 ## Regra de alinhamento com eSocial
 - `docs/esocial/plano-implementacao.md` continua sendo a referencia tecnica para a ordem dos eventos;
