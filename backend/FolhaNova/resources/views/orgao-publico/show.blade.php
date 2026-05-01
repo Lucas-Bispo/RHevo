@@ -180,6 +180,15 @@
                                 </div>
                                 <p class="mt-2 text-sm text-slate-300">Ambiente: {{ ucfirst($eventoS1000->ambiente) }}</p>
                                 <p class="mt-1 text-xs text-slate-500">Atualizado em {{ optional($eventoS1000->updated_at)->format('d/m/Y H:i') }}</p>
+                                @if ($eventoS1000->status === 'erro')
+                                    <div class="mt-4 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-4 text-sm text-amber-100">
+                                        <p>Evento S-1000 com erro pode ser reenfileirado para reprocessamento local.</p>
+                                        <form method="POST" action="{{ route('eventos-esocial.reprocessar', $eventoS1000) }}" class="mt-3">
+                                            @csrf
+                                            <button type="submit" class="btn btn-warning btn-sm">Reprocessar S-1000</button>
+                                        </form>
+                                    </div>
+                                @endif
                                 <div class="mt-4 flex flex-wrap gap-3">
                                     <a href="{{ route('eventos-esocial.show', $eventoS1000) }}" class="btn btn-ghost btn-sm">Detalhar evento</a>
                                     <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000']) }}" class="btn btn-ghost btn-sm">Abrir S-1000 no painel</a>

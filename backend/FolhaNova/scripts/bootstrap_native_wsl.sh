@@ -14,6 +14,10 @@ BACKEND_PID_FILE="${LOG_DIR}/dev-server.pid"
 VITE_LOG="${LOG_DIR}/vite-dev.log"
 VITE_PID_FILE="${LOG_DIR}/vite-dev.pid"
 
+listener_pid() {
+    lsof -iTCP:"$1" -sTCP:LISTEN 2>/dev/null | awk 'NR > 1 {print $2; exit}' || true
+}
+
 # --- Validacoes iniciais ---
 if [[ ! -d "$PROJECT_DIR" ]]; then
     echo "Projeto nativo nao encontrado em: $PROJECT_DIR"
@@ -65,6 +69,10 @@ if ! timeout 60s bash -c "until curl -s --head http://127.0.0.1:${BACKEND_PORT}/
     echo "ERRO: Backend Laravel nao iniciou a tempo. Verifique o log: ${BACKEND_LOG}" >&2
     exit 1
 fi
+BACKEND_LISTENER_PID="$(listener_pid "$BACKEND_PORT")"
+if [[ -n "$BACKEND_LISTENER_PID" ]]; then
+    echo "$BACKEND_LISTENER_PID" > "$BACKEND_PID_FILE"
+fi
 echo "Backend OK."
 
 echo "[6/7] Subindo Vite em background..."
@@ -76,6 +84,10 @@ echo "Aguardando Vite responder em http://127.0.0.1:${VITE_PORT}..."
 if ! timeout 60s bash -c "until curl -s --head http://127.0.0.1:${VITE_PORT}/resources/js/app.js | grep '200 OK' > /dev/null; do sleep 1; done"; then
     echo "ERRO: Vite nao iniciou a tempo. Verifique o log: ${VITE_LOG}" >&2
     exit 1
+fi
+VITE_LISTENER_PID="$(listener_pid "$VITE_PORT")"
+if [[ -n "$VITE_LISTENER_PID" ]]; then
+    echo "$VITE_LISTENER_PID" > "$VITE_PID_FILE"
 fi
 echo "Vite OK."
 

@@ -84,16 +84,26 @@
             </a>
         </div>
 
-        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-7">
             <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1000']) }}" class="stat-card block transition hover:border-cyan-400/40 hover:bg-cyan-500/5 focus:outline-none focus:ring-2 focus:ring-cyan-400/50">
                 <p class="text-sm text-slate-400">S-1000</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1000'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-cyan-300">Base institucional</p>
             </a>
+            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1005']) }}" class="stat-card block transition hover:border-teal-400/40 hover:bg-teal-500/5 focus:outline-none focus:ring-2 focus:ring-teal-400/50">
+                <p class="text-sm text-slate-400">S-1005</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1005'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-teal-300">Estabelecimentos</p>
+            </a>
             <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1010']) }}" class="stat-card block transition hover:border-sky-400/40 hover:bg-sky-500/5 focus:outline-none focus:ring-2 focus:ring-sky-400/50">
                 <p class="text-sm text-slate-400">S-1010</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1010'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-sky-300">Rubricas</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1020']) }}" class="stat-card block transition hover:border-lime-400/40 hover:bg-lime-500/5 focus:outline-none focus:ring-2 focus:ring-lime-400/50">
+                <p class="text-sm text-slate-400">S-1020</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['s1020'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-lime-300">Lotacoes tributarias</p>
             </a>
             <a href="{{ route('eventos-esocial.index', ['evento' => 'S-1030']) }}" class="stat-card block transition hover:border-teal-400/40 hover:bg-teal-500/5 focus:outline-none focus:ring-2 focus:ring-teal-400/50">
                 <p class="text-sm text-slate-400">S-1030</p>

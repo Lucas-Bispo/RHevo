@@ -319,6 +319,54 @@ class DashboardTest extends TestCase
         Carbon::setTestNow();
     }
 
+    public function test_dashboard_keeps_s1000_with_error_as_pending_readiness(): void
+    {
+        $this->ensureTenantsTableExists();
+
+        $tenant = Tenant::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'name' => 'Prefeitura S1000 Erro',
+            'slug' => 'prefeitura-s1000-erro',
+            'domain' => 'prefeitura-s1000-erro.local',
+            'database' => 'tenant_s1000_erro',
+            'is_active' => true,
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2026-01',
+                    'fim_validade' => '',
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        EventoEsocial::query()->create([
+            'tenant_id' => $tenant->id,
+            'servidor_id' => null,
+            'evento' => 'S-1000',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Falha de validacao institucional.',
+            'payload' => ['origem' => 'dashboard_orgao_test'],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('Base S-1000 com pendencias')
+            ->assertSee('Revise o orgao publico antes da integracao futura.')
+            ->assertSee('>1<', false)
+            ->assertDontSee('Base S-1000 pronta');
+    }
+
     private function ensureTenantsTableExists(): void
     {
         if (Schema::hasTable('tenants')) {

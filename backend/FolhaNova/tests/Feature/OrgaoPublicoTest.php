@@ -248,6 +248,47 @@ class OrgaoPublicoTest extends TestCase
             ->assertSee('Corrigir parametros');
     }
 
+    public function test_orgao_publico_screen_keeps_s1000_with_error_as_pending_readiness(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2020-01',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $evento = EventoEsocial::query()->create([
+            'tenant_id' => $tenant->id,
+            'evento' => 'S-1000',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Falha de validacao institucional.',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('orgao-publico.show'))
+            ->assertOk()
+            ->assertSee('Base S-1000 com pendencias')
+            ->assertSee('Corrija ou reprocesse o evento S-1000 com erro.')
+            ->assertSee('Evento S-1000 com erro pode ser reenfileirado para reprocessamento local.')
+            ->assertSee('Reprocessar S-1000')
+            ->assertSee('action="'.route('eventos-esocial.reprocessar', $evento).'"', false)
+            ->assertDontSee('Base S-1000 pronta');
+    }
+
     public function test_orgao_publico_screen_shows_future_and_closed_validity_statuses(): void
     {
         $tenant = $this->createTenant([

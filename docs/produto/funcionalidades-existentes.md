@@ -29,9 +29,11 @@
 - Tela de edicao do orgao publico agora exibe orientacao contextual de consistencia para `CPF`/`CNPJ`, `classTrib` e `natJurid`.
 - Leitura operacional do status de vigencia institucional do `S-1000`.
 - Leitura de prontidao operacional da base `S-1000`, com pendencias locais antes da integracao futura.
+- Prontidao `S-1000` considera evento local com erro como pendencia de correcao ou reprocessamento.
 - Normalizacao da natureza juridica do `S-1000`, evitando persistencia de `natJurid` em inscricoes por CPF.
 - Atalho do orgao publico para abrir o painel eSocial filtrado pela trilha `S-1000`.
 - Atalhos contextuais no orgao publico para abrir o painel `S-1000` pelo mesmo status ou ambiente do evento institucional atual.
+- Acao direta no orgao publico para reenfileirar o evento `S-1000` quando ele estiver com erro.
 - Modulo inicial de lotacoes com listagem, cadastro e edicao.
 - Filtro de prontidao `S-1005/S-1020` na listagem de lotacoes, separando lotacoes ativas com codigo eSocial das pendencias estruturais.
 - Cards `Prontas S-1005/S-1020` e `Pendencias S-1005/S-1020` na listagem de lotacoes.
@@ -98,7 +100,7 @@
 - Cards do painel eSocial para abrir eventos de tabela, eventos nao periodicos e eventos periodicos.
 - Cards do painel eSocial para filtrar eventos por ambiente de homologacao ou producao.
 - Cards do painel eSocial para filtrar pendencias e erros atualizados no dia.
-- Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1010`, `S-1030`, `S-1040` e `S-2200`.
+- Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1005`, `S-1010`, `S-1020`, `S-1030`, `S-1040` e `S-2200`.
 - Card do painel eSocial para filtrar eventos sem mensagem de retorno registrada.
 - Filtro do painel eSocial por `origem` do payload, com leitura da origem ativa no resumo de filtros.
 - Filtro do painel eSocial para eventos com ou sem mensagem de retorno registrada, disponivel no card e no formulario principal.

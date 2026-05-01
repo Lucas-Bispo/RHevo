@@ -308,6 +308,22 @@ class EventosEsocialIndexTest extends TestCase
 
         EventoEsocial::create([
             'tenant_id' => 82,
+            'evento' => 'S-1005',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'estabelecimentos'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 82,
+            'evento' => 'S-1020',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'lotacoes_tributarias'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 82,
             'evento' => 'S-1030',
             'status' => 'pendente',
             'ambiente' => 'homologacao',
@@ -335,19 +351,21 @@ class EventosEsocialIndexTest extends TestCase
             ->get(route('eventos-esocial.index'))
             ->assertOk()
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1000']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1005']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1010']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1020']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1030']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1040']).'"', false)
             ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-2200']).'"', false);
 
         $this
             ->actingAs($user)
-            ->get(route('eventos-esocial.index', ['evento' => 'S-1040']))
+            ->get(route('eventos-esocial.index', ['evento' => 'S-1020']))
             ->assertOk()
-            ->assertSee('S-1040')
-            ->assertSee('funcoes')
-            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('evento')->all() === ['S-1040'])
-            ->assertSee('value="S-1040" selected', false);
+            ->assertSee('S-1020')
+            ->assertSee('lotacoes_tributarias')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('evento')->all() === ['S-1020'])
+            ->assertSee('value="S-1020" selected', false);
     }
 
     public function test_eventos_index_can_filter_by_esocial_group(): void

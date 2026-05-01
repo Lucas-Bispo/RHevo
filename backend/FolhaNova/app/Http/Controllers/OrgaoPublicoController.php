@@ -170,6 +170,8 @@ class OrgaoPublicoController extends Controller
 
         if ($eventoS1000 === null) {
             $pendencias[] = 'Gere ou sincronize o evento S-1000 local.';
+        } elseif ($eventoS1000->status === 'erro') {
+            $pendencias[] = 'Corrija ou reprocesse o evento S-1000 com erro.';
         }
 
         if ($pendencias !== []) {

@@ -22,3 +22,6 @@ Esta pasta centraliza a arquitetura do sistema, cobrindo princípios técnicos, 
 - Convenções formais de pasta.
 - Catálogo de integrações externas.
 - Matriz de dependências entre módulos.
+
+## Documentos Relacionados
+- [Arquitetura de Nuvem AWS](./ARQUITETURA-NUVEM-AWS.md)

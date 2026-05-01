@@ -262,6 +262,8 @@ class DashboardController extends Controller
 
         if ($eventoS1000 === null) {
             $pendencias[] = 'evento_local';
+        } elseif ($eventoS1000->status === 'erro') {
+            $pendencias[] = 'evento_local_com_erro';
         }
 
         if ($pendencias !== []) {

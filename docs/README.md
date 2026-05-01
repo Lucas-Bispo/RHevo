@@ -23,6 +23,7 @@ Este índice organiza a documentação do projeto FolhaNova em trilhas temática
 - [Visão do projeto](./01-visao-projeto/README.md)
 - [Requisitos funcionais](./02-requisitos/REQUISITOS-FUNCIONAIS.md)
 - [Arquitetura consolidada](./03-arquitetura/README.md)
+- [Arquitetura de nuvem AWS](./03-arquitetura/ARQUITETURA-NUVEM-AWS.md)
 - [Cybersecurity Bible](./04-ciberseguranca/CYBERSECURITY-BIBLE.md)
 - [Performance Bible](./05-performance/PERFORMANCE-BIBLE.md)
 - [Performance da página de login](./05-performance/PERFORMANCE-LOGIN.md)
@@ -40,7 +41,10 @@ Este índice organiza a documentação do projeto FolhaNova em trilhas temática
 - [Project Organizer](./09-project-organization/PROJECT-ORGANIZER.md)
 - [Documentation Structure](./09-project-organization/FOLHANOVA-DOCUMENTATION-STRUCTURE.md)
 - [Backlog geral](./10-tarefas-backlog/BACKLOG-GERAL.md)
+- [Histórico do backlog por data](./10-tarefas-backlog/historico/README.md)
 - [Roadmap por fases](./11-implementacao/ROADMAP-FASES.md)
+- [Linha do tempo resumida](./11-implementacao/LINHA-DO-TEMPO.md)
+- [Histórico de implementação por data](./11-implementacao/historico/README.md)
 
 ## Regras de Uso
 - Toda nova documentação deve ser criada em pt-BR.
