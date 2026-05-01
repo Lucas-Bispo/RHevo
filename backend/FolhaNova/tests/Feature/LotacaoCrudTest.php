@@ -157,4 +157,37 @@ class LotacaoCrudTest extends TestCase
             'codigo' => 'LOT-EXT',
         ]);
     }
+
+    public function test_user_cannot_create_lotacao_with_duplicate_codigo_esocial_in_same_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 34,
+        ]);
+
+        Lotacao::create([
+            'tenant_id' => 34,
+            'codigo' => 'EDU-BASE',
+            'nome' => 'Secretaria de Educacao Base',
+            'tipo' => 'secretaria',
+            'codigo_esocial' => 'S1020-EDU',
+            'ativa' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('lotacoes.create'))
+            ->post(route('lotacoes.store'), [
+                'codigo' => 'EDU-DUP',
+                'nome' => 'Secretaria de Educacao Duplicada',
+                'tipo' => 'secretaria',
+                'codigo_esocial' => ' s1020-edu ',
+                'ativa' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('lotacoes.create'))
+            ->assertSessionHasErrors('codigo_esocial');
+
+        $this->assertSame(1, Lotacao::query()->where('tenant_id', 34)->where('codigo_esocial', 'S1020-EDU')->count());
+    }
 }

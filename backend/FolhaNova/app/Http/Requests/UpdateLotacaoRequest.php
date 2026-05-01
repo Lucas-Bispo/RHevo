@@ -9,6 +9,15 @@ use Illuminate\Validation\Rule;
 
 class UpdateLotacaoRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'codigo' => trim((string) $this->input('codigo')),
+            'nome' => trim((string) $this->input('nome')),
+            'codigo_esocial' => $this->nullableUpperTrimmed('codigo_esocial'),
+        ]);
+    }
+
     public function authorize(): bool
     {
         return $this->user() !== null;
@@ -34,7 +43,14 @@ class UpdateLotacaoRequest extends FormRequest
             ],
             'nome' => ['required', 'string', 'max:255'],
             'tipo' => ['required', Rule::in(TiposLotacao::codes())],
-            'codigo_esocial' => ['nullable', 'string', 'max:30'],
+            'codigo_esocial' => [
+                'nullable',
+                'string',
+                'max:30',
+                Rule::unique('lotacoes', 'codigo_esocial')
+                    ->ignore($lotacao?->id)
+                    ->where(fn ($query) => $query->where('tenant_id', $tenantId)),
+            ],
             'ativa' => ['required', 'boolean'],
         ];
     }
@@ -47,5 +63,12 @@ class UpdateLotacaoRequest extends FormRequest
         return [
             'tipo.in' => 'Selecione um tipo de lotacao suportado pelo recorte atual do S-1005/S-1020.',
         ];
+    }
+
+    private function nullableUpperTrimmed(string $key): ?string
+    {
+        $value = strtoupper(trim((string) $this->input($key)));
+
+        return $value === '' ? null : $value;
     }
 }
