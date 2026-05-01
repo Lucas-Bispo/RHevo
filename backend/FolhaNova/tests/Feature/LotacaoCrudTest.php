@@ -23,7 +23,12 @@ class LotacaoCrudTest extends TestCase
 
         $response
             ->assertOk()
-            ->assertSee('Cadastro de lotacao');
+            ->assertSee('Cadastro de lotacao')
+            ->assertSee('Setor')
+            ->assertSee('Departamento')
+            ->assertSee('Secretaria')
+            ->assertSee('Unidade')
+            ->assertSee('Gabinete');
     }
 
     public function test_user_can_create_lotacao(): void
@@ -123,6 +128,33 @@ class LotacaoCrudTest extends TestCase
             'id' => $lotacao->id,
             'tenant_id' => 99,
             'nome' => 'Lotacao Bloqueada',
+        ]);
+    }
+
+    public function test_user_cannot_create_lotacao_with_unsupported_type(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 33,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('lotacoes.create'))
+            ->post(route('lotacoes.store'), [
+                'codigo' => 'LOT-EXT',
+                'nome' => 'Lotacao externa',
+                'tipo' => 'externa',
+                'codigo_esocial' => 'S1020-EXT',
+                'ativa' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('lotacoes.create'))
+            ->assertSessionHasErrors('tipo');
+
+        $this->assertDatabaseMissing('lotacoes', [
+            'tenant_id' => 33,
+            'codigo' => 'LOT-EXT',
         ]);
     }
 }

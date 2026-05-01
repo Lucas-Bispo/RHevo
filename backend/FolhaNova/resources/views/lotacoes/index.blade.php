@@ -148,7 +148,7 @@
                                 <tr>
                                     <td class="font-medium text-white">{{ $lotacao->codigo }}</td>
                                     <td>{{ $lotacao->nome }}</td>
-                                    <td>{{ ucfirst($lotacao->tipo) }}</td>
+                                    <td>{{ \App\Support\Esocial\TiposLotacao::label($lotacao->tipo) ?? ucfirst($lotacao->tipo) }}</td>
                                     <td>{{ $lotacao->codigo_esocial ?? 'Nao informado' }}</td>
                                     <td>{{ number_format($lotacao->servidores_count, 0, ',', '.') }}</td>
                                     <td>

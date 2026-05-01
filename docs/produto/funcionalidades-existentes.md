@@ -36,6 +36,7 @@
 - Atalhos contextuais no orgao publico para abrir o painel `S-1000` pelo mesmo status ou ambiente do evento institucional atual.
 - Acao direta no orgao publico para reenfileirar o evento `S-1000` quando ele estiver com erro.
 - Modulo inicial de lotacoes com listagem, cadastro e edicao.
+- Catalogo local inicial de tipos de lotacao suportados para a preparacao `S-1005/S-1020`, reutilizado por validacao, formulario e listagem.
 - Filtro de prontidao `S-1005/S-1020` na listagem de lotacoes, separando lotacoes ativas com codigo eSocial das pendencias estruturais.
 - Cards `Prontas S-1005/S-1020` e `Pendencias S-1005/S-1020` na listagem de lotacoes.
 - Resumo visual de filtros ativos na listagem de lotacoes com acao para limpar filtros.
