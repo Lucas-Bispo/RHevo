@@ -41,10 +41,12 @@
 - Cards `Prontas S-1005/S-1020` e `Pendencias S-1005/S-1020` na listagem de lotacoes.
 - Resumo visual de filtros ativos na listagem de lotacoes com acao para limpar filtros.
 - Modulo inicial de cargos com listagem, cadastro e edicao.
+- Normalizacao e unicidade do codigo eSocial de cargos por tenant para evitar parametrizacao duplicada do `S-1030`.
 - Filtro de prontidao `S-1030` na listagem de cargos, separando cargos ativos com codigo eSocial das pendencias ocupacionais.
 - Cards `Prontos S-1030` e `Pendencias S-1030` na listagem de cargos.
 - Resumo visual de filtros ativos na listagem de cargos com acao para limpar filtros.
 - Modulo inicial de funcoes com listagem, cadastro e edicao.
+- Normalizacao e unicidade do codigo eSocial de funcoes por tenant para evitar parametrizacao duplicada do `S-1040`.
 - Filtro de prontidao `S-1040` na listagem de funcoes, separando funcoes ativas com codigo eSocial das pendencias funcionais.
 - Cards `Prontas S-1040` e `Pendencias S-1040` na listagem de funcoes.
 - Resumo visual de filtros ativos na listagem de funcoes com acao para limpar filtros.

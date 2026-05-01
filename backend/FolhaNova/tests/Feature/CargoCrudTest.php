@@ -121,4 +121,36 @@ class CargoCrudTest extends TestCase
             'nome' => 'Cargo Bloqueado',
         ]);
     }
+
+    public function test_user_cannot_create_cargo_with_duplicate_codigo_esocial_in_same_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 45,
+        ]);
+
+        Cargo::create([
+            'tenant_id' => 45,
+            'codigo' => 'PROF-BASE',
+            'nome' => 'Professor Base',
+            'codigo_esocial' => 'S1030-PROF',
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('cargos.create'))
+            ->post(route('cargos.store'), [
+                'codigo' => 'PROF-DUP',
+                'nome' => 'Professor Duplicado',
+                'descricao' => '',
+                'codigo_esocial' => ' s1030-prof ',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('cargos.create'))
+            ->assertSessionHasErrors('codigo_esocial');
+
+        $this->assertSame(1, Cargo::query()->where('tenant_id', 45)->where('codigo_esocial', 'S1030-PROF')->count());
+    }
 }

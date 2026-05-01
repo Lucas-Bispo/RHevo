@@ -121,4 +121,36 @@ class FuncaoCrudTest extends TestCase
             'nome' => 'Funcao Bloqueada',
         ]);
     }
+
+    public function test_user_cannot_create_funcao_with_duplicate_codigo_esocial_in_same_tenant(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 55,
+        ]);
+
+        Funcao::create([
+            'tenant_id' => 55,
+            'codigo' => 'COORD-BASE',
+            'nome' => 'Coordenador Base',
+            'codigo_esocial' => 'S1040-COORD',
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('funcoes.create'))
+            ->post(route('funcoes.store'), [
+                'codigo' => 'COORD-DUP',
+                'nome' => 'Coordenador Duplicado',
+                'descricao' => '',
+                'codigo_esocial' => ' s1040-coord ',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('funcoes.create'))
+            ->assertSessionHasErrors('codigo_esocial');
+
+        $this->assertSame(1, Funcao::query()->where('tenant_id', 55)->where('codigo_esocial', 'S1040-COORD')->count());
+    }
 }
