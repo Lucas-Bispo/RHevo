@@ -42,6 +42,10 @@
 ### Rubricas
 - Rubrica precisa ter natureza, tipo e incidencia consistentes.
 - A natureza da rubrica deve ser tratada como codigo `natRubr` numerico de 4 digitos no cadastro local.
+- No recorte atual do `S-1010`, as naturezas suportadas devem respeitar regras locais de tipo e incidencias:
+  - `1000`: tipo `provento`, com IRRF e INSS, sem FGTS;
+  - `9201`: tipo `desconto`, com INSS, sem IRRF ou FGTS;
+  - `9219`: tipo `desconto`, sem IRRF, INSS ou FGTS.
 - Campos de rubrica devem ser normalizados antes da validacao para impedir duplicidade operacional mascarada por espacos.
 - Rubricas sem codigo eSocial devem ficar visiveis como pendencias de parametrizacao para o `S-1010`.
 - Codigo eSocial informado na rubrica deve ser normalizado em caixa alta e unico dentro do tenant.

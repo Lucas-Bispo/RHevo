@@ -9,10 +9,22 @@
     $inicioData = filled($inicioAtual) ? \Illuminate\Support\Carbon::parse($inicioAtual)->startOfDay() : null;
     $fimData = filled($fimAtual) ? \Illuminate\Support\Carbon::parse($fimAtual)->startOfDay() : null;
     $naturezaLabel = \App\Support\Esocial\NaturezasRubrica::label($naturezaAtual);
+    $regraIncidencia = \App\Support\Esocial\RegrasIncidenciaRubrica::description($naturezaAtual);
+    $incidenciaValida = \App\Support\Esocial\RegrasIncidenciaRubrica::isValid([
+        'natureza' => $naturezaAtual,
+        'tipo' => old('tipo', $rubrica->tipo ?? null),
+        'incide_irrf' => old('incide_irrf', isset($rubrica) ? ((int) $rubrica->incide_irrf === 1 ? '1' : '0') : '0'),
+        'incide_inss' => old('incide_inss', isset($rubrica) ? ((int) $rubrica->incide_inss === 1 ? '1' : '0') : '0'),
+        'incide_fgts' => old('incide_fgts', isset($rubrica) ? ((int) $rubrica->incide_fgts === 1 ? '1' : '0') : '0'),
+    ]);
 
     $combinacaoInvalida = false;
 
     if ($naturezaLabel === null) {
+        $combinacaoInvalida = true;
+    }
+
+    if (! $incidenciaValida) {
         $combinacaoInvalida = true;
     }
 
@@ -52,6 +64,11 @@
             {{ $ativoAtual
                 ? 'Rubricas ativas precisam iniciar ate hoje e nao podem encerrar no passado.'
                 : 'Rubricas inativas precisam informar fim de validade para preservar o encerramento da trilha.' }}
+        </li>
+        <li>
+            {{ $regraIncidencia !== null
+                ? ($incidenciaValida ? "Regra de incidencia aderente: {$regraIncidencia}" : "Ajuste tipo e incidencias: {$regraIncidencia}")
+                : 'A regra de incidencia sera definida quando a natureza estiver dentro do recorte local.' }}
         </li>
         <li>
             {{ $codigoEsocialAtual !== ''

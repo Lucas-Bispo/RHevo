@@ -492,6 +492,7 @@ class RubricaCrudTest extends TestCase
             ->assertSee('Consistencia S-1010')
             ->assertSee('Rubrica ativa na janela atual')
             ->assertSee('Natureza suportada no recorte atual: 1000 - Vencimento, salario ou soldo.')
+            ->assertSee('Regra de incidencia aderente: Vencimento base deve ser provento, com incidencia de IRRF e INSS e sem FGTS no recorte local atual.')
             ->assertSee('A rubrica atual ja esta identificada com codigo eSocial para a parametrizacao.')
             ->assertSee('A combinacao atual esta alinhada com as regras operacionais ja ativas no cadastro.')
             ->assertSee('Revisao S-1010')
@@ -546,8 +547,9 @@ class RubricaCrudTest extends TestCase
             ->assertSee('Rubrica inativa ou programada')
             ->assertSee('Natureza suportada no recorte atual: 9219 - Outros descontos consignados ou retencoes.')
             ->assertSee('Rubricas inativas precisam informar fim de validade para preservar o encerramento da trilha.')
+            ->assertSee('Ajuste tipo e incidencias: Outros descontos consignados devem ser desconto sem incidencia de IRRF, INSS ou FGTS no recorte local atual.')
             ->assertSee('A rubrica atual ja esta identificada com codigo eSocial para a parametrizacao.')
-            ->assertSee('A combinacao atual esta alinhada com as regras operacionais ja ativas no cadastro.')
+            ->assertSee('A combinacao atual pede ajuste antes do salvamento.')
             ->assertSee('Ver rubricas com codigo')
             ->assertSee('Ver rubricas inativas')
             ->assertSee('Ver vigencia encerrada')
@@ -564,6 +566,86 @@ class RubricaCrudTest extends TestCase
             ->assertSee('href="'.route('rubricas.index', ['incidencia' => 'fgts']).'"', false);
 
         Carbon::setTestNow();
+    }
+
+    public function test_user_can_not_create_rubrica_with_incompatible_s1010_incidence_rule(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 71,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.create'))
+            ->post(route('rubricas.store'), [
+                'codigo' => 'RUB-INC-OUT',
+                'nome' => 'Desconto consignado com FGTS',
+                'natureza' => '9219',
+                'tipo' => 'desconto',
+                'incide_irrf' => '0',
+                'incide_inss' => '0',
+                'incide_fgts' => '1',
+                'codigo_esocial' => 'S1010-INC-OUT',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.create'))
+            ->assertSessionHasErrors('natureza');
+
+        $this->assertDatabaseMissing('rubricas', [
+            'tenant_id' => 71,
+            'codigo' => 'RUB-INC-OUT',
+        ]);
+    }
+
+    public function test_user_can_not_update_rubrica_with_incompatible_s1010_type_rule(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 72,
+        ]);
+
+        $rubrica = Rubrica::create([
+            'tenant_id' => 72,
+            'codigo' => 'RUB-TIPO',
+            'nome' => 'Desconto previdenciario',
+            'natureza' => '9201',
+            'tipo' => 'desconto',
+            'incide_irrf' => false,
+            'incide_inss' => true,
+            'incide_fgts' => false,
+            'codigo_esocial' => 'S1010-TIPO',
+            'inicio_validade' => '2026-01-01',
+            'ativo' => true,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('rubricas.edit', $rubrica))
+            ->put(route('rubricas.update', $rubrica), [
+                'codigo' => 'RUB-TIPO',
+                'nome' => 'Desconto previdenciario como provento',
+                'natureza' => '9201',
+                'tipo' => 'provento',
+                'incide_irrf' => '0',
+                'incide_inss' => '1',
+                'incide_fgts' => '0',
+                'codigo_esocial' => 'S1010-TIPO',
+                'inicio_validade' => '2026-01-01',
+                'fim_validade' => '',
+                'ativo' => '1',
+            ]);
+
+        $response
+            ->assertRedirect(route('rubricas.edit', $rubrica))
+            ->assertSessionHasErrors('natureza');
+
+        $this->assertDatabaseHas('rubricas', [
+            'id' => $rubrica->id,
+            'tipo' => 'desconto',
+        ]);
     }
 
     public function test_user_can_not_create_rubrica_with_textual_natureza(): void

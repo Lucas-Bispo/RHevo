@@ -17,6 +17,7 @@
 
 ## Historico por Data
 
+- [02/05/2026](./historico/2026-05-02.md)
 - [01/05/2026](./historico/2026-05-01.md)
 - [30/04/2026](./historico/2026-04-30.md)
 - [29/04/2026](./historico/2026-04-29.md)

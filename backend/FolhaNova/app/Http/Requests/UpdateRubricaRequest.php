@@ -4,8 +4,10 @@ namespace App\Http\Requests;
 
 use App\Models\Rubrica;
 use App\Support\Esocial\NaturezasRubrica;
+use App\Support\Esocial\RegrasIncidenciaRubrica;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class UpdateRubricaRequest extends FormRequest
 {
@@ -79,6 +81,20 @@ class UpdateRubricaRequest extends FormRequest
     {
         return [
             'natureza.in' => 'Selecione uma natureza de rubrica suportada pelo recorte atual do S-1010.',
+        ];
+    }
+
+    /**
+     * @return array<int, callable(Validator): void>
+     */
+    public function after(): array
+    {
+        return [
+            function (Validator $validator): void {
+                foreach (RegrasIncidenciaRubrica::errors($this->all()) as $error) {
+                    $validator->errors()->add('natureza', $error);
+                }
+            },
         ];
     }
 
