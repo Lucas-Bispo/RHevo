@@ -8,5 +8,6 @@ Este diretorio separa o guia de integracao com os Web Services do eSocial em arq
 2. [Fluxo tecnico completo](./02-fluxo-tecnico.md)
 3. [Arquitetura, dados e estados](./03-arquitetura-dados-estados.md)
 4. [Erros, seguranca e preparacao para producao](./04-erros-seguranca-producao.md)
+5. [Plano de implementacao da integracao com o governo](./05-plano-implementacao-governo.md)
 
 Voltar para o [indice da integracao](../integracao-api-esocial.md).

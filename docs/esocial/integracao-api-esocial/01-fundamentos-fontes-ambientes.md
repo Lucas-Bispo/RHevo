@@ -20,7 +20,7 @@ Ou seja: nao e uma API REST moderna com `POST /eventos`. A integracao oficial ac
 
 ## Fontes oficiais consultadas
 
-Consulta feita em 30/04/2026:
+Consulta feita em 02/05/2026:
 
 - Documentacao Tecnica do eSocial: https://www.gov.br/esocial/pt-br/documentacao-tecnica/documentacao-tecnica
 - Manual de Orientacao do Desenvolvedor do eSocial v1.15: https://www.gov.br/esocial/pt-br/documentacao-tecnica/manuais/manualorientacaodesenvolvedoresocialv1-15.pdf
@@ -35,7 +35,7 @@ Na data desta consulta, a pagina oficial lista:
 - leiautes NT 06/2026 rev. 09/04/2026;
 - esquemas XSD S-1.3 ate NT 06/2026;
 - Manual de Orientacao do Desenvolvedor v1.15;
-- Mensagens do Sistema v2.4;
+- Mensagens do Sistema v2.5;
 - Pacote de Comunicacao eSocial v1.6.
 
 Antes de implementar a transmissao real, estes arquivos devem ser baixados novamente para garantir que a versao usada no codigo ainda e a versao oficial vigente.
