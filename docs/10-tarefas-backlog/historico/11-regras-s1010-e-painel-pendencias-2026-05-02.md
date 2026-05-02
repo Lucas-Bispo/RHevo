@@ -17,8 +17,8 @@ Vincular as naturezas de rubrica suportadas no recorte local do `S-1010` a regra
 - `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
 - `docs/esocial/regras-negocio.md`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-02.md`
-- `docs/11-implementacao/historico/2026-05-02.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
 
 **Plano:**
 - criar regras locais de compatibilidade para as naturezas `1000`, `9201` e `9219`;
@@ -44,8 +44,8 @@ Evoluir a operacao local do painel de eventos eSocial com leitura separada de pe
 - `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
 - `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-02.md`
-- `docs/11-implementacao/historico/2026-05-02.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
 
 **Plano:**
 - adicionar contadores de eventos pendentes e com erro atualizados antes de hoje;

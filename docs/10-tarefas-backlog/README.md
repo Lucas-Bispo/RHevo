@@ -7,7 +7,7 @@ Esta pasta organiza backlog, trilhas de trabalho, prioridades e tarefas macro do
 
 ## Conteúdo Atual
 - [Backlog geral](./BACKLOG-GERAL.md), mantido como índice curto.
-- [Histórico do backlog por data](./historico/README.md), com recortes menores para leitura rápida.
+- [Histórico do backlog por ordem, tema e data](./historico/README.md), com recortes menores para leitura rápida.
 - Base para futuras sprints, milestones e checkpoints.
 
 ## Regra de Leitura

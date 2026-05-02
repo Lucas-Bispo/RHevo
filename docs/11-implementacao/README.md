@@ -8,7 +8,7 @@ Esta pasta concentra o plano de implementação por fases, avanço funcional e c
 ## Conteúdo Atual
 - [Roadmap consolidado por fases](./ROADMAP-FASES.md).
 - [Linha do tempo](./LINHA-DO-TEMPO.md), mantida como índice curto.
-- [Histórico de implementação por data](./historico/README.md), com registros menores para consulta focada.
+- [Histórico de implementação por ordem, tema e data](./historico/README.md), com registros menores para consulta focada.
 - Base para acompanhamento de progresso e critérios de pronto.
 
 ## Regra de Leitura

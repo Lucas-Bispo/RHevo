@@ -19,8 +19,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/tests/Feature/ServidorAdmissaoTest.php`
 - `docs/esocial/regras-negocio.md`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `./vendor/bin/pint app/Support/Esocial/CategoriasTrabalhador.php app/Http/Requests/StoreServidorRequest.php app/Http/Requests/UpdateServidorRequest.php tests/Feature/ServidorAdmissaoTest.php`: sem pendencias.
@@ -43,8 +43,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/tests/Feature/ServidorAdmissaoTest.php`
 - `docs/esocial/regras-negocio.md`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `./vendor/bin/pint app/Http/Requests/StoreServidorRequest.php app/Http/Requests/UpdateServidorRequest.php tests/Feature/ServidorAdmissaoTest.php`: sem pendencias apos limpeza automatica de import.
@@ -66,8 +66,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/app/Http/Requests/UpdateLotacaoRequest.php`
 - `backend/FolhaNova/tests/Feature/LotacaoCrudTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `./vendor/bin/pint app/Http/Requests/StoreLotacaoRequest.php app/Http/Requests/UpdateLotacaoRequest.php tests/Feature/LotacaoCrudTest.php`: sem pendencias.
@@ -93,8 +93,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/tests/Feature/CargoCrudTest.php`
 - `backend/FolhaNova/tests/Feature/FuncaoCrudTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `./vendor/bin/pint app/Http/Requests/StoreCargoRequest.php app/Http/Requests/UpdateCargoRequest.php app/Http/Requests/StoreFuncaoRequest.php app/Http/Requests/UpdateFuncaoRequest.php tests/Feature/CargoCrudTest.php tests/Feature/FuncaoCrudTest.php`: sem pendencias.
@@ -121,8 +121,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/resources/views/lotacoes/index.blade.php`
 - `backend/FolhaNova/tests/Feature/LotacaoCrudTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `./vendor/bin/pint app/Support/Esocial/TiposLotacao.php app/Http/Requests/StoreLotacaoRequest.php app/Http/Requests/UpdateLotacaoRequest.php tests/Feature/LotacaoCrudTest.php`: sem pendencias.
@@ -147,8 +147,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
 - `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `./vendor/bin/pint app/Support/Esocial/ClassificacoesTributarias.php app/Http/Requests/UpdateOrgaoPublicoRequest.php`: sem pendencias.
@@ -178,8 +178,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `docs/produto/plano-de-implementacao.md`
 - `docs/esocial/plano-implementacao.md`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `./vendor/bin/pint app/Support/Esocial/NaturezasRubrica.php app/Http/Requests/StoreRubricaRequest.php app/Http/Requests/UpdateRubricaRequest.php tests/Feature/RubricaCrudTest.php`: sem pendencias.
@@ -199,8 +199,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - Estimar a maturidade atual do projeto em escala de `0` a `100`.
 
 **Arquivos criados / alterados:**
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `bash scripts/bootstrap_native_wsl.sh .`: backend e Vite iniciados.
@@ -236,9 +236,9 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
 - `docs/produto/funcionalidades-existentes.md`
 - `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 - `docs/11-implementacao/LINHA-DO-TEMPO.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `php artisan test tests/Feature/EventosEsocialIndexTest.php`: `21` testes verdes e `146` assercoes.
@@ -258,8 +258,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
 - `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `php artisan test tests/Feature/OrgaoPublicoTest.php`: `20` testes verdes e `117` assercoes.
@@ -281,8 +281,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
 - `backend/FolhaNova/tests/Feature/DashboardTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Validacao:**
 - `php artisan test tests/Feature/OrgaoPublicoTest.php tests/Feature/DashboardTest.php`: `22` testes verdes e `184` assercoes.

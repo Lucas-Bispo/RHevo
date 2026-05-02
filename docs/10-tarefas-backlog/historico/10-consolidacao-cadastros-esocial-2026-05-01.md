@@ -18,8 +18,8 @@ Centralizar o recorte local de categorias de trabalhador usadas na preparacao `S
 - `backend/FolhaNova/tests/Feature/ServidorAdmissaoTest.php`
 - `docs/esocial/regras-negocio.md`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - criar catalogo local inicial de categorias de trabalhador;
@@ -45,8 +45,8 @@ Fortalecer a preparacao local de `S-2200` normalizando matricula de servidores e
 - `backend/FolhaNova/tests/Feature/ServidorAdmissaoTest.php`
 - `docs/esocial/regras-negocio.md`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - normalizar `matricula` para maiusculas e sem espacos antes da validacao;
@@ -71,8 +71,8 @@ Fortalecer a preparacao local de `S-1005/S-1020` normalizando e impedindo duplic
 - `backend/FolhaNova/app/Http/Requests/UpdateLotacaoRequest.php`
 - `backend/FolhaNova/tests/Feature/LotacaoCrudTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - normalizar `codigo_esocial` de lotacoes para maiusculas e sem espacos;
@@ -100,8 +100,8 @@ Fortalecer a preparacao local de `S-1030/S-1040` normalizando e impedindo duplic
 - `backend/FolhaNova/tests/Feature/CargoCrudTest.php`
 - `backend/FolhaNova/tests/Feature/FuncaoCrudTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - normalizar `codigo_esocial` de cargos e funcoes para maiusculas e sem espacos;
@@ -129,8 +129,8 @@ Centralizar o recorte local de tipos de lotacao usados na preparacao `S-1005/S-1
 - `backend/FolhaNova/resources/views/lotacoes/index.blade.php`
 - `backend/FolhaNova/tests/Feature/LotacaoCrudTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - criar catalogo local reutilizavel de tipos de lotacao;
@@ -157,8 +157,8 @@ Centralizar o recorte local de classificacoes tributarias suportadas para `S-100
 - `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
 - `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - criar catalogo local reutilizavel de classificacoes tributarias do `S-1000`;
@@ -190,8 +190,8 @@ Consolidar a preparacao local do `S-1010` com um catalogo inicial de naturezas d
 - `docs/produto/plano-de-implementacao.md`
 - `docs/esocial/plano-implementacao.md`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - registrar a decisao de deixar XML, assinatura, envio e consulta oficial para o final;
@@ -219,8 +219,8 @@ Verificar o fluxo de desenvolvimento e estimar a maturidade atual do FolhaNova e
 - `docs/produto/priorizacao.md`
 - `docs/produto/funcionalidades-existentes.md`
 - `docs/esocial/plano-implementacao.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - revisar roadmap, priorizacao, backlog e linha do tempo;
@@ -248,9 +248,9 @@ Ampliar os atalhos de eventos prioritarios no painel eSocial para incluir as tri
 - `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
 - `docs/produto/funcionalidades-existentes.md`
 - `docs/10-tarefas-backlog/BACKLOG-GERAL.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 - `docs/11-implementacao/LINHA-DO-TEMPO.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - adicionar contadores dedicados para `S-1005` e `S-1020` no resumo do painel;
@@ -277,8 +277,8 @@ Ajustar a leitura de prontidao `S-1000` para que um evento local com status `err
 - `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
 - `backend/FolhaNova/tests/Feature/DashboardTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - tratar evento `S-1000` com `erro` como pendencia operacional;
@@ -303,8 +303,8 @@ Exibir uma acao direta de reprocessamento local na tela do orgao publico quando 
 - `backend/FolhaNova/resources/views/orgao-publico/show.blade.php`
 - `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-01.md`
-- `docs/11-implementacao/historico/2026-05-01.md`
+- `docs/10-tarefas-backlog/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
+- `docs/11-implementacao/historico/10-consolidacao-cadastros-esocial-2026-05-01.md`
 
 **Plano:**
 - reaproveitar a rota existente de reprocessamento local do painel eSocial;

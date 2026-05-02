@@ -18,8 +18,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/tests/Feature/RubricaCrudTest.php`
 - `docs/esocial/regras-negocio.md`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-02.md`
-- `docs/11-implementacao/historico/2026-05-02.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
 
 **Validacao:**
 - `php artisan test tests/Feature/RubricaCrudTest.php tests/Feature/RubricasIndexTest.php`: `33` testes verdes e `242` assercoes.
@@ -42,8 +42,8 @@ Registros historicos de implementacao separados para leitura rapida.
 - `backend/FolhaNova/resources/views/eventos-esocial/index.blade.php`
 - `backend/FolhaNova/tests/Feature/EventosEsocialIndexTest.php`
 - `docs/produto/funcionalidades-existentes.md`
-- `docs/10-tarefas-backlog/historico/2026-05-02.md`
-- `docs/11-implementacao/historico/2026-05-02.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
 
 **Validacao:**
 - `php artisan test tests/Feature/EventosEsocialIndexTest.php`: `22` testes verdes e `160` assercoes.
