@@ -18,6 +18,7 @@
                 ? 'Institucional'
                 : ($filtros['contexto'] === 'vinculado' ? 'Vinculado a servidor' : ''),
             'Acao' => $filtros['acao_label'],
+            'Periodo' => $filtros['periodo_label'],
             'Servidor' => $filtros['servidor_label'],
             'Data' => $filtros['data_label'],
         ])->filter();
@@ -51,6 +52,16 @@
                 <p class="text-sm text-slate-400">Erros hoje</p>
                 <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['erros_hoje'], 0, ',', '.') }}</p>
                 <p class="mt-2 text-sm text-rose-300">Prioridades abertas no dia</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['status' => 'pendente', 'periodo' => 'anteriores']) }}" class="stat-card block transition hover:border-orange-400/40 hover:bg-orange-500/5 focus:outline-none focus:ring-2 focus:ring-orange-400/50">
+                <p class="text-sm text-slate-400">Pendentes anteriores</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['pendentes_anteriores'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-orange-300">Fila envelhecida antes de hoje</p>
+            </a>
+            <a href="{{ route('eventos-esocial.index', ['status' => 'erro', 'periodo' => 'anteriores']) }}" class="stat-card block transition hover:border-red-400/40 hover:bg-red-500/5 focus:outline-none focus:ring-2 focus:ring-red-400/50">
+                <p class="text-sm text-slate-400">Erros anteriores</p>
+                <p class="mt-3 text-3xl font-semibold text-white">{{ number_format($resumo['erros_anteriores'], 0, ',', '.') }}</p>
+                <p class="mt-2 text-sm text-red-300">Falhas antigas para priorizar</p>
             </a>
             <a href="{{ route('eventos-esocial.index', ['status' => 'pendente']) }}" class="stat-card block transition hover:border-amber-400/40 hover:bg-amber-500/5 focus:outline-none focus:ring-2 focus:ring-amber-400/50">
                 <p class="text-sm text-slate-400">Pendentes</p>
@@ -262,6 +273,14 @@
                             <select name="acao" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
                                 <option value="">Todas</option>
                                 <option value="reprocessamento" @selected($filtros['acao'] === 'reprocessamento')>Reprocessamento local</option>
+                            </select>
+                        </label>
+
+                        <label class="form-control w-full xl:w-52">
+                            <span class="mb-2 text-xs uppercase tracking-[0.25em] text-slate-400">Periodo</span>
+                            <select name="periodo" class="select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white">
+                                <option value="">Todos</option>
+                                <option value="anteriores" @selected($filtros['periodo'] === 'anteriores')>Anteriores a hoje</option>
                             </select>
                         </label>
 

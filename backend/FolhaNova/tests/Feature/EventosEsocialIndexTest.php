@@ -232,6 +232,70 @@ class EventosEsocialIndexTest extends TestCase
             ));
     }
 
+    public function test_eventos_index_links_previous_pending_and_error_summaries_to_period_filter(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 94,
+        ]);
+
+        $eventoPendenteAnterior = EventoEsocial::create([
+            'tenant_id' => 94,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $eventoErroAnterior = EventoEsocial::create([
+            'tenant_id' => 94,
+            'evento' => 'S-1010',
+            'status' => 'erro',
+            'ambiente' => 'homologacao',
+            'mensagem_retorno' => 'Erro antigo de rubrica.',
+            'payload' => ['origem' => 'rubricas'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 94,
+            'evento' => 'S-2200',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cadastro_inicial_servidor'],
+        ]);
+
+        $eventoPendenteAnterior->forceFill([
+            'updated_at' => now()->subDay()->setTime(9, 10),
+        ])->saveQuietly();
+
+        $eventoErroAnterior->forceFill([
+            'updated_at' => now()->subDays(2)->setTime(11, 45),
+        ])->saveQuietly();
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('Pendentes anteriores')
+            ->assertSee('Erros anteriores')
+            ->assertSee('Fila envelhecida antes de hoje')
+            ->assertSee('Falhas antigas para priorizar')
+            ->assertSee('status=pendente', false)
+            ->assertSee('status=erro', false)
+            ->assertSee('periodo=anteriores', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['status' => 'erro', 'periodo' => 'anteriores']))
+            ->assertOk()
+            ->assertSee('Status: Erro')
+            ->assertSee('Periodo: Anteriores a hoje')
+            ->assertSee('value="anteriores" selected', false)
+            ->assertSee('Erro antigo de rubrica.')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->every(
+                fn ($evento) => $evento->status === 'erro' && optional($evento->updated_at)->lt(now()->startOfDay())
+            ));
+    }
+
     public function test_eventos_index_links_pending_summary_to_pending_filter(): void
     {
         $user = User::factory()->create([

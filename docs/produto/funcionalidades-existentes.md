@@ -109,6 +109,7 @@
 - Cards do painel eSocial para abrir eventos de tabela, eventos nao periodicos e eventos periodicos.
 - Cards do painel eSocial para filtrar eventos por ambiente de homologacao ou producao.
 - Cards do painel eSocial para filtrar pendencias e erros atualizados no dia.
+- Cards do painel eSocial para filtrar pendencias e erros anteriores ao dia atual, destacando itens envelhecidos da fila local.
 - Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1005`, `S-1010`, `S-1020`, `S-1030`, `S-1040` e `S-2200`.
 - Card do painel eSocial para filtrar eventos sem mensagem de retorno registrada.
 - Filtro do painel eSocial por `origem` do payload, com leitura da origem ativa no resumo de filtros.

@@ -33,6 +33,8 @@ class EventoEsocialController extends Controller
         $contexto = in_array($contexto, ['institucional', 'vinculado'], true) ? $contexto : '';
         $acao = trim((string) $request->string('acao'));
         $acao = $acao === 'reprocessamento' ? $acao : '';
+        $periodo = trim((string) $request->string('periodo'));
+        $periodo = $periodo === 'anteriores' ? $periodo : '';
         $servidor = $request->integer('servidor');
         $servidor = $servidor > 0 ? $servidor : 0;
         $data = trim((string) $request->string('data'));
@@ -89,6 +91,7 @@ class EventoEsocialController extends Controller
             ->when($contexto === 'institucional', fn ($query) => $query->whereNull('servidor_id'))
             ->when($contexto === 'vinculado', fn ($query) => $query->whereNotNull('servidor_id'))
             ->when($acao === 'reprocessamento', fn ($query) => $query->where('status', 'erro'))
+            ->when($periodo === 'anteriores', fn ($query) => $query->whereDate('updated_at', '<', now()->toDateString()))
             ->when($servidorSelecionado, fn ($query) => $query->where('servidor_id', $servidorSelecionado->id))
             ->when($dataSelecionada, fn ($query) => $query->whereDate('updated_at', $dataSelecionada->toDateString()))
             ->latest('updated_at')
@@ -112,6 +115,14 @@ class EventoEsocialController extends Controller
                 'erros_hoje' => (clone $baseQuery)
                     ->where('status', 'erro')
                     ->whereDate('updated_at', now()->toDateString())
+                    ->count(),
+                'pendentes_anteriores' => (clone $baseQuery)
+                    ->where('status', 'pendente')
+                    ->whereDate('updated_at', '<', now()->toDateString())
+                    ->count(),
+                'erros_anteriores' => (clone $baseQuery)
+                    ->where('status', 'erro')
+                    ->whereDate('updated_at', '<', now()->toDateString())
                     ->count(),
                 'com_retorno' => (clone $baseQuery)->whereNotNull('mensagem_retorno')->count(),
                 'sem_retorno' => (clone $baseQuery)->whereNull('mensagem_retorno')->count(),
@@ -142,6 +153,8 @@ class EventoEsocialController extends Controller
                 'contexto' => $contexto,
                 'acao' => $acao,
                 'acao_label' => $acao === 'reprocessamento' ? 'Reprocessamento local' : '',
+                'periodo' => $periodo,
+                'periodo_label' => $periodo === 'anteriores' ? 'Anteriores a hoje' : '',
                 'servidor' => $servidorSelecionado?->id,
                 'servidor_label' => $servidorSelecionado
                     ? trim(($servidorSelecionado->pessoa?->nome_completo ?? 'Servidor').' - '.$servidorSelecionado->matricula)
