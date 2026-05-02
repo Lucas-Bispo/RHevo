@@ -150,7 +150,7 @@ class DemoDataSeeder extends Seeder
 
         $this->evento($tenant, null, 'S-1000', 'processado', 'homologacao', 'PROTO-S1000', 'REC-S1000', 'Evento S-1000 processado no ambiente demo.', [
             'origem' => 'parametros_orgao_publico',
-            'ideEmpregador' => ['tpInsc' => '1', 'nrInsc' => '11222333000181'],
+            'ideEmpregador' => ['tpInsc' => '1', 'nrInsc' => '11222333'],
         ]);
         $this->evento($tenant, null, 'S-1010', 'erro', 'homologacao', null, null, 'Rubrica sem codigo eSocial pendente de revisao.', [
             'origem' => 'rubricas',

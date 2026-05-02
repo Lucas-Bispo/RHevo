@@ -88,6 +88,7 @@ class OrgaoPublicoTest extends TestCase
             ->assertSee('Contexto por CNPJ')
             ->assertSee('classificacao tributaria 85', false)
             ->assertSee('natureza juridica')
+            ->assertSee('raiz de 8 digitos em `nrInsc`.', false)
             ->assertSee('A combinacao atual esta alinhada com a regra de CNPJ.');
     }
 
@@ -473,6 +474,7 @@ class OrgaoPublicoTest extends TestCase
         $this->assertSame('pendente_assinatura', $evento->xml_validacao_status);
         $this->assertStringContainsString('evtInfoEmpregador', $evento->xml_gerado);
         $this->assertStringContainsString('<tpAmb>2</tpAmb>', $evento->xml_gerado);
+        $this->assertStringContainsString('<nrInsc>11222333</nrInsc>', $evento->xml_gerado);
         $this->assertStringContainsString('<classTrib>85</classTrib>', $evento->xml_gerado);
         $this->assertStringContainsString('assinatura digital', $evento->xml_validacao_mensagem);
 
@@ -537,7 +539,7 @@ class OrgaoPublicoTest extends TestCase
 
         $this->assertSame('producao', $evento->ambiente);
         $this->assertSame('Prefeitura Municipal das Flores', data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.nmRazao'));
-        $this->assertSame('11222333000181', data_get($evento->payload, 'ideEmpregador.nrInsc'));
+        $this->assertSame('11222333', data_get($evento->payload, 'ideEmpregador.nrInsc'));
     }
 
     public function test_updating_orgao_publico_requires_classificacao_tributaria_and_natureza_juridica_for_cnpj(): void

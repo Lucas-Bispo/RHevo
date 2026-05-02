@@ -34,7 +34,7 @@ class S1000PayloadBuilder
             'origem' => 'parametros_orgao_publico',
             'ideEmpregador' => [
                 'tpInsc' => $parametros['tipo_inscricao'] ?? null,
-                'nrInsc' => $this->onlyDigits($parametros['numero_inscricao'] ?? null),
+                'nrInsc' => $this->nrInsc($parametros),
             ],
             'infoEmpregador' => [
                 'inclusao' => [
@@ -91,7 +91,7 @@ class S1000PayloadBuilder
             'eventoVersion' => 'S.1.3.0',
             'empregador' => [
                 'tpInsc' => (int) ($parametros['tipo_inscricao'] ?? 1),
-                'nrInsc' => $this->onlyDigits($parametros['numero_inscricao'] ?? null),
+                'nrInsc' => $this->nrInsc($parametros),
                 'nmRazao' => $tenant->name,
             ],
         ], JSON_THROW_ON_ERROR);
@@ -110,5 +110,21 @@ class S1000PayloadBuilder
         $digits = preg_replace('/\D+/', '', (string) $value) ?? '';
 
         return $digits === '' ? null : $digits;
+    }
+
+    /**
+     * @param  array<string, mixed>  $parametros
+     */
+    private function nrInsc(array $parametros): ?string
+    {
+        $digits = $this->onlyDigits($parametros['numero_inscricao'] ?? null);
+
+        if ($digits === null) {
+            return null;
+        }
+
+        return (string) ($parametros['tipo_inscricao'] ?? '') === '1'
+            ? substr($digits, 0, 8)
+            : $digits;
     }
 }

@@ -1,5 +1,5 @@
 # Funcionalidades Existentes
-**Atualizado em:** 30/04/2026
+**Atualizado em:** 02/05/2026
 
 ## Plataforma administrativa
 - Login customizado com Livewire.
@@ -27,6 +27,7 @@
 - Catalogo local inicial de classificacoes tributarias suportadas para `S-1000`, reutilizado por validacao, formulario e leitura do orgao publico.
 - Compatibilidade inicial entre tipo de inscricao institucional e classificacao tributaria no `S-1000`.
 - Validacao de CPF/CNPJ institucional por digito verificador no fluxo do `S-1000`.
+- Normalizacao do `nrInsc` do `S-1000`, usando raiz de 8 digitos para CNPJ e 11 digitos para CPF no payload e no XML local.
 - Tela de edicao do orgao publico agora exibe orientacao contextual de consistencia para `CPF`/`CNPJ`, `classTrib` e `natJurid`.
 - Leitura operacional do status de vigencia institucional do `S-1000`.
 - Leitura de prontidao operacional da base `S-1000`, com pendencias locais antes da integracao futura.

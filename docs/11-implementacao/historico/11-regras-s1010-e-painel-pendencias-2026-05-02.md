@@ -2,6 +2,34 @@
 
 Registros historicos de implementacao separados para leitura rapida.
 
+### 02/05/2026 - Normalizacao do nrInsc no S-1000
+
+**Acao realizada:**
+- Normalizar o `nrInsc` do `S-1000` para raiz de 8 digitos quando a inscricao institucional for por CNPJ.
+- Preservar CPF com 11 digitos no mesmo builder.
+- Atualizar a orientacao da tela de parametros do orgao publico.
+- Ajustar o evento `S-1000` da massa demo para usar a raiz CNPJ.
+- Cobrir payload e XML local com teste focado.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Services/Esocial/Payloads/S1000PayloadBuilder.php`
+- `backend/FolhaNova/database/seeders/DemoDataSeeder.php`
+- `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/OrgaoPublicoTest.php`: `21` testes verdes e `138` assercoes.
+- `./vendor/bin/pint app/Services/Esocial/Payloads/S1000PayloadBuilder.php database/seeders/DemoDataSeeder.php tests/Feature/OrgaoPublicoTest.php`: sem pendencias.
+- `php artisan test tests/Feature/OrgaoPublicoTest.php tests/Feature/EventosEsocialIndexTest.php tests/Feature/EventoEsocialShowTest.php`: `50` testes verdes e `339` assercoes.
+- `php artisan test`: `148` testes verdes e `925` assercoes.
+- `npm run build`: build Vite concluido com sucesso.
+
+**Status:** Concluido
+
 ### 02/05/2026 - Regras Locais de Incidencia S-1010
 
 **Acao realizada:**

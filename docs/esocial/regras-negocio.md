@@ -1,11 +1,12 @@
 # Regras de Negocio e Validacao
-**Atualizado em:** 20/04/2026
+**Atualizado em:** 02/05/2026
 
 ## Regras basicas derivadas dos leiautes e anexos
 
 ### Identificacao do empregador
 - Validar `CPF/CNPJ` conforme `tpInsc`.
 - `nrInsc` deve ser compativel com `tpInsc`.
+- No `S-1000`, `nrInsc` deve usar a raiz de 8 digitos quando `tpInsc = 1` (`CNPJ`) e os 11 digitos quando `tpInsc = 2` (`CPF`).
 - `nrInsc` com CPF ou CNPJ completo deve ser rejeitado quando o digito verificador for invalido.
 - `classTrib` deve ser obrigatorio no cadastro institucional.
 - `classTrib` deve ser selecionado a partir da lista inicial controlada pelo sistema para evitar payload institucional com codigo ainda nao mapeado.

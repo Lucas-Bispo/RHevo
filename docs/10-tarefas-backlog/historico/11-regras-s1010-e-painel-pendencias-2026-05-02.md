@@ -2,6 +2,36 @@
 
 Entradas historicas de backlog separadas para leitura rapida.
 
+### ESOCIAL-S1000-RAIZ-CNPJ-NRINSC - 02/05/2026
+
+**Descricao:**
+Normalizar o `nrInsc` do `S-1000` para usar a raiz de 8 digitos quando o empregador estiver identificado por CNPJ, mantendo CPF com 11 digitos e preservando a exibicao cadastral do documento completo.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Services/Esocial/Payloads/S1000PayloadBuilder.php`
+- `backend/FolhaNova/database/seeders/DemoDataSeeder.php`
+- `backend/FolhaNova/resources/views/orgao-publico/partials/form-fields.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Plano:**
+- centralizar a normalizacao do `nrInsc` do `S-1000` no builder de payload;
+- usar raiz de CNPJ com 8 digitos e CPF com 11 digitos em payload/config;
+- explicar a regra de raiz CNPJ na tela de parametros do orgao;
+- cobrir a montagem do payload com teste focado.
+
+**Resultado:**
+- o builder `S-1000` passou a normalizar `nrInsc` conforme o tipo de inscricao;
+- eventos e XMLs locais por CNPJ usam raiz de 8 digitos;
+- inscricoes por CPF continuam usando 11 digitos;
+- a tela de parametros do orgao explica a diferenca entre cadastro completo e identificacao usada no payload;
+- a massa demo foi ajustada para manter o `S-1000` coerente com a regra.
+
 ### PRODUTO-S1010-REGRAS-INCIDENCIA-LOCAL - 02/05/2026
 
 **Descricao:**

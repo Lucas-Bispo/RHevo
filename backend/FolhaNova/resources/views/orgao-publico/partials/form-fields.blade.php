@@ -22,6 +22,7 @@
             'items' => [
                 'Use `classificacao tributaria 85` para administracao publica direta, autarquias e fundacoes.',
                 'A `natureza juridica` e obrigatoria para inscricoes por CNPJ neste modulo.',
+                'O cadastro pode guardar o CNPJ completo, mas o payload do `S-1000` usa a raiz de 8 digitos em `nrInsc`.',
                 ($classificacaoAtual !== null && $classificacaoAtual !== '85') || blank($naturezaJuridicaAtual)
                     ? 'A combinacao atual pede ajuste antes do salvamento.'
                     : 'A combinacao atual esta alinhada com a regra de CNPJ.',
