@@ -18,6 +18,7 @@
 
 ### Admissao e ingresso
 - `S-2200` so pode ser usado para categorias permitidas.
+- No recorte atual, categorias de trabalhador do `S-2200` devem ser selecionadas a partir do catalogo local controlado pelo produto.
 - `CPF` do trabalhador deve ser valido e consistente com data de nascimento.
 - `data_admissao` nao pode violar coerencia temporal do vinculo.
 - `matricula` deve ser unica no contexto contratual aplicavel.

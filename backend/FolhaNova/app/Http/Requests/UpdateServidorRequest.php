@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Servidor;
+use App\Support\Esocial\CategoriasTrabalhador;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -67,7 +68,7 @@ class UpdateServidorRequest extends FormRequest
                     ->where(fn ($query) => $query->where('tenant_id', $tenantId)),
             ],
             'tipo_vinculo' => ['required', Rule::in(['estatutario', 'celetista', 'comissionado', 'temporario', 'eletivo', 'estagiario'])],
-            'categoria_esocial' => ['nullable', 'string', 'max:10'],
+            'categoria_esocial' => ['nullable', 'string', 'max:10', Rule::in(CategoriasTrabalhador::codes())],
             'regime_previdenciario' => ['nullable', Rule::in(['rpps', 'rgps', 'outro'])],
             'lotacao_id' => ['nullable', Rule::exists('lotacoes', 'id')->where(fn ($query) => $query->where('tenant_id', $tenantId))],
             'cargo_id' => ['nullable', Rule::exists('cargos', 'id')->where(fn ($query) => $query->where('tenant_id', $tenantId))],
@@ -96,6 +97,16 @@ class UpdateServidorRequest extends FormRequest
             'funcao_id' => 'funcao',
             'data_admissao' => 'data de admissao',
             'salario_base' => 'salario base',
+        ];
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'categoria_esocial.in' => 'Selecione uma categoria eSocial suportada pelo recorte atual do S-2200.',
         ];
     }
 

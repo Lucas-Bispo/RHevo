@@ -47,7 +47,7 @@
     <div class="grid gap-4 md:grid-cols-2">
         @include('servidores.partials.field', ['name' => 'matricula', 'label' => 'Matricula', 'required' => true, 'placeholder' => '2026-0001', 'value' => old('matricula', $servidor->matricula ?? null)])
         @include('servidores.partials.select', ['name' => 'tipo_vinculo', 'label' => 'Tipo de vinculo', 'required' => true, 'options' => ['estatutario' => 'Estatutario', 'celetista' => 'Celetista', 'comissionado' => 'Comissionado', 'temporario' => 'Temporario', 'eletivo' => 'Eletivo', 'estagiario' => 'Estagiario'], 'value' => old('tipo_vinculo', $servidor->tipo_vinculo ?? null)])
-        @include('servidores.partials.field', ['name' => 'categoria_esocial', 'label' => 'Categoria eSocial', 'placeholder' => 'Ex.: 301', 'value' => old('categoria_esocial', $servidor->categoria_esocial ?? null)])
+        @include('servidores.partials.select', ['name' => 'categoria_esocial', 'label' => 'Categoria eSocial', 'options' => \App\Support\Esocial\CategoriasTrabalhador::options(), 'value' => old('categoria_esocial', $servidor->categoria_esocial ?? null)])
         @include('servidores.partials.select', ['name' => 'regime_previdenciario', 'label' => 'Regime previdenciario', 'options' => ['rpps' => 'RPPS', 'rgps' => 'RGPS', 'outro' => 'Outro'], 'value' => old('regime_previdenciario', $servidor->regime_previdenciario ?? null)])
         @include('servidores.partials.select-model', ['name' => 'lotacao_id', 'label' => 'Lotacao', 'items' => $lotacoes, 'value' => old('lotacao_id', $servidor->lotacao_id ?? null)])
         @include('servidores.partials.select-model', ['name' => 'cargo_id', 'label' => 'Cargo', 'items' => $cargos, 'value' => old('cargo_id', $servidor->cargo_id ?? null)])

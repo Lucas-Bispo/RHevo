@@ -52,7 +52,9 @@ class ServidorAdmissaoTest extends TestCase
             ->assertSee('Nova admissao')
             ->assertSee($lotacao->nome)
             ->assertSee($cargo->nome)
-            ->assertSee($funcao->nome);
+            ->assertSee($funcao->nome)
+            ->assertSee('301 - Servidor publico efetivo')
+            ->assertSee('302 - Servidor publico em cargo exclusivo em comissao');
     }
 
     public function test_user_can_register_servidor_admissao_and_generate_pending_esocial_event(): void
@@ -170,6 +172,40 @@ class ServidorAdmissaoTest extends TestCase
         $this->assertDatabaseMissing('pessoas', [
             'tenant_id' => 101,
             'nome_completo' => 'Servidor Duplicado',
+        ]);
+    }
+
+    public function test_user_cannot_register_servidor_with_unsupported_categoria_esocial(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 102,
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('servidores.create'))
+            ->post(route('servidores.store'), [
+                'nome_completo' => 'Servidor Categoria Invalida',
+                'cpf' => '39053344705',
+                'data_nascimento' => '1990-01-15',
+                'email' => 'categoria.invalida@prefeitura.gov.br',
+                'matricula' => 'CAT-999',
+                'tipo_vinculo' => 'estatutario',
+                'categoria_esocial' => '999',
+                'regime_previdenciario' => 'rpps',
+                'data_admissao' => '2026-04-20',
+                'salario_base' => '4200.00',
+                'situacao' => 'ativo',
+                'ambiente_esocial' => 'homologacao',
+            ]);
+
+        $response
+            ->assertRedirect(route('servidores.create'))
+            ->assertSessionHasErrors('categoria_esocial');
+
+        $this->assertDatabaseMissing('pessoas', [
+            'tenant_id' => 102,
+            'nome_completo' => 'Servidor Categoria Invalida',
         ]);
     }
 }
