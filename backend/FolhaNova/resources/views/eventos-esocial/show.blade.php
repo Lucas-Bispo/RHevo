@@ -44,6 +44,12 @@
                                 </form>
                             </div>
                         @endif
+                        @if ($eventoEsocial->evento === 'S-1000')
+                            <form method="POST" action="{{ route('eventos-esocial.gerar-xml', $eventoEsocial) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-info">Gerar XML local</button>
+                            </form>
+                        @endif
                         <a href="{{ route('eventos-esocial.index') }}" class="btn btn-ghost">Voltar para painel</a>
                         <a href="{{ route('eventos-esocial.index', ['evento' => $eventoEsocial->evento]) }}" class="btn btn-ghost">Mesmo evento</a>
                         <a href="{{ route('eventos-esocial.index', ['status' => $eventoEsocial->status]) }}" class="btn btn-ghost">Mesmo status</a>
@@ -121,6 +127,34 @@
                             {{ $eventoEsocial->mensagem_retorno ?: 'Nenhuma mensagem de retorno registrada ate o momento.' }}
                         </p>
                     </div>
+                </div>
+
+                <div class="mt-6 rounded-3xl border border-white/10 bg-slate-950/40 p-5">
+                    <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.35em] text-slate-400">XML oficial</p>
+                            <h3 class="mt-2 text-lg font-semibold text-white">Geracao local</h3>
+                        </div>
+                        <div class="text-sm text-slate-300 md:text-right">
+                            <p>Status: <span class="text-white">{{ $eventoEsocial->xml_validacao_status ?? 'Nao gerado' }}</span></p>
+                            <p>Gerado em: <span class="text-white">{{ optional($eventoEsocial->xml_gerado_em)->format('d/m/Y H:i') ?? 'Nao gerado' }}</span></p>
+                        </div>
+                    </div>
+
+                    <dl class="mt-4 space-y-3 text-sm text-slate-300">
+                        <div class="flex flex-col gap-1">
+                            <dt>Hash SHA-256</dt>
+                            <dd class="break-all text-white">{{ $eventoEsocial->xml_hash ?? 'Nao gerado' }}</dd>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <dt>Validacao</dt>
+                            <dd class="text-white">{{ $eventoEsocial->xml_validacao_mensagem ?? 'Gere o XML local para preparar a validacao e a assinatura digital.' }}</dd>
+                        </div>
+                    </dl>
+
+                    @if ($eventoEsocial->xml_gerado)
+                        <pre class="mt-4 overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/80 p-4 text-xs leading-6 text-slate-200">{{ $eventoEsocial->xml_gerado }}</pre>
+                    @endif
                 </div>
 
                 <div class="mt-6 rounded-3xl border border-white/10 bg-slate-950/40 p-5">

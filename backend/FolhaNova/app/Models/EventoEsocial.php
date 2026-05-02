@@ -19,6 +19,12 @@ class EventoEsocial extends Model
         'status',
         'ambiente',
         'payload',
+        'xml_gerado',
+        'xml_hash',
+        'xml_validacao_status',
+        'xml_validacao_mensagem',
+        'xml_gerado_em',
+        'xml_validado_em',
         'recibo',
         'protocolo',
         'mensagem_retorno',
@@ -30,6 +36,8 @@ class EventoEsocial extends Model
     {
         return [
             'payload' => 'array',
+            'xml_gerado_em' => 'datetime',
+            'xml_validado_em' => 'datetime',
             'enviado_em' => 'datetime',
             'processado_em' => 'datetime',
         ];

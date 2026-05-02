@@ -58,3 +58,35 @@ Evoluir a operacao local do painel de eventos eSocial com leitura separada de pe
 - os novos cards apontam para a listagem com `periodo=anteriores`;
 - o formulario de filtros passou a permitir selecionar eventos anteriores ao dia atual;
 - o teste focado cobre os links e garante que o filtro nao mistura eventos de hoje.
+
+### ESOCIAL-S1000-XML-LOCAL - 02/05/2026
+
+**Descricao:**
+Iniciar o Marco 1 da integracao com o governo, permitindo gerar localmente o XML oficial `S-1000` a partir do evento institucional antes da etapa de certificado, assinatura e envio SOAP.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/database/migrations/2026_05_02_153200_add_xml_generation_to_evento_esocials_table.php`
+- `backend/FolhaNova/app/Services/Esocial/Payloads/S1000PayloadBuilder.php`
+- `backend/FolhaNova/app/Services/Esocial/Xml/EsocialXmlFactory.php`
+- `backend/FolhaNova/app/Services/Esocial/Xml/EsocialXsdValidator.php`
+- `backend/FolhaNova/app/Services/EventosEsocial/GerarXmlEventoEsocialService.php`
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/integracao-api-esocial/05-plano-implementacao-governo.md`
+- `docs/produto/funcionalidades-existentes.md`
+
+**Plano:**
+- criar campos para XML gerado, hash, status e mensagem de validacao;
+- extrair builder de payload `S-1000` reutilizavel;
+- gerar XML `S-1000` via biblioteca `nfephp-org/sped-esocial`;
+- expor acao no detalhe do evento eSocial;
+- registrar que a validacao XSD final fica pendente ate a assinatura digital.
+
+**Resultado:**
+- o detalhe do evento `S-1000` passou a ter acao `Gerar XML local`;
+- o sistema grava XML oficial, hash SHA-256 e data de geracao;
+- a validacao informa `pendente_assinatura` quando o XSD exige `Signature`;
+- a proxima frente fica pronta para certificado A1 e assinatura do XML.

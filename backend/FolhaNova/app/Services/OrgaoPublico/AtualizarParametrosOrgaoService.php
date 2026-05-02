@@ -4,11 +4,15 @@ namespace App\Services\OrgaoPublico;
 
 use App\Models\EventoEsocial;
 use App\Models\Tenant;
-use Illuminate\Support\Arr;
+use App\Services\Esocial\Payloads\S1000PayloadBuilder;
 use Illuminate\Support\Facades\DB;
 
 class AtualizarParametrosOrgaoService
 {
+    public function __construct(
+        private readonly S1000PayloadBuilder $s1000PayloadBuilder,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $payload
      */
@@ -39,7 +43,7 @@ class AtualizarParametrosOrgaoService
                 'metadata' => $metadata,
             ]);
 
-            $eventoPayload = $this->buildEventoPayload($tenant->fresh());
+            $eventoPayload = $this->s1000PayloadBuilder->internalPayload($tenant->fresh());
             $eventoPendente = EventoEsocial::query()
                 ->where('tenant_id', $tenant->id)
                 ->whereNull('servidor_id')
@@ -73,58 +77,5 @@ class AtualizarParametrosOrgaoService
         $value = trim((string) $value);
 
         return $value === '' ? null : $value;
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function buildEventoPayload(Tenant $tenant): array
-    {
-        $parametros = $tenant->metadata['orgao_publico'] ?? [];
-        $contato = Arr::whereNotNull([
-            'nmCtt' => $parametros['contato_nome'] ?? null,
-            'cpfCtt' => $this->onlyDigits($parametros['contato_cpf'] ?? null),
-            'email' => $parametros['contato_email'] ?? null,
-            'foneFixo' => $this->onlyDigits($parametros['telefone'] ?? null),
-        ]);
-        $infoCadastro = Arr::whereNotNull([
-            'nmRazao' => $tenant->name,
-            'classTrib' => $parametros['classificacao_tributaria'] ?? null,
-            'natJurid' => ($parametros['tipo_inscricao'] ?? null) === '1'
-                ? ($parametros['natureza_juridica'] ?? null)
-                : null,
-            'contato' => $contato === [] ? null : $contato,
-        ]);
-
-        return [
-            'evento' => 'S-1000',
-            'origem' => 'parametros_orgao_publico',
-            'ideEmpregador' => [
-                'tpInsc' => $parametros['tipo_inscricao'] ?? null,
-                'nrInsc' => $this->onlyDigits($parametros['numero_inscricao'] ?? null),
-            ],
-            'infoEmpregador' => [
-                'inclusao' => [
-                    'idePeriodo' => Arr::whereNotNull([
-                        'iniValid' => $parametros['inicio_validade'] ?? null,
-                        'fimValid' => $parametros['fim_validade'] ?? null,
-                    ]),
-                    'infoCadastro' => $infoCadastro,
-                ],
-            ],
-            'controle_interno' => [
-                'tenant_id' => $tenant->id,
-                'slug' => $tenant->slug,
-                'ambiente' => $parametros['ambiente_esocial'] ?? null,
-                'observacoes' => $parametros['observacoes'] ?? null,
-            ],
-        ];
-    }
-
-    private function onlyDigits(mixed $value): ?string
-    {
-        $digits = preg_replace('/\D+/', '', (string) $value) ?? '';
-
-        return $digits === '' ? null : $digits;
     }
 }

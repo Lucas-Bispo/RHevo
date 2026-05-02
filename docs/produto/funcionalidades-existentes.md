@@ -35,6 +35,7 @@
 - Atalho do orgao publico para abrir o painel eSocial filtrado pela trilha `S-1000`.
 - Atalhos contextuais no orgao publico para abrir o painel `S-1000` pelo mesmo status ou ambiente do evento institucional atual.
 - Acao direta no orgao publico para reenfileirar o evento `S-1000` quando ele estiver com erro.
+- Geracao local inicial do XML oficial `S-1000` a partir do evento institucional, com hash SHA-256 e indicacao de validacao final pendente de assinatura digital.
 - Modulo inicial de lotacoes com listagem, cadastro e edicao.
 - Catalogo local inicial de tipos de lotacao suportados para a preparacao `S-1005/S-1020`, reutilizado por validacao, formulario e listagem.
 - Normalizacao e unicidade do codigo eSocial de lotacoes por tenant para evitar parametrizacao duplicada do `S-1005/S-1020`.
@@ -124,4 +125,4 @@
 
 ## O que ainda nao existe em operacao real
 - Atualizacoes cadastrais, afastamentos e desligamentos.
-- Geracao real de XML, assinatura, envio e consulta ao governo.
+- Assinatura digital com certificado A1, envio SOAP, consulta ao governo e recibo real de processamento.

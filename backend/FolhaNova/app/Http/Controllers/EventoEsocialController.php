@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\EventoEsocial;
+use App\Services\EventosEsocial\GerarXmlEventoEsocialService;
 use App\Services\EventosEsocial\ReprocessarEventoEsocialService;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class EventoEsocialController extends Controller
 {
@@ -43,7 +45,7 @@ class EventoEsocialController extends Controller
         if ($data !== '') {
             try {
                 $dataSelecionada = Carbon::createFromFormat('Y-m-d', $data)->startOfDay();
-            } catch (\Throwable) {
+            } catch (Throwable) {
                 $data = '';
             }
         }
@@ -209,6 +211,33 @@ class EventoEsocialController extends Controller
         return redirect()
             ->route('eventos-esocial.show', $eventoEsocial)
             ->with('status', 'Evento reenfileirado como pendente para reprocessamento local.');
+    }
+
+    public function gerarXml(
+        Request $request,
+        EventoEsocial $eventoEsocial,
+        GerarXmlEventoEsocialService $service
+    ): RedirectResponse {
+        $this->authorize('update', $eventoEsocial);
+        $eventoEsocial = $this->resolveEvento($request, $eventoEsocial);
+
+        if ($eventoEsocial->evento !== 'S-1000') {
+            return redirect()
+                ->route('eventos-esocial.show', $eventoEsocial)
+                ->with('warning', 'Nesta etapa, a geracao local de XML esta habilitada apenas para o S-1000.');
+        }
+
+        try {
+            $eventoEsocial = $service->execute($eventoEsocial);
+        } catch (Throwable $exception) {
+            return redirect()
+                ->route('eventos-esocial.show', $eventoEsocial)
+                ->with('warning', 'Nao foi possivel gerar o XML local: '.$exception->getMessage());
+        }
+
+        return redirect()
+            ->route('eventos-esocial.show', $eventoEsocial)
+            ->with('status', 'XML S-1000 gerado localmente e preparado para o marco de assinatura digital.');
     }
 
     private function resolveEvento(Request $request, EventoEsocial $eventoEsocial): EventoEsocial

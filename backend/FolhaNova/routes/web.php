@@ -45,6 +45,10 @@ Route::post('eventos-esocial/{eventoEsocial}/reprocessar', [EventoEsocialControl
     ->middleware(['auth'])
     ->name('eventos-esocial.reprocessar');
 
+Route::post('eventos-esocial/{eventoEsocial}/gerar-xml', [EventoEsocialController::class, 'gerarXml'])
+    ->middleware(['auth'])
+    ->name('eventos-esocial.gerar-xml');
+
 Route::get('rubricas', [RubricaController::class, 'index'])
     ->middleware(['auth'])
     ->name('rubricas.index');

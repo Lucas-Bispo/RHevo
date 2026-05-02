@@ -53,3 +53,35 @@ Registros historicos de implementacao separados para leitura rapida.
 - `php scripts/ensure_local_login.php`: usuario local recriado apos testes com `RefreshDatabase`.
 
 **Status:** Concluido
+
+### 02/05/2026 - XML Local do S-1000
+
+**Acao realizada:**
+- Criar campos de XML gerado, hash, status de validacao e datas no evento eSocial.
+- Extrair builder reutilizavel para payload/configuracao `S-1000`.
+- Gerar XML local `S-1000` com `nfephp-org/sped-esocial`.
+- Exibir botao `Gerar XML local` no detalhe do evento.
+- Registrar a validacao como `pendente_assinatura` quando o XSD oficial exigir `Signature`.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/database/migrations/2026_05_02_153200_add_xml_generation_to_evento_esocials_table.php`
+- `backend/FolhaNova/app/Models/EventoEsocial.php`
+- `backend/FolhaNova/app/Services/Esocial/Payloads/S1000PayloadBuilder.php`
+- `backend/FolhaNova/app/Services/Esocial/Xml/EsocialXmlFactory.php`
+- `backend/FolhaNova/app/Services/Esocial/Xml/EsocialXsdValidator.php`
+- `backend/FolhaNova/app/Services/Esocial/Xml/EsocialXmlValidationResult.php`
+- `backend/FolhaNova/app/Services/EventosEsocial/GerarXmlEventoEsocialService.php`
+- `backend/FolhaNova/app/Services/OrgaoPublico/AtualizarParametrosOrgaoService.php`
+- `backend/FolhaNova/app/Http/Controllers/EventoEsocialController.php`
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/routes/web.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/integracao-api-esocial/05-plano-implementacao-governo.md`
+- `docs/produto/funcionalidades-existentes.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/OrgaoPublicoTest.php tests/Feature/EventosEsocialIndexTest.php`: `43` testes verdes e `296` assercoes.
+- `./vendor/bin/pint --dirty`: formatacao aplicada.
+- `php artisan test`: `148` testes verdes e `923` assercoes.
+
+**Status:** Concluido

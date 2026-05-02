@@ -425,6 +425,67 @@ class OrgaoPublicoTest extends TestCase
         ]);
     }
 
+    public function test_user_can_generate_local_s1000_xml_from_event_detail(): void
+    {
+        $tenant = $this->createTenant([
+            'name' => 'Prefeitura Municipal do Sol',
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2020-01',
+                    'fim_validade' => null,
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+        $evento = EventoEsocial::query()->create([
+            'tenant_id' => $tenant->id,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.show', $evento))
+            ->assertOk()
+            ->assertSee('Gerar XML local')
+            ->assertSee('XML oficial')
+            ->assertSee('Nao gerado');
+
+        $this
+            ->actingAs($user)
+            ->post(route('eventos-esocial.gerar-xml', $evento))
+            ->assertRedirect(route('eventos-esocial.show', $evento))
+            ->assertSessionHas('status');
+
+        $evento->refresh();
+
+        $this->assertNotNull($evento->xml_gerado);
+        $this->assertSame(hash('sha256', $evento->xml_gerado), $evento->xml_hash);
+        $this->assertSame('pendente_assinatura', $evento->xml_validacao_status);
+        $this->assertStringContainsString('evtInfoEmpregador', $evento->xml_gerado);
+        $this->assertStringContainsString('<tpAmb>2</tpAmb>', $evento->xml_gerado);
+        $this->assertStringContainsString('<classTrib>85</classTrib>', $evento->xml_gerado);
+        $this->assertStringContainsString('assinatura digital', $evento->xml_validacao_mensagem);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.show', $evento))
+            ->assertOk()
+            ->assertSee($evento->xml_hash)
+            ->assertSee('pendente_assinatura')
+            ->assertSee('evtInfoEmpregador')
+            ->assertSee('assinatura digital');
+    }
+
     public function test_updating_orgao_publico_reuses_existing_pending_s1000_event(): void
     {
         $tenant = $this->createTenant([

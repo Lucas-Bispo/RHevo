@@ -32,6 +32,8 @@ O caminho correto e:
 
 Objetivo: provar que o FolhaNova consegue gerar XML valido sem falar com o governo.
 
+Status em 02/05/2026: iniciado com geracao local do XML `S-1000`, hash SHA-256 e exposicao no detalhe do evento. A validacao XSD final permanece pendente porque o XSD oficial exige a assinatura digital (`Signature`), que pertence ao Marco 2.
+
 Entregas:
 
 - versionar estrategia de XSDs oficiais fora de dados sensiveis;
