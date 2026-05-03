@@ -2,6 +2,35 @@
 
 Entradas historicas de backlog separadas para leitura rapida.
 
+### ESOCIAL-S1020-EVENTO-LOCAL-LOTACAO-PRONTA - 02/05/2026
+
+**Descricao:**
+Criar e sincronizar evento local `S-1020` pendente quando uma lotacao ativa possuir codigo eSocial, iniciando o espelhamento operacional das lotacoes prontas sem integracao real com o governo.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Services/Lotacoes/SincronizarEventoLotacaoService.php`
+- `backend/FolhaNova/app/Services/Lotacoes/RegistrarLotacaoService.php`
+- `backend/FolhaNova/app/Services/Lotacoes/AtualizarLotacaoService.php`
+- `backend/FolhaNova/tests/Feature/LotacaoCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Plano:**
+- centralizar a montagem do payload local `S-1020` da lotacao;
+- criar evento `S-1020` pendente para lotacao ativa com codigo eSocial;
+- reaproveitar evento `S-1020` pendente ao editar a mesma lotacao;
+- cobrir criacao e atualizacao com testes focados.
+
+**Resultado:**
+- lotacoes ativas com codigo eSocial passaram a gerar evento local `S-1020` pendente;
+- edicoes de lotacao pronta reaproveitam o evento `S-1020` pendente da propria lotacao;
+- o payload local registra origem `lotacoes` e os dados estruturais da lotacao;
+- quando nao ha tenant landlord disponivel no ambiente de teste, o evento usa `homologacao` como ambiente seguro.
+
 ### ESOCIAL-S1005-S1020-BLOQUEIO-INATIVACAO-LOTACAO - 02/05/2026
 
 **Descricao:**

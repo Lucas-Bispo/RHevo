@@ -42,6 +42,7 @@
 - Catalogo local inicial de tipos de lotacao suportados para a preparacao `S-1005/S-1020`, reutilizado por validacao, formulario e listagem.
 - Normalizacao e unicidade do codigo eSocial de lotacoes por tenant para evitar parametrizacao duplicada do `S-1005/S-1020`.
 - Bloqueio de inativacao de lotacao com servidores ativos vinculados, preservando consistencia estrutural para `S-1005/S-1020` e vinculos funcionais.
+- Criacao e edicao de lotacao ativa com codigo eSocial sincronizam evento local `S-1020` pendente para preparar a trilha de lotacoes tributarias.
 - Filtro de prontidao `S-1005/S-1020` na listagem de lotacoes, separando lotacoes ativas com codigo eSocial das pendencias estruturais.
 - Cards `Prontas S-1005/S-1020` e `Pendencias S-1005/S-1020` na listagem de lotacoes.
 - Resumo visual de filtros ativos na listagem de lotacoes com acao para limpar filtros.

@@ -2,6 +2,34 @@
 
 Registros historicos de implementacao separados para leitura rapida.
 
+### 02/05/2026 - Evento Local S-1020 para Lotacoes Prontas
+
+**Acao realizada:**
+- Criar service de sincronizacao de evento local `S-1020` para lotacoes.
+- Gerar evento `S-1020` pendente quando uma lotacao ativa possui codigo eSocial.
+- Reaproveitar evento `S-1020` pendente da mesma lotacao ao editar dados estruturais.
+- Usar ambiente do tenant quando disponivel, com fallback seguro para `homologacao`.
+- Cobrir criacao e atualizacao com testes focados.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Services/Lotacoes/SincronizarEventoLotacaoService.php`
+- `backend/FolhaNova/app/Services/Lotacoes/RegistrarLotacaoService.php`
+- `backend/FolhaNova/app/Services/Lotacoes/AtualizarLotacaoService.php`
+- `backend/FolhaNova/tests/Feature/LotacaoCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/LotacaoCrudTest.php`: `9` testes verdes e `45` assercoes.
+- `./vendor/bin/pint app/Services/Lotacoes/SincronizarEventoLotacaoService.php app/Services/Lotacoes/RegistrarLotacaoService.php app/Services/Lotacoes/AtualizarLotacaoService.php tests/Feature/LotacaoCrudTest.php`: sem pendencias.
+- `php artisan test tests/Feature/LotacaoCrudTest.php tests/Feature/LotacoesIndexTest.php tests/Feature/EventosEsocialIndexTest.php tests/Feature/DashboardTest.php`: `36` testes verdes e `295` assercoes.
+- `php artisan test`: `153` testes verdes e `957` assercoes.
+- `npm run build`: build Vite concluido com sucesso.
+
+**Status:** Concluido
+
 ### 02/05/2026 - Bloqueio de Inativacao de Lotacao com Servidores Ativos
 
 **Acao realizada:**

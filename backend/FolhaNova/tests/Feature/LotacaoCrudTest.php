@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\EventoEsocial;
 use App\Models\Lotacao;
 use App\Models\Pessoa;
 use App\Models\Servidor;
@@ -63,6 +64,33 @@ class LotacaoCrudTest extends TestCase
         ]);
     }
 
+    public function test_creating_ready_lotacao_generates_pending_s1020_event(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 36,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->post(route('lotacoes.store'), [
+                'codigo' => 'TRB-001',
+                'nome' => 'Secretaria de Trabalho',
+                'tipo' => 'secretaria',
+                'codigo_esocial' => 's1020-trb',
+                'ativa' => '1',
+            ])
+            ->assertRedirect(route('lotacoes.index'));
+
+        $lotacao = Lotacao::query()->where('tenant_id', 36)->where('codigo', 'TRB-001')->firstOrFail();
+        $evento = EventoEsocial::query()->where('tenant_id', 36)->where('evento', 'S-1020')->firstOrFail();
+
+        $this->assertSame('pendente', $evento->status);
+        $this->assertSame('homologacao', $evento->ambiente);
+        $this->assertSame('lotacoes', data_get($evento->payload, 'origem'));
+        $this->assertSame($lotacao->id, data_get($evento->payload, 'lotacao.id'));
+        $this->assertSame('S1020-TRB', data_get($evento->payload, 'lotacao.codigo_esocial'));
+    }
+
     public function test_user_can_update_lotacao(): void
     {
         $user = User::factory()->create([
@@ -98,6 +126,57 @@ class LotacaoCrudTest extends TestCase
             'codigo_esocial' => 'S1005-ADM',
             'ativa' => false,
         ]);
+    }
+
+    public function test_updating_ready_lotacao_reuses_pending_s1020_event(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 37,
+        ]);
+
+        $lotacao = Lotacao::create([
+            'tenant_id' => 37,
+            'codigo' => 'ADM-37',
+            'nome' => 'Administracao Geral',
+            'tipo' => 'departamento',
+            'codigo_esocial' => 'S1020-ADM',
+            'ativa' => true,
+        ]);
+
+        $evento = EventoEsocial::create([
+            'tenant_id' => 37,
+            'servidor_id' => null,
+            'evento' => 'S-1020',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => [
+                'origem' => 'lotacoes',
+                'lotacao' => [
+                    'id' => $lotacao->id,
+                    'nome' => 'Administracao Geral',
+                    'codigo_esocial' => 'S1020-ADM',
+                ],
+            ],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('lotacoes.update', $lotacao), [
+                'codigo' => 'ADM-37',
+                'nome' => 'Administracao Central',
+                'tipo' => 'gabinete',
+                'codigo_esocial' => 'S1020-ADM-CENTRAL',
+                'ativa' => '1',
+            ])
+            ->assertRedirect(route('lotacoes.index'));
+
+        $this->assertSame(1, EventoEsocial::query()->where('tenant_id', 37)->where('evento', 'S-1020')->count());
+
+        $evento->refresh();
+
+        $this->assertSame('Administracao Central', data_get($evento->payload, 'lotacao.nome'));
+        $this->assertSame('gabinete', data_get($evento->payload, 'lotacao.tipo'));
+        $this->assertSame('S1020-ADM-CENTRAL', data_get($evento->payload, 'lotacao.codigo_esocial'));
     }
 
     public function test_user_cannot_update_lotacao_from_another_tenant(): void
