@@ -10,7 +10,7 @@
     <select
         name="{{ $name }}"
         @class([
-            'select select-bordered border-white/10 bg-slate-950/50 text-sm text-white',
+            'select select-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white',
             'border-rose-400/50' => $errors->has($name),
         ])
     >

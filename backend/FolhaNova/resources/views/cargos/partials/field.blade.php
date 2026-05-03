@@ -15,7 +15,7 @@
             placeholder="{{ $placeholder }}"
             @required($required)
             @class([
-                'textarea textarea-bordered min-h-32 border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500',
+                'textarea textarea-bordered min-h-32 w-full border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500',
                 'border-rose-400/50' => $errors->has($name),
             ])
         >{{ $value }}</textarea>
@@ -27,7 +27,7 @@
             placeholder="{{ $placeholder }}"
             @required($required)
             @class([
-                'input input-bordered border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500',
+                'input input-bordered w-full border-white/10 bg-slate-950/50 text-sm text-white placeholder:text-slate-500',
                 'border-rose-400/50' => $errors->has($name),
             ])
         >
