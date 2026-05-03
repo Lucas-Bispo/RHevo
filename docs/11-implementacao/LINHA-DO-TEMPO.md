@@ -17,6 +17,7 @@
 
 ## Historico por Ordem, Tema e Data
 
+- [13 - Eventos locais para cargos e funcoes - 03/05/2026](./historico/13-eventos-locais-cargos-funcoes-2026-05-03.md)
 - [12 - Hardening de seguranca apos analise Gemini - 03/05/2026](./historico/12-hardening-seguranca-gemini-2026-05-03.md)
 - [11 - Regras S-1010 e painel de pendencias - 02/05/2026](./historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md)
 - [10 - Consolidacao de cadastros eSocial - 01/05/2026](./historico/10-consolidacao-cadastros-esocial-2026-05-01.md)

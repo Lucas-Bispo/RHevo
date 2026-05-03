@@ -48,11 +48,13 @@
 - Resumo visual de filtros ativos na listagem de lotacoes com acao para limpar filtros.
 - Modulo inicial de cargos com listagem, cadastro e edicao.
 - Normalizacao e unicidade do codigo eSocial de cargos por tenant para evitar parametrizacao duplicada do `S-1030`.
+- Criacao e edicao de cargo ativo com codigo eSocial sincronizam evento local `S-1030` pendente para preparar a trilha de cargos.
 - Filtro de prontidao `S-1030` na listagem de cargos, separando cargos ativos com codigo eSocial das pendencias ocupacionais.
 - Cards `Prontos S-1030` e `Pendencias S-1030` na listagem de cargos.
 - Resumo visual de filtros ativos na listagem de cargos com acao para limpar filtros.
 - Modulo inicial de funcoes com listagem, cadastro e edicao.
 - Normalizacao e unicidade do codigo eSocial de funcoes por tenant para evitar parametrizacao duplicada do `S-1040`.
+- Criacao e edicao de funcao ativa com codigo eSocial sincronizam evento local `S-1040` pendente para preparar a trilha de funcoes.
 - Filtro de prontidao `S-1040` na listagem de funcoes, separando funcoes ativas com codigo eSocial das pendencias funcionais.
 - Cards `Prontas S-1040` e `Pendencias S-1040` na listagem de funcoes.
 - Resumo visual de filtros ativos na listagem de funcoes com acao para limpar filtros.
@@ -116,6 +118,7 @@
 - Cards do painel eSocial para filtrar pendencias e erros atualizados no dia.
 - Cards do painel eSocial para filtrar pendencias e erros anteriores ao dia atual, destacando itens envelhecidos da fila local.
 - Atalhos do painel eSocial para eventos prioritarios `S-1000`, `S-1005`, `S-1010`, `S-1020`, `S-1030`, `S-1040` e `S-2200`.
+- Painel eSocial lista e filtra eventos locais estruturais de cargos (`S-1030`) e funcoes (`S-1040`) por origem do payload.
 - Card do painel eSocial para filtrar eventos sem mensagem de retorno registrada.
 - Filtro do painel eSocial por `origem` do payload, com leitura da origem ativa no resumo de filtros.
 - Filtro do painel eSocial para eventos com ou sem mensagem de retorno registrada, disponivel no card e no formulario principal.

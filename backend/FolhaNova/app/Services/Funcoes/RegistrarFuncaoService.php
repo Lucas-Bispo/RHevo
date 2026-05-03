@@ -6,12 +6,16 @@ use App\Models\Funcao;
 
 class RegistrarFuncaoService
 {
+    public function __construct(
+        private readonly SincronizarEventoFuncaoService $sincronizarEventoFuncaoService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $payload
      */
     public function execute(array $payload, ?int $tenantId): Funcao
     {
-        return Funcao::query()->create([
+        $funcao = Funcao::query()->create([
             'tenant_id' => $tenantId,
             'codigo' => trim((string) $payload['codigo']),
             'nome' => trim((string) $payload['nome']),
@@ -19,6 +23,10 @@ class RegistrarFuncaoService
             'codigo_esocial' => $this->nullableString($payload['codigo_esocial'] ?? null),
             'ativo' => (bool) $payload['ativo'],
         ]);
+
+        $this->sincronizarEventoFuncaoService->execute($funcao);
+
+        return $funcao;
     }
 
     private function nullableString(mixed $value): ?string

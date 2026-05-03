@@ -6,6 +6,10 @@ use App\Models\Funcao;
 
 class AtualizarFuncaoService
 {
+    public function __construct(
+        private readonly SincronizarEventoFuncaoService $sincronizarEventoFuncaoService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $payload
      */
@@ -19,7 +23,11 @@ class AtualizarFuncaoService
             'ativo' => (bool) $payload['ativo'],
         ]);
 
-        return $funcao->fresh();
+        $funcao = $funcao->fresh();
+
+        $this->sincronizarEventoFuncaoService->execute($funcao);
+
+        return $funcao;
     }
 
     private function nullableString(mixed $value): ?string

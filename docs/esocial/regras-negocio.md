@@ -64,6 +64,8 @@
 - Estabelecimento e lotacao tributaria devem respeitar tabelas oficiais.
 - Lotacao com servidor ativo vinculado nao deve ser inativada enquanto sustentar vinculo funcional operacional.
 - Lotacao ativa com codigo eSocial deve gerar ou atualizar evento local `S-1020` pendente antes de qualquer integracao real com o governo.
+- Cargo ativo com codigo eSocial deve gerar ou atualizar evento local `S-1030` pendente antes de qualquer integracao real com o governo.
+- Funcao ativa com codigo eSocial deve gerar ou atualizar evento local `S-1040` pendente antes de qualquer integracao real com o governo.
 
 ### Duplicidade e historico
 - Nao permitir duplicidade de evento equivalente para a mesma chave logica sem retificacao/exclusao adequada.

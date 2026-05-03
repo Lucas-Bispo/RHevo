@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\EventoEsocial;
 use App\Models\Funcao;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -53,6 +54,16 @@ class FuncaoCrudTest extends TestCase
             'codigo_esocial' => 'S1040-COORD',
             'ativo' => true,
         ]);
+
+        $evento = EventoEsocial::query()
+            ->where('tenant_id', 51)
+            ->where('evento', 'S-1040')
+            ->where('status', 'pendente')
+            ->firstOrFail();
+
+        $this->assertNull($evento->servidor_id);
+        $this->assertSame('funcoes', data_get($evento->payload, 'origem'));
+        $this->assertSame('S1040-COORD', data_get($evento->payload, 'funcao.codigo_esocial'));
     }
 
     public function test_user_can_update_funcao(): void
@@ -88,6 +99,57 @@ class FuncaoCrudTest extends TestCase
             'codigo_esocial' => 'S1040-CHEF',
             'ativo' => false,
         ]);
+
+        $this->assertSame(0, EventoEsocial::query()->where('tenant_id', 52)->where('evento', 'S-1040')->count());
+    }
+
+    public function test_updating_ready_funcao_reuses_pending_s1040_event(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 56,
+        ]);
+
+        $funcao = Funcao::create([
+            'tenant_id' => 56,
+            'codigo' => 'DIR-01',
+            'nome' => 'Diretor Escolar',
+            'codigo_esocial' => 'S1040-DIR',
+            'ativo' => true,
+        ]);
+
+        $evento = EventoEsocial::query()->create([
+            'tenant_id' => 56,
+            'servidor_id' => null,
+            'evento' => 'S-1040',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => [
+                'evento' => 'S-1040',
+                'origem' => 'funcoes',
+                'funcao' => [
+                    'id' => $funcao->id,
+                    'nome' => 'Nome antigo',
+                ],
+            ],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('funcoes.update', $funcao), [
+                'codigo' => 'DIR-01',
+                'nome' => 'Diretor de Unidade Escolar',
+                'descricao' => 'Gestao da unidade escolar',
+                'codigo_esocial' => 'S1040-DIR',
+                'ativo' => '1',
+            ])
+            ->assertRedirect(route('funcoes.index'));
+
+        $this->assertSame(1, EventoEsocial::query()->where('tenant_id', 56)->where('evento', 'S-1040')->count());
+
+        $evento->refresh();
+
+        $this->assertSame('Diretor de Unidade Escolar', data_get($evento->payload, 'funcao.nome'));
+        $this->assertSame('Gestao da unidade escolar', data_get($evento->payload, 'funcao.descricao'));
     }
 
     public function test_user_cannot_update_funcao_from_another_tenant(): void

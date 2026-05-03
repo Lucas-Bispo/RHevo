@@ -925,6 +925,47 @@ class EventosEsocialIndexTest extends TestCase
             ->assertSee('value="parametros_orgao_publico" selected', false);
     }
 
+    public function test_eventos_index_lists_structural_cargo_and_funcao_events(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 91,
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 91,
+            'evento' => 'S-1030',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'cargos'],
+        ]);
+
+        EventoEsocial::create([
+            'tenant_id' => 91,
+            'evento' => 'S-1040',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'funcoes'],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index'))
+            ->assertOk()
+            ->assertSee('S-1030')
+            ->assertSee('S-1040')
+            ->assertSee('Cargos')
+            ->assertSee('Funcoes')
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1030']).'"', false)
+            ->assertSee('href="'.route('eventos-esocial.index', ['evento' => 'S-1040']).'"', false);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.index', ['origem' => 'cargos']))
+            ->assertOk()
+            ->assertSee('Origem: cargos')
+            ->assertViewHas('eventos', fn ($eventos) => $eventos->getCollection()->pluck('payload.origem')->unique()->values()->all() === ['cargos']);
+    }
+
     public function test_eventos_index_shows_return_summary_in_listing(): void
     {
         $user = User::factory()->create([

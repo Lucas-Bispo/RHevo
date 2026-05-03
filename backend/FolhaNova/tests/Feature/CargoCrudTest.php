@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Cargo;
+use App\Models\EventoEsocial;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -53,6 +54,16 @@ class CargoCrudTest extends TestCase
             'codigo_esocial' => 'S1030-PROF',
             'ativo' => true,
         ]);
+
+        $evento = EventoEsocial::query()
+            ->where('tenant_id', 41)
+            ->where('evento', 'S-1030')
+            ->where('status', 'pendente')
+            ->firstOrFail();
+
+        $this->assertNull($evento->servidor_id);
+        $this->assertSame('cargos', data_get($evento->payload, 'origem'));
+        $this->assertSame('S1030-PROF', data_get($evento->payload, 'cargo.codigo_esocial'));
     }
 
     public function test_user_can_update_cargo(): void
@@ -88,6 +99,57 @@ class CargoCrudTest extends TestCase
             'codigo_esocial' => 'S1030-ADM',
             'ativo' => false,
         ]);
+
+        $this->assertSame(0, EventoEsocial::query()->where('tenant_id', 42)->where('evento', 'S-1030')->count());
+    }
+
+    public function test_updating_ready_cargo_reuses_pending_s1030_event(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 46,
+        ]);
+
+        $cargo = Cargo::create([
+            'tenant_id' => 46,
+            'codigo' => 'TEC-01',
+            'nome' => 'Tecnico Administrativo',
+            'codigo_esocial' => 'S1030-TEC',
+            'ativo' => true,
+        ]);
+
+        $evento = EventoEsocial::query()->create([
+            'tenant_id' => 46,
+            'servidor_id' => null,
+            'evento' => 'S-1030',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => [
+                'evento' => 'S-1030',
+                'origem' => 'cargos',
+                'cargo' => [
+                    'id' => $cargo->id,
+                    'nome' => 'Nome antigo',
+                ],
+            ],
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('cargos.update', $cargo), [
+                'codigo' => 'TEC-01',
+                'nome' => 'Tecnico de Administracao Municipal',
+                'descricao' => 'Atuacao tecnica atualizada',
+                'codigo_esocial' => 'S1030-TEC',
+                'ativo' => '1',
+            ])
+            ->assertRedirect(route('cargos.index'));
+
+        $this->assertSame(1, EventoEsocial::query()->where('tenant_id', 46)->where('evento', 'S-1030')->count());
+
+        $evento->refresh();
+
+        $this->assertSame('Tecnico de Administracao Municipal', data_get($evento->payload, 'cargo.nome'));
+        $this->assertSame('Atuacao tecnica atualizada', data_get($evento->payload, 'cargo.descricao'));
     }
 
     public function test_user_cannot_update_cargo_from_another_tenant(): void

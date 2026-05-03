@@ -6,6 +6,10 @@ use App\Models\Cargo;
 
 class AtualizarCargoService
 {
+    public function __construct(
+        private readonly SincronizarEventoCargoService $sincronizarEventoCargoService,
+    ) {}
+
     /**
      * @param  array<string, mixed>  $payload
      */
@@ -19,7 +23,11 @@ class AtualizarCargoService
             'ativo' => (bool) $payload['ativo'],
         ]);
 
-        return $cargo->fresh();
+        $cargo = $cargo->fresh();
+
+        $this->sincronizarEventoCargoService->execute($cargo);
+
+        return $cargo;
     }
 
     private function nullableString(mixed $value): ?string
