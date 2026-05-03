@@ -2,7 +2,8 @@
 
 namespace App\Logging;
 
-use Monolog\Logger;
+use Illuminate\Log\Logger as IlluminateLogger;
+use Monolog\Logger as MonologLogger;
 use Monolog\LogRecord;
 
 class RedactSensitiveData
@@ -14,18 +15,32 @@ class RedactSensitiveData
         '/\b\d{3}\.\d{3}\.\d{3}-\d{2}\b/' => '***.***.***-**',
         '/\b\d{11}\b/' => '***********',
         '/\b\d{14}\b/' => '**************',
-        '/("?(?:cpf|nis|salario|salario_base|password|senha|certificado|private_key|token)"?\s*[:=]\s*)("[^"]*"|\'[^\']*\'|[^\s,;}\]]+)/i' => '$1[REDACTED]',
+        '/("?(?:cpf|nis|salario|salario_base|password|senha|certificado|private_key|token)"?\s*[:=]\s*)(\[[^\]]*\]|"[^"]*"|\'[^\']*\'|[^\s,;}\]]+)/i' => '$1[REDACTED]',
     ];
 
-    public function __invoke(Logger $logger): void
+    public function __invoke(IlluminateLogger|MonologLogger $logger): void
     {
-        $logger->pushProcessor(function (LogRecord $record): LogRecord {
+        $monolog = $logger instanceof IlluminateLogger ? $logger->getLogger() : $logger;
+        $processor = $this->processor();
+
+        $monolog->pushProcessor($processor);
+
+        foreach ($monolog->getHandlers() as $handler) {
+            if (method_exists($handler, 'pushProcessor')) {
+                $handler->pushProcessor($processor);
+            }
+        }
+    }
+
+    private function processor(): callable
+    {
+        return function (LogRecord $record): LogRecord {
             return $record->with(
                 message: $this->redactValue($record->message),
                 context: $this->redactValue($record->context),
                 extra: $this->redactValue($record->extra),
             );
-        });
+        };
     }
 
     /**

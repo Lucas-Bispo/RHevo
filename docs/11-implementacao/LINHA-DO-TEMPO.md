@@ -17,6 +17,7 @@
 
 ## Historico por Ordem, Tema e Data
 
+- [15 - Checkup de estabilidade, logs e ambiente local - 03/05/2026](./historico/15-checkup-estabilidade-logs-ambiente-2026-05-03.md)
 - [14 - QA local com Vitest, dados demo e responsividade - 03/05/2026](./historico/14-qa-local-vitest-responsividade-2026-05-03.md)
 - [13 - Eventos locais para cargos e funcoes - 03/05/2026](./historico/13-eventos-locais-cargos-funcoes-2026-05-03.md)
 - [12 - Hardening de seguranca apos analise Gemini - 03/05/2026](./historico/12-hardening-seguranca-gemini-2026-05-03.md)
