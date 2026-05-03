@@ -130,6 +130,9 @@
                 </div>
 
                 <div class="mt-6 rounded-3xl border border-white/10 bg-slate-950/40 p-5">
+                    @php
+                        $xmlS1000Pendente = $eventoEsocial->evento === 'S-1000' && blank($eventoEsocial->xml_gerado);
+                    @endphp
                     <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                         <div>
                             <p class="text-xs uppercase tracking-[0.35em] text-slate-400">XML oficial</p>
@@ -140,6 +143,12 @@
                             <p>Gerado em: <span class="text-white">{{ optional($eventoEsocial->xml_gerado_em)->format('d/m/Y H:i') ?? 'Nao gerado' }}</span></p>
                         </div>
                     </div>
+
+                    @if ($xmlS1000Pendente)
+                        <div class="mt-4 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-6 text-amber-100">
+                            XML S-1000 pendente de geracao local. Gere novamente o XML depois de revisar ou alterar os parametros do orgao publico.
+                        </div>
+                    @endif
 
                     <dl class="mt-4 space-y-3 text-sm text-slate-300">
                         <div class="flex flex-col gap-1">

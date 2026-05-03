@@ -2,6 +2,29 @@
 
 Registros historicos de implementacao separados para leitura rapida.
 
+### 02/05/2026 - Alerta de XML S-1000 Pendente no Detalhe
+
+**Acao realizada:**
+- Exibir alerta operacional no detalhe do evento `S-1000` quando o XML local ainda nao estiver gerado.
+- Orientar a regeracao depois de revisar ou alterar parametros do orgao publico.
+- Cobrir o estado com teste focado no detalhe do evento.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/EventoEsocialShowTest.php`: `8` testes verdes e `45` assercoes.
+- `./vendor/bin/pint tests/Feature/EventoEsocialShowTest.php`: sem pendencias.
+- `php artisan test tests/Feature/OrgaoPublicoTest.php tests/Feature/EventosEsocialIndexTest.php tests/Feature/EventoEsocialShowTest.php`: `52` testes verdes e `353` assercoes.
+- `php artisan test`: `150` testes verdes e `939` assercoes.
+- `npm run build`: build Vite concluido com sucesso.
+
+**Status:** Concluido
+
 ### 02/05/2026 - Invalidacao de XML S-1000 ao Editar Parametros
 
 **Acao realizada:**

@@ -124,6 +124,7 @@
 - Tela de detalhe do evento eSocial com atalho para retornar ao painel pelo mesmo servidor vinculado.
 - Tela de detalhe do evento eSocial com atalho para retornar ao painel pela mesma data de atualizacao do registro.
 - Atalho do detalhe eSocial para abrir o servidor vinculado quando o evento possuir vinculo funcional.
+- Detalhe do evento `S-1000` alerta quando o XML local ainda nao foi gerado ou precisa ser regerado apos revisao dos parametros do orgao.
 
 ## O que ainda nao existe em operacao real
 - Atualizacoes cadastrais, afastamentos e desligamentos.

@@ -2,6 +2,31 @@
 
 Entradas historicas de backlog separadas para leitura rapida.
 
+### ESOCIAL-S1000-ALERTA-XML-PENDENTE - 02/05/2026
+
+**Descricao:**
+Destacar no detalhe do evento `S-1000` quando o XML oficial local ainda nao foi gerado ou foi invalidado apos alteracao dos parametros institucionais.
+
+**Status:** Concluido
+**Prioridade:** Media
+**Arquivos envolvidos:**
+- `backend/FolhaNova/resources/views/eventos-esocial/show.blade.php`
+- `backend/FolhaNova/tests/Feature/EventoEsocialShowTest.php`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Plano:**
+- exibir alerta operacional no bloco de XML oficial do detalhe do `S-1000`;
+- manter a acao `Gerar XML local` como caminho de resolucao;
+- cobrir o estado com teste focado;
+- registrar validacoes e status da entrega.
+
+**Resultado:**
+- o detalhe do evento `S-1000` passou a exibir alerta quando nao ha XML local gerado;
+- o alerta orienta a gerar novamente o XML apos revisar ou alterar parametros do orgao publico;
+- a acao `Gerar XML local` permanece disponivel no mesmo contexto operacional.
+
 ### ESOCIAL-S1000-INVALIDAR-XML-AO-EDITAR-PARAMETROS - 02/05/2026
 
 **Descricao:**

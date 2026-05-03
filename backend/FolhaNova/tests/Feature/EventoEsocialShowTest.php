@@ -173,6 +173,30 @@ class EventoEsocialShowTest extends TestCase
             ->assertSee('href="'.route('eventos-esocial.index', ['retorno' => 'sem_mensagem']).'"', false);
     }
 
+    public function test_s1000_detail_warns_when_local_xml_is_not_generated(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 84,
+        ]);
+
+        $evento = EventoEsocial::create([
+            'tenant_id' => 84,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['origem' => 'parametros_orgao_publico'],
+            'xml_gerado' => null,
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->get(route('eventos-esocial.show', $evento))
+            ->assertOk()
+            ->assertSee('Gerar XML local')
+            ->assertSee('XML S-1000 pendente de geracao local.')
+            ->assertSee('Gere novamente o XML depois de revisar ou alterar os parametros do orgao publico.');
+    }
+
     public function test_user_cannot_requeue_processed_event(): void
     {
         $user = User::factory()->create([
