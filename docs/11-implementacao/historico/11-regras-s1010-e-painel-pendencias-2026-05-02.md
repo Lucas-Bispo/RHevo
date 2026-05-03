@@ -2,6 +2,30 @@
 
 Registros historicos de implementacao separados para leitura rapida.
 
+### 02/05/2026 - Invalidacao de XML S-1000 ao Editar Parametros
+
+**Acao realizada:**
+- Limpar XML local, hash, status, mensagem e datas de validacao quando um evento `S-1000` pendente for reaproveitado apos edicao dos parametros do orgao publico.
+- Manter o payload atualizado como fonte de verdade para a proxima geracao local.
+- Cobrir o fluxo com teste focado.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Services/OrgaoPublico/AtualizarParametrosOrgaoService.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/OrgaoPublicoTest.php`: `22` testes verdes e `148` assercoes.
+- `./vendor/bin/pint app/Services/OrgaoPublico/AtualizarParametrosOrgaoService.php tests/Feature/OrgaoPublicoTest.php`: sem pendencias.
+- `php artisan test tests/Feature/OrgaoPublicoTest.php tests/Feature/EventosEsocialIndexTest.php tests/Feature/EventoEsocialShowTest.php`: `51` testes verdes e `349` assercoes.
+- `php artisan test`: `149` testes verdes e `935` assercoes.
+- `npm run build`: build Vite concluido com sucesso.
+
+**Status:** Concluido
+
 ### 02/05/2026 - Normalizacao do nrInsc no S-1000
 
 **Acao realizada:**

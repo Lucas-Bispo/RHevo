@@ -37,6 +37,7 @@
 - Atalhos contextuais no orgao publico para abrir o painel `S-1000` pelo mesmo status ou ambiente do evento institucional atual.
 - Acao direta no orgao publico para reenfileirar o evento `S-1000` quando ele estiver com erro.
 - Geracao local inicial do XML oficial `S-1000` a partir do evento institucional, com hash SHA-256 e indicacao de validacao final pendente de assinatura digital.
+- Edicao dos parametros do orgao publico invalida XML local, hash e validacao antigos do `S-1000` pendente para evitar artefato divergente do payload atualizado.
 - Modulo inicial de lotacoes com listagem, cadastro e edicao.
 - Catalogo local inicial de tipos de lotacao suportados para a preparacao `S-1005/S-1020`, reutilizado por validacao, formulario e listagem.
 - Normalizacao e unicidade do codigo eSocial de lotacoes por tenant para evitar parametrizacao duplicada do `S-1005/S-1020`.

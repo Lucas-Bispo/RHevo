@@ -2,6 +2,33 @@
 
 Entradas historicas de backlog separadas para leitura rapida.
 
+### ESOCIAL-S1000-INVALIDAR-XML-AO-EDITAR-PARAMETROS - 02/05/2026
+
+**Descricao:**
+Evitar que um evento `S-1000` pendente mantenha XML local, hash e validacao antigos depois que os parametros institucionais do orgao publico forem alterados.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Services/OrgaoPublico/AtualizarParametrosOrgaoService.php`
+- `backend/FolhaNova/tests/Feature/OrgaoPublicoTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Plano:**
+- limpar os campos de XML gerado quando um evento `S-1000` pendente for sincronizado com novos parametros;
+- manter o payload atualizado como fonte de verdade local;
+- cobrir o fluxo com teste focado de edicao dos parametros institucionais;
+- registrar a regra de negocio e a execucao da rodada.
+
+**Resultado:**
+- ao atualizar parametros do orgao publico, o evento `S-1000` pendente reaproveitado continua recebendo payload atualizado;
+- XML local, hash, status, mensagem e datas de validacao anteriores passam a ser limpos;
+- a tela de detalhe volta a indicar XML nao gerado ate nova geracao local;
+- o fluxo evita que um XML antigo pareca representar parametros institucionais alterados.
+
 ### ESOCIAL-S1000-RAIZ-CNPJ-NRINSC - 02/05/2026
 
 **Descricao:**

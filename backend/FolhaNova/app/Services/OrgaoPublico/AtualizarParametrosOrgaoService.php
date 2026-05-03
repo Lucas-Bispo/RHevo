@@ -56,6 +56,12 @@ class AtualizarParametrosOrgaoService
                 $eventoPendente->update([
                     'ambiente' => $metadata['orgao_publico']['ambiente_esocial'],
                     'payload' => $eventoPayload,
+                    'xml_gerado' => null,
+                    'xml_hash' => null,
+                    'xml_validacao_status' => null,
+                    'xml_validacao_mensagem' => null,
+                    'xml_gerado_em' => null,
+                    'xml_validado_em' => null,
                 ]);
             } else {
                 EventoEsocial::create([

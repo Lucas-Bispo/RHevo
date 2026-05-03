@@ -542,6 +542,71 @@ class OrgaoPublicoTest extends TestCase
         $this->assertSame('11222333', data_get($evento->payload, 'ideEmpregador.nrInsc'));
     }
 
+    public function test_updating_orgao_publico_clears_stale_local_xml_from_pending_s1000_event(): void
+    {
+        $tenant = $this->createTenant([
+            'metadata' => [
+                'orgao_publico' => [
+                    'tipo_inscricao' => '1',
+                    'numero_inscricao' => '11.222.333/0001-81',
+                    'classificacao_tributaria' => '85',
+                    'natureza_juridica' => '1244',
+                    'inicio_validade' => '2026-01',
+                    'ambiente_esocial' => 'homologacao',
+                ],
+            ],
+        ]);
+
+        $user = User::factory()->create([
+            'tenant_id' => $tenant->id,
+        ]);
+
+        $evento = EventoEsocial::query()->create([
+            'tenant_id' => $tenant->id,
+            'servidor_id' => null,
+            'evento' => 'S-1000',
+            'status' => 'pendente',
+            'ambiente' => 'homologacao',
+            'payload' => ['controle_interno' => ['slug' => $tenant->slug]],
+            'xml_gerado' => '<eSocial><evtInfoEmpregador /></eSocial>',
+            'xml_hash' => str_repeat('a', 64),
+            'xml_validacao_status' => 'pendente_assinatura',
+            'xml_validacao_mensagem' => 'XML anterior aguardava assinatura digital.',
+            'xml_gerado_em' => now(),
+            'xml_validado_em' => now(),
+        ]);
+
+        $this
+            ->actingAs($user)
+            ->put(route('orgao-publico.update'), [
+                'name' => 'Prefeitura Municipal das Flores',
+                'tipo_inscricao' => '1',
+                'numero_inscricao' => '11222333000181',
+                'classificacao_tributaria' => '85',
+                'natureza_juridica' => '1244',
+                'inicio_validade' => '2026-05',
+                'fim_validade' => '',
+                'ambiente_esocial' => 'producao',
+                'contato_nome' => 'Joao Lima',
+                'contato_cpf' => '52998224725',
+                'contato_email' => 'folha@flores.gov.br',
+                'telefone' => '1130304040',
+                'observacoes' => '',
+            ])
+            ->assertRedirect(route('orgao-publico.show'));
+
+        $evento->refresh();
+
+        $this->assertSame('producao', $evento->ambiente);
+        $this->assertSame('Prefeitura Municipal das Flores', data_get($evento->payload, 'infoEmpregador.inclusao.infoCadastro.nmRazao'));
+        $this->assertNull($evento->xml_gerado);
+        $this->assertNull($evento->xml_hash);
+        $this->assertNull($evento->xml_validacao_status);
+        $this->assertNull($evento->xml_validacao_mensagem);
+        $this->assertNull($evento->xml_gerado_em);
+        $this->assertNull($evento->xml_validado_em);
+    }
+
     public function test_updating_orgao_publico_requires_classificacao_tributaria_and_natureza_juridica_for_cnpj(): void
     {
         $tenant = $this->createTenant();
