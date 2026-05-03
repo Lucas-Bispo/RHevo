@@ -8,8 +8,10 @@ PROJECT_DIR="${1:-$NATIVE_PROJECT_DIR}"
 LOG_DIR="storage/logs"
 BACKEND_PID_FILE="${LOG_DIR}/dev-server.pid"
 VITE_PID_FILE="${LOG_DIR}/vite-dev.pid"
+VITEST_PID_FILE="${LOG_DIR}/vitest-ui.pid"
 BACKEND_PORT="${BACKEND_PORT:-8000}"
 VITE_PORT="${VITE_PORT:-5173}"
+VITEST_PORT="${VITEST_PORT:-51204}"
 
 stop_pid_file() {
     local label="$1"
@@ -50,7 +52,9 @@ cd "$PROJECT_DIR"
 
 stop_pid_file "backend Laravel" "$BACKEND_PID_FILE"
 stop_pid_file "Vite" "$VITE_PID_FILE"
+stop_pid_file "Vitest UI" "$VITEST_PID_FILE"
 stop_port "backend Laravel" "$BACKEND_PORT"
 stop_port "Vite" "$VITE_PORT"
+stop_port "Vitest UI" "$VITEST_PORT"
 
 echo "Servicos de desenvolvimento encerrados."

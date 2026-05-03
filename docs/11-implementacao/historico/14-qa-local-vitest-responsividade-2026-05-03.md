@@ -3,16 +3,20 @@
 ## Acao realizada
 
 - Instalar Vitest no frontend Vite/Laravel.
+- Instalar `@vitest/ui` para acompanhamento visual dos testes.
 - Extrair helper de tema para modulo testavel.
 - Adicionar teste Vitest para tema inicial e alternancia de tema.
 - Reforcar proporcionalidade de campos compartilhados com `w-full`.
 - Subir backend e Vite localmente.
+- Subir Vitest UI localmente em modo persistente.
 - Recarregar massa demo para teste manual.
 
 ## Arquivos criados / alterados
 
 - `backend/FolhaNova/package.json`
 - `backend/FolhaNova/package-lock.json`
+- `backend/FolhaNova/scripts/run_vitest_ui_detached.sh`
+- `backend/FolhaNova/scripts/stop_native_wsl.sh`
 - `backend/FolhaNova/vite.config.js`
 - `backend/FolhaNova/resources/js/theme.js`
 - `backend/FolhaNova/resources/js/theme.test.js`
@@ -38,10 +42,12 @@
 - `php artisan db:seed --class=DemoDataSeeder --force`: massa demo carregada apos testes.
 - `curl -Is http://127.0.0.1:8000/login`: HTTP 200.
 - `curl -Is http://127.0.0.1:5173/resources/js/app.js`: HTTP 200.
+- `curl -Is http://127.0.0.1:51204/__vitest__/`: HTTP 200.
 
 ## Ambiente para teste manual
 
 - URL: `http://127.0.0.1:8000/login`
+- Vitest UI: `http://127.0.0.1:51204/__vitest__/`
 - Usuario: `test@example.com`
 - Senha: `password`
 - Dados: 1 tenant, 3 servidores, 4 eventos, 3 cargos, 2 funcoes e 5 rubricas.
