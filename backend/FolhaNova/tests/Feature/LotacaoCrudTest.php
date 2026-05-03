@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Lotacao;
+use App\Models\Pessoa;
+use App\Models\Servidor;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -129,6 +131,56 @@ class LotacaoCrudTest extends TestCase
             'tenant_id' => 99,
             'nome' => 'Lotacao Bloqueada',
         ]);
+    }
+
+    public function test_user_cannot_deactivate_lotacao_with_active_servidores(): void
+    {
+        $user = User::factory()->create([
+            'tenant_id' => 35,
+        ]);
+
+        $lotacao = Lotacao::create([
+            'tenant_id' => 35,
+            'codigo' => 'SAU-01',
+            'nome' => 'Secretaria de Saude',
+            'tipo' => 'secretaria',
+            'codigo_esocial' => 'S1020-SAU',
+            'ativa' => true,
+        ]);
+
+        $pessoa = Pessoa::create([
+            'tenant_id' => 35,
+            'nome_completo' => 'Aline Cardoso',
+            'cpf' => '529.982.247-25',
+        ]);
+
+        Servidor::create([
+            'tenant_id' => 35,
+            'pessoa_id' => $pessoa->id,
+            'lotacao_id' => $lotacao->id,
+            'matricula' => 'MAT-3501',
+            'tipo_vinculo' => 'estatutario',
+            'data_admissao' => '2026-04-01',
+            'salario_base' => 4200,
+            'situacao' => 'ativo',
+        ]);
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('lotacoes.edit', $lotacao))
+            ->put(route('lotacoes.update', $lotacao), [
+                'codigo' => 'SAU-01',
+                'nome' => 'Secretaria de Saude',
+                'tipo' => 'secretaria',
+                'codigo_esocial' => 'S1020-SAU',
+                'ativa' => '0',
+            ]);
+
+        $response
+            ->assertRedirect(route('lotacoes.edit', $lotacao))
+            ->assertSessionHasErrors('ativa');
+
+        $this->assertTrue($lotacao->fresh()->ativa);
     }
 
     public function test_user_cannot_create_lotacao_with_unsupported_type(): void

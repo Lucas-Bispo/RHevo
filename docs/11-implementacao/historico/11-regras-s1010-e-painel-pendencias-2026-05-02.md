@@ -2,6 +2,31 @@
 
 Registros historicos de implementacao separados para leitura rapida.
 
+### 02/05/2026 - Bloqueio de Inativacao de Lotacao com Servidores Ativos
+
+**Acao realizada:**
+- Bloquear a inativacao de lotacoes que ainda possuem servidores ativos vinculados.
+- Manter permitida a inativacao de lotacoes sem servidor ativo.
+- Registrar a regra como consistencia estrutural para `S-1005/S-1020` e vinculos funcionais.
+- Cobrir o bloqueio com teste focado.
+
+**Arquivos criados / alterados:**
+- `backend/FolhaNova/app/Http/Requests/UpdateLotacaoRequest.php`
+- `backend/FolhaNova/tests/Feature/LotacaoCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Validacao:**
+- `php artisan test tests/Feature/LotacaoCrudTest.php`: `7` testes verdes e `32` assercoes.
+- `./vendor/bin/pint app/Http/Requests/UpdateLotacaoRequest.php tests/Feature/LotacaoCrudTest.php`: sem pendencias.
+- `php artisan test tests/Feature/LotacaoCrudTest.php tests/Feature/LotacoesIndexTest.php tests/Feature/ServidorAdmissaoTest.php tests/Feature/ServidorDetailTest.php tests/Feature/ServidoresIndexTest.php`: `22` testes verdes e `118` assercoes.
+- `php artisan test`: `151` testes verdes e `944` assercoes.
+- `npm run build`: build Vite concluido com sucesso.
+
+**Status:** Concluido
+
 ### 02/05/2026 - Alerta de XML S-1000 Pendente no Detalhe
 
 **Acao realizada:**

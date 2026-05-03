@@ -62,6 +62,7 @@
 - Categoria do trabalhador deve ser compativel com classificacao tributaria do empregador.
 - Categoria do trabalhador deve ser compativel com lotacao tributaria.
 - Estabelecimento e lotacao tributaria devem respeitar tabelas oficiais.
+- Lotacao com servidor ativo vinculado nao deve ser inativada enquanto sustentar vinculo funcional operacional.
 
 ### Duplicidade e historico
 - Nao permitir duplicidade de evento equivalente para a mesma chave logica sem retificacao/exclusao adequada.

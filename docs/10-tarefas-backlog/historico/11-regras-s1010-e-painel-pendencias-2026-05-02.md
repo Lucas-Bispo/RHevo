@@ -2,6 +2,33 @@
 
 Entradas historicas de backlog separadas para leitura rapida.
 
+### ESOCIAL-S1005-S1020-BLOQUEIO-INATIVACAO-LOTACAO - 02/05/2026
+
+**Descricao:**
+Bloquear a inativacao de lotacoes que ainda possuem servidores ativos vinculados, preservando consistencia operacional para vinculos funcionais e prontidao futura dos eventos `S-1005/S-1020`.
+
+**Status:** Concluido
+**Prioridade:** Alta
+**Arquivos envolvidos:**
+- `backend/FolhaNova/app/Http/Requests/UpdateLotacaoRequest.php`
+- `backend/FolhaNova/tests/Feature/LotacaoCrudTest.php`
+- `docs/esocial/regras-negocio.md`
+- `docs/produto/funcionalidades-existentes.md`
+- `docs/10-tarefas-backlog/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+- `docs/11-implementacao/historico/11-regras-s1010-e-painel-pendencias-2026-05-02.md`
+
+**Plano:**
+- detectar tentativa de alterar uma lotacao para inativa;
+- impedir a alteracao quando houver servidor com `situacao = ativo` vinculado;
+- permitir inativacao de lotacoes sem servidor ativo;
+- cobrir o bloqueio com teste focado.
+
+**Resultado:**
+- a edicao de lotacao agora bloqueia inativacao quando houver servidor ativo vinculado;
+- lotacoes sem servidor ativo continuam podendo ser inativadas;
+- a regra preserva consistencia operacional entre lotacoes e vinculos funcionais;
+- o bloqueio foi coberto por teste focado.
+
 ### ESOCIAL-S1000-ALERTA-XML-PENDENTE - 02/05/2026
 
 **Descricao:**

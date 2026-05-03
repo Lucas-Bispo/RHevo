@@ -6,6 +6,7 @@ use App\Models\Lotacao;
 use App\Support\Esocial\TiposLotacao;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class UpdateLotacaoRequest extends FormRequest
 {
@@ -63,6 +64,22 @@ class UpdateLotacaoRequest extends FormRequest
         return [
             'tipo.in' => 'Selecione um tipo de lotacao suportado pelo recorte atual do S-1005/S-1020.',
         ];
+    }
+
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator): void {
+            /** @var Lotacao|null $lotacao */
+            $lotacao = $this->route('lotacao');
+
+            if (
+                $lotacao !== null
+                && (string) $this->input('ativa') === '0'
+                && $lotacao->servidores()->where('situacao', 'ativo')->exists()
+            ) {
+                $validator->errors()->add('ativa', 'Nao inative uma lotacao com servidores ativos vinculados.');
+            }
+        });
     }
 
     private function nullableUpperTrimmed(string $key): ?string
