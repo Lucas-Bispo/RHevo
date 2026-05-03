@@ -18,8 +18,9 @@ O projeto trata dados pessoais, funcionais, previdenciarios e financeiros. Segur
 - `OrgaoPublico` deve autorizar o `Tenant` autenticado antes de exibir ou atualizar parametros institucionais.
 - Desabilitar debug em producao (`APP_DEBUG=false`).
 - Revisar dependencias periodicamente (`composer audit`).
+- Executar auditoria automatica de dependencias no CI com `composer audit --locked` e `npm audit --audit-level=high`.
 - Evitar injecao com Eloquent e statements parametrizados.
-- Nao registrar CPF, NIS, salario e segredos em logs.
+- Nao registrar CPF, NIS, salario e segredos em logs; os canais de log devem aplicar mascaramento automatico antes da escrita.
 
 ### 3) Requisitos tecnicos de codigo
 - Usar Form Requests para validacao rigorosa de entrada.
@@ -28,6 +29,7 @@ O projeto trata dados pessoais, funcionais, previdenciarios e financeiros. Segur
 - Reforcar o isolamento com policies de mesmo tenant em listagem, criacao e atualizacao.
 - Aplicar rate limiting em autenticacao, APIs e rotinas criticas.
 - Configurar cabecalhos de seguranca e cookies seguros conforme ambiente.
+- Manter cookies de sessao `secure`, `http_only` e `same_site=lax` por padrao.
 
 ## Dados sensiveis
 

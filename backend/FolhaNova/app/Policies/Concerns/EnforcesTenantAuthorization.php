@@ -2,6 +2,7 @@
 
 namespace App\Policies\Concerns;
 
+use App\Models\Tenant;
 use App\Models\User;
 
 trait EnforcesTenantAuthorization
@@ -37,10 +38,16 @@ trait EnforcesTenantAuthorization
 
     protected function belongsToSameTenant(User $user, object $model): bool
     {
-        $modelTenantId = $model->tenant_id ?? $model->id ?? null;
+        if ($model instanceof Tenant) {
+            return $user->tenant_id !== null
+                && (int) $user->tenant_id === (int) $model->id;
+        }
+
+        if (! isset($model->tenant_id)) {
+            return false;
+        }
 
         return $user->tenant_id !== null
-            && $modelTenantId !== null
-            && (int) $user->tenant_id === (int) $modelTenantId;
+            && (int) $user->tenant_id === (int) $model->tenant_id;
     }
 }
